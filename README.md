@@ -1,9 +1,10 @@
 # EpamJAVA
 
 ## First step
-![markdown logo](https://sun9-75.userapi.com/impg/bQMi9yUZjFknIcaB9ZOb5DwtzDkZJLRRLMZpmw/Q7r9aoGXZ-U.jpg?size=1130x542&quality=96&proxy=1&sign=66927c8b2dcfdc1968d3fb6bc8ef6717&type=album)
 
 ### Организовал пакеты , после создал классы Point и Main в com.epam.jwd.model и com.epam.jwd.app соответсвенно
+
+![markdown logo](https://sun9-75.userapi.com/impg/bQMi9yUZjFknIcaB9ZOb5DwtzDkZJLRRLMZpmw/Q7r9aoGXZ-U.jpg?size=1130x542&quality=96&proxy=1&sign=66927c8b2dcfdc1968d3fb6bc8ef6717&type=album)
 
 ## Second step 
 
@@ -12,6 +13,7 @@
 ## Third step 
 
 ### Компиляция :
+
 ![markdown logo](https://sun9-19.userapi.com/impg/zhk81rVhiIvR3zSjeJQQ1vvAdzjYr_bXCAXfOg/lTWG5oy77rM.jpg?size=1136x62&quality=96&proxy=1&sign=7d9628e23b19740d854757dc5bd27899&type=album)
 
 ## Fourth step 
