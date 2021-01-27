@@ -10,10 +10,12 @@ public class Square extends Figure{
         for(int i=0;i<this.masP.length;++i){
             this.masP[i] = new Point();
         }
+        IncrementID();
     }
 
     public Square(Point[] masP){
         this.masP = masP;
+        IncrementID();
     }
 
     public void setSquare(Point[] masP){
