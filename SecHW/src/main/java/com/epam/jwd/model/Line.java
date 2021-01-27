@@ -12,10 +12,12 @@ public class Line extends Figure{
         for(int i=0;i<this.masP.length;++i){
             this.masP[i] = new Point();
         }
+        IncrementID();
     }
 
     public Line(Point[] masP){
         this.masP = masP;
+        IncrementID();
     }
 
     public boolean CheckSamePoints(){
