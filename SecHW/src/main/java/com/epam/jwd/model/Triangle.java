@@ -11,10 +11,12 @@ public class Triangle extends Figure{
         for(int i=0;i<this.masP.length;++i){
             this.masP[i] = new Point();
         }
+        IncrementID();
     }
 
     public Triangle(Point[] masP){
         this.masP = masP;
+        IncrementID();
     }
 
     public Point[] getTriangle(){
