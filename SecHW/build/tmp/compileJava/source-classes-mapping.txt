@@ -1,10 +1,10 @@
 com/epam/jwd/model/Point.java
  com.epam.jwd.model.Point
+com/epam/jwd/model/Line.java
+ com.epam.jwd.model.Line
 com/epam/jwd/model/Figure.java
  com.epam.jwd.model.Figure
  com.epam.jwd.model.Figure$FigureType
-com/epam/jwd/model/Line.java
- com.epam.jwd.model.Line
 com/epam/jwd/Main.java
  com.epam.jwd.Main
 com/epam/jwd/model/Square.java
