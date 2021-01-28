@@ -1,6 +1,7 @@
 package com.epam.jwd.model;
 
 import org.apache.log4j.Logger;
+import java.lang.Math;
 
 public class Point {
     private int x,y;
@@ -30,6 +31,10 @@ public class Point {
 
     public void setY(int y){
         this.y = y;
+    }
+
+    public double Distance(Point a){
+        return Math.sqrt((this.x - a.getX())*(this.x -a.getX()) + (this.y - a.getY())*(this.y-a.getY()));
     }
 
     @Override
