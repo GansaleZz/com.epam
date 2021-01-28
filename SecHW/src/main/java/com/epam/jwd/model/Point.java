@@ -33,7 +33,7 @@ public class Point {
         this.y = y;
     }
 
-    public double Distance(Point a){
+    public double distance(Point a){
         return Math.sqrt((this.x - a.getX())*(this.x -a.getX()) + (this.y - a.getY())*(this.y-a.getY()));
     }
 
