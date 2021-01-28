@@ -23,7 +23,6 @@ public class Line extends Figure{
     public boolean CheckSamePoints(){
         if(masP[0].getX() == masP[1].getX() && masP[0].getY() == masP[1].getY()){
             log.error("Its not figure 'LINE'");
-            System.out.println("Its not figure 'LINE'");
             return true;
         }
         return false;
