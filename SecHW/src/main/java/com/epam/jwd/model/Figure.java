@@ -4,7 +4,7 @@ package com.epam.jwd.model;
 public class Figure {
     private static int id = 0;
 
-    public void IncrementID(){
+    public void incrementID(){
         ++this.id;
     }
 
