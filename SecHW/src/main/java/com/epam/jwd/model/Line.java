@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 public class Line extends Figure{
     private Point[] masP = new Point[2];
     private static final Logger log = Logger.getLogger(Line.class);
+    private Figure.FigureType Type = FigureType.LINE;
 
     public Line(){
         for(int i=0;i<this.masP.length;++i){
@@ -35,6 +36,10 @@ public class Line extends Figure{
 
     public void setLine(Point[] masP){
         this.masP = masP;
+    }
+
+    public Figure.FigureType getType(){
+        return this.Type;
     }
 
     @Override
