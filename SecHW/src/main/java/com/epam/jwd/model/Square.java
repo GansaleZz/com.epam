@@ -36,7 +36,7 @@ public class Square extends Figure{
     }
 
 
-    public void CheckExistance(){
+    public void сheckExistance(){
             double[] D = new double[6];
 
             D[0] = masP[0].Distance(masP[1]);
