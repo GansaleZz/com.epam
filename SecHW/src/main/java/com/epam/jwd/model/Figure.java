@@ -1,6 +1,8 @@
 package com.epam.jwd.model;
 
 
+import org.apache.log4j.Logger;
+
 public class Figure {
     private static int id = 0;
 
@@ -12,10 +14,16 @@ public class Figure {
         return this.id;
     }
 
-    private enum FigureType{
+    public enum FigureType{
         LINE,
         TRIANGLE,
         SQUARE;
+    }
+
+
+    public interface figurePropertiesStrategy{
+         boolean oppToFindProperties(); //opportunity
+         void Property();
     }
 
     @Override
