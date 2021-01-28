@@ -7,6 +7,8 @@ import java.sql.SQLOutput;
 public class Square extends Figure{
     private static final Logger log = Logger.getLogger(Square.class);
     private Point[] masP = new Point[4];
+    private Figure.FigureType Type = FigureType.SQUARE;
+    private double length;
 
     public Square(){
         for(int i=0;i<this.masP.length;++i){
@@ -38,7 +40,7 @@ public class Square extends Figure{
     }
 
 
-    public void checkExistance(){
+    public boolean checkExistance(){
             double[] D = new double[6];
 
             D[0] = masP[0].distance(masP[1]);
@@ -58,7 +60,7 @@ public class Square extends Figure{
                     }
                 }
             }
-
+            length = D[5];
             for(int i = 5 ; i >-1; --i){
                 D[i] /= D[0];
             }
@@ -69,11 +71,28 @@ public class Square extends Figure{
                     Math.abs(D[3]-1)<Math.pow(1,-8)&&
                     Math.abs(D[4]-Math.sqrt(2))<Math.pow(1,-8)&&
                     Math.abs(D[5]-Math.sqrt(2))<Math.pow(1,-8)))
-            {System.out.println(toString());}else{
-                log.error("Square doesnt exist!");
-               System.out.println("Square doesnt exist!");
+            {
+            return true; }else{
+               return false;
             }
 
+    }
+
+    public void existance(){
+        if(checkExistance()){
+            System.out.println(toString());
+        }else{
+            log.error("Square doesnt exist!");
+            System.out.println("Square doesnt exist!");
+        }
+    }
+
+    public Figure.FigureType getType(){
+        return this.Type;
+    }
+
+    public double getLength(){
+        return this.length;
     }
 
     @Override
