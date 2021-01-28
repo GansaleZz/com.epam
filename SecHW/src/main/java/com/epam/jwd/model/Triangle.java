@@ -11,12 +11,12 @@ public class Triangle extends Figure{
         for(int i=0;i<this.masP.length;++i){
             this.masP[i] = new Point();
         }
-        IncrementID();
+        incrementID();
     }
 
     public Triangle(Point[] masP){
         this.masP = masP;
-        IncrementID();
+        incrementID();
     }
 
     public Point[] getTriangle(){
@@ -27,21 +27,23 @@ public class Triangle extends Figure{
         this.masP = masP;
     }
 
-    public boolean CheckSamePoints(){
+    public boolean checkSamePoints(){
         if((masP[0].getX() == masP[1].getX() && masP[0].getY() == masP[1].getY()) || (masP[0].getX() == masP[2].getX() && masP[0].getY() == masP[2].getY()) || (masP[1].getX() == masP[2].getX() && masP[1].getY() == masP[2].getY())){
             log.error("Its not figure 'TRIANGLE'");
+            System.out.println("Its not figure 'TRIANGLE'");
             return true;
         }
         return false;
     }
 
-    public void сheckExistance(){
+    public void checkExistance(){
         double a,b,c;
         a = Math.pow(Math.pow(this.masP[0].getX() - this.masP[1].getX(),2)+Math.pow(this.masP[0].getY()-this.masP[1].getY(),2),0.5);
         b = Math.pow(Math.pow(this.masP[1].getX() - this.masP[2].getX(),2)+Math.pow(this.masP[1].getY()-this.masP[2].getY(),2),0.5);
         c = Math.pow(Math.pow(this.masP[0].getX() - this.masP[2].getX(),2)+Math.pow(this.masP[0].getY()-this.masP[2].getY(),2),0.5);
         if (a>=b+c || b>=a+c || c>=a+b){
             log.error("Triangle doesnt exist!");
+            System.out.println("Triangle doesnt exist!");
         }else{
             System.out.println(toString());
         }
