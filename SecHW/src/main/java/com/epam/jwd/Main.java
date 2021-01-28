@@ -1,6 +1,7 @@
 package com.epam.jwd;
 
 import com.epam.jwd.model.*;
+import com.epam.jwd.strategy.Properties;
 import org.apache.log4j.Logger;
 
 public class Main {
@@ -17,6 +18,8 @@ public class Main {
         InfoAboutmasL(masL);
         InfoAboutmasT(masT);
         InfoAboutmasS(masS);
+        Properties figure = Properties.getInstance(masS[0].getType(),masS[0].getSquare());
+        figure.Property();
     }
 
     public static void InitP(Point[] masP){
@@ -71,14 +74,14 @@ public class Main {
     public static void InfoAboutmasT(Triangle[] masT){
         for(int i=0;i<masT.length;++i){
             if(!masT[i].checkSamePoints())
-                masT[i].checkExistance();
+                masT[i].existance();
         }
     }
 
     public static void InfoAboutmasS(Square[] masS){
         for(int i=0;i<masS.length;++i){
             if(!masS[i].checkSamePoints())
-                masS[i].checkExistance();
+                masS[i].existance();
         }
     }
 }
