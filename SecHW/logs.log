@@ -1,9 +1,0 @@
-2021-01-27 17:22:27 INFO  Point:37 - Point exists! Coordinates (x: 3,y: 4)
-2021-01-27 17:22:27 INFO  Point:37 - Point exists! Coordinates (x: 3,y: 4)
-2021-01-27 17:22:27 INFO  Point:37 - Point exists! Coordinates (x: 3,y: 4)
-2021-01-27 17:22:27 INFO  Point:37 - Point exists! Coordinates (x: 3,y: 4)
-2021-01-27 17:22:27 INFO  Line:40 - Line exists! Points: x1:(0,1), x2:(10,14)
-2021-01-27 17:22:27 ERROR Line:23 - Its not figure 'LINE'
-2021-01-27 17:22:27 ERROR Triangle:30 - Its not figure 'TRIANGLE'
-2021-01-27 17:22:27 ERROR Triangle:30 - Its not figure 'TRIANGLE'
-2021-01-27 17:22:27 INFO  Square:56 - Square exists! Points:  x1:(3,3), x2:(3,4), x3:(4,3), x4:(4,4)
