@@ -67,7 +67,8 @@ public class Square extends Figure{
                     Math.abs(D[3]-1)<Math.pow(1,-8)&&
                     Math.abs(D[4]-Math.sqrt(2))<Math.pow(1,-8)&&
                     Math.abs(D[5]-Math.sqrt(2))<Math.pow(1,-8)))
-            {System.out.println(toString());}else{
+            {System.out.println(toString());}
+            else{
                 log.error("Square doesnt exist!");
             }
 
