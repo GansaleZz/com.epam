@@ -2,6 +2,7 @@ package com.epam.jwd.model;
 
 import org.apache.log4j.Logger;
 
+import java.sql.SQLOutput;
 
 public class Square extends Figure{
     private static final Logger log = Logger.getLogger(Square.class);
@@ -11,12 +12,12 @@ public class Square extends Figure{
         for(int i=0;i<this.masP.length;++i){
             this.masP[i] = new Point();
         }
-        IncrementID();
+        incrementID();
     }
 
     public Square(Point[] masP){
         this.masP = masP;
-        IncrementID();
+        incrementID();
     }
 
     public void setSquare(Point[] masP){
@@ -27,24 +28,25 @@ public class Square extends Figure{
         return this.masP;
     }
 
-    public boolean CheckSamePoints(){
+    public boolean checkSamePoints(){
         if((masP[0].getX() == masP[1].getX() && masP[0].getY() == masP[1].getY()) || (masP[0].getX() == masP[2].getX() && masP[0].getY() == masP[2].getY()) || (masP[0].getX() == masP[3].getX() && masP[0].getY() == masP[3].getY()) || (masP[1].getX() == masP[2].getX() && masP[1].getY() == masP[2].getY()) || (masP[1].getX() == masP[3].getX() && masP[1].getY() == masP[3].getY()) || (masP[2].getX() == masP[3].getX() && masP[2].getY() == masP[3].getY())){
             log.error("Its not figure 'SQUARE'");
+            System.out.println("Its not figure 'SQUARE'");
             return true;
         }
         return false;
     }
 
 
-    public void сheckExistance(){
+    public void checkExistance(){
             double[] D = new double[6];
 
-            D[0] = masP[0].Distance(masP[1]);
-            D[1] = masP[0].Distance(masP[2]);
-            D[2] = masP[0].Distance(masP[3]);
-            D[3] = masP[1].Distance(masP[2]);
-            D[4] = masP[1].Distance(masP[3]);
-            D[5] = masP[2].Distance(masP[3]);
+            D[0] = masP[0].distance(masP[1]);
+            D[1] = masP[0].distance(masP[2]);
+            D[2] = masP[0].distance(masP[3]);
+            D[3] = masP[1].distance(masP[2]);
+            D[4] = masP[1].distance(masP[3]);
+            D[5] = masP[2].distance(masP[3]);
 
             for(int i=0;i<D.length;++i){
                 double temp;
@@ -69,6 +71,7 @@ public class Square extends Figure{
                     Math.abs(D[5]-Math.sqrt(2))<Math.pow(1,-8)))
             {System.out.println(toString());}else{
                 log.error("Square doesnt exist!");
+               System.out.println("Square doesnt exist!");
             }
 
     }
