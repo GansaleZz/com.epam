@@ -43,10 +43,10 @@ public class Main {
 
     public static void InitS(Square[] masS){
         Point[] masP = new Point[4];
-        masP[0] = new Point(3,3);
-        masP[1] = new Point(3,4);
-        masP[2] = new Point(4,3);
-        masP[3] = new Point(4,4);
+        masP[0] = new Point(3,2);
+        masP[1] = new Point(4,3);
+        masP[2] = new Point(5,2);
+        masP[3] = new Point(4,1);
         for(int i=0;i< masS.length;++i){
             masS[i] = new Square(masP);
         }
