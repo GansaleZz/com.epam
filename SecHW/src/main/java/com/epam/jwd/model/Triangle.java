@@ -35,7 +35,7 @@ public class Triangle extends Figure{
         return false;
     }
 
-    public void CheckExistance(){
+    public void сheckExistance(){
         double a,b,c;
         a = Math.pow(Math.pow(this.masP[0].getX() - this.masP[1].getX(),2)+Math.pow(this.masP[0].getY()-this.masP[1].getY(),2),0.5);
         b = Math.pow(Math.pow(this.masP[1].getX() - this.masP[2].getX(),2)+Math.pow(this.masP[1].getY()-this.masP[2].getY(),2),0.5);
