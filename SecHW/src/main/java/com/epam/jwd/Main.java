@@ -63,22 +63,22 @@ public class Main {
 
     public static void InfoAboutmasL(Line[] masL){
         for(int i=0;i<masL.length;++i){
-            if(!masL[i].CheckSamePoints())
+            if(!masL[i].checkSamePoints())
                 System.out.println(masL[i].toString());
         }
     }
 
     public static void InfoAboutmasT(Triangle[] masT){
         for(int i=0;i<masT.length;++i){
-            if(!masT[i].CheckSamePoints())
-                masT[i].CheckExistance();
+            if(!masT[i].checkSamePoints())
+                masT[i].checkExistance();
         }
     }
 
     public static void InfoAboutmasS(Square[] masS){
         for(int i=0;i<masS.length;++i){
-            if(!masS[i].CheckSamePoints())
-                masS[i].CheckExistance();
+            if(!masS[i].checkSamePoints())
+                masS[i].checkExistance();
         }
     }
 }
