@@ -30,7 +30,6 @@ public class Triangle extends Figure{
     public boolean CheckSamePoints(){
         if((masP[0].getX() == masP[1].getX() && masP[0].getY() == masP[1].getY()) || (masP[0].getX() == masP[2].getX() && masP[0].getY() == masP[2].getY()) || (masP[1].getX() == masP[2].getX() && masP[1].getY() == masP[2].getY())){
             log.error("Its not figure 'TRIANGLE'");
-            System.out.println("Its not figure 'TRIANGLE'");
             return true;
         }
         return false;
@@ -43,7 +42,6 @@ public class Triangle extends Figure{
         c = Math.pow(Math.pow(this.masP[0].getX() - this.masP[2].getX(),2)+Math.pow(this.masP[0].getY()-this.masP[2].getY(),2),0.5);
         if (a>=b+c || b>=a+c || c>=a+b){
             log.error("Triangle doesnt exist!");
-            System.out.println("Triangle doesnt exist!");
         }else{
             System.out.println(toString());
         }
