@@ -12,17 +12,18 @@ public class Line extends Figure{
         for(int i=0;i<this.masP.length;++i){
             this.masP[i] = new Point();
         }
-        IncrementID();
+        incrementID();
     }
 
     public Line(Point[] masP){
         this.masP = masP;
-        IncrementID();
+        incrementID();
     }
 
-    public boolean CheckSamePoints(){
+    public boolean checkSamePoints(){
         if(masP[0].getX() == masP[1].getX() && masP[0].getY() == masP[1].getY()){
             log.error("Its not figure 'LINE'");
+            System.out.println("Its not figure 'LINE'");
             return true;
         }
         return false;
