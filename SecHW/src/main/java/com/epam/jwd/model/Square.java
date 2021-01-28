@@ -2,7 +2,6 @@ package com.epam.jwd.model;
 
 import org.apache.log4j.Logger;
 
-import java.sql.SQLOutput;
 
 public class Square extends Figure{
     private static final Logger log = Logger.getLogger(Square.class);
@@ -31,7 +30,6 @@ public class Square extends Figure{
     public boolean CheckSamePoints(){
         if((masP[0].getX() == masP[1].getX() && masP[0].getY() == masP[1].getY()) || (masP[0].getX() == masP[2].getX() && masP[0].getY() == masP[2].getY()) || (masP[0].getX() == masP[3].getX() && masP[0].getY() == masP[3].getY()) || (masP[1].getX() == masP[2].getX() && masP[1].getY() == masP[2].getY()) || (masP[1].getX() == masP[3].getX() && masP[1].getY() == masP[3].getY()) || (masP[2].getX() == masP[3].getX() && masP[2].getY() == masP[3].getY())){
             log.error("Its not figure 'SQUARE'");
-            System.out.println("Its not figure 'SQUARE'");
             return true;
         }
         return false;
@@ -71,7 +69,6 @@ public class Square extends Figure{
                     Math.abs(D[5]-Math.sqrt(2))<Math.pow(1,-8)))
             {System.out.println(toString());}else{
                 log.error("Square doesnt exist!");
-               System.out.println("Square doesnt exist!");
             }
 
     }
