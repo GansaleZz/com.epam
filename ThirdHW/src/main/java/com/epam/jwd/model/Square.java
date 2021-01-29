@@ -2,24 +2,26 @@ package com.epam.jwd.model;
 
 import org.apache.log4j.Logger;
 
-import java.sql.SQLOutput;
-
 public class Square extends Figure{
     private static final Logger log = Logger.getLogger(Square.class);
     private Point[] masP = new Point[4];
     private Figure.FigureType Type = FigureType.SQUARE;
     private double length;
 
-    public Square(){
+    protected Square(){
         for(int i=0;i<this.masP.length;++i){
             this.masP[i] = new Point();
         }
         incrementID();
     }
 
-    public Square(Point[] masP){
-        this.masP = masP;
-        incrementID();
+    protected Square(Point[] masP){
+        if(masP.length == 4){
+            this.masP = masP;
+            incrementID();
+        }else{
+            throw new IllegalArgumentException("Wrong count of points : "+masP.length+", expected 4");
+        }
     }
 
     public void setSquare(Point[] masP){
@@ -72,7 +74,8 @@ public class Square extends Figure{
                     Math.abs(D[4]-Math.sqrt(2))<Math.pow(1,-8)&&
                     Math.abs(D[5]-Math.sqrt(2))<Math.pow(1,-8)))
             {
-            return true; }else{
+                return true;
+            }else{
                return false;
             }
 
