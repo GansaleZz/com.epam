@@ -7,12 +7,12 @@ public class Point {
     private int x,y;
     private static final Logger log = Logger.getLogger(Point.class);
 
-    public Point(){
+    protected Point(){
         x = 3;
         y = 4;
     }
 
-    public Point(int x,int y){
+    protected Point(int x,int y){
         this.x = x;
         this.y = y;
     }
