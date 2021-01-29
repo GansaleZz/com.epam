@@ -21,6 +21,12 @@ public class FigureFactory extends Figure {
             case SQUARE:
                 i=4;
                 break;
+            case PENTAGON:
+                i=5;
+                break;
+            case HEXAGON:
+                i=6;
+                break;
         }
         masP = new Point[i];
         Random rand = new Random();
@@ -47,6 +53,12 @@ public class FigureFactory extends Figure {
             case SQUARE:
                 toReturn = new Square(masP);
                 break;
+            case PENTAGON:
+                toReturn = new MultiAngleFigure(type,masP);
+                break;
+            case HEXAGON:
+                toReturn = new MultiAngleFigure(type,masP);
+                break;
             default:
                 throw new IllegalArgumentException("Wrong figure type "+type+" for this count of points "+masP.length);
         }
@@ -68,6 +80,10 @@ public class FigureFactory extends Figure {
                 break;
             case SQUARE:
                 toReturn = new Square(masP);
+                break;
+            case PENTAGON:
+            case HEXAGON:
+                toReturn = new MultiAngleFigure(type,masP);
                 break;
             default:
                 throw new IllegalArgumentException("Wrong figure type "+type+" for this count of points "+masP.length);
