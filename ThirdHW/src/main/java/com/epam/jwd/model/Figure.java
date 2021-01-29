@@ -1,7 +1,7 @@
 package com.epam.jwd.model;
 
 
-import com.epam.jwd.strategy.Properties;
+import com.epam.jwd.strategy.*;
 import org.apache.log4j.Logger;
 
 public class Figure {
@@ -22,7 +22,9 @@ public class Figure {
         POINT,
         LINE,
         TRIANGLE,
-        SQUARE;
+        SQUARE,
+        PENTAGON,
+        HEXAGON;
     }
 
     public Figure(){
