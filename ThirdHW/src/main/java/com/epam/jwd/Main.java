@@ -1,7 +1,7 @@
 package com.epam.jwd;
 
 import com.epam.jwd.model.*;
-import com.epam.jwd.strategy.Properties;
+import com.epam.jwd.strategy.*;
 import org.apache.log4j.Logger;
 
 public class Main {
@@ -18,8 +18,12 @@ public class Main {
         InfoAboutmasL(masL);
         InfoAboutmasT(masT);
         InfoAboutmasS(masS);
-        Properties figure = Properties.getInstance(masS[0].getType(),masS[0].getSquare());
-        figure.Property();
+//        Properties figure = Properties.getInstance(masS[0].getType(),masS[0].getSquare());
+//        figure.Property();
+        PropertiesEn temp = PropertiesEn.INSTANCE;
+        temp.setMasP(masS[0].getSquare());
+        temp.setType(masS[0].getType());
+        temp.Property();
     }
 
     public static void InitP(Point[] masP){
