@@ -9,16 +9,20 @@ public class Line extends Figure{
     private static final Logger log = Logger.getLogger(Line.class);
     private Figure.FigureType Type = FigureType.LINE;
 
-    public Line(){
+    protected Line(){
         for(int i=0;i<this.masP.length;++i){
             this.masP[i] = new Point();
         }
         incrementID();
     }
 
-    public Line(Point[] masP){
-        this.masP = masP;
-        incrementID();
+    protected Line(Point[] masP){
+        if(masP.length == 2 ){
+            this.masP = masP;
+            incrementID();
+        }else{
+            throw new IllegalArgumentException("Wrong count of points : "+masP.length+", expected 2");
+        }
     }
 
     public boolean checkSamePoints(){
