@@ -4,6 +4,7 @@ import com.epam.jwd.model.*;
 import com.epam.jwd.strategy.*;
 import org.apache.log4j.Logger;
 
+
 public class Main {
     public static void main(String[] args) {
         Point[] masP = new Point[4];
@@ -18,46 +19,34 @@ public class Main {
         InfoAboutmasL(masL);
         InfoAboutmasT(masT);
         InfoAboutmasS(masS);
-//        Properties figure = Properties.getInstance(masS[0].getType(),masS[0].getSquare());
-//        figure.Property();
-        PropertiesEn temp = PropertiesEn.INSTANCE;
-        temp.setMasP(masS[0].getSquare());
-        temp.setType(masS[0].getType());
-        temp.Property();
     }
 
     public static void InitP(Point[] masP){
+        FigureFactory factory = new FigureFactory();
         for(int i=0;i< masP.length;++i){
-            masP[i] = new Point();
+            masP[i] = (Point) factory.getFigure(Figure.FigureType.POINT);
         }
     }
 
     public static void InitL(Line[] masL){
-        Point[] masP = new Point[2];
-        masP[0] = new Point(0,1);
-        masP[1] = new Point(10,14);
-        masL[0] = new Line(masP);
-        for(int i=1;i< masL.length;++i){
-            masL[i] = new Line();
+        FigureFactory factory = new FigureFactory();
+        for(int i=0;i< masL.length;++i){
+            masL[i] = (Line) factory.getFigure(Figure.FigureType.LINE);
         }
     }
 
     public static void InitT(Triangle[] masT){
+        FigureFactory factory = new FigureFactory();
         for(int i=0;i< masT.length;++i){
-            masT[i] = new Triangle();
+            masT[i] = (Triangle) factory.getFigure(Figure.FigureType.TRIANGLE);
         }
     }
 
     public static void InitS(Square[] masS){
-        Point[] masP = new Point[4];
-        masP[0] = new Point(3,2);
-        masP[1] = new Point(4,3);
-        masP[2] = new Point(5,2);
-        masP[3] = new Point(4,1);
+        FigureFactory factory = new FigureFactory();
         for(int i=0;i< masS.length;++i){
-            masS[i] = new Square(masP);
+            masS[i] = (Square) factory.getFigure(Figure.FigureType.SQUARE);
         }
-
     }
 
     public static void InfoAboutmasP(Point[] masP){
@@ -79,6 +68,8 @@ public class Main {
         for(int i=0;i<masT.length;++i){
             if(!masT[i].checkSamePoints())
                 masT[i].existance();
+                Properties figure = Properties.getInstance(masT[i].getType(),masT[i].getTriangle());
+                figure.Property();
         }
     }
 
@@ -86,6 +77,8 @@ public class Main {
         for(int i=0;i<masS.length;++i){
             if(!masS[i].checkSamePoints())
                 masS[i].existance();
+                Properties figure = Properties.getInstance(masS[i].getType(),masS[i].getSquare());
+                figure.Property();
         }
     }
 }
