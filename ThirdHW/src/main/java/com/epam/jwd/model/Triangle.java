@@ -10,16 +10,20 @@ public class Triangle extends Figure{
     private Figure.FigureType Type = FigureType.TRIANGLE;
     private double a,b,c;
 
-    public Triangle(){
+    protected Triangle(){
         for(int i=0;i<this.masP.length;++i){
             this.masP[i] = new Point();
         }
         incrementID();
     }
 
-    public Triangle(Point[] masP){
-        this.masP = masP;
-        incrementID();
+    protected Triangle(Point[] masP){
+        if(masP.length == 3){
+            this.masP = masP;
+            incrementID();
+        }else{
+            throw new IllegalArgumentException("Wrong count of points : "+masP.length+", expected 3");
+        }
     }
 
     public Point[] getTriangle(){
