@@ -9,12 +9,12 @@ public class Properties implements Figure.figurePropertiesStrategy {
     private Figure.FigureType type;
     private Point[] masP;
 
-    private Properties(Figure.FigureType type, Point[] masP){
+    private Properties(Figure.FigureType type, Point[] masP){ // realized "Lazy" singleton (*)
         this.type = type;
         this.masP = masP;
     }
 
-    public static Properties getInstance(Figure.FigureType type, Point[] masP){
+    public static Properties getInstance(Figure.FigureType type, Point[] masP){ // -> (*)
         if(instance == null){
             instance = new Properties(type,masP);
         }
@@ -52,6 +52,5 @@ public class Properties implements Figure.figurePropertiesStrategy {
                     log.info("Properties of this square: area = "+(square.getLength()*square.getLength())+", perimeter = "+(square.getLength()*4));
             }
         }
-
     }
 }
