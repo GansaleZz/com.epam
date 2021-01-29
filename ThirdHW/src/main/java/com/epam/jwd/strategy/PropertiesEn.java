@@ -21,32 +21,36 @@ public enum PropertiesEn implements Figure.figurePropertiesStrategy{ //enum real
 
     @Override
     public boolean oppToFindProperties(){
+        FigureFactory factory = new FigureFactory();
         switch (this.type){
             case TRIANGLE:
-                Triangle triangletemp = new Triangle(this.masP);
-                return triangletemp.checkExistance();
+                Triangle triangle = (Triangle) factory.getFigure(this.type,this.masP);
+                return triangle.checkExistance();
             case SQUARE:
-                Square squaretemp = new Square(this.masP);
-                return squaretemp.checkExistance();
+                Square Square = (Square) factory.getFigure(this.type,this.masP);
+                return Square.checkExistance();
             default: return false;
         }
     }
 
+
     @Override
     public void Property(){
         if(oppToFindProperties()) {
+            FigureFactory Factory = new FigureFactory();
             switch (this.type) {
                 case TRIANGLE:
-                    Triangle triangle = new Triangle(this.masP);
+                    Triangle triangle = (Triangle) Factory.getFigure(this.type,this.masP);
                     triangle.checkExistance();
                     double p = (triangle.getA() + triangle.getB() + triangle.getC())/2;
                     double S = Math.sqrt(p*(p-triangle.getA())*(p- triangle.getB())*(p- triangle.getC()));
                     log.info("Properties of this triangle : area = "+S+", perimeter = "+(p*2));
-
+                    break;
                 case SQUARE:
-                    Square square = new Square(this.masP);
+                    Square square = (Square) Factory.getFigure(this.type,this.masP);
                     square.checkExistance();
                     log.info("Properties of this square: area = "+(square.getLength()*square.getLength())+", perimeter = "+(square.getLength()*4));
+                    break;
             }
         }
     }
