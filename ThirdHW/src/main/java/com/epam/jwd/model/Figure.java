@@ -19,6 +19,7 @@ public class Figure {
     }
 
     public enum FigureType{
+        POINT,
         LINE,
         TRIANGLE,
         SQUARE;
@@ -42,22 +43,6 @@ public class Figure {
          void Property();
     }
 
-//    public enum Propers{
-//        INSTANCE;
-//
-//
-//
-//        private FigureType type;
-//        private Point[] masP;
-//
-//        Propers(FigureType type, Point[] masP){
-//            this.type = type;
-//            this.masP = masP;
-//        }
-//
-//        private Properties figure = Properties.getInstance(this.type,this.masP);
-//
-//    }
 
     @Override
     public String toString(){
