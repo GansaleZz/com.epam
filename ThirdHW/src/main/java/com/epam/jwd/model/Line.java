@@ -1,7 +1,6 @@
 package com.epam.jwd.model;
 
 
-import com.epam.jwd.model.*;
 import org.apache.log4j.Logger;
 
 public class Line extends Figure{
