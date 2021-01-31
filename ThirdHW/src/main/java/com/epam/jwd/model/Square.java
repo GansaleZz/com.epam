@@ -34,8 +34,8 @@ public class Square extends Figure{
 
     public boolean checkSamePoints(){
         if((masP[0].getX() == masP[1].getX() && masP[0].getY() == masP[1].getY()) || (masP[0].getX() == masP[2].getX() && masP[0].getY() == masP[2].getY()) || (masP[0].getX() == masP[3].getX() && masP[0].getY() == masP[3].getY()) || (masP[1].getX() == masP[2].getX() && masP[1].getY() == masP[2].getY()) || (masP[1].getX() == masP[3].getX() && masP[1].getY() == masP[3].getY()) || (masP[2].getX() == masP[3].getX() && masP[2].getY() == masP[3].getY())){
-            log.error("Its not figure 'SQUARE'");
-            System.out.println("Its not figure 'SQUARE'");
+            log.error("Its not figure "+this.Type);
+            System.out.println("Its not figure "+this.Type);
             return true;
         }
         return false;
@@ -85,8 +85,8 @@ public class Square extends Figure{
         if(checkExistance()){
             System.out.println(toString());
         }else{
-            log.error("Square doesnt exist!");
-            System.out.println("Square doesnt exist!");
+            log.error(this.Type+" doesnt exist!");
+            System.out.println(this.Type+" doesnt exist!");
         }
     }
 
@@ -100,7 +100,7 @@ public class Square extends Figure{
 
     @Override
     public String toString(){
-        log.info("Square exists! Points:  x1:("+masP[0].getX()+","+masP[0].getY()+"), x2:("+masP[1].getX()+","+masP[1].getY()+"), x3:("+masP[2].getX()+","+masP[2].getY()+"), x4:("+masP[3].getX()+","+masP[3].getY()+")");
-        return "Square exists! Points:  x1:("+masP[0].getX()+","+masP[0].getY()+"), x2:("+masP[1].getX()+","+masP[1].getY()+"), x3:("+masP[2].getX()+","+masP[2].getY()+"), x4:("+masP[3].getX()+","+masP[3].getY()+")";
+        log.info(this.Type+" exists! Points:  x1:("+masP[0].getX()+","+masP[0].getY()+"), x2:("+masP[1].getX()+","+masP[1].getY()+"), x3:("+masP[2].getX()+","+masP[2].getY()+"), x4:("+masP[3].getX()+","+masP[3].getY()+")");
+        return this.Type+" exists! Points:  x1:("+masP[0].getX()+","+masP[0].getY()+"), x2:("+masP[1].getX()+","+masP[1].getY()+"), x3:("+masP[2].getX()+","+masP[2].getY()+"), x4:("+masP[3].getX()+","+masP[3].getY()+")";
     }
 }
