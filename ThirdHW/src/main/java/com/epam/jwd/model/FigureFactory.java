@@ -2,6 +2,8 @@ package com.epam.jwd.model;
 
 import java.util.Random;
 import com.epam.jwd.exception.FigureNotExistException;
+import com.epam.jwd.impl.FigureExistencePostProcessor;
+
 public class FigureFactory extends Figure {
 
     public static Point[] getDefaultMasP(Figure.FigureType type){
@@ -38,6 +40,7 @@ public class FigureFactory extends Figure {
     }
 
     public Object getFigure(Figure.FigureType type, Point[] masP) throws  FigureNotExistException{
+        FigureExistencePostProcessor exc = new FigureExistencePostProcessor();
         Object toReturn = null;
         switch (type){
             case POINT:
@@ -60,11 +63,16 @@ public class FigureFactory extends Figure {
                 break;
             default: new FigureNotExistException("Wrong figure type "+type+" for this count of points "+masP.length);
         }
+        if(toReturn!=null)
+            exc.Figureprocess(true,type);
+        else
+            exc.Figureprocess(false,type);
         return toReturn;
     }
 
     public Object getFigure(Figure.FigureType type)throws  FigureNotExistException{
         Object toReturn = null;
+        FigureExistencePostProcessor exc = new FigureExistencePostProcessor();
         Point[] masP = getDefaultMasP(type);
             switch (type) {
                 case POINT:
@@ -85,6 +93,10 @@ public class FigureFactory extends Figure {
                     break;
                 default: new FigureNotExistException("Wrong figure type "+type+" for this count of points "+masP.length);
             }
+        if(toReturn!=null)
+            exc.Figureprocess(true,type);
+        else
+            exc.Figureprocess(false,type);
         return toReturn;
     }
 
