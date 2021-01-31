@@ -1,11 +1,12 @@
 package com.epam.jwd;
 
+import com.epam.jwd.exception.FigureNotExistException;
 import com.epam.jwd.model.*;
 import com.epam.jwd.strategy.*;
 
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FigureNotExistException {
         Point[] masP = new Point[4];
         Line[] masL = new Line[2];
         Triangle[] masT = new Triangle[2];
@@ -24,41 +25,41 @@ public class Main {
         InfoAboutHex(Hex);
     }
 
-    public static void InitP(Point[] masP){
+    public static void InitP(Point[] masP) throws FigureNotExistException {
         FigureFactory factory = new FigureFactory();
         for(int i=0;i< masP.length;++i){
             masP[i] = (Point) factory.getFigure(Figure.FigureType.POINT);
         }
     }
 
-    public static void InitL(Line[] masL){
+    public static void InitL(Line[] masL) throws FigureNotExistException {
         FigureFactory factory = new FigureFactory();
         for(int i=0;i< masL.length;++i){
             masL[i] = (Line) factory.getFigure(Figure.FigureType.LINE);
         }
     }
 
-    public static void InitT(Triangle[] masT){
+    public static void InitT(Triangle[] masT) throws FigureNotExistException {
         FigureFactory factory = new FigureFactory();
         for(int i=0;i< masT.length;++i){
             masT[i] = (Triangle) factory.getFigure(Figure.FigureType.TRIANGLE);
         }
     }
 
-    public static void InitS(Square[] masS){
+    public static void InitS(Square[] masS) throws FigureNotExistException {
         FigureFactory factory = new FigureFactory();
         for(int i=0;i< masS.length;++i){
             masS[i] = (Square) factory.getFigure(Figure.FigureType.SQUARE);
         }
     }
 
-    public static MultiAngleFigure InitPen(){
+    public static MultiAngleFigure InitPen() throws FigureNotExistException {
         FigureFactory factory = new FigureFactory();
         MultiAngleFigure Pen = (MultiAngleFigure) factory.getFigure(Figure.FigureType.PENTAGON);
         return Pen;
     }
 
-    public static MultiAngleFigure InitHex(){
+    public static MultiAngleFigure InitHex() throws FigureNotExistException {
         FigureFactory factory = new FigureFactory();
         MultiAngleFigure Hex = (MultiAngleFigure) factory.getFigure(Figure.FigureType.HEXAGON);
         return Hex;
@@ -79,7 +80,7 @@ public class Main {
         }
     }
 
-    public static void InfoAboutmasT(Triangle[] masT){
+    public static void InfoAboutmasT(Triangle[] masT) throws FigureNotExistException {
         for(int i=0;i<2;++i){
             if(!masT[i].checkSamePoints()) {
                 masT[i].existance();
@@ -91,7 +92,7 @@ public class Main {
         }
     }
 
-    public static void InfoAboutmasS(Square[] masS){
+    public static void InfoAboutmasS(Square[] masS) throws FigureNotExistException {
         for(int i=0;i<masS.length;++i){
             if(!masS[i].checkSamePoints()) {
                 masS[i].existance();
@@ -103,7 +104,7 @@ public class Main {
         }
     }
 
-    public static void InfoAboutPen(MultiAngleFigure Pen){
+    public static void InfoAboutPen(MultiAngleFigure Pen) throws FigureNotExistException {
         if(!Pen.checkSamePoints()){
             Pen.existance();
             if(Pen.checkExistance()){
@@ -113,7 +114,7 @@ public class Main {
         }
     }
 
-    public static void InfoAboutHex(MultiAngleFigure Hex){
+    public static void InfoAboutHex(MultiAngleFigure Hex) throws FigureNotExistException {
         if(!Hex.checkSamePoints()){
             Hex.existance();
             if(Hex.checkExistance()){
