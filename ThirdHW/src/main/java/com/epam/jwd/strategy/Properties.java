@@ -1,5 +1,6 @@
 package com.epam.jwd.strategy;
 
+import com.epam.jwd.exception.FigureNotExistException;
 import com.epam.jwd.model.*;
 import org.apache.log4j.Logger;
 
@@ -20,7 +21,7 @@ public class Properties implements Figure.figurePropertiesStrategy {
     }
 
     @Override
-    public boolean oppToFindProperties(){
+    public boolean oppToFindProperties() throws FigureNotExistException {
         FigureFactory factory = new FigureFactory();
         switch (this.type){
             case TRIANGLE:
@@ -39,7 +40,7 @@ public class Properties implements Figure.figurePropertiesStrategy {
 
 
     @Override
-    public void Property(){
+    public void Property() throws FigureNotExistException {
         if(oppToFindProperties()) {
             FigureFactory Factory = new FigureFactory();
             switch (this.type) {
