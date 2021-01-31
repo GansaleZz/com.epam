@@ -36,18 +36,17 @@ public class Triangle extends Figure{
 
     public boolean checkSamePoints(){
         if((masP[0].getX() == masP[1].getX() && masP[0].getY() == masP[1].getY()) || (masP[0].getX() == masP[2].getX() && masP[0].getY() == masP[2].getY()) || (masP[1].getX() == masP[2].getX() && masP[1].getY() == masP[2].getY())){
-            log.error("Its not figure 'TRIANGLE'");
-            System.out.println("Its not figure 'TRIANGLE'");
+            log.error("Its not figure "+this.Type);
+            System.out.println("Its not figure "+this.Type);
             return true;
         }
         return false;
     }
 
     public boolean checkExistance(){
-        double a,b,c;
-        a = Math.pow(Math.pow(this.masP[0].getX() - this.masP[1].getX(),2)+Math.pow(this.masP[0].getY()-this.masP[1].getY(),2),0.5);
-        b = Math.pow(Math.pow(this.masP[1].getX() - this.masP[2].getX(),2)+Math.pow(this.masP[1].getY()-this.masP[2].getY(),2),0.5);
-        c = Math.pow(Math.pow(this.masP[0].getX() - this.masP[2].getX(),2)+Math.pow(this.masP[0].getY()-this.masP[2].getY(),2),0.5);
+        this.a = Math.pow(Math.pow(this.masP[0].getX() - this.masP[1].getX(),2)+Math.pow(this.masP[0].getY()-this.masP[1].getY(),2),0.5);
+        this.b = Math.pow(Math.pow(this.masP[1].getX() - this.masP[2].getX(),2)+Math.pow(this.masP[1].getY()-this.masP[2].getY(),2),0.5);
+        this.c = Math.pow(Math.pow(this.masP[0].getX() - this.masP[2].getX(),2)+Math.pow(this.masP[0].getY()-this.masP[2].getY(),2),0.5);
         if (a>=b+c || b>=a+c || c>=a+b){
             return false;
         }else{
@@ -60,8 +59,8 @@ public class Triangle extends Figure{
         if(checkExistance()){
             System.out.println(toString());
         }else{
-            log.error("Triangle doesnt exist!");
-            System.out.println("Triangle doesnt exist!");
+            log.error(this.Type+" doesnt exist!");
+            System.out.println(this.Type+" doesnt exist!");
         }
     }
 
@@ -83,7 +82,7 @@ public class Triangle extends Figure{
 
     @Override
     public String toString(){
-        log.info("Triangle exists! Points:  x1:("+masP[0].getX()+","+masP[0].getY()+"), x2:("+masP[1].getX()+","+masP[1].getY()+"), x3:("+masP[2].getX()+","+masP[2].getY()+")");
-        return "Triangle exists! Points:  x1:("+masP[0].getX()+","+masP[0].getY()+"), x2:("+masP[1].getX()+","+masP[1].getY()+"), x3:("+masP[2].getX()+","+masP[2].getY()+")";
+        log.info(this.Type+" exists! Points:  x1:("+masP[0].getX()+","+masP[0].getY()+"), x2:("+masP[1].getX()+","+masP[1].getY()+"), x3:("+masP[2].getX()+","+masP[2].getY()+")");
+        return this.Type+" exists! Points:  x1:("+masP[0].getX()+","+masP[0].getY()+"), x2:("+masP[1].getX()+","+masP[1].getY()+"), x3:("+masP[2].getX()+","+masP[2].getY()+")";
     }
 }
