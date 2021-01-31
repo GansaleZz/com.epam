@@ -15,9 +15,8 @@ public class Properties implements Figure.figurePropertiesStrategy {
     }
 
     public static Properties getInstance(Figure.FigureType type, Point[] masP){ // -> (*)
-        if(instance == null){
+//        if(instance == null){
             instance = new Properties(type,masP);
-        }
         return instance;
     }
 
