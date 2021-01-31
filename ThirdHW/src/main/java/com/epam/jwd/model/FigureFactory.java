@@ -1,6 +1,5 @@
 package com.epam.jwd.model;
 
-import com.epam.jwd.model.*;
 import java.util.Random;
 
 public class FigureFactory extends Figure {
