@@ -1,6 +1,7 @@
 package com.epam.jwd.model;
 
 
+import com.epam.jwd.exception.FigureNotExistException;
 
 public class Figure {
     private static int id = 0;
@@ -39,8 +40,8 @@ public class Figure {
     }
 
     public interface figurePropertiesStrategy{
-         boolean oppToFindProperties(); //opportunity
-         void Property();
+         boolean oppToFindProperties() throws FigureNotExistException; //opportunity
+         void Property() throws FigureNotExistException;
     }
 
 
