@@ -2,7 +2,6 @@ package com.epam.jwd.model;
 
 import java.lang.Math;
 import org.apache.log4j.Logger;
-import com.epam.jwd.model.*;
 
 public class Triangle extends Figure{
     private static final Logger log = Logger.getLogger(Triangle.class);
