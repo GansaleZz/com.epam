@@ -39,7 +39,7 @@ public class Point {
 
     @Override
     public String toString(){
-        log.info("Point exists! Coordinates (x: "+x+",y: "+y+")");
-        return "Point exists! Coordinates (x: "+x+",y: "+y+")";
+        log.info("POINT exists! Coordinates (x: "+x+",y: "+y+")");
+        return "POINT exists! Coordinates (x: "+x+",y: "+y+")";
     }
 }
