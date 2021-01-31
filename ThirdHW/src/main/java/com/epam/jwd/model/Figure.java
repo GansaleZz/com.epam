@@ -1,8 +1,6 @@
 package com.epam.jwd.model;
 
 
-import com.epam.jwd.strategy.*;
-import org.apache.log4j.Logger;
 
 public class Figure {
     private static int id = 0;
