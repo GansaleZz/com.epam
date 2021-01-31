@@ -15,7 +15,6 @@ public class Properties implements Figure.figurePropertiesStrategy {
     }
 
     public static Properties getInstance(Figure.FigureType type, Point[] masP){ // -> (*)
-//        if(instance == null){
             instance = new Properties(type,masP);
         return instance;
     }
@@ -30,6 +29,10 @@ public class Properties implements Figure.figurePropertiesStrategy {
             case SQUARE:
                 Square Square = (Square) factory.getFigure(this.type,this.masP);
                 return Square.checkExistance();
+            case PENTAGON:
+            case HEXAGON:
+                MultiAngleFigure Polygon = (MultiAngleFigure) factory.getFigure(this.type,this.masP);
+                return Polygon.checkExistance();
             default: return false;
         }
     }
@@ -45,13 +48,38 @@ public class Properties implements Figure.figurePropertiesStrategy {
                     triangle.checkExistance();
                     double p = (triangle.getA() + triangle.getB() + triangle.getC())/2;
                     double S = Math.sqrt(p*(p-triangle.getA())*(p- triangle.getB())*(p- triangle.getC()));
-                    log.info("Properties of this triangle : area = "+S+", perimeter = "+(p*2));
+                    log.info("Properties of this "+this.type+" : area = "+S+", perimeter = "+(p*2));
                     break;
                 case SQUARE:
                     Square square = (Square) Factory.getFigure(this.type,this.masP);
                     square.checkExistance();
-                    log.info("Properties of this square: area = "+(square.getLength()*square.getLength())+", perimeter = "+(square.getLength()*4));
+                    S = (square.getLength()*square.getLength());
+                    double P = (square.getLength()*4);
+                    log.info("Properties of this "+this.type+": area = "+S+", perimeter = "+P);
                     break;
+                case HEXAGON:
+                case PENTAGON:
+                    MultiAngleFigure pentagon = (MultiAngleFigure) Factory.getFigure(this.type,this.masP);
+                    pentagon.checkExistance();
+                    S = 0;
+                    P = 0;
+                    Point[] temp;
+                    if(type == Figure.FigureType.PENTAGON){
+                        temp = new Point[6];
+                    }else{
+                        temp = new Point[7];
+                    }
+                    for(int i=0;i<masP.length;++i){
+                        temp[i] = masP[i];
+                    }
+                    temp[temp.length-1] = temp[0];
+                    for(int i=1;i<temp.length;++i){
+                        S +=(temp[i-1].getX()*temp[i].getY()-temp[i-1].getY()*temp[i].getX());
+                    }
+                    for(int i=0;i<temp.length-1;++i){
+                        P += Math.sqrt((temp[i].getY()-temp[i+1].getY())*(temp[i].getY()-temp[i+1].getY())+(temp[i].getX()-temp[i+1].getX())*(temp[i].getX()-temp[i+1].getX()));
+                    }
+                    log.info("Properties of this "+this.type+": area = "+Math.abs(S/2)+", perimeter = "+P);
             }
         }
     }
