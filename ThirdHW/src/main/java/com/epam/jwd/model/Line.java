@@ -27,8 +27,8 @@ public class Line extends Figure{
 
     public boolean checkSamePoints(){
         if(masP[0].getX() == masP[1].getX() && masP[0].getY() == masP[1].getY()){
-            log.error("Its not figure 'LINE'");
-            System.out.println("Its not figure 'LINE'");
+            log.error("Its not figure "+this.Type);
+            System.out.println("Its not figure "+this.Type);
             return true;
         }
         return false;
@@ -48,7 +48,7 @@ public class Line extends Figure{
 
     @Override
     public String toString(){
-        log.info("Line exists! Points: x1:("+masP[0].getX()+","+masP[0].getY()+"), x2:("+masP[1].getX()+","+masP[1].getY()+")");
-        return "Line exists! Points: x1:("+masP[0].getX()+","+masP[0].getY()+"), x2:("+masP[1].getX()+","+masP[1].getY()+")";
+        log.info(this.Type+" exists! Points: x1:("+masP[0].getX()+","+masP[0].getY()+"), x2:("+masP[1].getX()+","+masP[1].getY()+")");
+        return this.Type+" exists! Points: x1:("+masP[0].getX()+","+masP[0].getY()+"), x2:("+masP[1].getX()+","+masP[1].getY()+")";
     }
 }
