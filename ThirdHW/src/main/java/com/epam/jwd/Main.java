@@ -106,12 +106,20 @@ public class Main {
     public static void InfoAboutPen(MultiAngleFigure Pen){
         if(!Pen.checkSamePoints()){
             Pen.existance();
+            if(Pen.checkExistance()){
+                Properties figure = Properties.getInstance(Pen.getType(),Pen.getMultiAngleFigure());
+                figure.Property();
+            }
         }
     }
 
     public static void InfoAboutHex(MultiAngleFigure Hex){
         if(!Hex.checkSamePoints()){
             Hex.existance();
+            if(Hex.checkExistance()){
+                Properties figure = Properties.getInstance(Hex.getType(),Hex.getMultiAngleFigure());
+                figure.Property();
+            }
         }
     }
 }
