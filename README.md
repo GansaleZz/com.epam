@@ -2,5 +2,5 @@
 
 ### Результат выполнения:
 
-![markdown logo](https://sun9-63.userapi.com/impg/oecnFYp8l9vuUpAdsci54Iefa8VRx0E8eYWnfQ/6diJdi9cllY.jpg?size=1270x268&quality=96&proxy=1&sign=4e519bc49ba69c36a32d492fe9802cb4&type=album)
+![markdown logo](https://sun9-32.userapi.com/impg/_dDIvvnYtaLVhmBmY_7gSuTOgXoBmONc-xcIsg/L0Vv0gBHQc4.jpg?size=1956x900&quality=96&proxy=1&sign=a1070b3b7d3cb7d6e7edba380e647552&type=album)
 
