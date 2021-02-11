@@ -1,9 +1,10 @@
 package com.epam.jwd.model;
 
-import java.util.Random;
 import com.epam.jwd.exception.FigureNotExistException;
 import com.epam.jwd.impl.FigureExistencePostProcessor;
 import com.epam.jwd.impl.FigureExistencePreProcessor;
+
+import java.util.Random;
 
 public class FigureFactory extends Figure {
 
@@ -36,7 +37,6 @@ public class FigureFactory extends Figure {
         for(int j=0;j<i;++j){
             masP[j] = new Point(rand.nextInt(10),rand.nextInt(10));
         }
-
         return masP;
     }
 
@@ -46,9 +46,9 @@ public class FigureFactory extends Figure {
         Figure toReturn = null;
         switch (type){
             case POINT:
-
                 excpre.figurePreProcess(masP,type);
                 toReturn = new Point(masP[0].getX(),masP[0].getY());
+                ((Point)toReturn).setMasP(masP);
                 break;
             case LINE:
                 excpre.figurePreProcess(masP,type);
@@ -69,7 +69,7 @@ public class FigureFactory extends Figure {
                 break;
             default: new FigureNotExistException("Wrong figure type "+type+" for this count of points "+masP.length);
         }
-        if(toReturn!=null)
+        if(toReturn != null)
             excpost.figurepostprocess(true,type,toReturn);
         else
             excpost.figurepostprocess(false,type,toReturn);
@@ -85,6 +85,7 @@ public class FigureFactory extends Figure {
                 case POINT:
                     excpre.figurePreProcess(masP,type);
                     toReturn = new Point(masP[0].getX(), masP[0].getY());
+                    ((Point)toReturn).setMasP(masP);
                     break;
                 case LINE:
                     excpre.figurePreProcess(masP,type);
@@ -105,10 +106,11 @@ public class FigureFactory extends Figure {
                     break;
                 default: new FigureNotExistException("Wrong figure type "+type+" for this count of points "+masP.length);
             }
-        if(toReturn!=null)
-            excpost.figurepostprocess(true,type,toReturn);
-        else
-            excpost.figurepostprocess(false,type,toReturn);
+        if(toReturn!=null) {
+            excpost.figurepostprocess(true, type, toReturn);
+        }else {
+            excpost.figurepostprocess(false, type, toReturn);
+        }
         return toReturn;
     }
 

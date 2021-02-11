@@ -12,57 +12,56 @@ public class Main {
         Line[] masL = new Line[2];
         Triangle[] masT = new Triangle[2];
         Square[] masS = new Square[1];
-        InitP(masP);
-        InitL(masL);
-        InitT(masT);
-        InitS(masS);
-        MultiAngleFigure Pen = InitPen();
-        MultiAngleFigure Hex = InitHex();
+        ConcreteAppContext app = new ConcreteAppContext();
+        InitP(masP,app);
+        InitL(masL,app);
+        InitT(masT,app);
+        InitS(masS,app);
+        MultiAngleFigure Pen = InitPen(app);
+        MultiAngleFigure Hex = InitHex(app);
         InfoAboutmasP(masP);
         InfoAboutmasL(masL);
         InfoAboutmasT(masT);
         InfoAboutmasS(masS);
         InfoAboutPen(Pen);
         InfoAboutHex(Hex);
+
     }
 
 
-    public static void InitP(Point[] masP) throws FigureNotExistException {
-        ConcreteAppContext app = new ConcreteAppContext();
+    public static void InitP(Point[] masP,ConcreteAppContext app) throws FigureNotExistException {
         for(int i=0;i< masP.length;++i){
             masP[i] =(Point) app.createFigureFactory(Figure.FigureType.POINT);
         }
     }
 
-    public static void InitL(Line[] masL) throws FigureNotExistException {
-        ConcreteAppContext app = new ConcreteAppContext();
+    public static void InitL(Line[] masL,ConcreteAppContext app) throws FigureNotExistException {
         for(int i=0;i< masL.length;++i){
-            masL[i] = (Line) app.createFigureFactory(Figure.FigureType.LINE);
+            Point[][] temp = new Point[2][2];
+            temp[i][0] = (Point) app.createFigureFactory(Figure.FigureType.POINT);
+            temp[i][1] = (Point) app.createFigureFactory(Figure.FigureType.POINT);
+            masL[i] = (Line) app.createFigureFactory(temp[i],Figure.FigureType.LINE);
         }
     }
 
-    public static void InitT(Triangle[] masT) throws FigureNotExistException {
-        ConcreteAppContext app = new ConcreteAppContext();
+    public static void InitT(Triangle[] masT,ConcreteAppContext app) throws FigureNotExistException {
         for(int i=0;i< masT.length;++i){
             masT[i] = (Triangle) app.createFigureFactory(Figure.FigureType.TRIANGLE);
         }
     }
 
-    public static void InitS(Square[] masS) throws FigureNotExistException {
-        ConcreteAppContext app = new ConcreteAppContext();
+    public static void InitS(Square[] masS,ConcreteAppContext app) throws FigureNotExistException {
         for(int i=0;i< masS.length;++i){
             masS[i] = (Square) app.createFigureFactory(Figure.FigureType.SQUARE);
         }
     }
 
-    public static MultiAngleFigure InitPen() throws FigureNotExistException {
-        ConcreteAppContext app = new ConcreteAppContext();
+    public static MultiAngleFigure InitPen(ConcreteAppContext app) throws FigureNotExistException {
         MultiAngleFigure Pen = (MultiAngleFigure) app.createFigureFactory(Figure.FigureType.PENTAGON);
         return Pen;
     }
 
-    public static MultiAngleFigure InitHex() throws FigureNotExistException {
-        ConcreteAppContext app = new ConcreteAppContext();
+    public static MultiAngleFigure InitHex(ConcreteAppContext app) throws FigureNotExistException {
         MultiAngleFigure Hex = (MultiAngleFigure) app.createFigureFactory(Figure.FigureType.HEXAGON);
         return Hex;
     }

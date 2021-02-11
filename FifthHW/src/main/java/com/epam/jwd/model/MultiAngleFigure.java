@@ -13,6 +13,7 @@ public class MultiAngleFigure extends Figure{
         if((masP.length == 5 && type == FigureType.PENTAGON) || (masP.length == 6 && type == FigureType.HEXAGON)){
         this.type = type;
         this.masP = masP;
+        super.setMasP(masP);
         incrementID();
         }else{
             throw new IllegalArgumentException("Wrong input parameteres!");

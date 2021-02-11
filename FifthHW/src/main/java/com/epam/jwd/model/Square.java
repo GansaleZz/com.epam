@@ -12,12 +12,14 @@ public class Square extends Figure{
         for(int i=0;i<this.masP.length;++i){
             this.masP[i] = new Point();
         }
+        super.setMasP(masP);
         incrementID();
     }
 
     protected Square(Point[] masP){
         if(masP.length == 4){
             this.masP = masP;
+            super.setMasP(masP);
             incrementID();
         }else{
             throw new IllegalArgumentException("Wrong count of points : "+masP.length+", expected 4");

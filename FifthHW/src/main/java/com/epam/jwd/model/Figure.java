@@ -27,6 +27,7 @@ public class Figure {
     }
 
     public Figure(){
+
     }
 
     public Figure(FigureType type, Point[] masP){
@@ -38,7 +39,15 @@ public class Figure {
     public Point[] getMasP() {
         return masP;
     }
+    
+    public void setMasP(Point[] masP){
+        this.masP = masP;
+    }
 
+    public FigureType getType(){
+        return this.type;
+    }
+    
     public interface figurePropertiesStrategy{
          boolean oppToFindProperties() throws FigureNotExistException; //opportunity
          void Property() throws FigureNotExistException;

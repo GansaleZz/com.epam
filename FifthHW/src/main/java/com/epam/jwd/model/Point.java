@@ -1,11 +1,11 @@
 package com.epam.jwd.model;
 
 import org.apache.log4j.Logger;
-import java.lang.Math;
 
 public class Point extends Figure {
     private int x,y;
     private static final Logger log = Logger.getLogger(Point.class);
+    private Point[] masP = new Point[1];
 
     protected Point(){
         x = 3;
@@ -17,12 +17,22 @@ public class Point extends Figure {
         this.y = y;
     }
 
+    public void setMasP(Point[] masP){
+        super.setMasP(masP);
+        this.masP = masP;
+    }
+
+
     public int getX(){
         return this.x;
     }
 
     public int getY(){
         return this.y;
+    }
+
+    public Point[] masP(){
+        return this.masP;
     }
 
     public void setX(int x){

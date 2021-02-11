@@ -12,12 +12,14 @@ public class Line extends Figure{
         for(int i=0;i<this.masP.length;++i){
             this.masP[i] = new Point();
         }
+        super.setMasP(masP);
         incrementID();
     }
 
     protected Line(Point[] masP){
         if(masP.length == 2 ){
             this.masP = masP;
+            super.setMasP(masP);
             incrementID();
         }else{
             throw new IllegalArgumentException("Wrong count of points : "+masP.length+", expected 2");
