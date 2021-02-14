@@ -1,6 +1,7 @@
 package com.epam.jwd.model;
 
 
+import com.epam.jwd.exception.FigureNotExistException;
 import org.apache.log4j.Logger;
 
 public class Line extends Figure{
@@ -8,21 +9,14 @@ public class Line extends Figure{
     private static final Logger log = Logger.getLogger(Line.class);
     private Figure.FigureType Type = FigureType.LINE;
 
-    protected Line(){
-        for(int i=0;i<this.masP.length;++i){
-            this.masP[i] = new Point();
-        }
-        super.setMasP(masP);
-        incrementID();
-    }
 
-    protected Line(Point[] masP){
+    protected Line(Point[] masP) throws FigureNotExistException {
         if(masP.length == 2 ){
             this.masP = masP;
             super.setMasP(masP);
             incrementID();
         }else{
-            throw new IllegalArgumentException("Wrong count of points : "+masP.length+", expected 2");
+            throw new FigureNotExistException("Wrong count of points : "+masP.length+", expected 2");
         }
     }
 
@@ -36,7 +30,7 @@ public class Line extends Figure{
     }
 
     public Point[] getLine(){
-        return this.masP;
+        return masP;
     }
 
     public void setLine(Point[] masP){
@@ -44,7 +38,7 @@ public class Line extends Figure{
     }
 
     public Figure.FigureType getType(){
-        return this.Type;
+        return Type;
     }
 
     @Override

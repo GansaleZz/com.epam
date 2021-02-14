@@ -4,17 +4,10 @@ import org.apache.log4j.Logger;
 
 public class Triangle extends Figure{
     private static final Logger log = Logger.getLogger(Triangle.class);
-    private Point[] masP = new Point[3];
+    private Point[] masP;
     private Figure.FigureType Type = FigureType.TRIANGLE;
     private double a,b,c;
 
-    protected Triangle(){
-        for(int i=0;i<this.masP.length;++i){
-            this.masP[i] = new Point();
-        }
-        super.setMasP(masP);
-        incrementID();
-    }
 
     protected Triangle(Point[] masP){
         if(masP.length == 3){
@@ -26,13 +19,6 @@ public class Triangle extends Figure{
         }
     }
 
-    public Point[] getTriangle(){
-        return this.masP;
-    }
-
-    public void setTriangle(Point[] masP){
-        this.masP = masP;
-    }
 
     public boolean checkSamePoints(){
         if((masP[0].getX() == masP[1].getX() && masP[0].getY() == masP[1].getY()) || (masP[0].getX() == masP[2].getX() && masP[0].getY() == masP[2].getY()) || (masP[1].getX() == masP[2].getX() && masP[1].getY() == masP[2].getY())){
@@ -47,11 +33,7 @@ public class Triangle extends Figure{
         this.a = Math.pow(Math.pow(this.masP[0].getX() - this.masP[1].getX(),2)+Math.pow(this.masP[0].getY()-this.masP[1].getY(),2),0.5);
         this.b = Math.pow(Math.pow(this.masP[1].getX() - this.masP[2].getX(),2)+Math.pow(this.masP[1].getY()-this.masP[2].getY(),2),0.5);
         this.c = Math.pow(Math.pow(this.masP[0].getX() - this.masP[2].getX(),2)+Math.pow(this.masP[0].getY()-this.masP[2].getY(),2),0.5);
-        if (a>=b+c || b>=a+c || c>=a+b){
-            return false;
-        }else{
-            return true;
-        }
+        return !(a >= b + c) && !(b >= a + c) && !(c >= a + b);
 
     }
 

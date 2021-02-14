@@ -10,12 +10,9 @@ public class Figure {
 
 
     public void incrementID(){
-        ++this.id;
+        ++id;
     }
 
-    public int getId(){
-        return this.id;
-    }
 
     public enum FigureType{
         POINT,
@@ -30,10 +27,6 @@ public class Figure {
 
     }
 
-    public Figure(FigureType type, Point[] masP){
-        this.type = type;
-        this.masP = masP;
-    }
 
 
     public Point[] getMasP() {

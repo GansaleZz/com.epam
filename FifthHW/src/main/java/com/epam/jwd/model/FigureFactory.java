@@ -9,28 +9,16 @@ import java.util.Random;
 public class FigureFactory extends Figure {
 
     public static Point[] getDefaultMasP(Figure.FigureType type){
-        int i=0;
+        int i;
         Point[] masP;
-        switch(type){
-            case POINT:
-                i=1;
-                break;
-            case LINE:
-                i=2;
-                break;
-            case TRIANGLE:
-                i=3;
-                break;
-            case SQUARE:
-                i=4;
-                break;
-            case PENTAGON:
-                i=5;
-                break;
-            case HEXAGON:
-                i=6;
-                break;
-        }
+        i = switch (type) {
+            case POINT -> 1;
+            case LINE -> 2;
+            case TRIANGLE -> 3;
+            case SQUARE -> 4;
+            case PENTAGON -> 5;
+            case HEXAGON -> 6;
+        };
         masP = new Point[i];
         Random rand = new Random();
 
@@ -44,73 +32,63 @@ public class FigureFactory extends Figure {
         FigureExistencePostProcessor excpost= new FigureExistencePostProcessor();
         FigureExistencePreProcessor excpre = new FigureExistencePreProcessor();
         Figure toReturn = null;
-        switch (type){
-            case POINT:
-                excpre.figurePreProcess(masP,type);
-                toReturn = new Point(masP[0].getX(),masP[0].getY());
-                ((Point)toReturn).setMasP(masP);
-                break;
-            case LINE:
-                excpre.figurePreProcess(masP,type);
+        switch (type) {
+            case POINT -> {
+                excpre.figurePreProcess(masP, type);
+                toReturn = new Point(masP[0].getX(), masP[0].getY());
+                (toReturn).setMasP(masP);
+            }
+            case LINE -> {
+                excpre.figurePreProcess(masP, type);
                 toReturn = new Line(masP);
-                break;
-            case TRIANGLE:
-                excpre.figurePreProcess(masP,type);
+            }
+            case TRIANGLE -> {
+                excpre.figurePreProcess(masP, type);
                 toReturn = new Triangle(masP);
-                break;
-            case SQUARE:
-                excpre.figurePreProcess(masP,type);
+            }
+            case SQUARE -> {
+                excpre.figurePreProcess(masP, type);
                 toReturn = new Square(masP);
-                break;
-            case HEXAGON:
-            case PENTAGON:
-                excpre.figurePreProcess(masP,type);
-                toReturn = new MultiAngleFigure(type,masP);
-                break;
-            default: new FigureNotExistException("Wrong figure type "+type+" for this count of points "+masP.length);
+            }
+            case HEXAGON, PENTAGON -> {
+                excpre.figurePreProcess(masP, type);
+                toReturn = new MultiAngleFigure(type, masP);
+            }
+            default -> new FigureNotExistException("Wrong figure type " + type + " for this count of points " + masP.length);
         }
-        if(toReturn != null)
-            excpost.figurepostprocess(true,type,toReturn);
-        else
-            excpost.figurepostprocess(false,type,toReturn);
+        excpost.figurepostprocess(toReturn != null,type,toReturn);
         return toReturn;
     }
 
-    public Figure getFigure(Figure.FigureType type)throws  FigureNotExistException{
+    public Figure getFigure(Figure.FigureType type) throws FigureNotExistException {
         Figure toReturn = null;
         FigureExistencePostProcessor excpost= new FigureExistencePostProcessor();
         FigureExistencePreProcessor excpre = new FigureExistencePreProcessor();
         Point[] masP = getDefaultMasP(type);
-            switch (type) {
-                case POINT:
-                    excpre.figurePreProcess(masP,type);
-                    toReturn = new Point(masP[0].getX(), masP[0].getY());
-                    ((Point)toReturn).setMasP(masP);
-                    break;
-                case LINE:
-                    excpre.figurePreProcess(masP,type);
-                    toReturn = new Line(masP);
-                    break;
-                case TRIANGLE:
-                    excpre.figurePreProcess(masP,type);
-                    toReturn = new Triangle(masP);
-                    break;
-                case SQUARE:
-                    excpre.figurePreProcess(masP,type);
-                    toReturn = new Square(masP);
-                    break;
-                case PENTAGON:
-                case HEXAGON:
-                    excpre.figurePreProcess(masP,type);
-                    toReturn = new MultiAngleFigure(type, masP);
-                    break;
-                default: new FigureNotExistException("Wrong figure type "+type+" for this count of points "+masP.length);
+        switch (type) {
+            case POINT -> {
+                excpre.figurePreProcess(masP, type);
+                toReturn = new Point(masP[0].getX(), masP[0].getY());
+                (toReturn).setMasP(masP);
             }
-        if(toReturn!=null) {
-            excpost.figurepostprocess(true, type, toReturn);
-        }else {
-            excpost.figurepostprocess(false, type, toReturn);
+            case LINE -> {
+                excpre.figurePreProcess(masP, type);
+                toReturn = new Line(masP);
+            }
+            case TRIANGLE -> {
+                excpre.figurePreProcess(masP, type);
+                toReturn = new Triangle(masP);
+            }
+            case SQUARE -> {
+                excpre.figurePreProcess(masP, type);
+                toReturn = new Square(masP);
+            }
+            case PENTAGON, HEXAGON -> {
+                excpre.figurePreProcess(masP, type);
+                toReturn = new MultiAngleFigure(type, masP);
+            }
         }
+        excpost.figurepostprocess(toReturn != null, type, toReturn);
         return toReturn;
     }
 

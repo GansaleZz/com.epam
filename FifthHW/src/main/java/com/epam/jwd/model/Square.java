@@ -8,13 +8,6 @@ public class Square extends Figure{
     private Figure.FigureType Type = FigureType.SQUARE;
     private double length;
 
-    protected Square(){
-        for(int i=0;i<this.masP.length;++i){
-            this.masP[i] = new Point();
-        }
-        super.setMasP(masP);
-        incrementID();
-    }
 
     protected Square(Point[] masP){
         if(masP.length == 4){
@@ -69,17 +62,12 @@ public class Square extends Figure{
                 D[i] /= D[0];
             }
 
-            if((Math.abs(D[0]-1)<Math.pow(1,-8)&&
-                    Math.abs(D[1]-1)<Math.pow(1,-8)&&
-                    Math.abs(D[2]-1)<Math.pow(1,-8)&&
-                    Math.abs(D[3]-1)<Math.pow(1,-8)&&
-                    Math.abs(D[4]-Math.sqrt(2))<Math.pow(1,-8)&&
-                    Math.abs(D[5]-Math.sqrt(2))<Math.pow(1,-8)))
-            {
-                return true;
-            }else{
-               return false;
-            }
+        return Math.abs(D[0] - 1) < Math.pow(1, -8) &&
+                Math.abs(D[1] - 1) < Math.pow(1, -8) &&
+                Math.abs(D[2] - 1) < Math.pow(1, -8) &&
+                Math.abs(D[3] - 1) < Math.pow(1, -8) &&
+                Math.abs(D[4] - Math.sqrt(2)) < Math.pow(1, -8) &&
+                Math.abs(D[5] - Math.sqrt(2)) < Math.pow(1, -8);
 
     }
 

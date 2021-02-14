@@ -9,42 +9,36 @@ public class FigureExistencePreProcessor implements FigurePreProcessor {
 
     @Override
     public void figurePreProcess(Point[] masP, Figure.FigureType type ){
-        switch(type) {
-            case POINT: {
+        switch (type) {
+            case POINT -> {
                 if (masP.length != 1) {
                     log.error("Length of input mas of points should be equals to 1! ");
                 }
-                break;
             }
-            case LINE:{
+            case LINE -> {
                 if (masP.length != 2) {
                     log.error("Length of input mas of points should be equals to 2! ");
                 }
-                break;
             }
-            case TRIANGLE:{
+            case TRIANGLE -> {
                 if (masP.length != 3) {
                     log.error("Length of input mas of points should be equals to 3! ");
                 }
-                break;
             }
-            case SQUARE:{
+            case SQUARE -> {
                 if (masP.length != 4) {
                     log.error("Length of input mas of points should be equals to 4! ");
                 }
-                break;
             }
-            case PENTAGON:{
+            case PENTAGON -> {
                 if (masP.length != 5) {
                     log.error("Length of input mas of points should be equals to 5! ");
                 }
-                break;
             }
-            case HEXAGON:{
+            case HEXAGON -> {
                 if (masP.length != 6) {
                     log.error("Length of input mas of points should be equals to 6! ");
                 }
-                break;
             }
         }
     }

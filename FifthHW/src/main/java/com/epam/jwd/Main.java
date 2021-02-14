@@ -57,13 +57,11 @@ public class Main {
     }
 
     public static MultiAngleFigure InitPen(ConcreteAppContext app) throws FigureNotExistException {
-        MultiAngleFigure Pen = (MultiAngleFigure) app.createFigureFactory(Figure.FigureType.PENTAGON);
-        return Pen;
+        return (MultiAngleFigure) app.createFigureFactory(Figure.FigureType.PENTAGON);
     }
 
     public static MultiAngleFigure InitHex(ConcreteAppContext app) throws FigureNotExistException {
-        MultiAngleFigure Hex = (MultiAngleFigure) app.createFigureFactory(Figure.FigureType.HEXAGON);
-        return Hex;
+        return (MultiAngleFigure) app.createFigureFactory(Figure.FigureType.HEXAGON);
     }
 
     public static void InfoAboutmasP(Point[] masP){
@@ -75,9 +73,9 @@ public class Main {
     }
 
     public static void InfoAboutmasL(Line[] masL){
-        for(int i=0;i<masL.length;++i){
-            if(!masL[i].checkSamePoints())
-                System.out.println(masL[i].toString());
+        for (Line line : masL) {
+            if (!line.checkSamePoints())
+                System.out.println(line.toString());
         }
     }
 
@@ -94,11 +92,11 @@ public class Main {
     }
 
     public static void InfoAboutmasS(Square[] masS) throws FigureNotExistException {
-        for(int i=0;i<masS.length;++i){
-            if(!masS[i].checkSamePoints()) {
-                masS[i].existance();
-                if(masS[i].checkExistance()) {
-                    Properties figure = Properties.getInstance(masS[i].getType(), masS[i]);
+        for (Square s : masS) {
+            if (!s.checkSamePoints()) {
+                s.existance();
+                if (s.checkExistance()) {
+                    Properties figure = Properties.getInstance(s.getType(), s);
                     figure.Property();
                 }
             }

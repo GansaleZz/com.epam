@@ -7,10 +7,6 @@ public class Point extends Figure {
     private static final Logger log = Logger.getLogger(Point.class);
     private Point[] masP = new Point[1];
 
-    protected Point(){
-        x = 3;
-        y = 4;
-    }
 
     protected Point(int x,int y){
         this.x = x;
