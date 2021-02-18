@@ -1,4 +1,0 @@
-com/epam/jwd/model/FigureFactoryTest.java
- com.epam.jwd.model.FigureFactoryTest
-com/epam/jwd/MainTest.java
- com.epam.jwd.MainTest
