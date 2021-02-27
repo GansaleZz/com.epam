@@ -24,8 +24,8 @@ public class Main {
         System.out.println(crewMember.getId());
         System.out.println(crewMember1.getId());
         System.out.println(crewMember.getId());
-        System.out.println(Rank.resolveRankById(3));
-        System.out.println();
+        CrewMember crewMember2 = crewMemberFactory.create(Rank.FIRST_OFFICER,Role.COMMANDER,"Svyat2");
+        System.out.println(crewMember2.getId());
         NassaContext nassaContext = new NassaContext();
         nassaContext.init();
 

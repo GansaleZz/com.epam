@@ -38,7 +38,7 @@ public class SpaceshipFactory implements EntityFactory<Spaceship> {
                     .withSetCrew(crew)
                     .withFlightDist(flightDist)
                     .build();
-        }catch(UnknownEntityException e){
+        }catch(InvalidInArgsException e){
             throw new InvalidInArgsException(args);
         }
         return spaceship;

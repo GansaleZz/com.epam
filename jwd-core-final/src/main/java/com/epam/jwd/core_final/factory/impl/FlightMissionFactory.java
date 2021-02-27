@@ -5,6 +5,7 @@ import com.epam.jwd.core_final.domain.CrewMember;
 import com.epam.jwd.core_final.domain.FlightMission;
 import com.epam.jwd.core_final.domain.Spaceship;
 import com.epam.jwd.core_final.exception.InvalidInArgsException;
+import com.epam.jwd.core_final.exception.InvalidStateException;
 import com.epam.jwd.core_final.exception.UnknownEntityException;
 import com.epam.jwd.core_final.factory.EntityFactory;
 
@@ -27,8 +28,8 @@ public class FlightMissionFactory implements EntityFactory<FlightMission> {
             else{
                 for(Object i:args){
                     if (i instanceof String)  name = (String) i;
-                        else if(i instanceof LocalDate && start != null) start = (LocalDate) i;
-                             else if(i instanceof LocalDate && end != null) end = (LocalDate) i;
+                        else if(i instanceof LocalDate && start == null) start = (LocalDate) i;
+                             else if(i instanceof LocalDate && end == null) end = (LocalDate) i;
                                 else if(i instanceof Spaceship) assignedSpaceShip = (Spaceship) i;
                                     else if(i instanceof List) assignedCrew = (List<CrewMember>) i;
                                         else if(i instanceof Long) distance = (long) i;
@@ -37,8 +38,7 @@ public class FlightMissionFactory implements EntityFactory<FlightMission> {
             }
 
 
-        if(flightMission == null
-                || name == null
+        if(name == null
                 || start == null
                 || end == null
                 || distance == 0
@@ -58,8 +58,7 @@ public class FlightMissionFactory implements EntityFactory<FlightMission> {
                     .withDistance(distance)
                     .withAssignedSpaceShip(assignedSpaceShip)
                     .build();
-
-        }catch(UnknownEntityException e){
+        }catch(InvalidInArgsException e){
             throw new InvalidInArgsException(args);
         }
         return flightMission;

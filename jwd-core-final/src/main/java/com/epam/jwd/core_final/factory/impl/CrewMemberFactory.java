@@ -5,6 +5,7 @@ import com.epam.jwd.core_final.domain.CrewMember;
 import com.epam.jwd.core_final.domain.Rank;
 import com.epam.jwd.core_final.domain.Role;
 import com.epam.jwd.core_final.exception.InvalidInArgsException;
+import com.epam.jwd.core_final.exception.InvalidStateException;
 import com.epam.jwd.core_final.exception.UnknownEntityException;
 import com.epam.jwd.core_final.factory.EntityFactory;
 
@@ -37,7 +38,7 @@ public class CrewMemberFactory implements EntityFactory<CrewMember> {
                     .withRank(rank)
                     .withRole(role)
                     .build();
-        }catch(UnknownEntityException e){
+        }catch(InvalidInArgsException e){
             throw new InvalidInArgsException(args);
         }
         return crewMember;

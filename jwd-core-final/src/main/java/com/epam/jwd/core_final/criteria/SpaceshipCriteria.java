@@ -13,7 +13,7 @@ import java.util.Map;
 //OK
 public class SpaceshipCriteria extends Criteria<Spaceship> {
     private Spaceship spaceship;
-    private static int id = 0;
+    private static int id = 1;
 
 
     public SpaceshipCriteria(String name){

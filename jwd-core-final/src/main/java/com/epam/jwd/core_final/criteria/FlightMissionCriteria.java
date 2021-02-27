@@ -15,7 +15,7 @@ import java.util.List;
 //OK
 public class FlightMissionCriteria extends Criteria<FlightMission> {
     private FlightMission flightMission;
-    private static int id = 0;
+    private static int id = 1;
 
     public FlightMissionCriteria(String name){
         flightMission = new FlightMission(name,id++);
