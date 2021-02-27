@@ -1,5 +1,6 @@
 package com.epam.jwd.core_final.exception;
 
+
 public class UnknownEntityException extends RuntimeException {
 
     private final String entityName;
@@ -11,16 +12,17 @@ public class UnknownEntityException extends RuntimeException {
         this.args = null;
     }
 
-    public UnknownEntityException(String entityName, Object[] args) {
+    public UnknownEntityException(String entityName, Object... args) {
         super();
         this.entityName = entityName;
         this.args = args;
     }
 
+
     @Override
     public String getMessage() {
         // todo
         // you should use entityName, args (if necessary)
-        return null;
+        return "Such id " + args +"does not exist for this entity:" + entityName;
     }
 }

@@ -1,6 +1,8 @@
 package com.epam.jwd.core_final.domain;
 
 import com.epam.jwd.core_final.exception.UnknownEntityException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public enum Role implements BaseEntity {
     MISSION_SPECIALIST(1L),
@@ -24,14 +26,40 @@ public enum Role implements BaseEntity {
      */
     @Override
     public String getName() {
-        return null;
+        return this.name();
     }
 
     /**
      * todo via java.lang.enum methods!
      * @throws UnknownEntityException if such id does not exist
      */
-    public static Role resolveRoleById(int id) {
-        return null;
+
+    public static Role resolveRoleById(int id) throws UnknownEntityException{
+        Role role = null;
+        try{
+            switch (id){
+                case 1: {
+                    role = MISSION_SPECIALIST;
+                    break;
+                }
+                case 2: {
+                    role = FLIGHT_ENGINEER;
+                    break;
+                }
+                case 3: {
+                        role = PILOT;
+                        break;
+                }
+                case 4:{
+                        role = COMMANDER;
+                        break;
+                }
+            }
+        }catch (UnknownEntityException e){
+            Logger logger = LoggerFactory.getLogger("UnknownEntityException");
+            logger.error("Such id does not exist : " + id);
+            throw new UnknownEntityException("Role",id);
+        }
+        return role;
     }
 }
