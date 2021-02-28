@@ -2,7 +2,6 @@ package com.epam.jwd.core_final.context.impl;
 
 import com.epam.jwd.core_final.context.ApplicationContext;
 import com.epam.jwd.core_final.domain.*;
-import com.epam.jwd.core_final.exception.InvalidInArgsException;
 import com.epam.jwd.core_final.exception.InvalidStateException;
 import com.epam.jwd.core_final.factory.impl.CrewMemberFactory;
 import com.epam.jwd.core_final.factory.impl.PlanetFactory;
@@ -11,10 +10,7 @@ import com.epam.jwd.core_final.factory.impl.SpaceshipFactory;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 // todo
 public class NassaContext implements ApplicationContext {
@@ -98,6 +94,27 @@ public class NassaContext implements ApplicationContext {
         }
 
         PlanetFactory planetFactory = new PlanetFactory();
-        
+        try(FileInputStream file = new FileInputStream("/Users/andrew_wannasesh/Folders/EpamJAva/jwd-core-final/src/main/resources/input/spacemap")){
+            i = 1;
+            k = 1;
+            do{
+                String temp = "";
+                if ((buf = file.read()) == '\n') {
+                    buf = file.read();
+                    ++k;
+                    i = 1;
+                }
+                do {
+                    temp += (char) buf;
+                    buf = file.read();
+                } while ((char) buf != ',' && buf != '\n');
+                if (temp.equalsIgnoreCase("null")) ++i;
+                else planetMap.add(planetFactory.create(i, k, temp));
+            }while(file.available() != 0);
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+        }
+
+
     }
 }
