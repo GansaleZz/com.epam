@@ -53,6 +53,14 @@ public class FlightMission extends AbstractBaseEntity {
         this.assignedCrew = assignedCrew;
     }
 
+    public void setFrom(Planet planet){
+        from = planet;
+    }
+
+    public void setTo(Planet planet){
+        to = planet;
+    }
+
     public void setMissionResult(MissionResult missionResult) {
         this.missionResult = missionResult;
     }

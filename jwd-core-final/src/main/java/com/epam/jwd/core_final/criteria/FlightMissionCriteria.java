@@ -46,6 +46,16 @@ public class FlightMissionCriteria extends Criteria<FlightMission> {
             return this;
         }
 
+        public FlightMissionCriteria.Builder withFrom(Planet from){
+            actualClass.setFrom(from);
+            return this;
+        }
+
+        public FlightMissionCriteria.Builder withTo(Planet to){
+            actualClass.setTo(to);
+            return this;
+        }
+
         @Override
         protected FlightMission getActual() {
             return actualClass;

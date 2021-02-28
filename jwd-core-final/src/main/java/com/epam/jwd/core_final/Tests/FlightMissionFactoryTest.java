@@ -3,6 +3,7 @@ package com.epam.jwd.core_final.Tests;
 import com.epam.jwd.core_final.domain.*;
 import com.epam.jwd.core_final.factory.impl.CrewMemberFactory;
 import com.epam.jwd.core_final.factory.impl.FlightMissionFactory;
+import com.epam.jwd.core_final.factory.impl.PlanetFactory;
 import com.epam.jwd.core_final.factory.impl.SpaceshipFactory;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +23,7 @@ class FlightMissionFactoryTest {
         LocalDate start = LocalDate.ofYearDay(2042,135);
         LocalDate end = LocalDate.ofYearDay(2022,134);
         String name = "Test Mission";
-        long distance = 141;
+        long distance ;
         SpaceshipFactory spaceshipFactory = new SpaceshipFactory();
         Map<Role,Short> map = new HashMap<>();
         map.put(Role.PILOT,(short) 195);
@@ -31,7 +32,11 @@ class FlightMissionFactoryTest {
         CrewMemberFactory crewMemberFactory = new CrewMemberFactory();
         CrewMember crewMember = crewMemberFactory.create(Rank.TRAINEE,Role.PILOT,"Andrey");
         list.add(crewMember);
-        FlightMission flightMission = flightMissionFactory.create(spaceship,list,start,end,name,distance);
+
+        PlanetFactory planetFactory = new PlanetFactory();
+        Planet from = planetFactory.create(10,15,"Yupiter");
+        Planet to = planetFactory.create(40,20,"Mars");
+        FlightMission flightMission = flightMissionFactory.create(spaceship,list,start,end,name,from,to);
         assertEquals(flightMission.getName(),"Test Mission");
         if(!start.isAfter(end)) {
             assertEquals(flightMission.getEnd(), end);
@@ -40,6 +45,7 @@ class FlightMissionFactoryTest {
             assertEquals(flightMission.getEnd(), start);
             assertEquals(flightMission.getStart(), end);
         }
+        distance = (long) Math.sqrt((10-40)*(10-40) + (15-20)*(15-20));
         assertEquals(flightMission.getDistance(),distance);
     }
 }
