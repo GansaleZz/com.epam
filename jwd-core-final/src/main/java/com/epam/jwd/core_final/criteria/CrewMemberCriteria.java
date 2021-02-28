@@ -1,5 +1,6 @@
 package com.epam.jwd.core_final.criteria;
 
+import com.epam.jwd.core_final.domain.BaseEntity;
 import com.epam.jwd.core_final.domain.CrewMember;
 import com.epam.jwd.core_final.domain.Rank;
 import com.epam.jwd.core_final.domain.Role;
@@ -10,25 +11,28 @@ import com.epam.jwd.core_final.domain.Role;
 
 //OK
 public class CrewMemberCriteria extends Criteria<CrewMember> {
-    private CrewMember crewMember;
     private static int id = 1;
 
-    public CrewMemberCriteria(String name){
-        crewMember = new CrewMember(name,id++);
-    }
+    public static class Builder extends BaseBuilder<CrewMember>{
 
-    public CrewMemberCriteria withRank(Rank rank){
-        crewMember.setRank(rank);
-        return this;
-    }
+        public Builder withName(String name){
+            actualClass = new CrewMember(name,id);
+            return this;
+        }
 
-    public CrewMemberCriteria withRole(Role role){
-        crewMember.setRole(role);
-        return this;
-    }
+        public Builder withRank(Rank rank){
+            actualClass.setRank(rank);
+            return this;
+        }
 
+        public Builder withRole(Role role){
+            actualClass.setRole(role);
+            return this;
+        }
 
-    public CrewMember build(){
-        return crewMember;
+        @Override
+        protected CrewMember getActual() {
+            return actualClass;
+        }
     }
 }

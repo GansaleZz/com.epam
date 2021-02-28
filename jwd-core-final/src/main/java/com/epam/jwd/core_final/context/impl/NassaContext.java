@@ -6,6 +6,8 @@ import com.epam.jwd.core_final.exception.InvalidStateException;
 import com.epam.jwd.core_final.factory.impl.CrewMemberFactory;
 import com.epam.jwd.core_final.factory.impl.PlanetFactory;
 import com.epam.jwd.core_final.factory.impl.SpaceshipFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -22,7 +24,7 @@ public class NassaContext implements ApplicationContext {
 
     @Override
     public <T extends BaseEntity> Collection<T> retrieveBaseEntityList(Class<T> tClass) {
-        return null;
+        return tClass == CrewMember.class ? (Collection<T>) crewMembers : tClass == Spaceship.class ? (Collection<T>) spaceships : tClass == Planet.class ? (Collection<T>) planetMap : null;
     }
 
     /**
@@ -30,7 +32,8 @@ public class NassaContext implements ApplicationContext {
      * @throws InvalidStateException
      */
     @Override
-    public void init() throws InvalidStateException, IOException {
+    public void init() throws IOException {
+        Logger logger = LoggerFactory.getLogger("InitNassaContext");
         CrewMemberFactory crewMemberFactory = new CrewMemberFactory();
         int i,k,buf;
         String name;
@@ -52,8 +55,10 @@ public class NassaContext implements ApplicationContext {
                 crewMembers.add(crewMemberFactory.create(Rank.resolveRankById(k), Role.resolveRoleById(i), name));
             }while(file.available() != 0);
         } catch(IOException e ){
+            logger.error(e.getMessage());
             e.printStackTrace();
         }
+        logger.info("Crew members completely were read from the file");
 
         SpaceshipFactory spaceshipFactory = new SpaceshipFactory();
         try(FileInputStream file = new FileInputStream("/Users/andrew_wannasesh/Folders/EpamJAva/jwd-core-final/src/main/resources/input/spaceships")){
@@ -90,8 +95,10 @@ public class NassaContext implements ApplicationContext {
                 spaceships.add(spaceshipFactory.create(map,name,n));
             }while(file.available() != 0);
         }catch (FileNotFoundException e){
+            logger.error(e.getMessage());
             e.printStackTrace();
         }
+        logger.info("Spaceships completely were read from the file");
 
         PlanetFactory planetFactory = new PlanetFactory();
         try(FileInputStream file = new FileInputStream("/Users/andrew_wannasesh/Folders/EpamJAva/jwd-core-final/src/main/resources/input/spacemap")){
@@ -112,8 +119,10 @@ public class NassaContext implements ApplicationContext {
                 else planetMap.add(planetFactory.create(i, k, temp));
             }while(file.available() != 0);
         }catch(FileNotFoundException e){
+            logger.error(e.getMessage());
             e.printStackTrace();
         }
+        logger.info("Planets completely were read from the file");
 
 
     }

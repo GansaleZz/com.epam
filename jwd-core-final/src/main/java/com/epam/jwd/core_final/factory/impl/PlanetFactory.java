@@ -4,6 +4,8 @@ import com.epam.jwd.core_final.criteria.PlanetCriteria;
 import com.epam.jwd.core_final.domain.Planet;
 import com.epam.jwd.core_final.exception.InvalidInArgsException;
 import com.epam.jwd.core_final.factory.EntityFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class PlanetFactory implements EntityFactory<Planet>{
@@ -13,8 +15,12 @@ public class PlanetFactory implements EntityFactory<Planet>{
         int x = 0;
         int y = 0;
         String name = null;
+        Logger logger = LoggerFactory.getLogger(this.getClass());
 
-        if(args.length != 3) throw new InvalidInArgsException(args);
+        if(args.length != 3){
+            logger.error("Invalid input args : " +args);
+            throw new InvalidInArgsException(args);
+        }
         else{
             for(Object i : args){
                     if(i instanceof Integer && x == 0) x = (int) i;
@@ -22,13 +28,19 @@ public class PlanetFactory implements EntityFactory<Planet>{
                             else if(i instanceof  String) name = (String) i;
             }
         }
-        if(name == null || x == 0 || y == 0) throw new InvalidInArgsException(args);
+        if(name == null || x == 0 || y == 0) {
+            logger.error("Invalid input args : " +args);
+            throw new InvalidInArgsException(args);
+        }
         else try{
-            planet = new PlanetCriteria(name)
+            planet = new PlanetCriteria.Builder()
+                    .withName(name)
                     .withX(x)
                     .withY(y)
                     .build();
+            logger.info("Planet was completely created!");
         }catch (InvalidInArgsException e){
+            logger.error("Invalid input args : " +args);
             throw new InvalidInArgsException(args);
         }
         return planet;

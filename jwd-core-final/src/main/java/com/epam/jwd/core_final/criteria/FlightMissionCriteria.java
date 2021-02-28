@@ -1,9 +1,6 @@
 package com.epam.jwd.core_final.criteria;
 
-import com.epam.jwd.core_final.domain.CrewMember;
-import com.epam.jwd.core_final.domain.FlightMission;
-import com.epam.jwd.core_final.domain.MissionResult;
-import com.epam.jwd.core_final.domain.Spaceship;
+import com.epam.jwd.core_final.domain.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -14,41 +11,44 @@ import java.util.List;
 
 //OK
 public class FlightMissionCriteria extends Criteria<FlightMission> {
-    private FlightMission flightMission;
     private static int id = 1;
 
-    public FlightMissionCriteria(String name){
-        flightMission = new FlightMission(name,id++);
-    }
+    public static class Builder extends BaseBuilder<FlightMission>{
+
+        public FlightMissionCriteria.Builder withName(String name){
+            actualClass = new FlightMission(name,id);
+            return this;
+        }
+
+        public FlightMissionCriteria.Builder withStart(LocalDate start){
+            actualClass.setStart(start);
+            return this;
+        }
+
+        public FlightMissionCriteria.Builder withEnd(LocalDate end){
+            actualClass.setEnd(end);
+            return this;
+        }
+
+        public FlightMissionCriteria.Builder withDistance(long distance){
+            actualClass.setDistance(distance);
+            return this;
+        }
+
+        public FlightMissionCriteria.Builder withAssignedSpaceShip(Spaceship assignedSpaceShip){
+            actualClass.setAssignedSpaceShip(assignedSpaceShip);
+            return this;
+        }
 
 
-    public FlightMissionCriteria withStart(LocalDate start){
-        flightMission.setStart(start);
-        return this;
-    }
+        public FlightMissionCriteria.Builder withAssignedCrew(List<CrewMember> assignedCrew){
+            actualClass.setAssignedCrew(assignedCrew);
+            return this;
+        }
 
-    public FlightMissionCriteria withEnd(LocalDate end){
-        flightMission.setEnd(end);
-        return this;
-    }
-
-    public FlightMissionCriteria withDistance(long distance){
-        flightMission.setDistance(distance);
-        return this;
-    }
-
-    public FlightMissionCriteria withAssignedSpaceShip(Spaceship assignedSpaceShip){
-        flightMission.setAssignedSpaceShip(assignedSpaceShip);
-        return this;
-    }
-
-    public FlightMissionCriteria withAssignedCrew(List<CrewMember> assignedCrew){
-        flightMission.setAssignedCrew(assignedCrew);
-        return this;
-    }
-
-
-    public FlightMission build(){
-        return flightMission;
+        @Override
+        protected FlightMission getActual() {
+            return actualClass;
+        }
     }
 }

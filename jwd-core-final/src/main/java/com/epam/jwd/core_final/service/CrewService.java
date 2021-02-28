@@ -2,7 +2,9 @@ package com.epam.jwd.core_final.service;
 
 import com.epam.jwd.core_final.criteria.Criteria;
 import com.epam.jwd.core_final.domain.CrewMember;
+import com.epam.jwd.core_final.exception.InvalidStateException;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,7 +14,7 @@ import java.util.Optional;
  */
 public interface CrewService {
 
-    List<CrewMember> findAllCrewMembers();
+    List<CrewMember> findAllCrewMembers() throws InvalidStateException, IOException;
 
     List<CrewMember> findAllCrewMembersByCriteria(Criteria<? extends CrewMember> criteria);
 

@@ -6,6 +6,8 @@ import com.epam.jwd.core_final.domain.FlightMission;
 import com.epam.jwd.core_final.domain.Spaceship;
 import com.epam.jwd.core_final.exception.InvalidInArgsException;
 import com.epam.jwd.core_final.factory.EntityFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -21,8 +23,11 @@ public class FlightMissionFactory implements EntityFactory<FlightMission> {
         long distance = 0;
         Spaceship assignedSpaceShip = null;
         List<CrewMember> assignedCrew = null ;
-
-        if (args.length != 6 ) throw new InvalidInArgsException(args);
+        Logger logger = LoggerFactory.getLogger(this.getClass());
+        if (args.length != 6 ) {
+            logger.error("Invalid input args : " +args);
+            throw new InvalidInArgsException(args);
+        }
             else{
                 for(Object i:args){
                     if (i instanceof String)  name = (String) i;
@@ -42,6 +47,7 @@ public class FlightMissionFactory implements EntityFactory<FlightMission> {
                 || distance == 0
                 || assignedCrew == null
                 || assignedSpaceShip == null){
+            logger.error("Invalid input args : " +args);
             throw new InvalidInArgsException(args);
         }else try{
             if (start.isAfter(end)) {
@@ -49,14 +55,17 @@ public class FlightMissionFactory implements EntityFactory<FlightMission> {
                 start = end;
                 end = temp;
             }
-            flightMission = new FlightMissionCriteria(name)
+            flightMission = new FlightMissionCriteria.Builder()
+                    .withName(name)
                     .withAssignedCrew(assignedCrew)
                     .withEnd(end)
                     .withStart(start)
                     .withDistance(distance)
                     .withAssignedSpaceShip(assignedSpaceShip)
                     .build();
+            logger.info("FlighMission was completely created!");
         }catch(InvalidInArgsException e){
+            logger.error("Invalid input args : " +args);
             throw new InvalidInArgsException(args);
         }
         return flightMission;
