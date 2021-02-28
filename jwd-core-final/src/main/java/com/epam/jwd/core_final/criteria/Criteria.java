@@ -7,6 +7,8 @@ import com.epam.jwd.core_final.domain.BaseEntity;
  * Should be a builder for {@link BaseEntity} fields
  */
 public abstract class Criteria<T extends BaseEntity> {
+    private String name;
+
     protected static abstract class BaseBuilder<T extends  BaseEntity> {
         protected T actualClass;
 

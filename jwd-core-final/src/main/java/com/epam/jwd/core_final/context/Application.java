@@ -11,6 +11,8 @@ public interface Application {
     static ApplicationMenu start() throws InvalidStateException, IOException {
         final Supplier<ApplicationContext> applicationContextSupplier =() -> nassaContext; // todo
         nassaContext.init();
+
         return applicationContextSupplier::get;
     }
+
 }

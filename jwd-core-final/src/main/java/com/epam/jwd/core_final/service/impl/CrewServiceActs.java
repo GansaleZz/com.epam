@@ -3,6 +3,7 @@ package com.epam.jwd.core_final.service.impl;
 import com.epam.jwd.core_final.context.Application;
 import com.epam.jwd.core_final.context.ApplicationMenu;
 import com.epam.jwd.core_final.context.impl.NassaContext;
+import com.epam.jwd.core_final.criteria.CrewMemberCriteria;
 import com.epam.jwd.core_final.criteria.Criteria;
 import com.epam.jwd.core_final.domain.CrewMember;
 import com.epam.jwd.core_final.domain.Rank;
@@ -23,8 +24,10 @@ public class CrewServiceActs implements CrewService {
 
     @Override
     public List<CrewMember> findAllCrewMembersByCriteria(Criteria<? extends CrewMember> criteria) {
-//        List<CrewMember> crewMembers = new ArrayList<>(Application.nassaContext.retrieveBaseEntityList(CrewMember.class));
-//        List<CrewMember> list = new ArrayList<>();
+        List<CrewMember> crewMembers = new ArrayList<>(Application.nassaContext.retrieveBaseEntityList(CrewMember.class));
+        List<CrewMember> list = new ArrayList<>();
+        CrewMemberCriteria crewMemberCriteria = (CrewMemberCriteria) criteria;
+        System.out.println(crewMemberCriteria.getRank());
 //        crewMembers.stream().filter(crewMembers -> crewMembers.getId().equals(criteria));
 //        return list;
 //        Rank rank = (Rank) criteria;

@@ -1,6 +1,9 @@
 package com.epam.jwd.core_final;
 
 import com.epam.jwd.core_final.context.Application;
+import com.epam.jwd.core_final.context.ApplicationContext;
+import com.epam.jwd.core_final.context.ApplicationMenu;
+import com.epam.jwd.core_final.context.impl.ApplicationMenuImpl;
 import com.epam.jwd.core_final.context.impl.NassaContext;
 import com.epam.jwd.core_final.criteria.CrewMemberCriteria;
 import com.epam.jwd.core_final.criteria.Criteria;
@@ -22,11 +25,15 @@ import java.util.Map;
 public class Main {
 
     public static void main(String[] args) throws InvalidStateException, IOException {
-          Application.start();
-        CrewServiceActs crewServiceActs = new CrewServiceActs();
-        System.out.println(crewServiceActs.findAllCrewMembers());
-        Criteria<CrewMember> criteria = new CrewMemberCriteria();
-        CrewMember crewMember = new CrewMember("fff",1);
+//
+        ApplicationMenu applicationMenu = Application.start();
+        applicationMenu.printAvailableOptions();
+//        System.out.println(applicationMenu.printAvailableOptions());
+//          Application.start();
+//        CrewServiceActs crewServiceActs = new CrewServiceActs();
+//        System.out.println(crewServiceActs.findAllCrewMembers());
+//        Criteria<CrewMember> criteria = new CrewMemberCriteria();
+//        CrewMember crewMember = new CrewMember("fff",1);
 //        CrewMemberFactory crewMemberFactory = new CrewMemberFactory();
 //        CrewMember crewMember = crewMemberFactory.create(Rank.CAPTAIN,Role.COMMANDER,"Svyat");
 //        CrewMember crewMember1 = crewMemberFactory.create(Rank.FIRST_OFFICER,Role.COMMANDER,"Svyat1");
