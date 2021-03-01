@@ -16,41 +16,38 @@ public class CrewMemberFactory implements EntityFactory<CrewMember> {
         Rank rank = null;
         Role role = null;
         String name = null;
-        CrewMember crewMember;
+        CrewMember crewMember = null;
+        Boolean bool =true;
         Logger logger = LoggerFactory.getLogger(this.getClass());
-        if (args.length != 3 ) {
-            logger.error("Invalid input args : " +args);
-            throw new InvalidInArgsException(args);
-        }
-            else {
+        try {
+            if (args.length < 3 || args.length > 4) {
+                logger.error("Invalid input args for creating crew !");
+                throw new InvalidInArgsException(args);
+            } else {
                 for (Object i : args) {
                     if (i instanceof Rank) rank = (Rank) i;
                     else if (i instanceof Role) role = (Role) i;
                     else if (i instanceof String) name = (String) i;
+                    else if (i instanceof Boolean) bool = (Boolean) i;
                 }
             }
-
-        if(role == null
-                || rank == null
-                || name == null) {
-            logger.error("Invalid input args : " +args);
-            throw new InvalidInArgsException(args);
-        }else
-            try {
-//            crewMember = new CrewMemberCriteria(name)
-//                    .withRank(rank)
-//                    .withRole(role)
-//                    .build();
+            if (role == null
+                    || rank == null
+                    || name == null) {
+                logger.error("Invalid input args for creating crew !");
+                throw new InvalidInArgsException(args);
+            } else {
                 crewMember = new CrewMemberCriteria.Builder()
-                       .withName(name)
-                       .withRank(rank)
-                       .withRole(role)
-                       .build();
-
-            logger.info("CrewMember was completely created!");
-        }catch(InvalidInArgsException e){
-            logger.error("Invalid input args : " +args);
-            throw new InvalidInArgsException(args);
+                        .withName(name)
+                        .withRank(rank)
+                        .withRole(role)
+                        .isReadyForNextMissions(bool)
+                        .build();
+                logger.info("CrewMember was successfully created!");
+            }
+        }catch(InvalidInArgsException e) {
+            logger.error("Invalid input args for creating crew !");
+            System.out.println(e.getMessage());
         }
         return crewMember;
     }

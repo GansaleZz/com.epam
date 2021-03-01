@@ -15,7 +15,8 @@ class CrewMemberFactoryTest {
     @org.junit.jupiter.api.Test
     void create() {
         CrewMemberFactory crewMemberFactory = new CrewMemberFactory();
-        CrewMember crewMember = crewMemberFactory.create(Rank.CAPTAIN, Role.COMMANDER,"Test Crew");
+        boolean bool = false;
+        CrewMember crewMember = crewMemberFactory.create(Rank.CAPTAIN, Role.COMMANDER,"Test Crew", false);
         assertEquals(crewMember.getRank(),Rank.CAPTAIN);
         assertEquals(crewMember.getRole(),Role.COMMANDER);
         assertEquals(crewMember.getName(),"Test Crew");

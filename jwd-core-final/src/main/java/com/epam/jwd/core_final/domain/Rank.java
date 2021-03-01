@@ -61,7 +61,8 @@ public enum Rank implements BaseEntity {
         }catch (UnknownEntityException e){
             Logger logger = LoggerFactory.getLogger("UnknownEntityException");
             logger.error("Such id " + id +"does not exist for this entity:" + "Rank");
-            throw new UnknownEntityException("Rank",id);
+            new UnknownEntityException("Rank",id);
+            System.out.println(e.getMessage());
         }
         return rank;
     }

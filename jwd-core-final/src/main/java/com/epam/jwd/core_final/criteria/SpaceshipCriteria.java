@@ -11,11 +11,21 @@ import java.util.Map;
 //OK
 public class SpaceshipCriteria extends Criteria<Spaceship> {
     private static int id = 1;
+    private String name;
+    private Map<Role, Short> crew;
+    private boolean isReadyForNextMissions;
+    private long flightDistance;
+
 
     public static class Builder extends BaseBuilder<Spaceship>{
 
         public SpaceshipCriteria.Builder withName(String name){
             actualClass = new Spaceship(name,id);
+            return this;
+        }
+
+        public SpaceshipCriteria.Builder isReadyForNextMissions(boolean isReadyForNextMissions){
+            actualClass.setReadyForNextMissions(isReadyForNextMissions);
             return this;
         }
 
@@ -33,6 +43,38 @@ public class SpaceshipCriteria extends Criteria<Spaceship> {
         protected Spaceship getActual() {
             return actualClass;
         }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Map<Role, Short> getCrew() {
+        return crew;
+    }
+
+    public void setCrew(Map<Role, Short> crew) {
+        this.crew = crew;
+    }
+
+    public boolean isReadyForNextMissions() {
+        return isReadyForNextMissions;
+    }
+
+    public void setReadyForNextMissions(boolean readyForNextMissions) {
+        isReadyForNextMissions = readyForNextMissions;
+    }
+
+    public long getFlightDistance() {
+        return flightDistance;
+    }
+
+    public void setFlightDistance(long flightDistance) {
+        this.flightDistance = flightDistance;
     }
 
 

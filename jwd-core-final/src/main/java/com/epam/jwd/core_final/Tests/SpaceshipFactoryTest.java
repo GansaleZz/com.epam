@@ -19,7 +19,7 @@ class SpaceshipFactoryTest {
         long flightDistance = 12055;
         Map<Role,Short> map = new HashMap<>();
         map.put(Role.FLIGHT_ENGINEER, (short) 148);
-        Spaceship spaceship = spaceshipFactory.create(name,map,flightDistance);
+        Spaceship spaceship = spaceshipFactory.create(name,map,flightDistance,false);
         assertEquals(spaceship.getCrew(),map);
         assertEquals(spaceship.getName(),"Test spaceship");
         assertEquals(spaceship.getFlightDist(),12055);

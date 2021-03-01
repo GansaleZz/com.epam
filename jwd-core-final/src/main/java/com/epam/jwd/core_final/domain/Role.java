@@ -58,7 +58,8 @@ public enum Role implements BaseEntity {
         }catch (UnknownEntityException e){
             Logger logger = LoggerFactory.getLogger("UnknownEntityException");
             logger.error("Such id " + id +"does not exist for this entity:" + "Role");
-            throw new UnknownEntityException("Role",id);
+            new UnknownEntityException("Role",id);
+            System.out.println(e.getMessage());
         }
         return role;
     }

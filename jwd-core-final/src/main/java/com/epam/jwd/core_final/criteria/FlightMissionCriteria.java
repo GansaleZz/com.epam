@@ -12,6 +12,15 @@ import java.util.List;
 //OK
 public class FlightMissionCriteria extends Criteria<FlightMission> {
     private static int id = 1;
+    private LocalDate start;
+    private LocalDate end;
+    private long distance;
+    private Spaceship assignedSpaceShip;
+    private List<CrewMember> assignedCrew;
+    private MissionResult missionResult;
+    private Planet from ;
+    private Planet to;
+
 
     public static class Builder extends BaseBuilder<FlightMission>{
 
@@ -60,5 +69,69 @@ public class FlightMissionCriteria extends Criteria<FlightMission> {
         protected FlightMission getActual() {
             return actualClass;
         }
+    }
+
+    public LocalDate getStart() {
+        return start;
+    }
+
+    public void setStart(LocalDate start) {
+        this.start = start;
+    }
+
+    public LocalDate getEnd() {
+        return end;
+    }
+
+    public void setEnd(LocalDate end) {
+        this.end = end;
+    }
+
+    public long getDistance() {
+        return distance;
+    }
+
+    public void setDistance(long distance) {
+        this.distance = distance;
+    }
+
+    public Spaceship getAssignedSpaceShip() {
+        return assignedSpaceShip;
+    }
+
+    public void setAssignedSpaceShip(Spaceship assignedSpaceShip) {
+        this.assignedSpaceShip = assignedSpaceShip;
+    }
+
+    public List<CrewMember> getAssignedCrew() {
+        return assignedCrew;
+    }
+
+    public void setAssignedCrew(List<CrewMember> assignedCrew) {
+        this.assignedCrew = assignedCrew;
+    }
+
+    public MissionResult getMissionResult() {
+        return missionResult;
+    }
+
+    public void setMissionResult(MissionResult missionResult) {
+        this.missionResult = missionResult;
+    }
+
+    public Planet getFrom() {
+        return from;
+    }
+
+    public void setFrom(Planet from) {
+        this.from = from;
+    }
+
+    public Planet getTo() {
+        return to;
+    }
+
+    public void setTo(Planet to) {
+        this.to = to;
     }
 }

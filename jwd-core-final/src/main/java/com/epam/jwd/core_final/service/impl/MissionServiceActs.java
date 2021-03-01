@@ -24,7 +24,7 @@ public class MissionServiceActs implements MissionService {
     }
 
     @Override
-    public FlightMission updateSpaceshipDetails(FlightMission flightMission) {
+    public FlightMission updateFlightMissionDetails(FlightMission flightMission) {
         return null;
     }
 

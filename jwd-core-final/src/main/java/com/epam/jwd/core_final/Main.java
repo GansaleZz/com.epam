@@ -3,7 +3,6 @@ package com.epam.jwd.core_final;
 import com.epam.jwd.core_final.context.Application;
 import com.epam.jwd.core_final.context.ApplicationContext;
 import com.epam.jwd.core_final.context.ApplicationMenu;
-import com.epam.jwd.core_final.context.impl.ApplicationMenuImpl;
 import com.epam.jwd.core_final.context.impl.NassaContext;
 import com.epam.jwd.core_final.criteria.CrewMemberCriteria;
 import com.epam.jwd.core_final.criteria.Criteria;

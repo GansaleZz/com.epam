@@ -2,12 +2,14 @@ package com.epam.jwd.core_final.exception;
 
 public class InvalidStateException extends Exception {
     // todo
-    public InvalidStateException(){
+    String str;
+    public InvalidStateException(String str){
         super();
+        this.str = str;
     }
 
     @Override
     public String getMessage() {
-        return super.getMessage();
+        return "Entity " + str+" was not created ( ==null)";
     }
 }

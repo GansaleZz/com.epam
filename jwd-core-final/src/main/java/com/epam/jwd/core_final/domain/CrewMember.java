@@ -13,7 +13,7 @@ package com.epam.jwd.core_final.domain;
 public class CrewMember extends AbstractBaseEntity {
     private Role role;
     private Rank rank;
-    private boolean isReadyForNextMissions = true;
+    private boolean isReadyForNextMissions;
 
     public CrewMember(String name,int id){
         super(name,id);

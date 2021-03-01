@@ -21,10 +21,11 @@ public class NassaContext implements ApplicationContext {
     private Collection<CrewMember> crewMembers = new ArrayList<>();
     private Collection<Spaceship> spaceships = new ArrayList<>();
     private Collection<Planet> planetMap = new ArrayList<>();
+    private Collection<FlightMission> flightMissions = new ArrayList<>();
 
     @Override
     public <T extends BaseEntity> Collection<T> retrieveBaseEntityList(Class<T> tClass) {
-        return tClass == CrewMember.class ? (Collection<T>) crewMembers : tClass == Spaceship.class ? (Collection<T>) spaceships : tClass == Planet.class ? (Collection<T>) planetMap : null;
+        return tClass == CrewMember.class ? (Collection<T>) crewMembers : tClass == Spaceship.class ? (Collection<T>) spaceships : tClass == Planet.class ? (Collection<T>) planetMap : tClass == FlightMission.class ? (Collection<T>) flightMissions : null;
     }
 
     /**
@@ -52,7 +53,13 @@ public class NassaContext implements ApplicationContext {
                 buf = Character.getNumericValue((char) file.read());
                 k = buf;
                 file.skip(1);
-                crewMembers.add(crewMemberFactory.create(Rank.resolveRankById(k), Role.resolveRoleById(i), name));
+                try{
+                    CrewMember crewMember = crewMemberFactory.create(Rank.resolveRankById(k), Role.resolveRoleById(i), name);
+                    if (crewMember == null) throw new InvalidStateException("crew");
+                    else crewMembers.add(crewMember);
+                }catch (InvalidStateException e){
+                    System.out.println(e.getMessage());
+                }
             }while(file.available() != 0);
         } catch(IOException e ){
             logger.error(e.getMessage());
@@ -92,7 +99,13 @@ public class NassaContext implements ApplicationContext {
                     map.put(Role.resolveRoleById(i),(short) Integer.parseInt(temp));
                     if((char) buf != '}') buf = file.read();
                 }while((char) buf != '}');
-                spaceships.add(spaceshipFactory.create(map,name,n));
+                try{
+                    Spaceship spaceship = spaceshipFactory.create(map,name,n);
+                    if(spaceship == null) throw new InvalidStateException("spaceship");
+                    else spaceships.add(spaceshipFactory.create(map,name,n));
+                }catch (InvalidStateException e){
+                    System.out.println(e.getMessage());
+                }
             }while(file.available() != 0);
         }catch (FileNotFoundException e){
             logger.error(e.getMessage());
@@ -116,7 +129,15 @@ public class NassaContext implements ApplicationContext {
                     buf = file.read();
                 } while ((char) buf != ',' && buf != '\n');
                 if (temp.equalsIgnoreCase("null")) ++i;
-                else planetMap.add(planetFactory.create(i, k, temp));
+                else {
+                    try {
+                        Planet planet = planetFactory.create(i, k, temp);
+                        if (planet == null) throw new InvalidStateException("planet");
+                        else planetMap.add(planetFactory.create(i, k, temp));
+                    } catch (InvalidStateException e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
             }while(file.available() != 0);
         }catch(FileNotFoundException e){
             logger.error(e.getMessage());

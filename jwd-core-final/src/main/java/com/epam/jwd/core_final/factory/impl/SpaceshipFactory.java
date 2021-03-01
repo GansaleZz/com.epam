@@ -13,41 +13,43 @@ import java.util.Map;
 public class SpaceshipFactory implements EntityFactory<Spaceship> {
     @Override
     public Spaceship create(Object... args) throws InvalidInArgsException{
-        Spaceship spaceship;
+        Spaceship spaceship = null;
         long flightDist = 0;
         Map<Role,Short> crew = null;
         String name = null;
+        Boolean bool = true;
         Logger logger = LoggerFactory.getLogger(this.getClass());
-        if(args.length != 3) {
-            logger.error("Invalid input args : " +args);
-            throw new InvalidInArgsException(args);
-        }
-            else{
-                for(Object i : args){
-                    if(i instanceof Map) crew = (Map<Role, Short>) i;
-                        else if(i instanceof String) name = (String) i;
-                            else if(i instanceof Integer) flightDist = ((Integer) i).longValue();
-                                else if(i instanceof Long) flightDist = (Long) i;
+        try {
+            if (args.length < 3 || args.length > 4) {
+                logger.error("Invalid input args for creating spaceship!");
+                throw new InvalidInArgsException(args);
+            } else {
+                for (Object i : args) {
+                    if (i instanceof Map) crew = (Map<Role, Short>) i;
+                    else if (i instanceof String) name = (String) i;
+                    else if (i instanceof Integer) flightDist = ((Integer) i).longValue();
+                    else if (i instanceof Long) flightDist = (Long) i;
+                    else if (i instanceof Boolean) bool = (Boolean) i;
                 }
             }
 
-
-
-        if(crew == null
-        || flightDist == 0
-        || name == null) {
-            logger.error("Invalid input args : " +args);
-            throw new InvalidInArgsException(args);
-        }else try{
-            spaceship = new SpaceshipCriteria.Builder()
-                    .withName(name)
-                    .withSetCrew(crew)
-                    .withFlightDist(flightDist)
-                    .build();
-            logger.info("Spaceship was completely created!");
+            if (crew == null
+                    || flightDist == 0
+                    || name == null) {
+                logger.error("Invalid input args for creating spaceship!");
+                throw new InvalidInArgsException(args);
+            } else {
+                spaceship = new SpaceshipCriteria.Builder()
+                        .withName(name)
+                        .withSetCrew(crew)
+                        .withFlightDist(flightDist)
+                        .isReadyForNextMissions(bool)
+                        .build();
+                logger.info("Spaceship was successfully created!");
+            }
         }catch(InvalidInArgsException e){
-            logger.error("Invalid input args : " +args);
-            throw new InvalidInArgsException(args);
+            logger.error("Invalid input args for creating spaceship!");
+            System.out.println(e.getMessage());
         }
         return spaceship;
     }
