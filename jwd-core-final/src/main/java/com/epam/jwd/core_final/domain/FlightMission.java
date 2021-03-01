@@ -1,6 +1,7 @@
 package com.epam.jwd.core_final.domain;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -20,8 +21,8 @@ import java.util.List;
 //OK
 
 public class FlightMission extends AbstractBaseEntity {
-    private LocalDate start;
-    private LocalDate end;
+    private LocalDateTime start;
+    private LocalDateTime end;
     private long distance;
     private Spaceship assignedSpaceShip;
     private List<CrewMember> assignedCrew;
@@ -32,61 +33,68 @@ public class FlightMission extends AbstractBaseEntity {
         super(name,id);
     }
 
-
-    public void setStart(LocalDate start) {
-        this.start = start;
-    }
-
-    public void setEnd(LocalDate end) {
-        this.end = end;
-    }
-
-    public void setDistance(long distance) {
-        this.distance = distance;
-    }
-
-    public void setAssignedSpaceShip(Spaceship assignedSpaceShip) {
-        this.assignedSpaceShip = assignedSpaceShip;
-    }
-
-    public void setAssignedCrew(List<CrewMember> assignedCrew) {
-        this.assignedCrew = assignedCrew;
-    }
-
-    public void setFrom(Planet planet){
-        from = planet;
-    }
-
-    public void setTo(Planet planet){
-        to = planet;
-    }
-
-    public void setMissionResult(MissionResult missionResult) {
-        this.missionResult = missionResult;
-    }
-
-    public LocalDate getStart() {
+    public LocalDateTime getStart() {
         return start;
     }
 
-    public LocalDate getEnd() {
+    public void setStart(LocalDateTime start) {
+        this.start = start;
+    }
+
+    public LocalDateTime getEnd() {
         return end;
+    }
+
+    public void setEnd(LocalDateTime end) {
+        this.end = end;
     }
 
     public long getDistance() {
         return distance;
     }
 
+    public void setDistance(long distance) {
+        this.distance = distance;
+    }
+
     public Spaceship getAssignedSpaceShip() {
         return assignedSpaceShip;
+    }
+
+    public void setAssignedSpaceShip(Spaceship assignedSpaceShip) {
+        this.assignedSpaceShip = assignedSpaceShip;
     }
 
     public List<CrewMember> getAssignedCrew() {
         return assignedCrew;
     }
 
+    public void setAssignedCrew(List<CrewMember> assignedCrew) {
+        this.assignedCrew = assignedCrew;
+    }
+
     public MissionResult getMissionResult() {
         return missionResult;
+    }
+
+    public void setMissionResult(MissionResult missionResult) {
+        this.missionResult = missionResult;
+    }
+
+    public Planet getFrom() {
+        return from;
+    }
+
+    public void setFrom(Planet from) {
+        this.from = from;
+    }
+
+    public Planet getTo() {
+        return to;
+    }
+
+    public void setTo(Planet to) {
+        this.to = to;
     }
 
     @Override

@@ -18,6 +18,7 @@ public class CrewMemberCriteria extends Criteria<CrewMember> {
     private Role role = null;
     private Boolean isReadyForNextMissions = null;
 
+
     public static class Builder extends BaseBuilder<CrewMember>{
 
         public Builder withName(String name){

@@ -6,11 +6,13 @@ import com.epam.jwd.core_final.domain.Rank;
 import com.epam.jwd.core_final.domain.Role;
 import com.epam.jwd.core_final.exception.InvalidInArgsException;
 import com.epam.jwd.core_final.factory.EntityFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import org.apache.log4j.Logger;
 
 // do the same for other entities
 public class CrewMemberFactory implements EntityFactory<CrewMember> {
+    private static final Logger logger = Logger.getLogger(CrewMemberFactory.class);
+
     @Override
     public CrewMember create(Object... args) throws  InvalidInArgsException{
         Rank rank = null;
@@ -18,7 +20,6 @@ public class CrewMemberFactory implements EntityFactory<CrewMember> {
         String name = null;
         CrewMember crewMember = null;
         Boolean bool =true;
-        Logger logger = LoggerFactory.getLogger(this.getClass());
         try {
             if (args.length < 3 || args.length > 4) {
                 logger.error("Invalid input args for creating crew !");

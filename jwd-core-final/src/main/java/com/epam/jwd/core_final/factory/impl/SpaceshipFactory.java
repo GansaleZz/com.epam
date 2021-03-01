@@ -5,12 +5,11 @@ import com.epam.jwd.core_final.domain.Role;
 import com.epam.jwd.core_final.domain.Spaceship;
 import com.epam.jwd.core_final.exception.InvalidInArgsException;
 import com.epam.jwd.core_final.factory.EntityFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
 public class SpaceshipFactory implements EntityFactory<Spaceship> {
+    private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(SpaceshipFactory.class);
     @Override
     public Spaceship create(Object... args) throws InvalidInArgsException{
         Spaceship spaceship = null;
@@ -18,7 +17,6 @@ public class SpaceshipFactory implements EntityFactory<Spaceship> {
         Map<Role,Short> crew = null;
         String name = null;
         Boolean bool = true;
-        Logger logger = LoggerFactory.getLogger(this.getClass());
         try {
             if (args.length < 3 || args.length > 4) {
                 logger.error("Invalid input args for creating spaceship!");

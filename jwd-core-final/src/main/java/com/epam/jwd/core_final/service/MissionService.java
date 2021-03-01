@@ -17,4 +17,6 @@ public interface MissionService {
     FlightMission updateFlightMissionDetails(FlightMission flightMission);
 
     FlightMission createMission(FlightMission flightMission);
+
+    FlightMission startMission(FlightMission flightMission);
 }

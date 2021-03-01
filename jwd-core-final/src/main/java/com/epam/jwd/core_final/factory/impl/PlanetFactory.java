@@ -4,18 +4,17 @@ import com.epam.jwd.core_final.criteria.PlanetCriteria;
 import com.epam.jwd.core_final.domain.Planet;
 import com.epam.jwd.core_final.exception.InvalidInArgsException;
 import com.epam.jwd.core_final.factory.EntityFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 
 public class PlanetFactory implements EntityFactory<Planet>{
+    private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(PlanetFactory.class);
     @Override
     public Planet create(Object... args) throws InvalidInArgsException {
         Planet planet = null;
         int x = 0;
         int y = 0;
         String name = null;
-        Logger logger = LoggerFactory.getLogger(this.getClass());
         try {
             if (args.length != 3) {
                 logger.error("Invalid input args for creating planet!");
@@ -36,7 +35,7 @@ public class PlanetFactory implements EntityFactory<Planet>{
                         .withX(x)
                         .withY(y)
                         .build();
-                logger.info("Planet was successfully created!");
+                    logger.info("Planet was successfully created!");
             }
         }catch (InvalidInArgsException e){
             logger.error("Invalid input args for creating planet!");

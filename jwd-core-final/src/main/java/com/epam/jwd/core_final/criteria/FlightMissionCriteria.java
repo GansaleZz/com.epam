@@ -3,6 +3,7 @@ package com.epam.jwd.core_final.criteria;
 import com.epam.jwd.core_final.domain.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -12,30 +13,19 @@ import java.util.List;
 //OK
 public class FlightMissionCriteria extends Criteria<FlightMission> {
     private static int id = 1;
-    private LocalDate start;
-    private LocalDate end;
-    private long distance;
+    private long distance = 0;
     private Spaceship assignedSpaceShip;
     private List<CrewMember> assignedCrew;
-    private MissionResult missionResult;
-    private Planet from ;
+    private MissionResult missionResult = null;
+    private Planet from;
     private Planet to;
+    private String name;
 
 
     public static class Builder extends BaseBuilder<FlightMission>{
 
         public FlightMissionCriteria.Builder withName(String name){
             actualClass = new FlightMission(name,id);
-            return this;
-        }
-
-        public FlightMissionCriteria.Builder withStart(LocalDate start){
-            actualClass.setStart(start);
-            return this;
-        }
-
-        public FlightMissionCriteria.Builder withEnd(LocalDate end){
-            actualClass.setEnd(end);
             return this;
         }
 
@@ -71,24 +61,17 @@ public class FlightMissionCriteria extends Criteria<FlightMission> {
         }
     }
 
-    public LocalDate getStart() {
-        return start;
-    }
-
-    public void setStart(LocalDate start) {
-        this.start = start;
-    }
-
-    public LocalDate getEnd() {
-        return end;
-    }
-
-    public void setEnd(LocalDate end) {
-        this.end = end;
-    }
 
     public long getDistance() {
         return distance;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setDistance(long distance) {

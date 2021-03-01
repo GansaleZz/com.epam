@@ -6,8 +6,7 @@ import com.epam.jwd.core_final.exception.InvalidStateException;
 import com.epam.jwd.core_final.factory.impl.CrewMemberFactory;
 import com.epam.jwd.core_final.factory.impl.PlanetFactory;
 import com.epam.jwd.core_final.factory.impl.SpaceshipFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.epam.jwd.core_final.util.PropertyReaderUtil;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -16,12 +15,13 @@ import java.util.*;
 
 // todo
 public class NassaContext implements ApplicationContext {
-
+    private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(NassaContext.class);
     // no getters/setters for them
     private Collection<CrewMember> crewMembers = new ArrayList<>();
     private Collection<Spaceship> spaceships = new ArrayList<>();
     private Collection<Planet> planetMap = new ArrayList<>();
     private Collection<FlightMission> flightMissions = new ArrayList<>();
+    private ApplicationProperties applicationProperties;
 
     @Override
     public <T extends BaseEntity> Collection<T> retrieveBaseEntityList(Class<T> tClass) {
@@ -34,7 +34,8 @@ public class NassaContext implements ApplicationContext {
      */
     @Override
     public void init() throws IOException {
-        Logger logger = LoggerFactory.getLogger("InitNassaContext");
+        PropertyReaderUtil.loadProperties();
+        applicationProperties = new ApplicationProperties(PropertyReaderUtil.getProperties());
         CrewMemberFactory crewMemberFactory = new CrewMemberFactory();
         int i,k,buf;
         String name;
@@ -144,7 +145,5 @@ public class NassaContext implements ApplicationContext {
             e.printStackTrace();
         }
         logger.info("Planets completely were read from the file");
-
-
     }
 }

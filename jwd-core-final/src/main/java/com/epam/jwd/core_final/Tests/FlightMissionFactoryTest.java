@@ -20,8 +20,6 @@ class FlightMissionFactoryTest {
     @Test
     void create() {
         FlightMissionFactory flightMissionFactory = new FlightMissionFactory();
-        LocalDate start = LocalDate.ofYearDay(2042,135);
-        LocalDate end = LocalDate.ofYearDay(2022,134);
         String name = "Test Mission";
         long distance ;
         SpaceshipFactory spaceshipFactory = new SpaceshipFactory();
@@ -36,15 +34,8 @@ class FlightMissionFactoryTest {
         PlanetFactory planetFactory = new PlanetFactory();
         Planet from = planetFactory.create(10,15,"Yupiter");
         Planet to = planetFactory.create(40,20,"Mars");
-        FlightMission flightMission = flightMissionFactory.create(spaceship,list,start,end,name,from,to);
+        FlightMission flightMission = flightMissionFactory.create(spaceship,list,name,from,to);
         assertEquals(flightMission.getName(),"Test Mission");
-        if(!start.isAfter(end)) {
-            assertEquals(flightMission.getEnd(), end);
-            assertEquals(flightMission.getStart(), start);
-        }else{
-            assertEquals(flightMission.getEnd(), start);
-            assertEquals(flightMission.getStart(), end);
-        }
         distance = (long) Math.sqrt((10-40)*(10-40) + (15-20)*(15-20));
         assertEquals(flightMission.getDistance(),distance);
     }

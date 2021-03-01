@@ -1,5 +1,7 @@
 package com.epam.jwd.core_final.domain;
 
+import java.util.Properties;
+
 /**
  * This class should be IMMUTABLE!
  * <p>
@@ -23,20 +25,22 @@ public final class ApplicationProperties {
     private final String crewFileName;
     private final String missionsFileName;
     private final String spaceshipsFileName;
+    private final String spacemapFileName;
     private final int fileRefreshRate;
     private final String dateTimeFormat;
 
-    public ApplicationProperties(String inputRootDir, String outputRootDir, String crewFileName, String missionsFileName, String spaceshipsFileName, int fileRefreshRate, String dateTimeFormat) {
-        this.inputRootDir = inputRootDir;
-        this.outputRootDir = outputRootDir;
-        this.crewFileName = crewFileName;
-        this.missionsFileName = missionsFileName;
-        this.spaceshipsFileName = spaceshipsFileName;
-        this.fileRefreshRate = fileRefreshRate;
-        this.dateTimeFormat = dateTimeFormat;
+    public ApplicationProperties(Properties properties) {
+        this.inputRootDir = properties.getProperty("inputRootDir");
+        this.outputRootDir = properties.getProperty("outputRootDir");
+        this.crewFileName = properties.getProperty("crewFileName");
+        this.missionsFileName = properties.getProperty("missionsFileName");
+        this.spaceshipsFileName = properties.getProperty("spaceshipsFileName");
+        this.fileRefreshRate = Integer.valueOf(properties.getProperty("fileRefreshRate"));
+        this.spacemapFileName = properties.getProperty("spacemapFileName");
+        this.dateTimeFormat = properties.getProperty("dateTimeFormat");
     }
 
-    
+
     public int getFileRefreshRate() {
         return fileRefreshRate;
     }
@@ -63,6 +67,10 @@ public final class ApplicationProperties {
 
     public String getSpaceshipsFileName() {
         return spaceshipsFileName;
+    }
+
+    public String getSpacemapFileName() {
+        return spacemapFileName;
     }
 
     @Override

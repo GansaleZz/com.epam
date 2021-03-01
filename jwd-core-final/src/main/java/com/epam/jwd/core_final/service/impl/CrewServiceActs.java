@@ -72,10 +72,7 @@ public class CrewServiceActs implements CrewService {
         List<CrewMember> crewMembers = new ArrayList<>(Application.nassaContext.retrieveBaseEntityList(CrewMember.class));
         Optional<CrewMember> crewMember = null;
         for(int i=0; i<crewMembers.size();++i){
-            if(crewMembers.get(i).getName().equals(((CrewMemberCriteria) criteria).getName())
-                && crewMembers.get(i).getRank() == ((CrewMemberCriteria) criteria).getRank()
-                && crewMembers.get(i).getRole() == ((CrewMemberCriteria) criteria).getRole()
-                && crewMembers.get(i).isReadyForNexMissions() == ((CrewMemberCriteria) criteria).getReadyForNextMissions()) {
+            if(crewMembers.get(i).getName().equals(((CrewMemberCriteria) criteria).getName())) {
                     crewMember = Optional.ofNullable(crewMembers.get(i));
                     System.out.println(crewMembers.get(i).getName() + " " + crewMembers.get(i) + "\n");
                     break;
