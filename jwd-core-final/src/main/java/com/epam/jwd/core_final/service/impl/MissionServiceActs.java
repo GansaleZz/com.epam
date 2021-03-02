@@ -5,6 +5,7 @@ import com.epam.jwd.core_final.criteria.*;
 import com.epam.jwd.core_final.domain.CrewMember;
 import com.epam.jwd.core_final.domain.FlightMission;
 import com.epam.jwd.core_final.domain.Planet;
+import com.epam.jwd.core_final.domain.Spaceship;
 import com.epam.jwd.core_final.exception.InvalidStateException;
 import com.epam.jwd.core_final.exception.ReadinessError;
 import com.epam.jwd.core_final.service.MissionService;
@@ -15,6 +16,16 @@ import java.util.Optional;
 import java.util.Scanner;
 
 public class MissionServiceActs implements MissionService {
+    private static MissionServiceActs instance;
+
+    private MissionServiceActs(){}
+
+    public static MissionServiceActs getInstance(){
+        if(instance == null){
+            instance = new MissionServiceActs();
+        }
+        return instance;
+    }
     @Override
     public List<FlightMission> findAllMissions() {
         return (List<FlightMission>) Application.nassaContext.retrieveBaseEntityList(FlightMission.class);
@@ -31,13 +42,6 @@ public class MissionServiceActs implements MissionService {
                 }
             }
         }else{
-            if(((FlightMissionCriteria) criteria).getName() != null){
-                for(FlightMission flightMission:flightMissions){
-                    if(flightMission.getName().equals(((FlightMissionCriteria) criteria).getName())){
-                        list.add(flightMission);
-                    }
-                }
-            }else{
                 if(((FlightMissionCriteria) criteria).getMissionResult() != null){
                     for(FlightMission flightMission:flightMissions){
                         if(flightMission.getMissionResult() == ((FlightMissionCriteria) criteria).getMissionResult()){
@@ -46,7 +50,6 @@ public class MissionServiceActs implements MissionService {
                     }
                 }
             }
-        }
         if(list.size() ==0) list = null;
         return list;
     }
@@ -80,7 +83,7 @@ public class MissionServiceActs implements MissionService {
                     System.out.println("Enter name of new (To) planet: ");
                     Scanner str = new Scanner(System.in);
                     String name = str.nextLine();
-                    SpacemapServiceActs spacemapServiceActs = new SpacemapServiceActs();
+                    SpacemapServiceActs spacemapServiceActs = SpacemapServiceActs.getInstance();
                     PlanetCriteria planetCriteria = new PlanetCriteria();
                     planetCriteria.setName(name);
                     Planet planet;
@@ -91,12 +94,13 @@ public class MissionServiceActs implements MissionService {
                     }catch(InvalidStateException e){
                         System.out.println(e.getMessage());
                     }
+                    break;
                 }
                 case 2:{
                     System.out.println("Enter name of new (From) planet: ");
                     Scanner str = new Scanner(System.in);
                     String name = str.nextLine();
-                    SpacemapServiceActs spacemapServiceActs = new SpacemapServiceActs();
+                    SpacemapServiceActs spacemapServiceActs = SpacemapServiceActs.getInstance();
                     PlanetCriteria planetCriteria = new PlanetCriteria();
                     planetCriteria.setName(name);
                     Planet planet;
@@ -107,9 +111,10 @@ public class MissionServiceActs implements MissionService {
                     }catch(InvalidStateException e){
                         System.out.println(e.getMessage());
                     }
+                    break;
                 }
                 case 3:{
-                    CrewServiceActs crewServiceActs = new CrewServiceActs();
+                    CrewServiceActs crewServiceActs = CrewServiceActs.getInstance();
                     CrewMemberCriteria crewMemberCriteria = new CrewMemberCriteria();
                     CrewMember crewMember1;
                     CrewMember crewMember2;
@@ -158,6 +163,15 @@ public class MissionServiceActs implements MissionService {
                                 throw new ReadinessError(crewMember4.getName());
                             }
                         }
+                        for(CrewMember i: flightMission.getAssignedCrew()){
+                            i.setReadyForNexMissions(true);
+                        }
+                        List<CrewMember> list = new ArrayList<>();
+                        list.add(crewMember1);
+                        list.add(crewMember2);
+                        list.add(crewMember3);
+                        list.add(crewMember4);
+                        flightMission.setAssignedCrew(list);
                     }catch(InvalidStateException e){
                         System.out.println(e.getMessage());
                         break;
@@ -168,32 +182,37 @@ public class MissionServiceActs implements MissionService {
                         eg.printStackTrace();
                         break;
                     }
-                    for(CrewMember i: flightMission.getAssignedCrew()){
-                        i.setReadyForNexMissions(true);
-                    }
-                    List<CrewMember> list = new ArrayList<>();
-                    list.add(crewMember1);
-                    list.add(crewMember2);
-                    list.add(crewMember3);
-                    list.add(crewMember4);
-                    flightMission.setAssignedCrew(list);
                     break;
                 }
                 case 4:{
-                    System.out.println("Enter name of new spaceship: ");
-                    Scanner str = new Scanner(System.in);
-                    String name;
-                    SpaceshipCriteria spaceshipCriteria = new SpaceshipCriteria();
-                    try{
-                        name = str.nextLine();
-                    }catch(NullPointerException e){
-                        e.printStackTrace();
-//                    }catch (ReadinessError ex){
-//                        System.out.println(ex.getMessage());
-//                    }catch (InvalidStateException s){
-//                        System.out.println(s.getMessage());
-//                    }
-                }}
+                    try {
+                        System.out.println("Enter name of spaceship: ");
+                        Scanner str = new Scanner(System.in);
+                        String name = str.nextLine();
+                        SpaceshipCriteria spaceshipCriteria = new SpaceshipCriteria();
+                        spaceshipCriteria.setName(name);
+                        SpaceshipServiceActs spaceshipServiceActs = SpaceshipServiceActs.getInstance();
+                        if (spaceshipServiceActs.findSpaceshipByCriteria(spaceshipCriteria) == null)
+                            throw new InvalidStateException("spaceship");
+                        else {
+                            Spaceship spaceship = spaceshipServiceActs.findSpaceshipByCriteria(spaceshipCriteria).get();
+                            if (spaceship.isReadyForNextMissions() == false) throw new ReadinessError(spaceship.getName());
+                            else {
+                                Spaceship Currentspaceship = flightMission.getAssignedSpaceShip();
+                                Currentspaceship.setReadyForNextMissions(true);
+                                flightMission.setAssignedSpaceShip(spaceship);
+                            }
+                        }
+                    }
+                    catch (ReadinessError ex){
+                        System.out.println(ex.getMessage());
+                        break;
+                    }catch (InvalidStateException s){
+                        System.out.println(s.getMessage());
+                        break;
+                    }
+                    break;
+                }
                 default: System.out.println("Wrong number! try again...");
             }
         }while(buf > 4 || buf < 1);

@@ -75,6 +75,7 @@ public class NassaContext implements ApplicationContext {
                 long n;
                 name ="";
                 buf = file.read();
+                if((char) buf == '\n') buf = file.read();
                 do{
                     name += (char) buf;
                     buf = file.read();

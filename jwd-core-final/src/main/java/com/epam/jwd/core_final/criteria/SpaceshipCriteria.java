@@ -13,8 +13,8 @@ public class SpaceshipCriteria extends Criteria<Spaceship> {
     private static int id = 1;
     private String name;
     private Map<Role, Short> crew;
-    private boolean isReadyForNextMissions;
-    private long flightDistance;
+    private boolean isReadyForNextMissions = Boolean.parseBoolean(null);
+    private long flightDistance =0;
 
 
     public static class Builder extends BaseBuilder<Spaceship>{

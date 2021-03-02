@@ -15,7 +15,7 @@ import java.util.Optional;
  */
 public interface CrewService {
 
-    List<CrewMember> findAllCrewMembers() throws InvalidStateException, IOException;
+    List<CrewMember> findAllCrewMembers();
 
     List<CrewMember> findAllCrewMembersByCriteria(Criteria<? extends CrewMember> criteria);
 

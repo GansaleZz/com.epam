@@ -1,25 +1,31 @@
 package com.epam.jwd.core_final.service.impl;
 
 import com.epam.jwd.core_final.context.Application;
-import com.epam.jwd.core_final.context.ApplicationMenu;
-import com.epam.jwd.core_final.context.impl.NassaContext;
 import com.epam.jwd.core_final.criteria.CrewMemberCriteria;
 import com.epam.jwd.core_final.criteria.Criteria;
 import com.epam.jwd.core_final.domain.CrewMember;
 import com.epam.jwd.core_final.domain.Rank;
 import com.epam.jwd.core_final.domain.Role;
 import com.epam.jwd.core_final.exception.DuplicateException;
-import com.epam.jwd.core_final.exception.InvalidStateException;
 import com.epam.jwd.core_final.service.CrewService;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
-import java.util.function.Predicate;
 
 public class CrewServiceActs implements CrewService {
+    private static CrewServiceActs instance;
+
+    private CrewServiceActs(){}
+
+    public static CrewServiceActs getInstance(){
+        if(instance == null){
+            instance = new CrewServiceActs();
+        }
+        return instance;
+    }
+
     @Override
     public List<CrewMember> findAllCrewMembers(){
         return (List<CrewMember>) Application.nassaContext.retrieveBaseEntityList(CrewMember.class);
@@ -30,36 +36,24 @@ public class CrewServiceActs implements CrewService {
         List<CrewMember> crewMembers = new ArrayList<>(Application.nassaContext.retrieveBaseEntityList(CrewMember.class));
         List<CrewMember> list = new ArrayList<>();
         if(((CrewMemberCriteria) criteria).getReadyForNextMissions() != null){
-            for(int i=0;i<crewMembers.size();++i){
-                if(crewMembers.get(i).isReadyForNexMissions() == (((CrewMemberCriteria) criteria).getReadyForNextMissions())){
-                    list.add(crewMembers.get(i));
-                    System.out.println(crewMembers.get(i).getName() + " " + crewMembers.get(i)+"\n");
-                }
-            }
+            crewMembers.stream()
+                    .filter(i -> i.isReadyForNexMissions() == (((CrewMemberCriteria) criteria).getReadyForNextMissions()))
+                    .forEach(i -> list.add(i));
         }else{
             if(((CrewMemberCriteria) criteria).getName() != null){
-                for(int i=0;i<crewMembers.size();++i){
-                    if(crewMembers.get(i).getName().equals(((CrewMemberCriteria) criteria).getName())){
-                        list.add(crewMembers.get(i));
-                        System.out.println(crewMembers.get(i).getName() + " " + crewMembers.get(i)+"\n");
-                    }
-                }
+                crewMembers.stream()
+                        .filter(i -> i.getName().equals(((CrewMemberCriteria) criteria).getName()))
+                        .forEach(i -> list.add(i));
             } else {
                 if(((CrewMemberCriteria) criteria).getRank() != null){
-                    for(int i=0;i<crewMembers.size();++i){
-                        if(crewMembers.get(i).getRank() == (((CrewMemberCriteria) criteria).getRank())){
-                            list.add(crewMembers.get(i));
-                            System.out.println(crewMembers.get(i).getName() + " " + crewMembers.get(i)+"\n");
-                        }
-                    }
+                    crewMembers.stream()
+                            .filter(i -> i.getRank() == (((CrewMemberCriteria) criteria).getRank()))
+                            .forEach(i -> list.add(i));
                 } else{
                     if(((CrewMemberCriteria) criteria).getRole() != null){
-                        for(int i=0;i<crewMembers.size();++i){
-                            if(crewMembers.get(i).getRole() == (((CrewMemberCriteria) criteria).getRole())){
-                                list.add(crewMembers.get(i));
-                                System.out.println(crewMembers.get(i).getName() + " " + crewMembers.get(i)+"\n");
-                            }
-                        }
+                        crewMembers.stream()
+                                .filter(i -> i.getRole() == (((CrewMemberCriteria) criteria).getRole()))
+                                .forEach(i -> list.add(i));
                     }
                 }
             }
@@ -70,14 +64,10 @@ public class CrewServiceActs implements CrewService {
     @Override
     public Optional<CrewMember> findCrewMemberByCriteria(Criteria<? extends CrewMember> criteria) {
         List<CrewMember> crewMembers = new ArrayList<>(Application.nassaContext.retrieveBaseEntityList(CrewMember.class));
-        Optional<CrewMember> crewMember = null;
-        for(int i=0; i<crewMembers.size();++i){
-            if(crewMembers.get(i).getName().equals(((CrewMemberCriteria) criteria).getName())) {
-                    crewMember = Optional.ofNullable(crewMembers.get(i));
-                    System.out.println(crewMembers.get(i).getName() + " " + crewMembers.get(i) + "\n");
-                    break;
-            }
-        }
+        Optional<CrewMember> crewMember;
+        crewMember = crewMembers.stream()
+                .filter(i -> i.getName().equals(((CrewMemberCriteria) criteria).getName()))
+                .findAny();
         return crewMember;
     }
 
@@ -113,7 +103,6 @@ public class CrewServiceActs implements CrewService {
         crewMember.setRank(Rank.resolveRankById(rank));
         crewMember.setRole(Role.resolveRoleById(role));
         crewMember.setReadyForNexMissions(bool == 1);
-        System.out.println(crewMember.getName() +" " + crewMember +"\n");
         return crewMember;
     }
 
@@ -126,12 +115,14 @@ public class CrewServiceActs implements CrewService {
     public CrewMember createCrewMember(CrewMember crewMember) throws DuplicateException {
         List<CrewMember> crewMembers = new ArrayList<>(Application.nassaContext.retrieveBaseEntityList(CrewMember.class));
         try {
-            for (int i = 0; i < crewMembers.size(); ++i) {
-                if (crewMembers.get(i).getName().equalsIgnoreCase(crewMember.getName())) {
+            Optional<CrewMember> crewCheck;
+                    crewCheck = crewMembers.stream()
+                    .filter(i -> i.getName().equalsIgnoreCase(crewMember.getName()))
+                    .findAny();
+                if (crewCheck.isPresent()) {
                     throw new DuplicateException(crewMember.getName(),"Crew");
                 }
-            }
-            crewMembers.add(crewMember);
+                crewMembers.add(crewMember);
         }catch(DuplicateException e){
             System.out.println(e.getMessage());
         }
