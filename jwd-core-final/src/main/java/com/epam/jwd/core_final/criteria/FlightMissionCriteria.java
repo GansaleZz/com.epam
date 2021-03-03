@@ -25,7 +25,7 @@ public class FlightMissionCriteria extends Criteria<FlightMission> {
     public static class Builder extends BaseBuilder<FlightMission>{
 
         public FlightMissionCriteria.Builder withName(String name){
-            actualClass = new FlightMission(name,id);
+            actualClass = new FlightMission(name,id++);
             return this;
         }
 

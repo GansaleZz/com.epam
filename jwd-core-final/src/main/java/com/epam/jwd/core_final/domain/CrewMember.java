@@ -48,7 +48,9 @@ public class CrewMember extends AbstractBaseEntity {
         return "CrewMember{" +
                 "role=" + role +
                 ", rank=" + rank +
-                ", isReadyForNexMissions=" + isReadyForNextMissions +
+                ", isReadyForNextMissions=" + isReadyForNextMissions +
+                ", name=" + super.getName() +
+                ", id=" + super.getId() +
                 '}';
     }
 }

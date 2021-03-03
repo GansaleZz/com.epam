@@ -6,6 +6,7 @@ import com.epam.jwd.core_final.domain.CrewMember;
 import com.epam.jwd.core_final.domain.FlightMission;
 import com.epam.jwd.core_final.domain.Planet;
 import com.epam.jwd.core_final.domain.Spaceship;
+import com.epam.jwd.core_final.exception.DuplicateException;
 import com.epam.jwd.core_final.exception.InvalidStateException;
 import com.epam.jwd.core_final.exception.ReadinessError;
 import com.epam.jwd.core_final.service.MissionService;
@@ -36,34 +37,25 @@ public class MissionServiceActs implements MissionService {
         List<FlightMission> flightMissions = new ArrayList<>(Application.nassaContext.retrieveBaseEntityList(FlightMission.class));
         List<FlightMission> list = new ArrayList<>();
         if(((FlightMissionCriteria) criteria).getDistance() != 0){
-            for(FlightMission flightMission: flightMissions){
-                if(flightMission.getDistance() == ((FlightMissionCriteria) criteria).getDistance()){
-                    list.add(flightMission);
-                }
-            }
+            flightMissions.stream()
+                    .filter(i -> i.getDistance() == ((FlightMissionCriteria) criteria).getDistance())
+                    .forEach(list::add);
         }else{
                 if(((FlightMissionCriteria) criteria).getMissionResult() != null){
-                    for(FlightMission flightMission:flightMissions){
-                        if(flightMission.getMissionResult() == ((FlightMissionCriteria) criteria).getMissionResult()){
-                            list.add(flightMission);
-                        }
-                    }
+                    flightMissions.stream()
+                            .filter(i -> i.getMissionResult() == ((FlightMissionCriteria) criteria).getMissionResult())
+                            .forEach(list::add);
                 }
             }
-        if(list.size() ==0) list = null;
         return list;
     }
 
     @Override
     public Optional<FlightMission> findMissionByCriteria(Criteria<? extends FlightMission> criteria) {
         List<FlightMission> flightMissions = new ArrayList<>(Application.nassaContext.retrieveBaseEntityList(FlightMission.class));
-        Optional<FlightMission> flightMission = null;
-        for(FlightMission i: flightMissions){
-            if(i.getName().equals(((FlightMissionCriteria) criteria).getName())){
-                flightMission = Optional.of(i);
-                break;
-            }
-        }
+        Optional<FlightMission> flightMission = flightMissions.stream()
+                .filter(i -> i.getName().equals(((FlightMissionCriteria) criteria).getName()))
+                .findAny();
         return flightMission;
     }
 
@@ -88,9 +80,11 @@ public class MissionServiceActs implements MissionService {
                     planetCriteria.setName(name);
                     Planet planet;
                     try {
-                        planet = spacemapServiceActs.findPlanetByCriteria(planetCriteria).get();
-                        if(planet == null) throw new InvalidStateException("planet");
-                        else flightMission.setTo(planet);
+                        if(!spacemapServiceActs.findPlanetByCriteria(planetCriteria).isPresent()) throw new InvalidStateException("planet");
+                        else{
+                            planet = spacemapServiceActs.findPlanetByCriteria(planetCriteria).get();
+                            flightMission.setTo(planet);
+                        }
                     }catch(InvalidStateException e){
                         System.out.println(e.getMessage());
                     }
@@ -105,11 +99,14 @@ public class MissionServiceActs implements MissionService {
                     planetCriteria.setName(name);
                     Planet planet;
                     try {
-                        planet = spacemapServiceActs.findPlanetByCriteria(planetCriteria).get();
-                        if(planet == null) throw new InvalidStateException("planet");
-                        else flightMission.setFrom(planet);
+                        if(!spacemapServiceActs.findPlanetByCriteria(planetCriteria).isPresent()) throw new InvalidStateException("planet");
+                        else {
+                            planet = spacemapServiceActs.findPlanetByCriteria(planetCriteria).get();
+                            flightMission.setFrom(planet);
+                        }
                     }catch(InvalidStateException e){
                         System.out.println(e.getMessage());
+                        break;
                     }
                     break;
                 }
@@ -126,9 +123,9 @@ public class MissionServiceActs implements MissionService {
                         System.out.println("Enter name of the first crew member: ");
                          name = str.nextLine();
                         crewMemberCriteria.setName(name);
-                        crewMember1 = crewServiceActs.findCrewMemberByCriteria(crewMemberCriteria).get();
-                        if(crewMember1 == null) throw new InvalidStateException("crew");
+                        if(!crewServiceActs.findCrewMemberByCriteria(crewMemberCriteria).isPresent()) throw new InvalidStateException("crew");
                         else{
+                            crewMember1 = crewServiceActs.findCrewMemberByCriteria(crewMemberCriteria).get();
                             if(crewMember1.isReadyForNexMissions() == false) {
                                 throw new ReadinessError(crewMember1.getName());
                             }
@@ -136,9 +133,9 @@ public class MissionServiceActs implements MissionService {
                         System.out.println("Enter name of the second crew member: ");
                         name = str.nextLine();
                         crewMemberCriteria.setName(name);
-                        crewMember2 = crewServiceActs.findCrewMemberByCriteria(crewMemberCriteria).get();
-                        if(crewMember2 == null) throw new InvalidStateException("crew");
+                        if(!crewServiceActs.findCrewMemberByCriteria(crewMemberCriteria).isPresent()) throw new InvalidStateException("crew");
                         else{
+                            crewMember2 = crewServiceActs.findCrewMemberByCriteria(crewMemberCriteria).get();
                             if(crewMember2.isReadyForNexMissions() == false) {
                                 throw new ReadinessError(crewMember2.getName());
                             }
@@ -146,9 +143,9 @@ public class MissionServiceActs implements MissionService {
                         System.out.println("Enter name of the third crew member: ");
                         name = str.nextLine();
                         crewMemberCriteria.setName(name);
-                        crewMember3 = crewServiceActs.findCrewMemberByCriteria(crewMemberCriteria).get();
-                        if(crewMember3 == null) throw new InvalidStateException("crew");
+                        if(!crewServiceActs.findCrewMemberByCriteria(crewMemberCriteria).isPresent()) throw new InvalidStateException("crew");
                         else{
+                            crewMember3 = crewServiceActs.findCrewMemberByCriteria(crewMemberCriteria).get();
                             if(crewMember3.isReadyForNexMissions() == false) {
                                 throw new ReadinessError(crewMember3.getName());
                             }
@@ -156,9 +153,9 @@ public class MissionServiceActs implements MissionService {
                         System.out.println("Enter name of the fourth crew member: ");
                         name = str.nextLine();
                         crewMemberCriteria.setName(name);
-                        crewMember4 = crewServiceActs.findCrewMemberByCriteria(crewMemberCriteria).get();
-                        if(crewMember4 == null) throw new InvalidStateException("crew");
+                        if(!crewServiceActs.findCrewMemberByCriteria(crewMemberCriteria).isPresent()) throw new InvalidStateException("crew");
                         else{
+                            crewMember4 = crewServiceActs.findCrewMemberByCriteria(crewMemberCriteria).get();
                             if(crewMember4.isReadyForNexMissions() == false) {
                                 throw new ReadinessError(crewMember4.getName());
                             }
@@ -175,11 +172,8 @@ public class MissionServiceActs implements MissionService {
                     }catch(InvalidStateException e){
                         System.out.println(e.getMessage());
                         break;
-                    }catch (ReadinessError ex){
+                    }catch (ReadinessError ex) {
                         System.out.println(ex.getMessage());
-                        break;
-                    }catch (NullPointerException eg){
-                        eg.printStackTrace();
                         break;
                     }
                     break;
@@ -221,7 +215,18 @@ public class MissionServiceActs implements MissionService {
 
     @Override
     public FlightMission createMission(FlightMission flightMission) {
-        return null;
+        List<FlightMission> flightMissions = new ArrayList<>(Application.nassaContext.retrieveBaseEntityList(FlightMission.class));
+        try {
+            Optional<FlightMission> missionCheck = flightMissions.stream()
+                    .filter(i -> i.getName().equals(flightMission.getName()))
+                    .findAny();
+            if (missionCheck.isPresent()) throw new DuplicateException(flightMission.getName(),"flightMission");
+            else flightMissions.add(flightMission);
+
+        }catch(DuplicateException e){
+            System.out.println(e.getMessage());
+        }
+        return flightMission;
     }
 
     @Override

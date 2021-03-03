@@ -11,7 +11,7 @@ public class PlanetCriteria extends Criteria<Planet> {
     public static class Builder extends BaseBuilder<Planet>{
 
         public PlanetCriteria.Builder withName(String name){
-            actualClass = new Planet(name,id);
+            actualClass = new Planet(name,id++);
             return this;
         }
 

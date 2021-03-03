@@ -120,7 +120,7 @@ public class CrewServiceActs implements CrewService {
                     .filter(i -> i.getName().equalsIgnoreCase(crewMember.getName()))
                     .findAny();
                 if (crewCheck.isPresent()) {
-                    throw new DuplicateException(crewMember.getName(),"Crew");
+                    throw new DuplicateException(crewMember.getName(),"crew");
                 }
                 crewMembers.add(crewMember);
         }catch(DuplicateException e){

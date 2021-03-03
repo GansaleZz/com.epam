@@ -2,15 +2,20 @@ package com.epam.jwd.core_final.context;
 
 import com.epam.jwd.core_final.criteria.CrewMemberCriteria;
 import com.epam.jwd.core_final.criteria.FlightMissionCriteria;
+import com.epam.jwd.core_final.criteria.PlanetCriteria;
 import com.epam.jwd.core_final.criteria.SpaceshipCriteria;
 import com.epam.jwd.core_final.domain.*;
 import com.epam.jwd.core_final.exception.InvalidStateException;
 import com.epam.jwd.core_final.factory.impl.CrewMemberFactory;
+import com.epam.jwd.core_final.factory.impl.FlightMissionFactory;
+import com.epam.jwd.core_final.factory.impl.PlanetFactory;
+import com.epam.jwd.core_final.factory.impl.SpaceshipFactory;
 import com.epam.jwd.core_final.service.impl.CrewServiceActs;
 import com.epam.jwd.core_final.service.impl.MissionServiceActs;
 import com.epam.jwd.core_final.service.impl.SpacemapServiceActs;
 import com.epam.jwd.core_final.service.impl.SpaceshipServiceActs;
 
+import java.sql.SQLOutput;
 import java.util.*;
 
 // todo replace Object with your own types
@@ -104,6 +109,7 @@ public interface ApplicationMenu {
                                         System.out.println("Enter name of crew:");
                                         Scanner scan = new Scanner(System.in);
                                         String name= scan.nextLine();
+                                        scan.close();
                                         CrewMemberCriteria crewMemberCriteria = new CrewMemberCriteria();
                                         crewMemberCriteria.setName(name);
                                         handleUserInput(crewServiceActs.findAllCrewMembersByCriteria(crewMemberCriteria));
@@ -141,6 +147,7 @@ public interface ApplicationMenu {
                     CrewMemberCriteria crewMemberCriteria = new CrewMemberCriteria();
                     crewMemberCriteria.setName(temp);
                     handleUserInput(crewServiceActs.findCrewMemberByCriteria(crewMemberCriteria));
+                    str.close();
                     break;
                 }
                 case 4:{
@@ -180,6 +187,7 @@ public interface ApplicationMenu {
                         System.out.println(e.getMessage());
                         break;
                     }
+                    str.close();
                     break;
                 }
                 case 5:{
@@ -219,8 +227,8 @@ public interface ApplicationMenu {
                         System.out.println(e.getMessage());
                         break;
                     }
+                    str.close();
                     break;
-
                 }
                 case 7:{
                     handleUserInput(missionServiceActs.findAllMissions());
@@ -295,6 +303,7 @@ public interface ApplicationMenu {
                     FlightMissionCriteria flightMissionCriteria = new FlightMissionCriteria();
                     flightMissionCriteria.setName(name);
                     handleUserInput(missionServiceActs.findMissionByCriteria(flightMissionCriteria));
+                    str.close();
                     break;
                 }
                 case 10:{
@@ -316,22 +325,88 @@ public interface ApplicationMenu {
                         System.out.println(e.getMessage());
                         break;
                     }
+                    str.close();
                     break;
                 }
                 case 11:{
-
+                    System.out.println("Enter name of mission: ");
+                    Scanner str = new Scanner(System.in);
+                    String name = str.nextLine();
+                    try{
+                        Planet to;
+                        Planet from;
+                        PlanetCriteria planetCriteria = new PlanetCriteria();
+                        System.out.println("Enter name of initial planet: ");
+                        String first = str.nextLine();
+                        planetCriteria.setName(first);
+                        if(!spacemapServiceActs.findPlanetByCriteria(planetCriteria).isPresent()) {
+                            throw new InvalidStateException("planet");
+                        }
+                        else {
+                            from = spacemapServiceActs.findPlanetByCriteria(planetCriteria).get();
+                        }
+                        System.out.println("Enter name of ending planet: ");
+                        String second;
+                        do {
+                            second = str.nextLine();
+                            if (first.equals(second))
+                                System.out.println("You can not enter the same name both for initial and ending planets! Try again ...");
+                        }while(first.equals(second));
+                        planetCriteria.setName(second);
+                        if(!spacemapServiceActs.findPlanetByCriteria(planetCriteria).isPresent()) {
+                            throw new InvalidStateException("planet");
+                        }
+                        else{
+                           to = spacemapServiceActs.findPlanetByCriteria(planetCriteria).get();
+                        }
+                        FlightMissionFactory flightMissionFactory = new FlightMissionFactory();
+                        FlightMission flightMission = flightMissionFactory.create(to,from,name);
+                        handleUserInput(missionServiceActs.createMission(flightMission));
+                    }catch(InvalidStateException e){
+                        System.out.println(e.getMessage());
+                        break;
+                    }
+                    break;
                 }
                 case 12:{
-
+                    handleUserInput(spacemapServiceActs.getRandomPlanet());
+                    break;
                 }
                 case 13:{
-
+                    PlanetCriteria planetCriteria = new PlanetCriteria();
+                    Scanner str = new Scanner(System.in);
+                    try {
+                        System.out.println("Enter name of first planet: ");
+                        String name = str.nextLine();
+                        planetCriteria.setName(name);
+                        if(!spacemapServiceActs.findPlanetByCriteria(planetCriteria).isPresent()) throw new InvalidStateException("planet");
+                        Planet first = spacemapServiceActs.findPlanetByCriteria(planetCriteria).get();
+                        System.out.println("Enter name of second planet: ");
+                        name = str.nextLine();
+                        planetCriteria.setName(name);
+                        if(!spacemapServiceActs.findPlanetByCriteria(planetCriteria).isPresent()) throw new InvalidStateException("planet");
+                        Planet second = spacemapServiceActs.findPlanetByCriteria(planetCriteria).get();
+                        handleUserInput(spacemapServiceActs.getDistanceBetweenPlanets(first,second));
+                    }catch(InvalidStateException e){
+                        System.out.println(e.getMessage());
+                        break;
+                    }
+                    str.close();
+                    break;
                 }
                 case 14:{
-
+                    System.out.println("Enter name of planet: ");
+                    Scanner str = new Scanner(System.in);
+                    String name = str.nextLine();
+                    PlanetCriteria planetCriteria = new PlanetCriteria();
+                    planetCriteria.setName(name);
+                    handleUserInput(spacemapServiceActs.findPlanetByCriteria(planetCriteria));
+                    str.close();
+                    break;
                 }
                 case 15:{
                     handleUserInput(spaceshipServiceActs.findAllSpaceships());
+                    break;
                 }
                 case 16:{
                     System.out.println("Enter criteria : \n" +
@@ -372,16 +447,51 @@ public interface ApplicationMenu {
                     SpaceshipCriteria spaceshipCriteria = new SpaceshipCriteria();
                     spaceshipCriteria.setName(name);
                     handleUserInput(spaceshipServiceActs.findSpaceshipByCriteria(spaceshipCriteria));
+                    str.close();
                     break;
                 }
                 case 18:{
-
+                    System.out.println("Enter name of spaceship: ");
+                    Scanner str  = new Scanner(System.in);
+                    String name = str.nextLine();
+                    try{
+                        SpaceshipCriteria spaceshipCriteria = new SpaceshipCriteria();
+                        spaceshipCriteria.setName(name);
+                        if(!spaceshipServiceActs.findSpaceshipByCriteria(spaceshipCriteria).isPresent()) throw new InvalidStateException("spaceship");
+                        else handleUserInput(spaceshipServiceActs.updateSpaceshipDetails(spaceshipServiceActs.findSpaceshipByCriteria(spaceshipCriteria).get()));
+                    }catch (InvalidStateException e){
+                        System.out.println(e.getMessage());
+                    }
+                    str.close();
+                    break;
                 }
                 case 19:{
 
                 }
                 case 20:{
-
+                    System.out.println("Enter flight distance of spaceship: ");
+                    long distance = in.nextLong();
+                    System.out.println("Enter requirement crew for this spaceship (number of crew members for this role): ");
+                    Map<Role,Short> crew = new HashMap<>();
+                    System.out.println(Role.MISSION_SPECIALIST);
+                    buf = in.nextInt();
+                    crew.put(Role.MISSION_SPECIALIST,(short) buf);
+                    System.out.println(Role.FLIGHT_ENGINEER);
+                    buf = in.nextInt();
+                    crew.put(Role.FLIGHT_ENGINEER,(short) buf);
+                    System.out.println(Role.PILOT);
+                    buf = in.nextInt();
+                    crew.put(Role.PILOT,(short) buf);
+                    System.out.println(Role.COMMANDER);
+                    buf = in.nextInt();
+                    crew.put(Role.COMMANDER,(short) buf);
+                    Scanner str = new Scanner(System.in);
+                    System.out.println("Enter name of spaceship: ");
+                    String name = str.nextLine();
+                    str.close();
+                    SpaceshipFactory spaceshipFactory = new SpaceshipFactory();
+                    handleUserInput(spaceshipServiceActs.createSpaceship(spaceshipFactory.create(crew,name,distance)));
+                    break;
                 }
                 case 21:{
 
@@ -395,27 +505,21 @@ public interface ApplicationMenu {
         return null;
     }
 
-    default Object handleUserInput(Object o) {
+    default void handleUserInput(Object o) {
         if(o == null) System.out.println("This object(s) is absent!\n");
         else {
             if(o instanceof List){
                 for (Object s: (List) o){
-                    if(s instanceof Spaceship) {
-                        System.out.println(((Spaceship) s).getName() + " " + s);
-                    }
-                    else{
-                        if(s instanceof CrewMember){
-                            System.out.println(((CrewMember) s).getName() + " " + s);
-                        }
-                        else{
-                            if(s instanceof  FlightMission){
-                                System.out.println(((FlightMission) s).getName() + " " + s);
-                            }
-                        }
-                    }
+                    System.out.println(s.toString());
+                }
+            }
+            else{
+                if(!(o instanceof Optional))
+                    System.out.println(o.toString());
+                else{
+                    System.out.println(((Optional<?>) o).get().toString());
                 }
             }
         }
-        return null;
     }
 }

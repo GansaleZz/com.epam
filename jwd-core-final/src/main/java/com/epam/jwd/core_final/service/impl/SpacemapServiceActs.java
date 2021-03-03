@@ -9,6 +9,7 @@ import com.epam.jwd.core_final.service.SpacemapService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 public class SpacemapServiceActs implements SpacemapService {
     private static SpacemapServiceActs instance;
@@ -24,7 +25,10 @@ public class SpacemapServiceActs implements SpacemapService {
 
     @Override
     public Planet getRandomPlanet() {
-        return null;
+        List<Planet> spacemap = new ArrayList<>(Application.nassaContext.retrieveBaseEntityList(Planet.class));
+        Random random = new Random();
+        int rand = random.nextInt(spacemap.size());
+        return spacemap.get(rand);
     }
 
     @Override
@@ -38,6 +42,6 @@ public class SpacemapServiceActs implements SpacemapService {
 
     @Override
     public int getDistanceBetweenPlanets(Planet first, Planet second) {
-        return 0;
+        return (int) Math.sqrt((first.getPoint().getX() - second.getPoint().getX()) * (first.getPoint().getX() - second.getPoint().getX()) + (first.getPoint().getY() - second.getPoint().getY()) * (first.getPoint().getY() - second.getPoint().getY()));
     }
 }

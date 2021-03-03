@@ -21,22 +21,13 @@ class FlightMissionFactoryTest {
     void create() {
         FlightMissionFactory flightMissionFactory = new FlightMissionFactory();
         String name = "Test Mission";
-        long distance ;
-        SpaceshipFactory spaceshipFactory = new SpaceshipFactory();
-        Map<Role,Short> map = new HashMap<>();
-        map.put(Role.PILOT,(short) 195);
-        Spaceship spaceship = spaceshipFactory.create(map,"Test SpaceSHHIIIP",1901);
-        List<CrewMember> list = new ArrayList<>();
-        CrewMemberFactory crewMemberFactory = new CrewMemberFactory();
-        CrewMember crewMember = crewMemberFactory.create(Rank.TRAINEE,Role.PILOT,"Andrey");
-        list.add(crewMember);
 
         PlanetFactory planetFactory = new PlanetFactory();
         Planet from = planetFactory.create(10,15,"Yupiter");
         Planet to = planetFactory.create(40,20,"Mars");
-        FlightMission flightMission = flightMissionFactory.create(spaceship,list,name,from,to);
+        FlightMission flightMission = flightMissionFactory.create(name,from,to);
         assertEquals(flightMission.getName(),"Test Mission");
-        distance = (long) Math.sqrt((10-40)*(10-40) + (15-20)*(15-20));
+        long distance = (long) Math.sqrt((10-40)*(10-40) + (15-20)*(15-20));
         assertEquals(flightMission.getDistance(),distance);
     }
 }

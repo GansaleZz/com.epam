@@ -49,6 +49,8 @@ public class Spaceship extends AbstractBaseEntity {
                 "flightDist=" + flightDist +
                 ", isReadyForNextMissions=" + isReadyForNextMissions +
                 ", crew=" + crew +
+                ", name=" + super.getName() +
+                ", id=" + super.getId() +
                 '}';
     }
 }

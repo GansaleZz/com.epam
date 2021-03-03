@@ -1,10 +1,8 @@
 package com.epam.jwd.core_final.criteria;
 
-import com.epam.jwd.core_final.domain.BaseEntity;
 import com.epam.jwd.core_final.domain.CrewMember;
 import com.epam.jwd.core_final.domain.Rank;
 import com.epam.jwd.core_final.domain.Role;
-import com.epam.jwd.core_final.factory.impl.CrewMemberFactory;
 
 /**
  * Should be a builder for {@link com.epam.jwd.core_final.domain.CrewMember} fields
@@ -22,7 +20,7 @@ public class CrewMemberCriteria extends Criteria<CrewMember> {
     public static class Builder extends BaseBuilder<CrewMember>{
 
         public Builder withName(String name){
-            actualClass = new CrewMember(name,id);
+            actualClass = new CrewMember(name,id++);
             return this;
         }
 

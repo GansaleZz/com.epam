@@ -20,12 +20,10 @@ public class FlightMissionFactory implements EntityFactory<FlightMission> {
         FlightMission flightMission = null;
         String name = null;
         long distance = 0;
-        Spaceship assignedSpaceShip = null;
-        List<CrewMember> assignedCrew = null ;
         Planet to = null;
         Planet from = null;
         try {
-            if (args.length != 5) {
+            if (args.length != 3) {
                 logger.error("Invalid input args for creating flight mission !");
                 throw new InvalidInArgsException(args);
             } else {
@@ -33,14 +31,10 @@ public class FlightMissionFactory implements EntityFactory<FlightMission> {
                     if (i instanceof String) name = (String) i;
                     else if (i instanceof Planet && from == null) from = (Planet) i;
                     else if (i instanceof Planet && to == null) to = (Planet) i;
-                    else if (i instanceof Spaceship) assignedSpaceShip = (Spaceship) i;
-                    else if (i instanceof List) assignedCrew = (List<CrewMember>) i;
                 }
             }
 
             if (name == null
-                    || assignedCrew == null
-                    || assignedSpaceShip == null
                     || to == null
                     || from == null) {
                 logger.error("Invalid input args for creating flight mission !");
@@ -49,9 +43,7 @@ public class FlightMissionFactory implements EntityFactory<FlightMission> {
                 distance = (long) Math.sqrt((to.getPoint().getX() - from.getPoint().getX()) * (to.getPoint().getX() - from.getPoint().getX()) + (to.getPoint().getY() - from.getPoint().getY()) * (to.getPoint().getY() - from.getPoint().getY()));
                 flightMission = new FlightMissionCriteria.Builder()
                         .withName(name)
-                        .withAssignedCrew(assignedCrew)
                         .withDistance(distance)
-                        .withAssignedSpaceShip(assignedSpaceShip)
                         .withFrom(from)
                         .withTo(to)
                         .build();

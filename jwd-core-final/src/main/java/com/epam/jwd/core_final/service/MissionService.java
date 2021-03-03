@@ -2,6 +2,7 @@ package com.epam.jwd.core_final.service;
 
 import com.epam.jwd.core_final.criteria.Criteria;
 import com.epam.jwd.core_final.domain.FlightMission;
+import com.epam.jwd.core_final.exception.DuplicateException;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +17,7 @@ public interface MissionService {
 
     FlightMission updateFlightMissionDetails(FlightMission flightMission);
 
-    FlightMission createMission(FlightMission flightMission);
+    FlightMission createMission(FlightMission flightMission) throws DuplicateException;
 
     FlightMission startMission(FlightMission flightMission);
 }

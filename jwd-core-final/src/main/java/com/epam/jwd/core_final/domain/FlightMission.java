@@ -106,6 +106,8 @@ public class FlightMission extends AbstractBaseEntity {
                 ", assignedSpaceShip=" + assignedSpaceShip +
                 ", assignedCrew=" + assignedCrew +
                 ", missionResult=" + missionResult +
+                ", name=" + super.getName() +
+                ", id=" + super.getId() +
                 '}';
     }
 }

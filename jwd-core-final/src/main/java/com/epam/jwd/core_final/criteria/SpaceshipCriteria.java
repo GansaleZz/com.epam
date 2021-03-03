@@ -20,7 +20,7 @@ public class SpaceshipCriteria extends Criteria<Spaceship> {
     public static class Builder extends BaseBuilder<Spaceship>{
 
         public SpaceshipCriteria.Builder withName(String name){
-            actualClass = new Spaceship(name,id);
+            actualClass = new Spaceship(name,id++);
             return this;
         }
 
