@@ -74,35 +74,43 @@ public class CrewServiceActs implements CrewService {
     @Override
     public CrewMember updateCrewMemberDetails(CrewMember crewMember) {
         Scanner in = new Scanner(System.in);
-        int rank,role,bool;
-        System.out.println("Enter new rank: \n" +
-                "TRAINEE - 1\n" +
-                "SECOND_OFFICER - 2\n" +
-                "FIRST_OFFICER - 3\n" +
-                "CAPTAIN - 4\n");
+        int rank,role,buf;
+        System.out.println("Enter which detail you want to update: \n" +
+                "Role - 1\n" +
+                "Rank -2");
         do{
-             rank = in.nextInt();
-            if(rank > 4 || rank < 1) System.out.println("Wrong number! try again...\n");
-        }while(rank > 4 || rank < 1);
-
-        System.out.println("Enter new role: \n" +
-                "MISSION_SPECIALIST - 1\n" +
-                "FLIGHT_ENGINEER - 2\n" +
-                "PILOT - 3\n" +
-                "COMMANDER - 4\n");
-        do{
-            role = in.nextInt();
-            if(role > 4 || role < 1) System.out.println("Wrong number! try again...\n");
-        }while(role > 4 || role < 1);
-
-        System.out.println("Enter new preparedness of crew to the mission(true - 1, false - 2: \n");
-        do{
-            bool = in.nextInt();
-            if(bool < 1 || bool > 2) System.out.println("Wrong number! try again...\n");
-        }while(bool < 1 || bool > 2);
-        crewMember.setRank(Rank.resolveRankById(rank));
-        crewMember.setRole(Role.resolveRoleById(role));
-        crewMember.setReadyForNexMissions(bool == 1);
+            buf = in.nextInt();
+            switch (buf){
+                case 1:{
+                    System.out.println("Enter new role: \n" +
+                            "MISSION_SPECIALIST - 1\n" +
+                            "FLIGHT_ENGINEER - 2\n" +
+                            "PILOT - 3\n" +
+                            "COMMANDER - 4\n");
+                    do{
+                        role = in.nextInt();
+                        if(role > 4 || role < 1) System.out.println("Wrong number! try again...\n");
+                    }while(role > 4 || role < 1);
+                    crewMember.setRole(Role.resolveRoleById(role));
+                    break;
+                }
+                case 2:{
+                    System.out.println("Enter new rank: \n" +
+                            "TRAINEE - 1\n" +
+                            "SECOND_OFFICER - 2\n" +
+                            "FIRST_OFFICER - 3\n" +
+                            "CAPTAIN - 4\n");
+                    do{
+                        rank = in.nextInt();
+                        if(rank > 4 || rank < 1) System.out.println("Wrong number! try again...\n");
+                    }while(rank > 4 || rank < 1);
+                    crewMember.setRank(Rank.resolveRankById(rank));
+                    break;
+                }
+                default:System.out.println("Wrong number! try again...\n");
+            }
+        }while(buf > 2 || buf < 1);
+        in.close();
         return crewMember;
     }
 
