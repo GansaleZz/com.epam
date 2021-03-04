@@ -99,7 +99,6 @@ public class SpaceshipServiceActs implements SpaceshipService {
                         System.out.println("Wrong number! try again...\n");
                 }
             } while (buf > 2 || buf < 1);
-//            in.close();
         }
         return spaceship;
     }

@@ -36,11 +36,6 @@ public class CrewServiceActs implements CrewService {
                     .filter(i -> i.isReadyForNexMissions() == (((CrewMemberCriteria) criteria).getReadyForNextMissions()))
                     .forEach(i -> list.add(i));
         }else{
-            if(((CrewMemberCriteria) criteria).getName() != null){
-                crewMembers.stream()
-                        .filter(i -> i.getName().equals(((CrewMemberCriteria) criteria).getName()))
-                        .forEach(i -> list.add(i));
-            } else {
                 if(((CrewMemberCriteria) criteria).getRank() != null){
                     crewMembers.stream()
                             .filter(i -> i.getRank() == (((CrewMemberCriteria) criteria).getRank()))
@@ -53,17 +48,16 @@ public class CrewServiceActs implements CrewService {
                     }
                 }
             }
-        }
         return list;
     }
 
     @Override
     public Optional<CrewMember> findCrewMemberByCriteria(Criteria<? extends CrewMember> criteria) {
         List<CrewMember> crewMembers = (List<CrewMember>) Application.nassaContext.retrieveBaseEntityList(CrewMember.class);
-        Optional<CrewMember> crewMember;
-        crewMember = crewMembers.stream()
-                .filter(i -> i.getName().equals(((CrewMemberCriteria) criteria).getName()))
-                .findAny();
+        Optional<CrewMember> crewMember = null;
+            crewMember = crewMembers.stream()
+                    .filter(i -> i.getName().equals(((CrewMemberCriteria) criteria).getName()))
+                    .findAny();
         return crewMember;
     }
 
@@ -75,18 +69,27 @@ public class CrewServiceActs implements CrewService {
         Scanner in = new Scanner(System.in);
         int rank,role,buf;
         System.out.println("Enter which detail you want to update: \n" +
-                "Role - 1\n" +
-                "Rank -2");
+                "1 - Role\n" +
+                "2 - Rank");
         do{
+            while(!in.hasNextInt()){
+                System.out.println("You need to enter number! Try again...");
+                in.nextLine();
+            }
             buf = in.nextInt();
             switch (buf){
                 case 1:{
                     System.out.println("Enter new role: \n" +
-                            "MISSION_SPECIALIST - 1\n" +
-                            "FLIGHT_ENGINEER - 2\n" +
-                            "PILOT - 3\n" +
-                            "COMMANDER - 4\n");
+                            "1 - MISSION_SPECIALIST\n" +
+                            "2 - FLIGHT_ENGINEER\n" +
+                            "3 - PILOT\n" +
+                            "4 - COMMANDER");
                     do{
+                        in.nextLine();
+                        while(!in.hasNextInt()){
+                            System.out.println("You need to enter number! Try again...");
+                            in.nextLine();
+                        }
                         role = in.nextInt();
                         if(role > 4 || role < 1) System.out.println("Wrong number! try again...\n");
                     }while(role > 4 || role < 1);
@@ -95,11 +98,16 @@ public class CrewServiceActs implements CrewService {
                 }
                 case 2:{
                     System.out.println("Enter new rank: \n" +
-                            "TRAINEE - 1\n" +
-                            "SECOND_OFFICER - 2\n" +
-                            "FIRST_OFFICER - 3\n" +
-                            "CAPTAIN - 4\n");
+                            "1 - TRAINEE\n" +
+                            "2 - SECOND_OFFICER\n" +
+                            "3 - FIRST_OFFICER\n" +
+                            "4 - CAPTAIN");
                     do{
+                        in.nextLine();
+                        while(!in.hasNextInt()){
+                            System.out.println("You need to enter number! Try again...");
+                            in.nextLine();
+                        }
                         rank = in.nextInt();
                         if(rank > 4 || rank < 1) System.out.println("Wrong number! try again...\n");
                     }while(rank > 4 || rank < 1);

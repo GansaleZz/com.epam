@@ -3,6 +3,7 @@ package com.epam.jwd.core_final.context.impl;
 import com.epam.jwd.core_final.domain.FlightMission;
 
 import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.JsonSerializer;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
@@ -27,7 +28,8 @@ public class JsonUtils {
         jsonArray.add(jsonObject);
         try {
             FileWriter file = new FileWriter("/Users/andrew_wannasesh/Folders/EpamJAva/jwd-core-final/src/main/resources/output/flightmissions.json");
-            file.write(jsonArray.toJSONString());
+            jsonArray.writeJSONString(file);
+            file.flush();
             file.close();
         }catch (IOException e){
             e.printStackTrace();
