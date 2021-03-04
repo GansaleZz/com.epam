@@ -3,16 +3,12 @@ package com.epam.jwd.core_final.service.impl;
 import com.epam.jwd.core_final.context.Application;
 import com.epam.jwd.core_final.criteria.CrewMemberCriteria;
 import com.epam.jwd.core_final.criteria.Criteria;
-import com.epam.jwd.core_final.domain.CrewMember;
-import com.epam.jwd.core_final.domain.Rank;
-import com.epam.jwd.core_final.domain.Role;
-import com.epam.jwd.core_final.exception.DuplicateException;
+import com.epam.jwd.core_final.criteria.FlightMissionCriteria;
+import com.epam.jwd.core_final.domain.*;
+import com.epam.jwd.core_final.exception.*;
 import com.epam.jwd.core_final.service.CrewService;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.*;
 
 public class CrewServiceActs implements CrewService {
     private static CrewServiceActs instance;
@@ -33,7 +29,7 @@ public class CrewServiceActs implements CrewService {
 
     @Override
     public List<CrewMember> findAllCrewMembersByCriteria(Criteria<? extends CrewMember> criteria) {
-        List<CrewMember> crewMembers = new ArrayList<>(Application.nassaContext.retrieveBaseEntityList(CrewMember.class));
+        List<CrewMember> crewMembers = (List<CrewMember>) Application.nassaContext.retrieveBaseEntityList(CrewMember.class);
         List<CrewMember> list = new ArrayList<>();
         if(((CrewMemberCriteria) criteria).getReadyForNextMissions() != null){
             crewMembers.stream()
@@ -63,7 +59,7 @@ public class CrewServiceActs implements CrewService {
 
     @Override
     public Optional<CrewMember> findCrewMemberByCriteria(Criteria<? extends CrewMember> criteria) {
-        List<CrewMember> crewMembers = new ArrayList<>(Application.nassaContext.retrieveBaseEntityList(CrewMember.class));
+        List<CrewMember> crewMembers = (List<CrewMember>) Application.nassaContext.retrieveBaseEntityList(CrewMember.class);
         Optional<CrewMember> crewMember;
         crewMember = crewMembers.stream()
                 .filter(i -> i.getName().equals(((CrewMemberCriteria) criteria).getName()))
@@ -73,6 +69,9 @@ public class CrewServiceActs implements CrewService {
 
     @Override
     public CrewMember updateCrewMemberDetails(CrewMember crewMember) {
+        if(crewMember.isReadyForNexMissions() != true){
+            System.out.println("Crew member is busy now ! Try again next time...\n");
+        }
         Scanner in = new Scanner(System.in);
         int rank,role,buf;
         System.out.println("Enter which detail you want to update: \n" +
@@ -110,18 +109,54 @@ public class CrewServiceActs implements CrewService {
                 default:System.out.println("Wrong number! try again...\n");
             }
         }while(buf > 2 || buf < 1);
-        in.close();
+//        in.close();
         return crewMember;
     }
 
     @Override
-    public void assignCrewMemberOnMission(CrewMember crewMember) throws RuntimeException {
+    public void assignCrewMemberOnMission(CrewMember crewMember) throws ReadinessException, InvalidStateException, FullAssignedException {
+        try {
+            if (crewMember.isReadyForNexMissions() != true) throw new ReadinessException(crewMember.getName());
+            else{
+                Scanner str = new Scanner(System.in);
+                MissionServiceActs missionServiceActs = MissionServiceActs.getInstance();
+                FlightMissionCriteria flightMissionCriteria= new FlightMissionCriteria();
+                System.out.println("Enter name of mission: ");
+                String name = str.nextLine();
+//                String name = "Test";
+                flightMissionCriteria.setName(name);
+                if(!missionServiceActs.findMissionByCriteria(flightMissionCriteria).isPresent()) throw new InvalidStateException("flight mission");
+                else{
+                    FlightMission flightMission = missionServiceActs.findMissionByCriteria(flightMissionCriteria).get();
+                    if(flightMission.getAssignedSpaceShip() == null) {
+                        System.out.println("You need to assign spaceship first!");
+                    }
+                    else
+                    if(flightMission.getMissionResult() != MissionResult.PLANNED) throw new AssignException("crew member");
+                    else{
+                        Map<Role,Short> crew = flightMission.getAssignedSpaceShip().getCrew();
+                        if(flightMission.getAssignedCrew().size()!= 0) {
+                            short count = (short) flightMission.getAssignedCrew().stream()
+                                    .filter(i -> i.getRole() == crewMember.getRole())
+                                    .count();
+                            if(count >= crew.get(crewMember.getRole())) throw new FullAssignedException(flightMission.getName());
+                        }else{
+                            crewMember.setReadyForNexMissions(false);
+                            flightMission.addToCrew(crewMember);
+                        }
+                    }
+                }
+//                str.close();
+            }
+        } catch (ReadinessException | InvalidStateException | FullAssignedException | AssignException e) {
+            System.out.println(e.getMessage());
+        }
 
     }
 
     @Override
     public CrewMember createCrewMember(CrewMember crewMember) throws DuplicateException {
-        List<CrewMember> crewMembers = new ArrayList<>(Application.nassaContext.retrieveBaseEntityList(CrewMember.class));
+        List<CrewMember> crewMembers = (List<CrewMember>) Application.nassaContext.retrieveBaseEntityList(CrewMember.class);
         try {
             Optional<CrewMember> crewCheck;
                     crewCheck = crewMembers.stream()

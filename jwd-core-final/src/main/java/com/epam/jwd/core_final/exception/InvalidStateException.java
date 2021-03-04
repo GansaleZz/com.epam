@@ -10,6 +10,6 @@ public class InvalidStateException extends Exception {
 
     @Override
     public String getMessage() {
-        return "Entity " + str+" does not exist!";
+        return "Entity " + str+" with this criteria does not exist!";
     }
 }

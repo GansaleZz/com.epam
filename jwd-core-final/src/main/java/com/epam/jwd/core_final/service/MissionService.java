@@ -19,5 +19,5 @@ public interface MissionService {
 
     FlightMission createMission(FlightMission flightMission) throws DuplicateException;
 
-    FlightMission startMission(FlightMission flightMission);
+    void startMission(FlightMission flightMission);
 }

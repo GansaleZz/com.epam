@@ -25,7 +25,6 @@ public class JsonUtils {
         jsonObject.put("starting of mission",""+flightMission.getStart());
         jsonObject.put("ending of mission",""+flightMission.getEnd());
         jsonArray.add(jsonObject);
-        System.out.println(jsonArray.size());
         try {
             FileWriter file = new FileWriter("/Users/andrew_wannasesh/Folders/EpamJAva/jwd-core-final/src/main/resources/output/flightmissions.json");
             file.write(jsonArray.toJSONString());

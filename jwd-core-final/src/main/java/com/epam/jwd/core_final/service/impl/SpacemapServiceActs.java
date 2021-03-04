@@ -25,7 +25,7 @@ public class SpacemapServiceActs implements SpacemapService {
 
     @Override
     public Planet getRandomPlanet() {
-        List<Planet> spacemap = new ArrayList<>(Application.nassaContext.retrieveBaseEntityList(Planet.class));
+        List<Planet> spacemap = (List<Planet>) Application.nassaContext.retrieveBaseEntityList(Planet.class);
         Random random = new Random();
         int rand = random.nextInt(spacemap.size());
         return spacemap.get(rand);
@@ -33,7 +33,7 @@ public class SpacemapServiceActs implements SpacemapService {
 
     @Override
     public Optional<Planet> findPlanetByCriteria(Criteria<? extends Planet> criteria) {
-        List<Planet> spacemap = new ArrayList<>(Application.nassaContext.retrieveBaseEntityList(Planet.class));
+        List<Planet> spacemap = (List<Planet>) Application.nassaContext.retrieveBaseEntityList(Planet.class);
         Optional<Planet> planet = spacemap.stream()
                 .filter(i -> i.getName().equals(((PlanetCriteria) criteria).getName()))
                 .findAny();

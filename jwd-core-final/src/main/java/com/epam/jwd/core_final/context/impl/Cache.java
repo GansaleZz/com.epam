@@ -1,15 +1,29 @@
 package com.epam.jwd.core_final.context.impl;
 
+import com.epam.jwd.core_final.domain.CrewMember;
 import com.epam.jwd.core_final.domain.FlightMission;
 import com.epam.jwd.core_final.domain.MissionResult;
 
 import java.time.LocalDateTime;
 import java.util.*;
 
-public class Cache {
-    private static Hashtable<Long,FlightMission> cache = new Hashtable<>();
+public class Cache extends TimerTask {
+    private static Map<Long,FlightMission> cache = new HashMap<>();
+    private static Cache instance;
 
     private Cache(){}
+
+    public static Cache getInstance(){
+        if(instance == null){
+            instance = new Cache();
+        }
+        return instance;
+    }
+
+    @Override
+    public void run() {
+        refreshCache();
+    }
 
 
     public static void addToCache(FlightMission flightMission){
@@ -19,24 +33,27 @@ public class Cache {
     }
 
     public static void refreshCache(){
-
         if(cache.size() != 0 ) {
-            List<FlightMission> list = new ArrayList<>(cache.values());
-            for (int i = 0; i < list.size(); ++i) {
-                if(list.get(i).getEnd().isBefore(LocalDateTime.now())){
+            Iterator i = cache.entrySet().iterator();
+            while(i.hasNext()) {
+                Map.Entry pair = (Map.Entry) i.next();
+                if(((FlightMission) pair.getValue()).getEnd().isBefore(LocalDateTime.now())){
                     Random random = new Random();
                     int res = random.nextInt(10);
                     if(res <=5){
-                        list.get(i).setMissionResult(MissionResult.COMPLETED);
-                        list.get(i).getAssignedSpaceShip().setReadyForNextMissions(true);
-                        list.get(i).getAssignedCrew().stream()
+                        ((FlightMission) pair.getValue()).setMissionResult(MissionResult.COMPLETED);
+                        JsonUtils.parseFlightMissionJson(((FlightMission) pair.getValue()));
+                        ((FlightMission) pair.getValue()).getAssignedSpaceShip().setReadyForNextMissions(true);
+                        ((FlightMission) pair.getValue()).getAssignedSpaceShip().setFlightDist(((FlightMission) pair.getValue()).getAssignedSpaceShip().getFlightDist() - ((FlightMission) pair.getValue()).getDistance());
+                        ((FlightMission) pair.getValue()).setAssignedSpaceShip(null);
+                        ((FlightMission) pair.getValue()).getAssignedCrew().stream()
                                 .forEach(crew -> crew.setReadyForNexMissions(true));
-                        JsonUtils.parseFlightMissionJson(list.get(i));
-                        list.remove(i);
+                        ((FlightMission) pair.getValue()).getAssignedCrew().clear();
+                        cache.remove(pair.getKey());
                     }else{
-                        list.get(i).setMissionResult(MissionResult.FAILED);
-                        JsonUtils.parseFlightMissionJson(list.get(i));
-                        list.remove(i);
+                        ((FlightMission) pair.getValue()).setMissionResult(MissionResult.FAILED);
+                        JsonUtils.parseFlightMissionJson(((FlightMission) pair.getValue()));
+                        cache.remove(pair.getKey());
                     }
                 }
             }

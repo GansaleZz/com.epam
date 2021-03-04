@@ -4,6 +4,7 @@ import com.epam.jwd.core_final.criteria.Criteria;
 import com.epam.jwd.core_final.domain.CrewMember;
 import com.epam.jwd.core_final.exception.DuplicateException;
 import com.epam.jwd.core_final.exception.InvalidStateException;
+import com.epam.jwd.core_final.exception.ReadinessException;
 
 import java.io.IOException;
 import java.util.List;
@@ -24,7 +25,7 @@ public interface CrewService {
     CrewMember updateCrewMemberDetails(CrewMember crewMember);
 
     // todo create custom exception for case, when crewMember is not able to be assigned
-    void assignCrewMemberOnMission(CrewMember crewMember) throws RuntimeException;
+    void assignCrewMemberOnMission(CrewMember crewMember) throws ReadinessException, InvalidStateException;
 
     // todo create custom exception for case, when crewMember is not able to be created (for example - duplicate.
     // crewmember unique criteria - only name!

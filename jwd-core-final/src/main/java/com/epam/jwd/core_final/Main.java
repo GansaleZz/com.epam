@@ -27,8 +27,8 @@ import java.util.Map;
 public class Main {
 
     public static void main(String[] args) throws InvalidStateException, IOException {
-//        ApplicationMenu applicationMenu = Application.start();
-//        applicationMenu.printAvailableOptions();
+        ApplicationMenu applicationMenu = Application.start();
+        applicationMenu.printAvailableOptions();
 
     }
 }

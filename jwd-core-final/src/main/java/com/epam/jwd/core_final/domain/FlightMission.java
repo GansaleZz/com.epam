@@ -2,6 +2,7 @@ package com.epam.jwd.core_final.domain;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,9 +24,9 @@ import java.util.List;
 public class FlightMission extends AbstractBaseEntity {
     private LocalDateTime start;
     private LocalDateTime end;
-    private long distance;
+    private long distance = 0;
     private Spaceship assignedSpaceShip;
-    private List<CrewMember> assignedCrew;
+    private List<CrewMember> assignedCrew = new ArrayList<>();
     private MissionResult missionResult;
     private Planet from ;
     private Planet to;
@@ -85,8 +86,13 @@ public class FlightMission extends AbstractBaseEntity {
         return from;
     }
 
+    public void addToCrew(CrewMember crewMember){
+        assignedCrew.add(crewMember);
+    }
+
     public void setFrom(Planet from) {
         this.from = from;
+        if (distance != 0) distance = (long) Math.sqrt((to.getPoint().getX() - from.getPoint().getX()) * (to.getPoint().getX() - from.getPoint().getX()) + (to.getPoint().getY() - from.getPoint().getY()) * (to.getPoint().getY() - from.getPoint().getY()));
     }
 
     public Planet getTo() {
@@ -95,12 +101,13 @@ public class FlightMission extends AbstractBaseEntity {
 
     public void setTo(Planet to) {
         this.to = to;
+        if (distance != 0) distance = (long) Math.sqrt((to.getPoint().getX() - from.getPoint().getX()) * (to.getPoint().getX() - from.getPoint().getX()) + (to.getPoint().getY() - from.getPoint().getY()) * (to.getPoint().getY() - from.getPoint().getY()));
     }
 
     @Override
     public String toString() {
         return "FlightMission{" +
-                ", start=" + start +
+                " start=" + start +
                 ", end=" + end +
                 ", distance=" + distance +
                 ", assignedSpaceShip=" + assignedSpaceShip +

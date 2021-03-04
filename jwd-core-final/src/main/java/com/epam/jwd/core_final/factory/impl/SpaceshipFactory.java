@@ -6,6 +6,7 @@ import com.epam.jwd.core_final.domain.Spaceship;
 import com.epam.jwd.core_final.exception.InvalidInArgsException;
 import com.epam.jwd.core_final.factory.EntityFactory;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class SpaceshipFactory implements EntityFactory<Spaceship> {
@@ -14,7 +15,7 @@ public class SpaceshipFactory implements EntityFactory<Spaceship> {
     public Spaceship create(Object... args) throws InvalidInArgsException{
         Spaceship spaceship = null;
         long flightDist = 0;
-        Map<Role,Short> crew = null;
+        Map<Role,Short> crew = new HashMap<>();
         String name = null;
         Boolean bool = true;
         try {
@@ -30,13 +31,6 @@ public class SpaceshipFactory implements EntityFactory<Spaceship> {
                     else if (i instanceof Boolean) bool = (Boolean) i;
                 }
             }
-
-            if (crew == null
-                    || flightDist == 0
-                    || name == null) {
-                logger.error("Invalid input args for creating spaceship!");
-                throw new InvalidInArgsException(args);
-            } else {
                 spaceship = new SpaceshipCriteria.Builder()
                         .withName(name)
                         .withSetCrew(crew)
@@ -44,7 +38,6 @@ public class SpaceshipFactory implements EntityFactory<Spaceship> {
                         .isReadyForNextMissions(bool)
                         .build();
                 logger.info("Spaceship was successfully created!");
-            }
         }catch(InvalidInArgsException e){
             logger.error("Invalid input args for creating spaceship!");
             System.out.println(e.getMessage());

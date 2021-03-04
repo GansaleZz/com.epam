@@ -30,7 +30,7 @@ class FlightMissionFactoryTest {
         Planet to = planetFactory.create(40,20,"Mars");
         FlightMission flightMission = flightMissionFactory.create(name,from,to);
         Cache.addToCache(flightMission);
-        Cache.refreshCache();
+//        Cache.refreshCache();
         assertEquals(flightMission.getName(),"Test Mission");
         long distance = (long) Math.sqrt((10-40)*(10-40) + (15-20)*(15-20));
         assertEquals(flightMission.getDistance(),distance);

@@ -21,7 +21,7 @@ public class FlightMissionFactory implements EntityFactory<FlightMission> {
         String name = null;
         long distance = 0;
         Planet to = null;
-        Planet from = null;
+        Planet from =null ;
         try {
             if (args.length != 3) {
                 logger.error("Invalid input args for creating flight mission !");
@@ -43,9 +43,9 @@ public class FlightMissionFactory implements EntityFactory<FlightMission> {
                 distance = (long) Math.sqrt((to.getPoint().getX() - from.getPoint().getX()) * (to.getPoint().getX() - from.getPoint().getX()) + (to.getPoint().getY() - from.getPoint().getY()) * (to.getPoint().getY() - from.getPoint().getY()));
                 flightMission = new FlightMissionCriteria.Builder()
                         .withName(name)
-                        .withDistance(distance)
                         .withFrom(from)
                         .withTo(to)
+                        .withDistance(distance)
                         .build();
                 logger.info("FlightMission was successfully created!");
             }
