@@ -128,49 +128,53 @@ public class MissionServiceActs implements MissionService {
     @Override
     public void startMission(FlightMission flightMission) {
             Spaceship spaceship = flightMission.getAssignedSpaceShip();
-            if (spaceship == null) System.out.println("You can not start mission, while spaceship does not assigned!");
-            else {
-                if (flightMission.getAssignedCrew().size() == 0)
-                    System.out.println("You can not start mission, while crew does not assigned entirely!");
+            if(MissionResult.COMPLETED == flightMission.getMissionResult() || MissionResult.FAILED == flightMission.getMissionResult()){
+                System.out.println("Mission "+flightMission.getName()+" is not available!");
+            }
+            else
+                if (spaceship == null) System.out.println("You can not start mission, while spaceship does not assigned!");
                 else {
-                    if(flightMission.getMissionResult() != MissionResult.PLANNED) System.out.println("Mission is not available to start!");
+                    if (flightMission.getAssignedCrew().size() == 0)
+                        System.out.println("You can not start mission, while crew does not assigned entirely!");
                     else {
-                        Map<Role, Short> crew = spaceship.getCrew();
-                        short i, j, k, l;
-                        i = (short) flightMission.getAssignedCrew().stream()
-                                .filter(crewMember -> crewMember.getRole() == Role.MISSION_SPECIALIST)
-                                .count();
-                        if (i != crew.get(Role.MISSION_SPECIALIST))
-                            System.out.println("You can not start mission, while crew does not assigned entirely!");
+                        if(flightMission.getMissionResult() != MissionResult.PLANNED) System.out.println("Mission is not available to start!");
                         else {
-                            j = (short) flightMission.getAssignedCrew().stream()
-                                    .filter(crewMember -> crewMember.getRole() == Role.FLIGHT_ENGINEER)
+                            Map<Role, Short> crew = spaceship.getCrew();
+                            short i, j, k, l;
+                            i = (short) flightMission.getAssignedCrew().stream()
+                                    .filter(crewMember -> crewMember.getRole() == Role.MISSION_SPECIALIST)
                                     .count();
-                            if (j != crew.get(Role.FLIGHT_ENGINEER))
+                            if (i != crew.get(Role.MISSION_SPECIALIST))
                                 System.out.println("You can not start mission, while crew does not assigned entirely!");
                             else {
-                                k = (short) flightMission.getAssignedCrew().stream()
-                                        .filter(crewMember -> crewMember.getRole() == Role.PILOT)
+                                j = (short) flightMission.getAssignedCrew().stream()
+                                        .filter(crewMember -> crewMember.getRole() == Role.FLIGHT_ENGINEER)
                                         .count();
-                                if (k != crew.get(Role.PILOT))
+                                if (j != crew.get(Role.FLIGHT_ENGINEER))
                                     System.out.println("You can not start mission, while crew does not assigned entirely!");
                                 else {
-                                    l = (short) flightMission.getAssignedCrew().stream()
-                                            .filter(crewMember -> crewMember.getRole() == Role.COMMANDER)
+                                    k = (short) flightMission.getAssignedCrew().stream()
+                                            .filter(crewMember -> crewMember.getRole() == Role.PILOT)
                                             .count();
-                                    if (l != crew.get(Role.COMMANDER))
+                                    if (k != crew.get(Role.PILOT))
                                         System.out.println("You can not start mission, while crew does not assigned entirely!");
                                     else {
-                                        flightMission.setStart(LocalDateTime.now());
-                                        flightMission.setEnd(flightMission.getStart().plusSeconds(flightMission.getDistance()));
-                                        flightMission.setMissionResult(MissionResult.IN_PROGRESS);
-                                        Cache.addToCache(flightMission);
+                                        l = (short) flightMission.getAssignedCrew().stream()
+                                                .filter(crewMember -> crewMember.getRole() == Role.COMMANDER)
+                                                .count();
+                                        if (l != crew.get(Role.COMMANDER))
+                                            System.out.println("You can not start mission, while crew does not assigned entirely!");
+                                        else {
+                                            flightMission.setStart(LocalDateTime.now());
+                                            flightMission.setEnd(flightMission.getStart().plusSeconds(flightMission.getDistance()));
+                                            flightMission.setMissionResult(MissionResult.IN_PROGRESS);
+                                            Cache.addToCache(flightMission);
+                                        }
                                     }
                                 }
                             }
                         }
                     }
-                }
             }
         }
 }

@@ -151,7 +151,6 @@ public interface ApplicationMenu {
                         CrewMemberCriteria crewMemberCriteria = new CrewMemberCriteria();
                         crewMemberCriteria.setName(temp);
                         handleUserInput(crewServiceActs.findCrewMemberByCriteria(crewMemberCriteria));
-//                        str.close();
                         break;
                     }
                     case 4: {
@@ -192,7 +191,6 @@ public interface ApplicationMenu {
                             System.out.println(e.getMessage());
                             break;
                         }
-//                        str.close();
                         break;
                     }
                     case 5: {
@@ -246,7 +244,6 @@ public interface ApplicationMenu {
                             System.out.println(e.getMessage());
                             break;
                         }
-//                        str.close();
                         break;
                     }
                     case 7: {
@@ -323,7 +320,6 @@ public interface ApplicationMenu {
                         FlightMissionCriteria flightMissionCriteria = new FlightMissionCriteria();
                         flightMissionCriteria.setName(name);
                         handleUserInput(missionServiceActs.findMissionByCriteria(flightMissionCriteria));
-//                        str.close();
                         break;
                     }
                     case 10: {
@@ -349,7 +345,6 @@ public interface ApplicationMenu {
                             System.out.println(e.getMessage());
                             break;
                         }
-//                        str.close();
                         break;
                     }
                     case 11: {
@@ -415,7 +410,6 @@ public interface ApplicationMenu {
                             System.out.println(e.getMessage());
                             break;
                         }
-//                        str.close();
                         break;
                     }
                     case 14: {
@@ -425,7 +419,6 @@ public interface ApplicationMenu {
                         PlanetCriteria planetCriteria = new PlanetCriteria();
                         planetCriteria.setName(name);
                         handleUserInput(spacemapServiceActs.findPlanetByCriteria(planetCriteria));
-//                        str.close();
                         break;
                     }
                     case 15: {
@@ -472,7 +465,6 @@ public interface ApplicationMenu {
                         SpaceshipCriteria spaceshipCriteria = new SpaceshipCriteria();
                         spaceshipCriteria.setName(name);
                         handleUserInput(spaceshipServiceActs.findSpaceshipByCriteria(spaceshipCriteria));
-//                        str.close();
                         break;
                     }
                     case 18: {
@@ -489,7 +481,6 @@ public interface ApplicationMenu {
                         } catch (InvalidStateException e) {
                             System.out.println(e.getMessage());
                         }
-//                        str.close();
                         break;
                     }
                     case 19: {
@@ -509,7 +500,6 @@ public interface ApplicationMenu {
                         } catch (InvalidStateException e) {
                             System.out.println(e.getMessage());
                         }
-//                        str.close();
                         break;
                     }
                     case 20: {

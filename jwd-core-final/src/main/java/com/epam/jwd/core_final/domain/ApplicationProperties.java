@@ -1,5 +1,7 @@
 package com.epam.jwd.core_final.domain;
 
+import com.epam.jwd.core_final.util.PropertyReaderUtil;
+
 import java.util.Properties;
 
 /**
@@ -20,69 +22,49 @@ import java.util.Properties;
 //OK
 
 public final class ApplicationProperties {
-    private final String inputRootDir;
-    private final String outputRootDir;
-    private final String crewFileName;
-    private final String missionsFileName;
-    private final String spaceshipsFileName;
-    private final String spacemapFileName;
-    private final int fileRefreshRate;
-    private final String dateTimeFormat;
+    private static Properties properties = PropertyReaderUtil.getProperties();
+    private static final String inputRootDir = properties.getProperty("inputRootDir");
+    private static final String outputRootDir = properties.getProperty("outputRootDir");;
+    private static final String crewFileName  = properties.getProperty("crewFileName");
+    private static final String missionsFileName = properties.getProperty("missionsFileName");
+    private static final String spaceshipsFileName = properties.getProperty("spaceshipsFileName");
+    private static final String spacemapFileName = properties.getProperty("spacemapFileName");
+    private static final int fileRefreshRate = Integer.valueOf(properties.getProperty("fileRefreshRate"));
+    private static final String dateTimeFormat = properties.getProperty("dateTimeFormat");
 
-    public ApplicationProperties(Properties properties) {
-        this.inputRootDir = properties.getProperty("inputRootDir");
-        this.outputRootDir = properties.getProperty("outputRootDir");
-        this.crewFileName = properties.getProperty("crewFileName");
-        this.missionsFileName = properties.getProperty("missionsFileName");
-        this.spaceshipsFileName = properties.getProperty("spaceshipsFileName");
-        this.fileRefreshRate = Integer.valueOf(properties.getProperty("fileRefreshRate"));
-        this.spacemapFileName = properties.getProperty("spacemapFileName");
-        this.dateTimeFormat = properties.getProperty("dateTimeFormat");
-    }
+    private ApplicationProperties(){}
 
 
-    public int getFileRefreshRate() {
+    public static int getFileRefreshRate() {
         return fileRefreshRate;
     }
 
-    public String getCrewFileName() {
+    public static String getCrewFileName() {
         return crewFileName;
     }
 
-    public String getDateTimeFormat() {
+    public static String getDateTimeFormat() {
         return dateTimeFormat;
     }
 
-    public String getInputRootDir() {
+    public static String getInputRootDir() {
         return inputRootDir;
     }
 
-    public String getMissionsFileName() {
+    public static String getMissionsFileName() {
         return missionsFileName;
     }
 
-    public String getOutputRootDir() {
+    public static String getOutputRootDir() {
         return outputRootDir;
     }
 
-    public String getSpaceshipsFileName() {
+    public static String getSpaceshipsFileName() {
         return spaceshipsFileName;
     }
 
-    public String getSpacemapFileName() {
+    public static String getSpacemapFileName() {
         return spacemapFileName;
     }
 
-    @Override
-    public String toString() {
-        return "ApplicationProperties{" +
-                "inputRootDir='" + inputRootDir + '\'' +
-                ", outputRootDir='" + outputRootDir + '\'' +
-                ", crewFileName='" + crewFileName + '\'' +
-                ", missionsFileName='" + missionsFileName + '\'' +
-                ", spaceshipsFileName='" + spaceshipsFileName + '\'' +
-                ", fileRefreshRate=" + fileRefreshRate +
-                ", dateTimeFormat='" + dateTimeFormat + '\'' +
-                '}';
-    }
 }

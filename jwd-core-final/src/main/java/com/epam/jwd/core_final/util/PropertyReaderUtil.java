@@ -15,6 +15,7 @@ public final class PropertyReaderUtil {
     private static final Properties properties = new Properties();
 
     public static Properties getProperties(){
+        loadProperties();
         return properties;
     }
 

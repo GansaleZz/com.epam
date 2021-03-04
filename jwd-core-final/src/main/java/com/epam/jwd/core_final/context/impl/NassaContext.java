@@ -34,8 +34,6 @@ public class NassaContext implements ApplicationContext {
      */
     @Override
     public void init() throws IOException {
-        PropertyReaderUtil.loadProperties();
-        applicationProperties = new ApplicationProperties(PropertyReaderUtil.getProperties());
         CrewMemberFactory crewMemberFactory = new CrewMemberFactory();
         int i,k,buf;
         String name;
@@ -145,6 +143,6 @@ public class NassaContext implements ApplicationContext {
             logger.error(e.getMessage());
             e.printStackTrace();
         }
-        logger.info("Planets completely were read from the file");
+//        logger.info("Planets completely were read from the file");
     }
 }

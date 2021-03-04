@@ -49,10 +49,14 @@ public class Cache extends TimerTask {
                         ((FlightMission) pair.getValue()).getAssignedCrew().stream()
                                 .forEach(crew -> crew.setReadyForNexMissions(true));
                         ((FlightMission) pair.getValue()).getAssignedCrew().clear();
+                        System.out.println("Mission "+((FlightMission) pair.getValue()).getName()+ " completed!");
                         cache.remove(pair.getKey());
                     }else{
                         ((FlightMission) pair.getValue()).setMissionResult(MissionResult.FAILED);
                         JsonUtils.parseFlightMissionJson(((FlightMission) pair.getValue()));
+                        ((FlightMission) pair.getValue()).setAssignedSpaceShip(null);
+                        ((FlightMission) pair.getValue()).getAssignedCrew().clear();
+                        System.out.println("Mission "+((FlightMission) pair.getValue()).getName()+ " failed!");
                         cache.remove(pair.getKey());
                     }
                 }

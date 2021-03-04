@@ -109,7 +109,6 @@ public class CrewServiceActs implements CrewService {
                 default:System.out.println("Wrong number! try again...\n");
             }
         }while(buf > 2 || buf < 1);
-//        in.close();
         return crewMember;
     }
 
@@ -123,7 +122,6 @@ public class CrewServiceActs implements CrewService {
                 FlightMissionCriteria flightMissionCriteria= new FlightMissionCriteria();
                 System.out.println("Enter name of mission: ");
                 String name = str.nextLine();
-//                String name = "Test";
                 flightMissionCriteria.setName(name);
                 if(!missionServiceActs.findMissionByCriteria(flightMissionCriteria).isPresent()) throw new InvalidStateException("flight mission");
                 else{
@@ -146,7 +144,6 @@ public class CrewServiceActs implements CrewService {
                         }
                     }
                 }
-//                str.close();
             }
         } catch (ReadinessException | InvalidStateException | FullAssignedException | AssignException e) {
             System.out.println(e.getMessage());
