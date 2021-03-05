@@ -58,8 +58,8 @@ public class MissionServiceActs implements MissionService {
     public FlightMission updateFlightMissionDetails(FlightMission flightMission) {
         Scanner in = new Scanner(System.in);
         System.out.println("Enter which detail You want to update: \n" +
-                "Planet (to) - 1\n" +
-                "Planet (from) - 2");
+                "1 - Planet (to)\n" +
+                "2 - Planet (from)");
         int buf;
         do{
             buf= in.nextInt();
@@ -114,11 +114,13 @@ public class MissionServiceActs implements MissionService {
         List<FlightMission> flightMissions = (List<FlightMission>) Application.nassaContext.retrieveBaseEntityList(FlightMission.class);
         try {
             Optional<FlightMission> missionCheck = flightMissions.stream()
-                    .filter(i -> i.getName().equals(flightMission.getName()))
+                    .filter(i -> i.getName().equalsIgnoreCase(flightMission.getName()))
                     .findAny();
             if (missionCheck.isPresent()) throw new DuplicateException(flightMission.getName(),"flightMission");
-            else flightMissions.add(flightMission);
-
+            else {
+                flightMissions.add(flightMission);
+                System.out.println("Mission has completely created!");
+            }
         }catch(DuplicateException e){
             System.out.println(e.getMessage());
         }

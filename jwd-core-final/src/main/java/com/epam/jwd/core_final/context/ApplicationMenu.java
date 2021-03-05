@@ -221,10 +221,10 @@ public interface ApplicationMenu {
                             String name = str.nextLine();
                             int rank, role;
                             System.out.println("Enter role: \n" +
-                                    "MISSION_SPECIALIST - 1\n" +
-                                    "FLIGHT_ENGINEER - 2\n" +
-                                    "PILOT - 3\n" +
-                                    "COMMANDER - 4");
+                                    "1 - MISSION_SPECIALIST\n" +
+                                    "2 - FLIGHT_ENGINEER\n" +
+                                    "3 - PILOT\n" +
+                                    "4 - COMMANDER");
                             do {
                                 while(!in.hasNextInt()){
                                     System.out.println("You need to enter number! Try again...");
@@ -235,10 +235,10 @@ public interface ApplicationMenu {
                             } while (buf > 4 || buf < 1);
                             role = buf;
                             System.out.println("Enter rank: \n" +
-                                    "TRAINEE - 1\n" +
-                                    "SECOND_OFFICER - 2\n" +
-                                    "FIRST_OFFICER - 3\n" +
-                                    "CAPTAIN - 4");
+                                    "1 - TRAINEE\n" +
+                                    "2 - SECOND_OFFICER\n" +
+                                    "3 - FIRST_OFFICER\n" +
+                                    "4 - CAPTAIN");
                             do {
                                 while(!in.hasNextInt()){
                                     System.out.println("You need to enter number! Try again...");
@@ -257,17 +257,24 @@ public interface ApplicationMenu {
                                 System.out.println(e.getMessage());
                                 break;
                             }
+                            System.out.println("Enter any key to continue ...");
+                            Scanner read = new Scanner(System.in);
+                            read.nextLine();
                             break;
                         }
                         case 7: {
                             handleUserInput(missionServiceActs.findAllMissions());
+                            System.out.println("Enter any key to continue ...");
+                            Scanner read = new Scanner(System.in);
+                            read.nextLine();
                             break;
                         }
                         case 8: {
                             System.out.println("Enter criteria:\n" +
-                                    "Distance of mission - 1\n" +
-                                    "Mission status - 2");
+                                    "1 - Distance of mission\n" +
+                                    "2 - Mission status");
                             do {
+                                in.nextLine();
                                 while(!in.hasNextInt()){
                                     System.out.println("You need to enter number! Try again...");
                                     in.nextLine();
@@ -277,6 +284,11 @@ public interface ApplicationMenu {
                                     case 1: {
                                         System.out.println("Enter distance of mission: ");
                                         long distance;
+                                        in.nextLine();
+                                        while(!in.hasNextLong()){
+                                            System.out.println("You need to enter number! Try again...");
+                                            in.nextLine();
+                                        }
                                         distance = in.nextLong();
                                         FlightMissionCriteria flightMissionCriteria = new FlightMissionCriteria();
                                         flightMissionCriteria.setDistance(distance);
@@ -285,13 +297,14 @@ public interface ApplicationMenu {
                                     }
                                     case 2: {
                                         System.out.println("Enter status of mission: \n" +
-                                                "CANCELLED - 1\n" +
-                                                "FAILED - 2\n" +
-                                                "PLANNED - 3\n" +
-                                                "IN_PROGRESS - 4\n" +
-                                                "COMPLETED - 5");
+                                                "1 - CANCELLED\n" +
+                                                "2 - FAILED\n" +
+                                                "3 - PLANNED\n" +
+                                                "4 - IN_PROGRESS\n" +
+                                                "5 - COMPLETED");
                                         MissionResult missionResult = null;
                                         do {
+                                            in.nextLine();
                                             while(!in.hasNextInt()){
                                                 System.out.println("You need to enter number! Try again...");
                                                 in.nextLine();
@@ -332,6 +345,9 @@ public interface ApplicationMenu {
                                         System.out.println("Wrong number! try again...");
                                 }
                             } while (buf > 2 || buf < 1);
+                            System.out.println("Enter any key to continue ...");
+                            Scanner read = new Scanner(System.in);
+                            read.nextLine();
                             break;
                         }
                         case 9: {
@@ -341,6 +357,9 @@ public interface ApplicationMenu {
                             FlightMissionCriteria flightMissionCriteria = new FlightMissionCriteria();
                             flightMissionCriteria.setName(name);
                             handleUserInput(missionServiceActs.findMissionByCriteria(flightMissionCriteria));
+                            System.out.println("Enter any key to continue ...");
+                            Scanner read = new Scanner(System.in);
+                            read.nextLine();
                             break;
                         }
                         case 10: {
@@ -352,20 +371,22 @@ public interface ApplicationMenu {
                             FlightMissionCriteria flightMissionCriteria = new FlightMissionCriteria();
                             flightMissionCriteria.setName(name);
                             try {
-                                if (missionServiceActs.findMissionByCriteria(flightMissionCriteria) == null)
+                                if (missionServiceActs.findMissionByCriteria(flightMissionCriteria).isEmpty())
                                     throw new InvalidStateException("flightmission");
                                 else {
                                     flightMission = missionServiceActs.findMissionByCriteria(flightMissionCriteria).get();
-                                    if (flightMission.getMissionResult() != null || flightMission.getMissionResult() != MissionResult.PLANNED) {
-                                        System.out.println("Flight mission " + flightMission.getName() + " is in the progress now! Tra next time...");
+                                    if (flightMission.getMissionResult() != null ) {
+                                        System.out.println("Flight mission " + flightMission.getName() + " is in the progress/planned now! Try again next time...");
                                     } else {
                                         handleUserInput(missionServiceActs.updateFlightMissionDetails(flightMission));
                                     }
                                 }
                             } catch (InvalidStateException e) {
                                 System.out.println(e.getMessage());
-                                break;
                             }
+                            System.out.println("Enter any key to continue ...");
+                            Scanner read = new Scanner(System.in);
+                            read.nextLine();
                             break;
                         }
                         case 11: {
@@ -402,12 +423,17 @@ public interface ApplicationMenu {
                                 handleUserInput(missionServiceActs.createMission(flightMission));
                             } catch (InvalidStateException e) {
                                 System.out.println(e.getMessage());
-                                break;
                             }
+                            System.out.println("Enter any key to continue ...");
+                            Scanner read = new Scanner(System.in);
+                            read.nextLine();
                             break;
                         }
                         case 12: {
                             handleUserInput(spacemapServiceActs.getRandomPlanet());
+                            System.out.println("Enter any key to continue ...");
+                            Scanner read = new Scanner(System.in);
+                            read.nextLine();
                             break;
                         }
                         case 13: {
@@ -429,8 +455,10 @@ public interface ApplicationMenu {
                                 handleUserInput(spacemapServiceActs.getDistanceBetweenPlanets(first, second));
                             } catch (InvalidStateException e) {
                                 System.out.println(e.getMessage());
-                                break;
                             }
+                            System.out.println("Enter any key to continue ...");
+                            Scanner read = new Scanner(System.in);
+                            read.nextLine();
                             break;
                         }
                         case 14: {
@@ -440,17 +468,24 @@ public interface ApplicationMenu {
                             PlanetCriteria planetCriteria = new PlanetCriteria();
                             planetCriteria.setName(name);
                             handleUserInput(spacemapServiceActs.findPlanetByCriteria(planetCriteria));
+                            System.out.println("Enter any key to continue ...");
+                            Scanner read = new Scanner(System.in);
+                            read.nextLine();
                             break;
                         }
                         case 15: {
                             handleUserInput(spaceshipServiceActs.findAllSpaceships());
+                            System.out.println("Enter any key to continue ...");
+                            Scanner read = new Scanner(System.in);
+                            read.nextLine();
                             break;
                         }
                         case 16: {
                             System.out.println("Enter criteria : \n" +
-                                    "Flight distance - 1 \n" +
-                                    "Ready for next missions - 2");
+                                    "1 - Flight distance\n" +
+                                    "2 - Ready for next missions");
                             do {
+                                in.nextLine();
                                 while(!in.hasNextInt()){
                                     System.out.println("You need to enter number! Try again...");
                                     in.nextLine();
@@ -460,6 +495,7 @@ public interface ApplicationMenu {
                                     case 1: {
                                         System.out.println("Enter flight distance: ");
                                         Scanner lon = new Scanner(System.in);
+                                        in.nextLine();
                                         while(!in.hasNextLong()){
                                             System.out.println("You need to enter number! Try again...");
                                             in.nextLine();
@@ -471,8 +507,11 @@ public interface ApplicationMenu {
                                         break;
                                     }
                                     case 2: {
-                                        System.out.println("Enter preparedness of crew to the mission(true - 1, false - 2: \n");
+                                        System.out.println("Enter preparedness of crew to the mission:\n" +
+                                                "1 - true\n" +
+                                                "2 - false");
                                         do {
+                                            in.nextLine();
                                             while(!in.hasNextInt()){
                                                 System.out.println("You need to enter number! Try again...");
                                                 in.nextLine();
@@ -489,6 +528,9 @@ public interface ApplicationMenu {
                                         System.out.println("Wrong number! try again...");
                                 }
                             } while (buf > 2 || buf < 1);
+                            System.out.println("Enter any key to continue ...");
+                            Scanner read = new Scanner(System.in);
+                            read.nextLine();
                             break;
                         }
                         case 17: {
@@ -498,6 +540,9 @@ public interface ApplicationMenu {
                             SpaceshipCriteria spaceshipCriteria = new SpaceshipCriteria();
                             spaceshipCriteria.setName(name);
                             handleUserInput(spaceshipServiceActs.findSpaceshipByCriteria(spaceshipCriteria));
+                            System.out.println("Enter any key to continue ...");
+                            Scanner read = new Scanner(System.in);
+                            read.nextLine();
                             break;
                         }
                         case 18: {
@@ -507,13 +552,16 @@ public interface ApplicationMenu {
                             try {
                                 SpaceshipCriteria spaceshipCriteria = new SpaceshipCriteria();
                                 spaceshipCriteria.setName(name);
-                                if (!spaceshipServiceActs.findSpaceshipByCriteria(spaceshipCriteria).isPresent())
+                                if (spaceshipServiceActs.findSpaceshipByCriteria(spaceshipCriteria).isEmpty())
                                     throw new InvalidStateException("spaceship");
                                 else
                                     handleUserInput(spaceshipServiceActs.updateSpaceshipDetails(spaceshipServiceActs.findSpaceshipByCriteria(spaceshipCriteria).get()));
                             } catch (InvalidStateException e) {
                                 System.out.println(e.getMessage());
                             }
+                            System.out.println("Enter any key to continue ...");
+                            Scanner read = new Scanner(System.in);
+                            read.nextLine();
                             break;
                         }
                         case 19: {
@@ -533,10 +581,14 @@ public interface ApplicationMenu {
                             } catch (InvalidStateException e) {
                                 System.out.println(e.getMessage());
                             }
+                            System.out.println("Enter any key to continue ...");
+                            Scanner read = new Scanner(System.in);
+                            read.nextLine();
                             break;
                         }
                         case 20: {
                             System.out.println("Enter flight distance of spaceship: ");
+                            in.nextLine();
                             while(!in.hasNextLong()){
                                 System.out.println("You need to enter number! Try again...");
                                 in.nextLine();
@@ -545,15 +597,35 @@ public interface ApplicationMenu {
                             System.out.println("Enter requirement crew for this spaceship (number of crew members for this role): ");
                             Map<Role, Short> crew = new HashMap<>();
                             System.out.println(Role.MISSION_SPECIALIST);
+                            in.nextLine();
+                            while(!in.hasNextInt()){
+                                System.out.println("You need to enter number! Try again...");
+                                in.nextLine();
+                            }
                             buf = in.nextInt();
                             crew.put(Role.MISSION_SPECIALIST, (short) buf);
                             System.out.println(Role.FLIGHT_ENGINEER);
+                            in.nextLine();
+                            while(!in.hasNextInt()){
+                                System.out.println("You need to enter number! Try again...");
+                                in.nextLine();
+                            }
                             buf = in.nextInt();
                             crew.put(Role.FLIGHT_ENGINEER, (short) buf);
                             System.out.println(Role.PILOT);
+                            in.nextLine();
+                            while(!in.hasNextInt()){
+                                System.out.println("You need to enter number! Try again...");
+                                in.nextLine();
+                            }
                             buf = in.nextInt();
                             crew.put(Role.PILOT, (short) buf);
                             System.out.println(Role.COMMANDER);
+                            in.nextLine();
+                            while(!in.hasNextInt()){
+                                System.out.println("You need to enter number! Try again...");
+                                in.nextLine();
+                            }
                             buf = in.nextInt();
                             crew.put(Role.COMMANDER, (short) buf);
                             Scanner str = new Scanner(System.in);
@@ -561,6 +633,9 @@ public interface ApplicationMenu {
                             String name = str.nextLine();
                             SpaceshipFactory spaceshipFactory = new SpaceshipFactory();
                             handleUserInput(spaceshipServiceActs.createSpaceship(spaceshipFactory.create(crew, name, distance)));
+                            System.out.println("Enter any key to continue ...");
+                            Scanner read = new Scanner(System.in);
+                            read.nextLine();
                             break;
                         }
                         case 21: {
@@ -577,8 +652,10 @@ public interface ApplicationMenu {
                                 }
                             } catch (InvalidStateException e) {
                                 System.out.println(e.getMessage());
-                                break;
                             }
+                            System.out.println("Enter any key to continue ...");
+                            Scanner read = new Scanner(System.in);
+                            read.nextLine();
                             break;
                         }
                         case 22:
@@ -595,6 +672,8 @@ public interface ApplicationMenu {
         if(o == null) System.out.println("This object(s) is absent!\n");
         else {
             if(o instanceof List){
+                if(((List) o).size() == 0) System.out.println("List of this entity is empty!");
+                else
                 for (Object s: (List) o){
                     System.out.println(s.toString());
                 }
@@ -603,8 +682,8 @@ public interface ApplicationMenu {
                 if(!(o instanceof Optional))
                     System.out.println(o.toString());
                 else{
-                    if(((Optional<?>) o).isPresent())
-                    System.out.println(((Optional<?>) o).get().toString());
+                    if(((Optional<?>) o).isPresent()) System.out.println(((Optional<?>) o).get().toString());
+                    else System.out.println("Entity does not exist!");
                 }
             }
         }

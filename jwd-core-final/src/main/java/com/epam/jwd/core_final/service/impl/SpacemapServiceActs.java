@@ -6,7 +6,6 @@ import com.epam.jwd.core_final.criteria.PlanetCriteria;
 import com.epam.jwd.core_final.domain.Planet;
 import com.epam.jwd.core_final.service.SpacemapService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;

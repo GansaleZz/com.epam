@@ -1,6 +1,5 @@
 package com.epam.jwd.core_final.context.impl;
 
-import com.epam.jwd.core_final.domain.CrewMember;
 import com.epam.jwd.core_final.domain.FlightMission;
 import com.epam.jwd.core_final.domain.MissionResult;
 

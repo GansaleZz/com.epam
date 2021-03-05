@@ -1,6 +1,5 @@
 package com.epam.jwd.core_final.criteria;
 
-import com.epam.jwd.core_final.domain.AbstractBaseEntity;
 import com.epam.jwd.core_final.domain.BaseEntity;
 
 /**

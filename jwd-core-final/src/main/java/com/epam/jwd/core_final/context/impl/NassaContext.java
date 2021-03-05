@@ -6,8 +6,6 @@ import com.epam.jwd.core_final.exception.InvalidStateException;
 import com.epam.jwd.core_final.factory.impl.CrewMemberFactory;
 import com.epam.jwd.core_final.factory.impl.PlanetFactory;
 import com.epam.jwd.core_final.factory.impl.SpaceshipFactory;
-import com.epam.jwd.core_final.util.PropertyReaderUtil;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -38,7 +36,7 @@ public class NassaContext implements ApplicationContext {
         int i,k,buf;
         String name;
         Map<Role,Short> map ;
-        try(FileInputStream file = new FileInputStream("/Users/andrew_wannasesh/Folders/EpamJAva/jwd-core-final/src/main/resources/input/crew")){
+        try(FileInputStream file = new FileInputStream("/Users/andrew_wannasesh/Folders/EpamJAva/jwd-core-final/src/main/resources/"+ApplicationProperties.getInputRootDir()+"/"+ApplicationProperties.getCrewFileName())){
             do{
                 name = "";
                 buf = Character.getNumericValue((char) file.read());
@@ -67,7 +65,7 @@ public class NassaContext implements ApplicationContext {
         logger.info("Crew members completely were read from the file");
 
         SpaceshipFactory spaceshipFactory = new SpaceshipFactory();
-        try(FileInputStream file = new FileInputStream("/Users/andrew_wannasesh/Folders/EpamJAva/jwd-core-final/src/main/resources/input/spaceships")){
+        try(FileInputStream file = new FileInputStream("/Users/andrew_wannasesh/Folders/EpamJAva/jwd-core-final/src/main/resources/"+ApplicationProperties.getInputRootDir()+"/"+ApplicationProperties.getSpaceshipsFileName())){
             do{
                 map = new HashMap<>();
                 long n;
@@ -114,7 +112,7 @@ public class NassaContext implements ApplicationContext {
         logger.info("Spaceships completely were read from the file");
 
         PlanetFactory planetFactory = new PlanetFactory();
-        try(FileInputStream file = new FileInputStream("/Users/andrew_wannasesh/Folders/EpamJAva/jwd-core-final/src/main/resources/input/spacemap")){
+        try(FileInputStream file = new FileInputStream("/Users/andrew_wannasesh/Folders/EpamJAva/jwd-core-final/src/main/resources/"+ApplicationProperties.getInputRootDir()+"/"+ApplicationProperties.getSpacemapFileName())){
             i = 1;
             k = 1;
             do{
@@ -143,6 +141,6 @@ public class NassaContext implements ApplicationContext {
             logger.error(e.getMessage());
             e.printStackTrace();
         }
-//        logger.info("Planets completely were read from the file");
+        logger.info("Planets completely were read from the file");
     }
 }

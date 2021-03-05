@@ -6,7 +6,6 @@ import com.epam.jwd.core_final.exception.DuplicateException;
 import com.epam.jwd.core_final.exception.InvalidStateException;
 import com.epam.jwd.core_final.exception.ReadinessException;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 

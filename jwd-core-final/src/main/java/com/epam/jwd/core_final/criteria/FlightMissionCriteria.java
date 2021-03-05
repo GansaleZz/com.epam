@@ -1,9 +1,6 @@
 package com.epam.jwd.core_final.criteria;
 
 import com.epam.jwd.core_final.domain.*;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**

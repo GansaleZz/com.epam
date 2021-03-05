@@ -1,12 +1,9 @@
 package com.epam.jwd.core_final.context.impl;
 
+import com.epam.jwd.core_final.domain.ApplicationProperties;
 import com.epam.jwd.core_final.domain.FlightMission;
-
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.JsonSerializer;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.*;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -27,7 +24,7 @@ public class JsonUtils {
         jsonObject.put("ending of mission",""+flightMission.getEnd());
         jsonArray.add(jsonObject);
         try {
-            FileWriter file = new FileWriter("/Users/andrew_wannasesh/Folders/EpamJAva/jwd-core-final/src/main/resources/output/flightmissions.json");
+            FileWriter file = new FileWriter("/Users/andrew_wannasesh/Folders/EpamJAva/jwd-core-final/src/main/resources/"+ ApplicationProperties.getOutputRootDir()+"/"+ApplicationProperties.getMissionsFileName()+".json");
             jsonArray.writeJSONString(file);
             file.flush();
             file.close();

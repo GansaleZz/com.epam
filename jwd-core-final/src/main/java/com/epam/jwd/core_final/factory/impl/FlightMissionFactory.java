@@ -1,16 +1,11 @@
 package com.epam.jwd.core_final.factory.impl;
 
 import com.epam.jwd.core_final.criteria.FlightMissionCriteria;
-import com.epam.jwd.core_final.domain.CrewMember;
 import com.epam.jwd.core_final.domain.FlightMission;
 import com.epam.jwd.core_final.domain.Planet;
-import com.epam.jwd.core_final.domain.Spaceship;
 import com.epam.jwd.core_final.exception.InvalidInArgsException;
 import com.epam.jwd.core_final.factory.EntityFactory;
 
-
-import java.time.LocalDate;
-import java.util.List;
 
 public class FlightMissionFactory implements EntityFactory<FlightMission> {
     private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(FlightMissionFactory.class);

@@ -61,13 +61,13 @@ public class SpaceshipServiceActs implements SpaceshipService {
     @Override
     public Spaceship updateSpaceshipDetails(Spaceship spaceship) {
         if(spaceship.isReadyForNextMissions() != true){
-            System.out.println("Spaceship busy now ! Try again next time...\n");
+            System.out.println("Spaceship busy now ! Try again next time...");
         }else {
             Scanner in = new Scanner(System.in);
             int buf;
             System.out.println("Enter which detail you want to update: \n" +
-                    "Flight distance - 1\n" +
-                    "Requirement crew -2");
+                    "1 - Flight distance\n" +
+                    "2 - Requirement crew");
             do {
                 buf = in.nextInt();
                 switch (buf) {
@@ -113,7 +113,6 @@ public class SpaceshipServiceActs implements SpaceshipService {
                 FlightMissionCriteria flightMissionCriteria = new FlightMissionCriteria();
                 System.out.println("Enter name of mission: ");
                 String name = str.nextLine();
-//                String name = "Test";
                 flightMissionCriteria.setName(name);
                 if(!missionServiceActs.findMissionByCriteria(flightMissionCriteria).isPresent()) throw new InvalidStateException("flight mission");
                 else{
@@ -127,6 +126,7 @@ public class SpaceshipServiceActs implements SpaceshipService {
                             spaceship.setReadyForNextMissions(false);
                             flightMission.setAssignedSpaceShip(spaceship);
                             flightMission.setMissionResult(MissionResult.PLANNED);
+                            System.out.println("Spaceship "+spaceship.getName()+" was completely assigned on mission "+flightMission.getName());
                         }
                     }
                 }
@@ -142,10 +142,12 @@ public class SpaceshipServiceActs implements SpaceshipService {
         List<Spaceship> spaceships = (List<Spaceship>) Application.nassaContext.retrieveBaseEntityList(Spaceship.class);
         try {
             Optional<Spaceship> spaceCheck;
+            Spaceship finalSpaceship = spaceship;
             spaceCheck = spaceships.stream()
-                    .filter(i -> i.getName().equalsIgnoreCase(spaceship.getName()))
+                    .filter(i -> i.getName().equalsIgnoreCase(finalSpaceship.getName()))
                     .findAny();
             if (spaceCheck.isPresent()) {
+                spaceship = spaceCheck.get();
                 throw new DuplicateException(spaceship.getName(),"spaceship");
             }
             spaceships.add(spaceship);

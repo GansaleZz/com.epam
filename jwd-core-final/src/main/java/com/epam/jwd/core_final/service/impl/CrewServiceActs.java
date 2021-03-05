@@ -64,59 +64,62 @@ public class CrewServiceActs implements CrewService {
     @Override
     public CrewMember updateCrewMemberDetails(CrewMember crewMember) {
         if(crewMember.isReadyForNexMissions() != true){
-            System.out.println("Crew member is busy now ! Try again next time...\n");
+            System.out.println("Crew member is busy now ! Try again next time...");
         }
-        Scanner in = new Scanner(System.in);
-        int rank,role,buf;
-        System.out.println("Enter which detail you want to update: \n" +
-                "1 - Role\n" +
-                "2 - Rank");
-        do{
-            while(!in.hasNextInt()){
-                System.out.println("You need to enter number! Try again...");
-                in.nextLine();
-            }
-            buf = in.nextInt();
-            switch (buf){
-                case 1:{
-                    System.out.println("Enter new role: \n" +
-                            "1 - MISSION_SPECIALIST\n" +
-                            "2 - FLIGHT_ENGINEER\n" +
-                            "3 - PILOT\n" +
-                            "4 - COMMANDER");
-                    do{
-                        in.nextLine();
-                        while(!in.hasNextInt()){
-                            System.out.println("You need to enter number! Try again...");
-                            in.nextLine();
-                        }
-                        role = in.nextInt();
-                        if(role > 4 || role < 1) System.out.println("Wrong number! try again...\n");
-                    }while(role > 4 || role < 1);
-                    crewMember.setRole(Role.resolveRoleById(role));
-                    break;
+        else {
+            Scanner in = new Scanner(System.in);
+            int rank, role, buf;
+            System.out.println("Enter which detail you want to update: \n" +
+                    "1 - Role\n" +
+                    "2 - Rank");
+            do {
+                while (!in.hasNextInt()) {
+                    System.out.println("You need to enter number! Try again...");
+                    in.nextLine();
                 }
-                case 2:{
-                    System.out.println("Enter new rank: \n" +
-                            "1 - TRAINEE\n" +
-                            "2 - SECOND_OFFICER\n" +
-                            "3 - FIRST_OFFICER\n" +
-                            "4 - CAPTAIN");
-                    do{
-                        in.nextLine();
-                        while(!in.hasNextInt()){
-                            System.out.println("You need to enter number! Try again...");
+                buf = in.nextInt();
+                switch (buf) {
+                    case 1: {
+                        System.out.println("Enter new role: \n" +
+                                "1 - MISSION_SPECIALIST\n" +
+                                "2 - FLIGHT_ENGINEER\n" +
+                                "3 - PILOT\n" +
+                                "4 - COMMANDER");
+                        do {
                             in.nextLine();
-                        }
-                        rank = in.nextInt();
-                        if(rank > 4 || rank < 1) System.out.println("Wrong number! try again...\n");
-                    }while(rank > 4 || rank < 1);
-                    crewMember.setRank(Rank.resolveRankById(rank));
-                    break;
+                            while (!in.hasNextInt()) {
+                                System.out.println("You need to enter number! Try again...");
+                                in.nextLine();
+                            }
+                            role = in.nextInt();
+                            if (role > 4 || role < 1) System.out.println("Wrong number! try again...\n");
+                        } while (role > 4 || role < 1);
+                        crewMember.setRole(Role.resolveRoleById(role));
+                        break;
+                    }
+                    case 2: {
+                        System.out.println("Enter new rank: \n" +
+                                "1 - TRAINEE\n" +
+                                "2 - SECOND_OFFICER\n" +
+                                "3 - FIRST_OFFICER\n" +
+                                "4 - CAPTAIN");
+                        do {
+                            in.nextLine();
+                            while (!in.hasNextInt()) {
+                                System.out.println("You need to enter number! Try again...");
+                                in.nextLine();
+                            }
+                            rank = in.nextInt();
+                            if (rank > 4 || rank < 1) System.out.println("Wrong number! try again...\n");
+                        } while (rank > 4 || rank < 1);
+                        crewMember.setRank(Rank.resolveRankById(rank));
+                        break;
+                    }
+                    default:
+                        System.out.println("Wrong number! try again...\n");
                 }
-                default:System.out.println("Wrong number! try again...\n");
-            }
-        }while(buf > 2 || buf < 1);
+            } while (buf > 2 || buf < 1);
+        }
         return crewMember;
     }
 
@@ -131,7 +134,7 @@ public class CrewServiceActs implements CrewService {
                 System.out.println("Enter name of mission: ");
                 String name = str.nextLine();
                 flightMissionCriteria.setName(name);
-                if(!missionServiceActs.findMissionByCriteria(flightMissionCriteria).isPresent()) throw new InvalidStateException("flight mission");
+                if(missionServiceActs.findMissionByCriteria(flightMissionCriteria).isEmpty()) throw new InvalidStateException("flight mission");
                 else{
                     FlightMission flightMission = missionServiceActs.findMissionByCriteria(flightMissionCriteria).get();
                     if(flightMission.getAssignedSpaceShip() == null) {
@@ -149,6 +152,7 @@ public class CrewServiceActs implements CrewService {
                         }else{
                             crewMember.setReadyForNexMissions(false);
                             flightMission.addToCrew(crewMember);
+                            System.out.println("Crew member "+crewMember.getName()+" was completely assigned on mission "+flightMission.getName());
                         }
                     }
                 }
@@ -164,10 +168,12 @@ public class CrewServiceActs implements CrewService {
         List<CrewMember> crewMembers = (List<CrewMember>) Application.nassaContext.retrieveBaseEntityList(CrewMember.class);
         try {
             Optional<CrewMember> crewCheck;
-                    crewCheck = crewMembers.stream()
-                    .filter(i -> i.getName().equalsIgnoreCase(crewMember.getName()))
+            CrewMember finalCrewMember = crewMember;
+            crewCheck = crewMembers.stream()
+                    .filter(i -> i.getName().equalsIgnoreCase(finalCrewMember.getName()))
                     .findAny();
                 if (crewCheck.isPresent()) {
+                    crewMember = crewCheck.get();
                     throw new DuplicateException(crewMember.getName(),"crew");
                 }
                 crewMembers.add(crewMember);
