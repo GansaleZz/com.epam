@@ -2,6 +2,8 @@ package com.epam.jwd.core_final.context.impl;
 
 import com.epam.jwd.core_final.domain.FlightMission;
 import com.epam.jwd.core_final.domain.MissionResult;
+import com.epam.jwd.core_final.service.impl.CrewServiceActs;
+import org.apache.log4j.Logger;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -9,7 +11,7 @@ import java.util.*;
 public class Cache extends TimerTask {
     private static Map<Long,FlightMission> cache = new HashMap<>();
     private static Cache instance;
-
+    private static final Logger logger = Logger.getLogger(Cache.class);
     private Cache(){}
 
     public static Cache getInstance(){
@@ -56,6 +58,7 @@ public class Cache extends TimerTask {
                                 .forEach(crew -> crew.setReadyForNexMissions(true));
                         ((FlightMission) pair.getValue()).getAssignedCrew().clear();
                         System.out.println("Mission "+((FlightMission) pair.getValue()).getName()+ " completed!");
+                        logger.info("Mission " + ((FlightMission) pair.getValue()).getName() + " completed!");
                         cache.remove(pair.getKey());
                     }else{
                         ((FlightMission) pair.getValue()).setMissionResult(MissionResult.FAILED);
@@ -63,6 +66,7 @@ public class Cache extends TimerTask {
                         ((FlightMission) pair.getValue()).setAssignedSpaceShip(null);
                         ((FlightMission) pair.getValue()).getAssignedCrew().clear();
                         System.out.println("Mission "+((FlightMission) pair.getValue()).getName()+ " failed!");
+                        logger.info("Mission "+((FlightMission) pair.getValue()).getName()+ " failed!");
                         cache.remove(pair.getKey());
                     }
                 }

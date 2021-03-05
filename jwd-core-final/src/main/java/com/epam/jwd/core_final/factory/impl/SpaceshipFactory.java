@@ -11,6 +11,7 @@ import java.util.Map;
 
 public class SpaceshipFactory implements EntityFactory<Spaceship> {
     private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(SpaceshipFactory.class);
+
     @Override
     public Spaceship create(Object... args) throws InvalidInArgsException{
         Spaceship spaceship = null;

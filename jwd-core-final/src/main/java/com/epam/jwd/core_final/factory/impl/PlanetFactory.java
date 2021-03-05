@@ -9,6 +9,7 @@ import com.epam.jwd.core_final.factory.EntityFactory;
 
 public class PlanetFactory implements EntityFactory<Planet>{
     private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(PlanetFactory.class);
+
     @Override
     public Planet create(Object... args) throws InvalidInArgsException {
         Planet planet = null;

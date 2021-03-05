@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 public class MissionServiceActs implements MissionService {
+    private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(MissionServiceActs.class);
     private static MissionServiceActs instance;
 
     private MissionServiceActs(){}
@@ -62,6 +63,10 @@ public class MissionServiceActs implements MissionService {
                 "2 - Planet (from)");
         int buf;
         do{
+            while (!in.hasNextInt()) {
+                System.out.println("You need to enter number! Try again...");
+                in.nextLine();
+            }
             buf= in.nextInt();
             switch(buf){
                 case 1:{
@@ -77,9 +82,12 @@ public class MissionServiceActs implements MissionService {
                         else{
                             planet = spacemapServiceActs.findPlanetByCriteria(planetCriteria).get();
                             flightMission.setTo(planet);
+                            System.out.println("Details of mission  " + flightMission.getName() + " were updated.");
+                            logger.info("Details of mission  " + flightMission.getName() + " were updated.");
                         }
                     }catch(InvalidStateException e){
                         System.out.println(e.getMessage());
+                        logger.warn(e.getMessage() + " (updateFlightMissionDetails)");
                     }
                     break;
                 }
@@ -96,10 +104,12 @@ public class MissionServiceActs implements MissionService {
                         else {
                             planet = spacemapServiceActs.findPlanetByCriteria(planetCriteria).get();
                             flightMission.setFrom(planet);
+                            System.out.println("Details of mission  " + flightMission.getName() + " were updated.");
+                            logger.info("Details of mission  " + flightMission.getName() + " were updated.");
                         }
                     }catch(InvalidStateException e){
                         System.out.println(e.getMessage());
-                        break;
+                        logger.warn(e.getMessage() + " (updateFlightMissionDetails)");
                     }
                     break;
                 }
@@ -119,10 +129,12 @@ public class MissionServiceActs implements MissionService {
             if (missionCheck.isPresent()) throw new DuplicateException(flightMission.getName(),"flightMission");
             else {
                 flightMissions.add(flightMission);
-                System.out.println("Mission has completely created!");
+                System.out.println("Mission "+flightMission.getName()+" was completely created!");
+                logger.info("Mission "+flightMission.getName()+" was completely created!");
             }
         }catch(DuplicateException e){
             System.out.println(e.getMessage());
+            logger.warn(e.getMessage() + " (createMission)");
         }
         return flightMission;
     }
@@ -171,6 +183,7 @@ public class MissionServiceActs implements MissionService {
                                             flightMission.setEnd(flightMission.getStart().plusSeconds(flightMission.getDistance()));
                                             flightMission.setMissionResult(MissionResult.IN_PROGRESS);
                                             System.out.println("Mission "+flightMission.getName()+" was completely started!");
+                                            logger.info("Mission "+flightMission.getName()+" was completely started!");
                                             Cache.addToCache(flightMission);
                                         }
                                     }
@@ -192,10 +205,11 @@ public class MissionServiceActs implements MissionService {
                     .forEach(i -> i.setReadyForNexMissions(true));
             flightMission.setAssignedSpaceShip(null);
             flightMission.getAssignedCrew().clear();
-            System.out.println("Mission completely stopped!");
+            System.out.println("Mission " + flightMission.getName()+" completely stopped!");
+            logger.info("Mission " + flightMission.getName()+" completely stopped!");
         }
         else{
-            System.out.println("You did not start mission" + flightMission.getName()+ "!");
+            System.out.println("You did not start mission " + flightMission.getName()+ "!");
         }
     }
 }

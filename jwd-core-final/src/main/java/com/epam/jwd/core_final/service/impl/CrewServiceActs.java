@@ -7,11 +7,14 @@ import com.epam.jwd.core_final.criteria.FlightMissionCriteria;
 import com.epam.jwd.core_final.domain.*;
 import com.epam.jwd.core_final.exception.*;
 import com.epam.jwd.core_final.service.CrewService;
+import org.apache.log4j.Logger;
 
 import java.util.*;
 
 public class CrewServiceActs implements CrewService {
     private static CrewServiceActs instance;
+    private static final Logger logger = Logger.getLogger(CrewServiceActs.class);
+
 
     private CrewServiceActs(){}
 
@@ -54,8 +57,7 @@ public class CrewServiceActs implements CrewService {
     @Override
     public Optional<CrewMember> findCrewMemberByCriteria(Criteria<? extends CrewMember> criteria) {
         List<CrewMember> crewMembers = (List<CrewMember>) Application.nassaContext.retrieveBaseEntityList(CrewMember.class);
-        Optional<CrewMember> crewMember = null;
-            crewMember = crewMembers.stream()
+        Optional<CrewMember> crewMember = crewMembers.stream()
                     .filter(i -> i.getName().equals(((CrewMemberCriteria) criteria).getName()))
                     .findAny();
         return crewMember;
@@ -95,6 +97,8 @@ public class CrewServiceActs implements CrewService {
                             if (role > 4 || role < 1) System.out.println("Wrong number! try again...\n");
                         } while (role > 4 || role < 1);
                         crewMember.setRole(Role.resolveRoleById(role));
+                        System.out.println("Details of crew member " + crewMember.getName() + " were updated.");
+                        logger.info("Details of crew member "+crewMember.getName()+" were updated.");
                         break;
                     }
                     case 2: {
@@ -113,6 +117,8 @@ public class CrewServiceActs implements CrewService {
                             if (rank > 4 || rank < 1) System.out.println("Wrong number! try again...\n");
                         } while (rank > 4 || rank < 1);
                         crewMember.setRank(Rank.resolveRankById(rank));
+                        System.out.println("Details of crew member " + crewMember.getName() + " were updated.");
+                        logger.info("Details of crew member "+crewMember.getName()+" were updated.");
                         break;
                     }
                     default:
@@ -153,12 +159,14 @@ public class CrewServiceActs implements CrewService {
                             crewMember.setReadyForNexMissions(false);
                             flightMission.addToCrew(crewMember);
                             System.out.println("Crew member "+crewMember.getName()+" was completely assigned on mission "+flightMission.getName());
+                            logger.info("Crew member "+crewMember.getName()+" was completely assigned on mission "+flightMission.getName());
                         }
                     }
                 }
             }
         } catch (ReadinessException | InvalidStateException | FullAssignedException | AssignException e) {
             System.out.println(e.getMessage());
+            logger.warn(e.getMessage()+ " (createCrewMember)");
         }
 
     }
@@ -177,8 +185,11 @@ public class CrewServiceActs implements CrewService {
                     throw new DuplicateException(crewMember.getName(),"crew");
                 }
                 crewMembers.add(crewMember);
+                System.out.println("Crew member "+crewMember.getName()+" was completely created.");
+                logger.info("Crew member "+crewMember.getName()+" was completely created.");
         }catch(DuplicateException e){
             System.out.println(e.getMessage());
+            logger.warn(e.getMessage() + " (createCrewMember)");
         }
         return crewMember;
     }

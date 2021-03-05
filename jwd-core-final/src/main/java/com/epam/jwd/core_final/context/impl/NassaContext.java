@@ -62,7 +62,7 @@ public class NassaContext implements ApplicationContext {
             logger.error(e.getMessage());
             e.printStackTrace();
         }
-        logger.info("Crew members completely were read from the file");
+        logger.info("Crew members were completely read from file");
 
         SpaceshipFactory spaceshipFactory = new SpaceshipFactory();
         try(FileInputStream file = new FileInputStream("/Users/andrew_wannasesh/Folders/EpamJAva/jwd-core-final/src/main/resources/"+ApplicationProperties.getInputRootDir()+"/"+ApplicationProperties.getSpaceshipsFileName())){
@@ -109,7 +109,7 @@ public class NassaContext implements ApplicationContext {
             logger.error(e.getMessage());
             e.printStackTrace();
         }
-        logger.info("Spaceships completely were read from the file");
+        logger.info("Spaceships were completely read from file");
 
         PlanetFactory planetFactory = new PlanetFactory();
         try(FileInputStream file = new FileInputStream("/Users/andrew_wannasesh/Folders/EpamJAva/jwd-core-final/src/main/resources/"+ApplicationProperties.getInputRootDir()+"/"+ApplicationProperties.getSpacemapFileName())){
@@ -141,6 +141,6 @@ public class NassaContext implements ApplicationContext {
             logger.error(e.getMessage());
             e.printStackTrace();
         }
-        logger.info("Planets completely were read from the file");
+        logger.info("Planets were completely read from file");
     }
 }

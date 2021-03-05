@@ -10,10 +10,12 @@ import com.epam.jwd.core_final.exception.DuplicateException;
 import com.epam.jwd.core_final.exception.InvalidStateException;
 import com.epam.jwd.core_final.exception.ReadinessException;
 import com.epam.jwd.core_final.service.SpaceshipService;
+import org.apache.log4j.Logger;
 
 import java.util.*;
 
 public class SpaceshipServiceActs implements SpaceshipService {
+    private static final Logger logger = Logger.getLogger(SpaceshipServiceActs.class);
     private static SpaceshipServiceActs instance;
 
     private SpaceshipServiceActs(){}
@@ -69,36 +71,69 @@ public class SpaceshipServiceActs implements SpaceshipService {
                     "1 - Flight distance\n" +
                     "2 - Requirement crew");
             do {
+                while (!in.hasNextInt()) {
+                    System.out.println("You need to enter number! Try again...");
+                    in.nextLine();
+                }
                 buf = in.nextInt();
+            } while (buf > 2 || buf < 1);
                 switch (buf) {
                     case 1: {
                         System.out.println("Enter new flight distance: ");
+                        in.nextLine();
+                        while (!in.hasNextLong()) {
+                            System.out.println("You need to enter number! Try again...");
+                            in.nextLine();
+                        }
                         long distance = in.nextLong();
                         spaceship.setFlightDist(distance);
+                        System.out.println("Details of spaceship " + spaceship.getName() + " were updated.");
+                        logger.info("Details of spaceship "+spaceship.getName()+" were updated.");
                         break;
                     }
                     case 2: {
                         System.out.println("Enter new requirement crew for this spaceship (number of crew members for this role): ");
                         Map<Role, Short> crew = new HashMap<>();
                         System.out.println(Role.MISSION_SPECIALIST);
+                        in.nextLine();
+                        while (!in.hasNextInt()) {
+                            System.out.println("You need to enter number! Try again...");
+                            in.nextLine();
+                        }
                         buf = in.nextInt();
                         crew.put(Role.MISSION_SPECIALIST, (short) buf);
                         System.out.println(Role.FLIGHT_ENGINEER);
+                        in.nextLine();
+                        while (!in.hasNextInt()) {
+                            System.out.println("You need to enter number! Try again...");
+                            in.nextLine();
+                        }
                         buf = in.nextInt();
                         crew.put(Role.FLIGHT_ENGINEER, (short) buf);
                         System.out.println(Role.PILOT);
+                        in.nextLine();
+                        while (!in.hasNextInt()) {
+                            System.out.println("You need to enter number! Try again...");
+                            in.nextLine();
+                        }
                         buf = in.nextInt();
                         crew.put(Role.PILOT, (short) buf);
                         System.out.println(Role.COMMANDER);
+                        in.nextLine();
+                        while (!in.hasNextInt()) {
+                            System.out.println("You need to enter number! Try again...");
+                            in.nextLine();
+                        }
                         buf = in.nextInt();
                         crew.put(Role.COMMANDER, (short) buf);
                         spaceship.setCrew(crew);
+                        System.out.println("Details of spaceship" + spaceship.getName() + " were updated.");
+                        logger.info("Details of spaceship "+spaceship.getName()+" were updated.");
                         break;
                     }
                     default:
                         System.out.println("Wrong number! try again...\n");
                 }
-            } while (buf > 2 || buf < 1);
         }
         return spaceship;
     }
@@ -126,13 +161,15 @@ public class SpaceshipServiceActs implements SpaceshipService {
                             spaceship.setReadyForNextMissions(false);
                             flightMission.setAssignedSpaceShip(spaceship);
                             flightMission.setMissionResult(MissionResult.PLANNED);
-                            System.out.println("Spaceship "+spaceship.getName()+" was completely assigned on mission "+flightMission.getName());
+                            logger.info("Spaceship "+spaceship.getName()+" was completely assigned on mission "+flightMission.getName()+".");
+                            System.out.println("Spaceship "+spaceship.getName()+" was completely assigned on mission "+flightMission.getName()+".");
                         }
                     }
                 }
             }
         }catch (ReadinessException | InvalidStateException | AssignException e ) {
             System.out.println(e.getMessage());
+            logger.warn(e.getMessage() + " (assignSpaceshipOnMission)");
         }
 
     }
@@ -151,8 +188,11 @@ public class SpaceshipServiceActs implements SpaceshipService {
                 throw new DuplicateException(spaceship.getName(),"spaceship");
             }
             spaceships.add(spaceship);
+            System.out.println("Spaceship "+spaceship.getName()+" was completely created.");
+            logger.info("Spaceship "+spaceship.getName()+" was completely created.");
         }catch(DuplicateException e){
             System.out.println(e.getMessage());
+            logger.warn(e.getMessage() + " (createSpaceship)");
         }
         return spaceship;
     }

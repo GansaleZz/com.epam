@@ -227,6 +227,7 @@ public interface ApplicationMenu {
                                     "3 - PILOT\n" +
                                     "4 - COMMANDER");
                             do {
+                                in.nextLine();
                                 while(!in.hasNextInt()){
                                     System.out.println("You need to enter number! Try again...");
                                     in.nextLine();
@@ -241,6 +242,7 @@ public interface ApplicationMenu {
                                     "3 - FIRST_OFFICER\n" +
                                     "4 - CAPTAIN");
                             do {
+                                in.nextLine();
                                 while(!in.hasNextInt()){
                                     System.out.println("You need to enter number! Try again...");
                                     in.nextLine();
@@ -281,6 +283,7 @@ public interface ApplicationMenu {
                                     in.nextLine();
                                 }
                                 buf = in.nextInt();
+                            } while (buf > 2 || buf < 1);
                                 switch (buf) {
                                     case 1: {
                                         System.out.println("Enter distance of mission: ");
@@ -345,7 +348,6 @@ public interface ApplicationMenu {
                                     default:
                                         System.out.println("Wrong number! try again...");
                                 }
-                            } while (buf > 2 || buf < 1);
                             System.out.println("Enter any key to continue ...");
                             Scanner read = new Scanner(System.in);
                             read.nextLine();
@@ -508,7 +510,7 @@ public interface ApplicationMenu {
                                         break;
                                     }
                                     case 2: {
-                                        System.out.println("Enter preparedness of crew to the mission:\n" +
+                                        System.out.println("Enter preparedness of spaceship to the mission:\n" +
                                                 "1 - true\n" +
                                                 "2 - false");
                                         do {
@@ -690,7 +692,7 @@ public interface ApplicationMenu {
     }
 
     default void handleUserInput(Object o) {
-        if(o == null) System.out.println("This object(s) is absent!\n");
+        if(o == null) System.out.println("This object(s) is absent!");
         else {
             if(o instanceof List){
                 if(((List) o).size() == 0) System.out.println("List of this entity is empty!");
