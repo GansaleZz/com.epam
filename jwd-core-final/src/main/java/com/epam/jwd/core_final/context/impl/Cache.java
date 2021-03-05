@@ -31,6 +31,13 @@ public class Cache extends TimerTask {
         }
     }
 
+    public static void removeFromCache(FlightMission flightMission){
+        if (flightMission.getMissionResult() == MissionResult.CANCELLED) {
+            JsonUtils.parseFlightMissionJson(flightMission);
+            cache.remove(flightMission.getId());
+        }
+    }
+
     public static void refreshCache(){
         if(cache.size() != 0 ) {
             Iterator i = cache.entrySet().iterator();

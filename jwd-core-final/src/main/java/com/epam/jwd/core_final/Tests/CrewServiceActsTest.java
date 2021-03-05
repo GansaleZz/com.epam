@@ -22,14 +22,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class CrewServiceActsTest {
 
     @Test
-    void findCrewMemberByCriteria() {
-    }
-
-    @Test
-    void updateCrewMemberDetails() {
-    }
-
-    @Test
     void assignCrewMemberOnMission() throws InvalidStateException {
         FlightMissionFactory flightMissionFactory = new FlightMissionFactory();
         SpaceshipFactory spaceshipFactory = new SpaceshipFactory();
@@ -62,7 +54,4 @@ class CrewServiceActsTest {
 //        crewServiceActs.assignCrewMemberOnMission(crewMember1);
     }
 
-    @Test
-    void createCrewMember() {
-    }
 }

@@ -117,7 +117,7 @@ public class SpaceshipServiceActs implements SpaceshipService {
                 if(!missionServiceActs.findMissionByCriteria(flightMissionCriteria).isPresent()) throw new InvalidStateException("flight mission");
                 else{
                     FlightMission flightMission = missionServiceActs.findMissionByCriteria(flightMissionCriteria).get();
-                    if(flightMission.getAssignedSpaceShip() != null && flightMission.getMissionResult() != null) throw new AssignException("spaceship");
+                    if(flightMission.getAssignedSpaceShip() != null || flightMission.getMissionResult() != null) throw new AssignException("spaceship");
                     else{
                         if(flightMission.getDistance() > spaceship.getFlightDist()){
                             System.out.println("Spaceship " + spaceship.getName()+" does not available for this missions distance!");

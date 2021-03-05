@@ -170,6 +170,7 @@ public class MissionServiceActs implements MissionService {
                                             flightMission.setStart(LocalDateTime.now());
                                             flightMission.setEnd(flightMission.getStart().plusSeconds(flightMission.getDistance()));
                                             flightMission.setMissionResult(MissionResult.IN_PROGRESS);
+                                            System.out.println("Mission "+flightMission.getName()+" was completely started!");
                                             Cache.addToCache(flightMission);
                                         }
                                     }
@@ -179,4 +180,22 @@ public class MissionServiceActs implements MissionService {
                     }
             }
         }
+
+    @Override
+    public void stopMission(FlightMission flightMission) {
+        if(flightMission.getMissionResult() == MissionResult.IN_PROGRESS){
+            flightMission.setMissionResult(MissionResult.CANCELLED);
+            flightMission.setEnd(LocalDateTime.now());
+            Cache.removeFromCache(flightMission);
+            flightMission.getAssignedSpaceShip().setReadyForNextMissions(true);
+            flightMission.getAssignedCrew().stream()
+                    .forEach(i -> i.setReadyForNexMissions(true));
+            flightMission.setAssignedSpaceShip(null);
+            flightMission.getAssignedCrew().clear();
+            System.out.println("Mission completely stopped!");
+        }
+        else{
+            System.out.println("You did not start mission" + flightMission.getName()+ "!");
+        }
+    }
 }

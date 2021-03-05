@@ -32,7 +32,7 @@ public interface ApplicationMenu {
     default void printAvailableOptions(){
         int buf = 0;
         Timer timer = new Timer();
-        timer.schedule(Cache.getInstance(),0,3000);
+        timer.schedule(Cache.getInstance(),0,ApplicationProperties.getFileRefreshRate());
         Scanner in = new Scanner(System.in);
         do {
             do {
@@ -58,7 +58,8 @@ public interface ApplicationMenu {
                         "19 - Assign spaceship on mission \n" +
                         "20 - Create spaceship \n" +
                         "21 - Start mission \n" +
-                        "22 - Exit ");
+                        "22 - Stop mission \n" +
+                        "23 - Exit ");
                 if(buf != 0) in.nextLine();
                 while(!in.hasNextInt()){
                     System.out.println("You need to enter number! Try again...");
@@ -658,7 +659,27 @@ public interface ApplicationMenu {
                             read.nextLine();
                             break;
                         }
-                        case 22:
+                        case 22:{
+                            System.out.println("Enter name of mission: ");
+                            try{
+                                FlightMissionCriteria flightMissionCriteria = new FlightMissionCriteria();
+                                Scanner str = new Scanner(System.in);
+                                String name = str.nextLine();
+                                flightMissionCriteria.setName(name);
+                                if (!missionServiceActs.findMissionByCriteria(flightMissionCriteria).isPresent())
+                                    throw new InvalidStateException("flight mission");
+                                else {
+                                    missionServiceActs.stopMission(missionServiceActs.findMissionByCriteria(flightMissionCriteria).get());
+                                }
+                            }catch (InvalidStateException e){
+                                System.out.println(e.getMessage());
+                            }
+                            System.out.println("Enter any key to continue ...");
+                            Scanner read = new Scanner(System.in);
+                            read.nextLine();
+                            break;
+                        }
+                        case 23:
                             System.exit(0);
                         default:
                             System.out.println("Wrong number! try again...\n");

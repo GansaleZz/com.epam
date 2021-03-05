@@ -10,6 +10,6 @@ public class AssignException extends RuntimeException{
 
     @Override
     public String getMessage() {
-        return "Entity "+entity+" was assigned to mission yet or mission on progress now";
+        return "Entity "+entity+" was assigned to mission yet or mission on progress now/cancelled";
     }
 }
