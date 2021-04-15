@@ -1,23 +1,34 @@
 package com.epam.db;
 
+import com.epam.util.PropertyReader;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public final class ConnectionPool {
     private Queue<Connection> availableConnectionList = new LinkedList<>();
     private List<Connection> notAvailableConnectionList = new ArrayList<>();
+    Properties properties = PropertyReader.getProperties();
     private static ConnectionPool instance = null;
-    private String url = "jdbc:mysql://localhost:3306/project";
-    private String password = "AdminAdmin8!";
-    private String user = "root";
+    private String url = properties.getProperty("db.url");
+    private String password = properties.getProperty("db.password");
+    private String user = properties.getProperty("db.user");
 
     private ConnectionPool(){
+        init();
+    }
 
+    private void init(){
+        try {
+            for (int i = 0; i < Integer.valueOf(properties.getProperty("db.initpoolsize")); ++i) {
+                Connection connection = DriverManager.getConnection(url, user, password);
+                availableConnectionList.add(connection);
+            }
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     public static ConnectionPool getInstance(){
@@ -30,7 +41,7 @@ public final class ConnectionPool {
     private void addConnection(){
         try {
             Connection connection = DriverManager.getConnection(url,user,password);
-            this.availableConnectionList.add(connection);
+            availableConnectionList.add(connection);
         }catch(SQLException e){
             System.out.println(e.getMessage());
         }
@@ -40,9 +51,9 @@ public final class ConnectionPool {
         if(availableConnectionList.size()<=0){
             addConnection();
         }
-        final Connection poll = availableConnectionList.poll();
-        notAvailableConnectionList.add(poll);
-        return poll;
+        final Connection pool = availableConnectionList.poll();
+        notAvailableConnectionList.add(pool);
+        return pool;
     }
 
     public void close(Connection connection){
