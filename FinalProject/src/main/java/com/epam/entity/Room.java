@@ -5,6 +5,7 @@ public class Room extends Entity{
     private RoomStatus room_status = RoomStatus.AVAILABLE;
     private int price;
     private int numberOfSeats;
+    private int id;
 
     public Room(RoomClass room_class, int price, int numberOfSeats) {
         this.room_class = room_class;
@@ -48,5 +49,15 @@ public class Room extends Entity{
                 ", price=" + price +
                 ", numberOfSeats=" + numberOfSeats +
                 '}';
+    }
+
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id;
     }
 }

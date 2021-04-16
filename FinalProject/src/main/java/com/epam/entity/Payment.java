@@ -6,6 +6,7 @@ public class Payment extends Entity{
     private final int amount;
     private LocalDateTime date;
     private PaymentStatus payment_status = PaymentStatus.INPROGRESS;
+    private int id;
 
     public Payment(int amount){
         this.amount = amount;
@@ -38,5 +39,15 @@ public class Payment extends Entity{
                 ", date=" + date +
                 ", payment_status=" + payment_status +
                 '}';
+    }
+
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id;
     }
 }

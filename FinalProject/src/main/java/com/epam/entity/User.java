@@ -4,13 +4,19 @@ public class User extends Entity{
     private final String login;
     private String password;
     private String email;
-    private UserStatus status = UserStatus.AVAILABLE;
+    private UserStatus status;
     private UserRole user_role;
+    private String name;
+    private int id;
 
-    public User(String login, String password, String email){
+    public User(String login, String password, String email,String name,int id , UserStatus status, UserRole role){
+        this.id = id;
         this.login = login;
         this.email = email;
         this.password = password;
+        this.user_role = role;
+        this.status = status;
+        this.name = name;
     }
 
     public void setRole(UserRole user_role) {
@@ -50,6 +56,16 @@ public class User extends Entity{
     }
 
     @Override
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
     public String toString() {
         return "User{" +
                 "login='" + login + '\'' +
@@ -57,6 +73,8 @@ public class User extends Entity{
                 ", email='" + email + '\'' +
                 ", status=" + status +
                 ", user_role=" + user_role +
+                ", name='" + name + '\'' +
+                ", id=" + id +
                 '}';
     }
 }

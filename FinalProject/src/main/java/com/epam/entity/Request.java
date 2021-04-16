@@ -9,6 +9,7 @@ public class Request extends Entity{
     private int userId;
     private RequestStatus request_status = RequestStatus.INPROGRESS;
     private Payment payment;
+    private int id;
 
     public Request(int numberOfSeats, LocalDateTime start, LocalDateTime end, int userId, Payment payment){
         this.numberOfSeats = numberOfSeats;
@@ -76,5 +77,15 @@ public class Request extends Entity{
                 ", request_status=" + request_status +
                 ", payment=" + payment +
                 '}';
+    }
+
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id;
     }
 }
