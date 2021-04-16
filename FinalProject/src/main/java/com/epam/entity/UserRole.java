@@ -12,6 +12,15 @@ public enum UserRole {
         this.id = id;
     }
 
+    public static int getIdByUserRole(UserRole userRole) {
+        int id = 0;
+        switch (userRole){
+            case ADMIN -> id = 1;
+            case CLIENT -> id = 2;
+        }
+        return id;
+    }
+
     public static Optional<UserRole> extractUserRolebyId(int id){
         Optional<UserRole> userRole = Optional.empty();
         switch(id){

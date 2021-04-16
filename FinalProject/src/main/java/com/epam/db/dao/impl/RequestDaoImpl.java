@@ -15,22 +15,17 @@ public class RequestDaoImpl implements RequestDao {
     }
 
     @Override
-    public Optional<Request> findEntityById(Long id) throws DaoException {
+    public Optional<Request> findEntityById(Integer id) throws DaoException {
         return Optional.empty();
     }
 
     @Override
-    public boolean create(Long id) throws DaoException {
+    public boolean create(Request request) throws DaoException {
         return false;
     }
 
     @Override
-    public boolean delete(Long id) throws DaoException {
-        return false;
-    }
-
-    @Override
-    public boolean delete(Request request) throws DaoException {
+    public boolean delete(Integer id) throws DaoException {
         return false;
     }
 

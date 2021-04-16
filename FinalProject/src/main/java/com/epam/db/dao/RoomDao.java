@@ -7,7 +7,7 @@ import com.epam.exceptions.DaoException;
 import java.util.List;
 import java.util.Optional;
 
-public interface RoomDao extends BaseDao<Long,Room>{
+public interface RoomDao extends BaseDao<Integer,Room>{
     Optional<Room> findRoomByCriteria(RoomCriteria roomCriteria) throws DaoException;
 
     List<Room> findAllRoomsByCriteria(RoomCriteria roomCriteria) throws DaoException;

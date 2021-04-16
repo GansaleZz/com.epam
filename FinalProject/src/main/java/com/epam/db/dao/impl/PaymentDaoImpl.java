@@ -15,22 +15,17 @@ public class PaymentDaoImpl implements PaymentDao {
     }
 
     @Override
-    public Optional<Payment> findEntityById(Long id) throws DaoException {
+    public Optional<Payment> findEntityById(Integer id) throws DaoException {
         return Optional.empty();
     }
 
     @Override
-    public boolean create(Long id) throws DaoException {
+    public boolean create(Payment payment) throws DaoException {
         return false;
     }
 
     @Override
-    public boolean delete(Long id) throws DaoException {
-        return false;
-    }
-
-    @Override
-    public boolean delete(Payment payment) throws DaoException {
+    public boolean delete(Integer id) throws DaoException {
         return false;
     }
 

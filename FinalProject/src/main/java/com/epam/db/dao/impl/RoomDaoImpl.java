@@ -15,22 +15,17 @@ public class RoomDaoImpl implements RoomDao {
     }
 
     @Override
-    public Optional<Room> findEntityById(Long id) throws DaoException {
+    public Optional<Room> findEntityById(Integer id) throws DaoException {
         return Optional.empty();
     }
 
     @Override
-    public boolean create(Long id) throws DaoException {
+    public boolean create(Room room) throws DaoException {
         return false;
     }
 
     @Override
-    public boolean delete(Long id) throws DaoException {
-        return false;
-    }
-
-    @Override
-    public boolean delete(Room room) throws DaoException {
+    public boolean delete(Integer id) throws DaoException {
         return false;
     }
 

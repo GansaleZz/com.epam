@@ -7,8 +7,8 @@ public class UserCriteria extends BaseCriteria{
     private String login = null;
     private String password = null;
     private String email = null;
-    private UserStatus status = null;
-    private UserRole user_role = null;
+    private UserStatus userStatus = null;
+    private UserRole userRole = null;
 
     public UserCriteria(){}
 
@@ -37,18 +37,18 @@ public class UserCriteria extends BaseCriteria{
     }
 
     public UserStatus getStatus() {
-        return status;
+        return userStatus;
     }
 
     public void setStatus(UserStatus status) {
-        this.status = status;
+        this.userStatus = status;
     }
 
     public UserRole getUser_role() {
-        return user_role;
+        return userRole;
     }
 
     public void setUser_role(UserRole user_role) {
-        this.user_role = user_role;
+        this.userRole = user_role;
     }
 }

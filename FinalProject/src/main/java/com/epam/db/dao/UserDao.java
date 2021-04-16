@@ -8,7 +8,7 @@ import com.epam.exceptions.DaoException;
 import java.util.List;
 import java.util.Optional;
 
-public interface UserDao extends BaseDao<Long,User>{
+public interface UserDao extends BaseDao<Integer,User>{
 
     List<User> findAllUsersByCriteria(UserCriteria userCriteria) throws DaoException;
 

@@ -39,11 +39,13 @@ public final class ConnectionPool {
     }
 
     private void addConnection(){
-        try {
-            Connection connection = DriverManager.getConnection(url,user,password);
-            availableConnectionList.add(connection);
-        }catch(SQLException e){
-            System.out.println(e.getMessage());
+        if(availableConnectionList.size()+notAvailableConnectionList.size()<Integer.valueOf(properties.getProperty("db.maxpoolsize"))) {
+            try {
+                Connection connection = DriverManager.getConnection(url, user, password);
+                availableConnectionList.add(connection);
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 
