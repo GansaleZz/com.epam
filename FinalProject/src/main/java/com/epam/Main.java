@@ -9,6 +9,8 @@ import com.epam.entity.*;
 import com.epam.util.PropertyReader;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 public class Main {
@@ -25,6 +27,8 @@ public class Main {
         room.setId(10);
         roomDao.update(room);
         System.out.println(roomDao.findEntityById(10));
+        List<Room> list = new ArrayList<>();
+        list.add(null);
 //        System.out.println(roomDao.create(room));
 //        System.out.println(roomDao.findEntityById(2));
 //        System.out.println(roomDao.delete(2));

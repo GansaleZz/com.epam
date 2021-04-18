@@ -1,46 +1,165 @@
 package com.epam.db.dao.impl;
 
 import com.epam.criteria.RequestCriteria;
+import com.epam.db.ConnectionPool;
 import com.epam.db.dao.RequestDao;
-import com.epam.entity.Request;
+import com.epam.entity.*;
 import com.epam.exceptions.DaoException;
 
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class RequestDaoImpl implements RequestDao {
-    @Override
-    public List<Request> findAllEntities() throws DaoException {
-        return null;
+    private final String SQL_SELECT_ALL = "SELECT * FROM Request";
+    private final String SQL_SELECT_BY_CRITERIA = "SELECT * FROM Request WHERE ";
+    private final String SQL_GET_COUNT = "SELECT COUNT(*) FROM Request";
+    private final String SQL_INSERT = "INSERT INTO Request (number_of_seats,start_date,end_date,user_id,request_status,room) VALUES(";
+    private final String SQL_DELETE = "DELETE FROM Request WHERE id = ";
+    private final String SQL_UPDATE = "UPDATE Request SET ";
+
+    private Optional<Request> getRequest(ResultSet resultSet) throws SQLException {
+        Optional<Request> request = Optional.empty();
+        try {
+            int id = resultSet.getInt(1);
+            int numberOfSeats = resultSet.getInt(2);
+            Date start = resultSet.getDate(3);
+            Date end = resultSet.getDate(4);
+            int userId = resultSet.getInt(5);
+            RequestStatus requestStatus = null;
+            if(RequestStatus.extractRequestStatusById(resultSet.getInt(6)).isPresent()){
+                requestStatus = RequestStatus.extractRequestStatusById(resultSet.getInt(6)).get();
+            }
+            int roomId = resultSet.getInt(7);
+            UserDaoImpl userDao = new UserDaoImpl();
+            RoomDaoImpl roomDao = new RoomDaoImpl();
+            if(userDao.findEntityById(userId).isPresent() && roomDao.findEntityById(roomId).isPresent()) {
+                request = Optional.of(new Request(numberOfSeats, start, end, userDao.findEntityById(userId).get(), id, requestStatus, roomDao.findEntityById(roomId).get()));
+            }
+        }catch(DaoException e){
+            System.out.println(e.getMessage());
+        }
+        return request;
     }
 
     @Override
-    public Optional<Request> findEntityById(Integer id) throws DaoException {
-        return Optional.empty();
+    public List<Request> findAllEntities() throws SQLException {
+        List<Request> list = new ArrayList<>();
+        Connection connection = ConnectionPool.getInstance().getConnection();
+        try {
+            ResultSet resultSet = connection.createStatement().executeQuery(SQL_SELECT_ALL);
+            while (resultSet.next()){
+                if(getRequest(resultSet).isPresent()){
+                    list.add(getRequest(resultSet).get());
+                }
+            }
+        }catch(DaoException e){
+            System.out.println(e.getMessage());
+        }
+        finally {
+            ConnectionPool connectionPool = ConnectionPool.getInstance();
+            connectionPool.close(connection);
+        }
+        return list;
     }
 
     @Override
-    public boolean create(Request request) throws DaoException {
-        return false;
+    public Optional<Request> findEntityById(Integer id) throws SQLException {
+        Connection connection = ConnectionPool.getInstance().getConnection();
+        Optional<Request> request = Optional.empty();
+        try {
+            ResultSet tempSet = connection.createStatement().executeQuery(SQL_GET_COUNT);
+            tempSet.next();
+            ResultSet resultSet = connection.createStatement().executeQuery(SQL_SELECT_BY_CRITERIA+"id = "+id);
+            if (resultSet.next()) {
+                request = getRequest(resultSet);
+            }
+        }catch(DaoException e){
+            System.out.println(e.getMessage());
+        }
+        finally {
+            ConnectionPool connectionPool = ConnectionPool.getInstance();
+            connectionPool.close(connection);
+        }
+        return request;
     }
 
     @Override
-    public boolean delete(Integer id) throws DaoException {
-        return false;
+    public boolean create(Request request) throws SQLException {
+        boolean result = false;
+        if(request != null) {
+            Connection connection = ConnectionPool.getInstance().getConnection();
+            try {
+                connection.createStatement().executeUpdate(SQL_INSERT +request.getNumberOfSeats()+","+request.getStart()+","+request.getEnd()+","+request.getUser().getId()+","+RequestStatus.getIdByRequestStatus(request.getRequestStatus())+","+request.getRoom().getId()+ ")");
+                result = true;
+            } catch (DaoException e) {
+                System.out.println(e.getMessage());
+            } finally {
+                ConnectionPool connectionPool = ConnectionPool.getInstance();
+                connectionPool.close(connection);
+            }
+        }
+        return result;
     }
 
     @Override
-    public Optional<Request> update(Request request) throws DaoException {
-        return Optional.empty();
+    public boolean delete(Integer id) throws SQLException {
+        Connection connection = ConnectionPool.getInstance().getConnection();
+        boolean result = false;
+        try{
+            if(findEntityById(id).isPresent()){
+                connection.createStatement().executeUpdate(SQL_DELETE+id);
+                result = true;
+            }
+        }catch(DaoException e){
+            System.out.println(e.getMessage());
+        }finally {
+            ConnectionPool connectionPool = ConnectionPool.getInstance();
+            connectionPool.close(connection);
+        }
+        return result;
     }
 
     @Override
-    public Optional<Request> findRequestByCriteria(RequestCriteria requestCriteria) throws DaoException {
-        return Optional.empty();
+    public Optional<Request> update(Request request) throws SQLException {
+        Optional<Request> requestOptional = Optional.empty();
+        if(request != null) {
+            Connection connection = ConnectionPool.getInstance().getConnection();
+            try {
+                connection.createStatement().executeUpdate(SQL_UPDATE + "number_of_seats = " + request.getNumberOfSeats()
+                        + ", start_date = " + request.getStart() + ", end_date = " + request.getEnd() + ", user_id = " + request.getUser().getId() +", request_status = "+RequestStatus.getIdByRequestStatus(request.getRequestStatus())+", room = " +request.getRoom().getId()+" WHERE id = " + request.getId());
+                requestOptional = findEntityById(request.getId());
+            } catch (DaoException e) {
+                System.out.println(e.getMessage());
+            } finally {
+                ConnectionPool connectionPool = ConnectionPool.getInstance();
+                connectionPool.close(connection);
+            }
+        }
+        return requestOptional;
     }
 
+
     @Override
-    public List<Request> findAllRequestByCriteria(RequestCriteria requestCriteria) throws DaoException {
-        return null;
+    public List<Request> findAllRequestByCriteria(RequestCriteria requestCriteria) throws SQLException {
+        List<Request> list = new ArrayList<>();
+        if(requestCriteria.getRequestStatus() != null) {
+            findAllEntities()
+                    .stream()
+                    .filter(i -> i.getRequestStatus() == requestCriteria.getRequestStatus())
+                    .forEach(i -> list.add(i));
+        }else{
+            if(requestCriteria.getNumberOfSeats()!=0) {
+                findAllEntities()
+                        .stream()
+                        .filter(i -> i.getNumberOfSeats() == requestCriteria.getNumberOfSeats())
+                        .forEach(i -> list.add(i));
+            }
+        }
+        return list;
     }
 }

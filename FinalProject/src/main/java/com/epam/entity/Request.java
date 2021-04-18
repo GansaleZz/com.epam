@@ -1,30 +1,26 @@
 package com.epam.entity;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class Request extends Entity{
     private int numberOfSeats;
-    private LocalDateTime start;
-    private LocalDateTime end;
-    private int userId;
-    private RequestStatus request_status = RequestStatus.INPROGRESS;
+    private Date start;
+    private Date end;
+    private User user;
+    private Room room;
+    private RequestStatus requestStatus;
     private Payment payment;
     private int id;
 
-    public Request(int numberOfSeats, LocalDateTime start, LocalDateTime end, int userId, Payment payment){
+    public Request(int numberOfSeats, Date start, Date end, User user,int id, RequestStatus requestStatus, Room room){
         this.numberOfSeats = numberOfSeats;
         this.start = start;
         this.end = end;
-        this.userId = userId;
-        this.payment = payment;
-    }
-
-    public Payment getPayment() {
-        return payment;
-    }
-
-    public void setPayment(Payment payment) {
-        this.payment = payment;
+        this.user = user;
+        this.id = id;
+        this.requestStatus = requestStatus;
+        this.room = room;
     }
 
     public int getNumberOfSeats() {
@@ -35,48 +31,52 @@ public class Request extends Entity{
         this.numberOfSeats = numberOfSeats;
     }
 
-    public LocalDateTime getStart() {
+    public Date getStart() {
         return start;
     }
 
-    public void setStart(LocalDateTime start) {
+    public void setStart(Date start) {
         this.start = start;
     }
 
-    public LocalDateTime getEnd() {
+    public Date getEnd() {
         return end;
     }
 
-    public void setEnd(LocalDateTime end) {
+    public void setEnd(Date end) {
         this.end = end;
     }
 
-    public int getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public RequestStatus getRequest_status() {
-        return request_status;
+    public Room getRoom() {
+        return room;
     }
 
-    public void setRequest_status(RequestStatus request_status) {
-        this.request_status = request_status;
+    public void setRoom(Room room) {
+        this.room = room;
     }
 
-    @Override
-    public String toString() {
-        return "Request{" +
-                "numberOfSeats=" + numberOfSeats +
-                ", start=" + start +
-                ", end=" + end +
-                ", userId=" + userId +
-                ", request_status=" + request_status +
-                ", payment=" + payment +
-                '}';
+    public RequestStatus getRequestStatus() {
+        return requestStatus;
+    }
+
+    public void setRequestStatus(RequestStatus requestStatus) {
+        this.requestStatus = requestStatus;
+    }
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
 
     @Override

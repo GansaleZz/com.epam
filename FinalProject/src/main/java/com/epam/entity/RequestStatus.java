@@ -13,6 +13,15 @@ public enum RequestStatus {
         this.id = id;
     }
 
+    public static int getIdByRequestStatus(RequestStatus requestStatus){
+        int id = 0;
+        switch(requestStatus){
+            case ACCEPTED -> id = 1;
+            case INPROGRESS -> id = 2;
+            case DENIED -> id = 3;
+        }
+        return  id;
+    }
     public static Optional<RequestStatus> extractRequestStatusById(int id){
         Optional<RequestStatus> requestStatus = Optional.empty();
         switch(id){
