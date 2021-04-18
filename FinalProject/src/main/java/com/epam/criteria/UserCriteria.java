@@ -4,13 +4,21 @@ import com.epam.entity.UserRole;
 import com.epam.entity.UserStatus;
 
 public class UserCriteria extends BaseCriteria{
+    private String name = null;
     private String login = null;
-    private String password = null;
     private String email = null;
-    private UserStatus userStatus = null;
-    private UserRole userRole = null;
+    private UserRole role = null;
+    private UserStatus status = null;
 
     public UserCriteria(){}
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getLogin() {
         return login;
@@ -18,14 +26,6 @@ public class UserCriteria extends BaseCriteria{
 
     public void setLogin(String login) {
         this.login = login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getEmail() {
@@ -36,19 +36,19 @@ public class UserCriteria extends BaseCriteria{
         this.email = email;
     }
 
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
+
     public UserStatus getStatus() {
-        return userStatus;
+        return status;
     }
 
     public void setStatus(UserStatus status) {
-        this.userStatus = status;
-    }
-
-    public UserRole getUser_role() {
-        return userRole;
-    }
-
-    public void setUser_role(UserRole user_role) {
-        this.userRole = user_role;
+        this.status = status;
     }
 }

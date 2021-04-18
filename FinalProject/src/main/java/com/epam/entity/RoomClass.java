@@ -14,6 +14,17 @@ public enum RoomClass {
         this. id = id;
     }
 
+    public static int getIdByRoomClass(RoomClass roomClass) {
+        int id = 0;
+        switch (roomClass){
+            case BUSINESS -> id = 1;
+            case ECONOM -> id = 2;
+            case LUXE -> id = 3;
+            case PREMIUM -> id = 4;
+        }
+        return id;
+    }
+
     public static Optional<RoomClass> extractRoomClassById(int id){
         Optional<RoomClass> roomClass = Optional.empty();
         switch(id){

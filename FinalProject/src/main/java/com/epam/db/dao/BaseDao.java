@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BaseDao <K,T extends Entity> {
+
     List<T> findAllEntities() throws SQLException;
 
     Optional<T> findEntityById(K id) throws SQLException;
@@ -16,5 +17,5 @@ public interface BaseDao <K,T extends Entity> {
 
     boolean delete(K id) throws DaoException, SQLException;
 
-    Optional<T> update(T t) throws DaoException;
+    Optional<T> update(T t) throws DaoException, SQLException;
 }

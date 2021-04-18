@@ -17,11 +17,11 @@ import java.util.Optional;
 
 public class UserDaoImpl implements UserDao {
     private final String SQL_SELECT_ALL = "SELECT * FROM USER";
-    private final String SQL_SELECT_BY_ID = "SELECT * FROM USER WHERE id = ";
     private final String SQL_SELECT_BY_CRITERIA = "SELECT * FROM USER WHERE ";
     private final String SQL_GET_COUNT = "SELECT COUNT(*) FROM USER";
     private final String SQL_INSERT = "INSERT INTO User (login,password,name,email,role_fk,status_fk) VALUES(";
     private final String SQL_DELETE = "DELETE FROM User WHERE id = ";
+    private final String SQL_UPDATE = "UPDATE User SET ";
 
     private Optional<User> getUser(ResultSet resultSet) throws SQLException {
         Optional<User> user = Optional.empty();
@@ -76,13 +76,10 @@ public class UserDaoImpl implements UserDao {
         try {
             ResultSet tempSet = connection.createStatement().executeQuery(SQL_GET_COUNT);
             tempSet.next();
-            if(tempSet.getInt(1)>=id) {
-                ResultSet resultSet = connection.createStatement().executeQuery(SQL_SELECT_BY_ID+id);
-                resultSet.next();
-                if (getUser(resultSet).isPresent()) {
+                ResultSet resultSet = connection.createStatement().executeQuery(SQL_SELECT_BY_CRITERIA+"id = "+id);
+                if (resultSet.next()) {
                     user = getUser(resultSet);
                 }
-            }
         }catch(DaoException e){
             System.out.println(e.getMessage());
         }
@@ -95,23 +92,22 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean create(User user) throws SQLException {
-        Connection connection = ConnectionPool.getInstance().getConnection();
         boolean result = false;
-        try{
-            if (user.getEmail() != null && user.getLogin() != null && user.getPassword() != null && user.getName() != null) {
-                if(!connection.createStatement().executeQuery(SQL_SELECT_BY_CRITERIA+"login = '"+user.getLogin()+"'").next()
-                && !connection.createStatement().executeQuery(SQL_SELECT_BY_CRITERIA+"email = '"+user.getEmail()+"'").next()){
-                    connection.createStatement().executeUpdate(SQL_INSERT+"'" +user.getLogin()+"','"+user.getPassword()+"','"+user.getName()
-                            +"','"+user.getEmail()+"',"+UserRole.getIdByUserRole(UserRole.CLIENT)+","+UserStatus.getIdByUserStatus(UserStatus.AVAILABLE)+")");
+        if(user!=null) {
+            Connection connection = ConnectionPool.getInstance().getConnection();
+            try {
+                if (!connection.createStatement().executeQuery(SQL_SELECT_BY_CRITERIA + "login = '" + user.getLogin() + "'").next()
+                        && !connection.createStatement().executeQuery(SQL_SELECT_BY_CRITERIA + "email = '" + user.getEmail() + "'").next()) {
+                    connection.createStatement().executeUpdate(SQL_INSERT + "'" + user.getLogin() + "','" + user.getPassword() + "','" + user.getName()
+                            + "','" + user.getEmail() + "'," + UserRole.getIdByUserRole(UserRole.CLIENT) + "," + UserStatus.getIdByUserStatus(UserStatus.AVAILABLE) + ")");
                     result = true;
                 }
+            } catch (DaoException e) {
+                System.out.println(e.getMessage());
+            } finally {
+                ConnectionPool connectionPool = ConnectionPool.getInstance();
+                connectionPool.close(connection);
             }
-        }catch(DaoException e){
-            System.out.println(e.getMessage());
-        }
-        finally {
-            ConnectionPool connectionPool = ConnectionPool.getInstance();
-            connectionPool.close(connection);
         }
         return result;
     }
@@ -135,17 +131,66 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Optional<User> update(User user) throws DaoException {
-        return Optional.empty();
+    public Optional<User> update(User user) throws SQLException {
+        Optional<User> userOptional = Optional.empty();
+        Connection connection = ConnectionPool.getInstance().getConnection();
+        try{
+            connection.createStatement().executeUpdate(SQL_UPDATE +"name = '"+user.getName()
+            +"', email = '"+user.getEmail()+"', password = '"+user.getPassword()+"' WHERE id = "+user.getId()+" AND login = '"+user.getLogin()+"'");
+            userOptional = findEntityById(user.getId());
+        }catch(DaoException e){
+            System.out.println(e.getMessage());
+        }finally {
+            ConnectionPool connectionPool = ConnectionPool.getInstance();
+            connectionPool.close(connection);
+        }
+        return userOptional;
     }
 
     @Override
-    public List<User> findAllUsersByCriteria(UserCriteria userCriteria) throws DaoException {
-        return null;
+    public List<User> findAllUsersByCriteria(UserCriteria userCriteria) throws SQLException {
+        List<User> list = new ArrayList<>();
+            if(userCriteria.getName() != null) {
+                findAllEntities()
+                        .stream()
+                        .filter(i -> i.getEmail().equals(userCriteria.getName()))
+                        .forEach(i -> list.add(i));
+            }else{
+                if(userCriteria.getStatus()!=null){
+                    if(userCriteria.getStatus()!=null){
+                        findAllEntities()
+                                .stream()
+                                .filter(i -> i.getStatus() == userCriteria.getStatus())
+                                .forEach(i -> list.add(i));
+                    }
+                }else{
+                    if(userCriteria.getRole()!=null){
+                        findAllEntities()
+                                .stream()
+                                .filter(i -> i.getRole() == userCriteria.getRole())
+                                .forEach(i -> list.add(i));
+                    }
+                }
+            }
+        return list;
     }
 
     @Override
-    public Optional<User> findUserByCriteria(UserCriteria userCriteria) throws DaoException {
-        return Optional.empty();
+    public Optional<User> findUserByCriteria(UserCriteria userCriteria) throws SQLException {
+        Optional<User> user = Optional.empty();
+        if(userCriteria.getEmail() != null){
+            user = findAllEntities()
+                    .stream()
+                    .filter(i -> i.getEmail().equals(userCriteria.getEmail()))
+                    .findAny();
+        }else{
+            if(userCriteria.getLogin() != null){
+                user = findAllEntities()
+                        .stream()
+                        .filter(i -> i.getLogin().equals(userCriteria.getLogin()))
+                        .findAny();
+            }
+        }
+        return user;
     }
 }

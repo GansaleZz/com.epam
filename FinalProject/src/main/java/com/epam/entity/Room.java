@@ -1,32 +1,41 @@
 package com.epam.entity;
 
 public class Room extends Entity{
-    private RoomClass room_class;
-    private RoomStatus room_status = RoomStatus.AVAILABLE;
+    private RoomClass roomClass;
+    private RoomStatus roomStatus;
     private int price;
     private int numberOfSeats;
     private int id;
 
-    public Room(RoomClass room_class, int price, int numberOfSeats) {
-        this.room_class = room_class;
+    public Room(RoomClass room_class, int price, int numberOfSeats, RoomStatus roomStatus,int id) {
+        this.roomClass = room_class;
         this.price = price;
         this.numberOfSeats = numberOfSeats;
+        this.roomStatus = roomStatus;
+        this.id = id;
     }
 
-    public RoomClass getRoom_class() {
-        return room_class;
+    public Room(RoomClass room_class, int price, int numberOfSeats, RoomStatus roomStatus) {
+        this.roomClass = room_class;
+        this.price = price;
+        this.numberOfSeats = numberOfSeats;
+        this.roomStatus = roomStatus;
     }
 
-    public void setRoom_class(RoomClass room_class) {
-        this.room_class = room_class;
+    public RoomClass getRoomClass() {
+        return roomClass;
     }
 
-    public RoomStatus getRoom_status() {
-        return room_status;
+    public void setRoomClass(RoomClass room_class) {
+        this.roomClass = room_class;
     }
 
-    public void setRoom_status(RoomStatus room_status) {
-        this.room_status = room_status;
+    public RoomStatus getRoomStatus() {
+        return roomStatus;
+    }
+
+    public void setRoomStatus(RoomStatus room_status) {
+        this.roomStatus = room_status;
     }
 
     public int getPrice() {
@@ -42,16 +51,6 @@ public class Room extends Entity{
     }
 
     @Override
-    public String toString() {
-        return "Room{" +
-                "room_class=" + room_class +
-                ", room_status=" + room_status +
-                ", price=" + price +
-                ", numberOfSeats=" + numberOfSeats +
-                '}';
-    }
-
-    @Override
     public int getId() {
         return id;
     }
@@ -59,5 +58,16 @@ public class Room extends Entity{
     @Override
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Room{" +
+                "roomClass=" + roomClass +
+                ", roomStatus=" + roomStatus +
+                ", price=" + price +
+                ", numberOfSeats=" + numberOfSeats +
+                ", id=" + id +
+                '}';
     }
 }

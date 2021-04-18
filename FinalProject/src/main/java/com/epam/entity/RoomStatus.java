@@ -12,6 +12,15 @@ public enum RoomStatus {
         this.id = id;
     }
 
+    public static int getIdByRoomStatus(RoomStatus roomStatus) {
+        int id = 0;
+        switch (roomStatus){
+            case ENGAGED -> id = 1;
+            case AVAILABLE -> id = 2;
+        }
+        return id;
+    }
+
     public static Optional<RoomStatus> extractRoomStatusById(int id){
         Optional<RoomStatus> roomStatus = Optional.empty();
         switch(id){
