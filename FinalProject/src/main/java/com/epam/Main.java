@@ -14,21 +14,21 @@ import java.util.List;
 import java.util.Properties;
 
 public class Main {
-    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+    public static void main(String[] args){
 //        UserDaoImpl userDao = new UserDaoImpl();
 //        User user = new User("maggy63","1234","1234a5","Maggy", UserStatus.extractUserStatusById(1).get(), UserRole.extractUserRolebyId(1).get());
 //        UserCriteria userCriteria = new UserCriteria();
 //        userCriteria.setRole(UserRole.CLIENT);
 //        System.out.println(userDao.findAllUsersByCriteria(userCriteria));
-        RoomDaoImpl roomDao = new RoomDaoImpl();
-        System.out.println(roomDao.findAllEntities());
-        System.out.println(roomDao.findEntityById(2));
-        Room room = new Room(RoomClass.BUSINESS,140,5,RoomStatus.AVAILABLE);
-        room.setId(10);
-        roomDao.update(room);
-        System.out.println(roomDao.findEntityById(10));
-        List<Room> list = new ArrayList<>();
-        list.add(null);
+//        RoomDaoImpl roomDao = new RoomDaoImpl();
+//        System.out.println(roomDao.findAllEntities());
+//        System.out.println(roomDao.findEntityById(2));
+//        Room room = new Room(RoomClass.BUSINESS,140,5,RoomStatus.AVAILABLE);
+//        room.setId(10);
+//        roomDao.update(room);
+//        System.out.println(roomDao.findEntityById(10));
+//        List<Room> list = new ArrayList<>();
+//        list.add(null);
 //        System.out.println(roomDao.create(room));
 //        System.out.println(roomDao.findEntityById(2));
 //        System.out.println(roomDao.delete(2));

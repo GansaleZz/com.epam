@@ -1,5 +1,7 @@
 package com.epam.entity;
 
+import java.util.Objects;
+
 public class User extends Entity{
     private final String login;
     private String password;
@@ -93,5 +95,18 @@ public class User extends Entity{
                 ", name='" + name + '\'' +
                 ", id=" + id +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id && login.equals(user.login) && password.equals(user.password) && email.equals(user.email) && status == user.status && user_role == user.user_role && name.equals(user.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(login, password, email, status, user_role, name, id);
     }
 }

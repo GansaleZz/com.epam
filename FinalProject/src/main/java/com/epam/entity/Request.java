@@ -2,6 +2,7 @@ package com.epam.entity;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Objects;
 
 public class Request extends Entity{
     private int numberOfSeats;
@@ -87,5 +88,18 @@ public class Request extends Entity{
     @Override
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Request request = (Request) o;
+        return numberOfSeats == request.numberOfSeats && id == request.id && start.equals(request.start) && end.equals(request.end) && user.equals(request.user) && room.equals(request.room) && requestStatus == request.requestStatus && payment.equals(request.payment);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(numberOfSeats, start, end, user, room, requestStatus, payment, id);
     }
 }

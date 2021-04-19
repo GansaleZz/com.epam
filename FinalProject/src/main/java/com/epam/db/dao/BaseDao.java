@@ -9,13 +9,13 @@ import java.util.Optional;
 
 public interface BaseDao <K,T extends Entity> {
 
-    List<T> findAllEntities() throws SQLException;
+    List<T> findAllEntities() throws DaoException;
 
-    Optional<T> findEntityById(K id) throws SQLException;
+    Optional<T> findEntityById(K id) throws DaoException;
 
-    boolean create(T t) throws DaoException, SQLException;
+    boolean create(T t) throws DaoException;
 
-    boolean delete(K id) throws DaoException, SQLException;
+    boolean delete(K id) throws DaoException;
 
-    Optional<T> update(T t) throws DaoException, SQLException;
+    Optional<T> update(T t) throws DaoException;
 }

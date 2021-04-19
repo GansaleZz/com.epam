@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface UserDao extends BaseDao<Integer,User>{
 
-    List<User> findAllUsersByCriteria(UserCriteria userCriteria) throws DaoException, SQLException;
+    List<User> findAllUsersByCriteria(UserCriteria userCriteria) throws DaoException;
 
-    Optional<User> findUserByCriteria(UserCriteria userCriteria) throws DaoException, SQLException;
+    Optional<User> findUserByCriteria(UserCriteria userCriteria) throws DaoException;
 }

@@ -1,6 +1,7 @@
 package com.epam.entity;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Payment extends Entity{
     private final int amount;
@@ -49,5 +50,18 @@ public class Payment extends Entity{
     @Override
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Payment payment = (Payment) o;
+        return amount == payment.amount && id == payment.id && date.equals(payment.date) && payment_status == payment.payment_status;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(amount, date, payment_status, id);
     }
 }

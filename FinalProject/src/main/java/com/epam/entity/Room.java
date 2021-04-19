@@ -1,5 +1,7 @@
 package com.epam.entity;
 
+import java.util.Objects;
+
 public class Room extends Entity{
     private RoomClass roomClass;
     private RoomStatus roomStatus;
@@ -69,5 +71,18 @@ public class Room extends Entity{
                 ", numberOfSeats=" + numberOfSeats +
                 ", id=" + id +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Room room = (Room) o;
+        return price == room.price && numberOfSeats == room.numberOfSeats && id == room.id && roomClass == room.roomClass && roomStatus == room.roomStatus;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(roomClass, roomStatus, price, numberOfSeats, id);
     }
 }

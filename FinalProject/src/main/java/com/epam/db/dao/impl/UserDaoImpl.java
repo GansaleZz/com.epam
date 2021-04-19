@@ -23,7 +23,7 @@ public class UserDaoImpl implements UserDao {
     private final String SQL_DELETE = "DELETE FROM User WHERE id = ";
     private final String SQL_UPDATE = "UPDATE User SET ";
 
-    private Optional<User> getUser(ResultSet resultSet) throws SQLException {
+    private Optional<User> getUser(ResultSet resultSet) throws DaoException {
         Optional<User> user = Optional.empty();
         try {
             int id = resultSet.getInt("id");
@@ -42,14 +42,14 @@ public class UserDaoImpl implements UserDao {
             if (userRole != null && userStatus != null) {
                 user = Optional.of(new User(login, password, email, name, id, userStatus, userRole));
             }
-        }catch(DaoException e){
-            System.out.println(e.getMessage());
+        }catch(SQLException e){
+            throw new DaoException(e);
         }
         return user;
     }
 
     @Override
-    public List<User> findAllEntities() throws SQLException {
+    public List<User> findAllEntities() throws DaoException {
         List<User> list = new ArrayList<>();
         Connection connection = ConnectionPool.getInstance().getConnection();
         try {
@@ -59,8 +59,8 @@ public class UserDaoImpl implements UserDao {
                     list.add(getUser(resultSet).get());
                 }
             }
-        }catch(DaoException e){
-            System.out.println(e.getMessage());
+        }catch(SQLException e){
+            throw new DaoException(e);
         }
         finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -70,7 +70,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Optional<User> findEntityById(Integer id) throws SQLException {
+    public Optional<User> findEntityById(Integer id) throws DaoException {
         Connection connection = ConnectionPool.getInstance().getConnection();
         Optional<User> user = Optional.empty();
         try {
@@ -80,8 +80,8 @@ public class UserDaoImpl implements UserDao {
                 if (resultSet.next()) {
                     user = getUser(resultSet);
                 }
-        }catch(DaoException e){
-            System.out.println(e.getMessage());
+        }catch(SQLException e){
+            throw new DaoException(e);
         }
         finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -91,7 +91,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean create(User user) throws SQLException {
+    public boolean create(User user) throws DaoException {
         boolean result = false;
         if(user!=null) {
             Connection connection = ConnectionPool.getInstance().getConnection();
@@ -102,8 +102,8 @@ public class UserDaoImpl implements UserDao {
                             + "','" + user.getEmail() + "'," + UserRole.getIdByUserRole(UserRole.CLIENT) + "," + UserStatus.getIdByUserStatus(UserStatus.AVAILABLE) + ")");
                     result = true;
                 }
-            } catch (DaoException e) {
-                System.out.println(e.getMessage());
+            } catch (SQLException e) {
+                throw new DaoException(e);
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
                 connectionPool.close(connection);
@@ -113,7 +113,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean delete(Integer id) throws SQLException {
+    public boolean delete(Integer id) throws DaoException {
         Connection connection = ConnectionPool.getInstance().getConnection();
         boolean result = false;
         try{
@@ -121,8 +121,8 @@ public class UserDaoImpl implements UserDao {
                 connection.createStatement().executeUpdate(SQL_DELETE+id);
                 result = true;
             }
-        }catch(DaoException e){
-            System.out.println(e.getMessage());
+        }catch(SQLException e){
+           throw new DaoException(e);
         }finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connectionPool.close(connection);
@@ -131,15 +131,15 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Optional<User> update(User user) throws SQLException {
+    public Optional<User> update(User user) throws DaoException {
         Optional<User> userOptional = Optional.empty();
         Connection connection = ConnectionPool.getInstance().getConnection();
         try{
             connection.createStatement().executeUpdate(SQL_UPDATE +"name = '"+user.getName()
             +"', email = '"+user.getEmail()+"', password = '"+user.getPassword()+"' WHERE id = "+user.getId()+" AND login = '"+user.getLogin()+"'");
             userOptional = findEntityById(user.getId());
-        }catch(DaoException e){
-            System.out.println(e.getMessage());
+        }catch(SQLException e){
+            throw new DaoException(e);
         }finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connectionPool.close(connection);
@@ -148,7 +148,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public List<User> findAllUsersByCriteria(UserCriteria userCriteria) throws SQLException {
+    public List<User> findAllUsersByCriteria(UserCriteria userCriteria) throws DaoException {
         List<User> list = new ArrayList<>();
             if(userCriteria.getName() != null) {
                 findAllEntities()
@@ -176,7 +176,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Optional<User> findUserByCriteria(UserCriteria userCriteria) throws SQLException {
+    public Optional<User> findUserByCriteria(UserCriteria userCriteria) throws DaoException {
         Optional<User> user = Optional.empty();
         if(userCriteria.getEmail() != null){
             user = findAllEntities()

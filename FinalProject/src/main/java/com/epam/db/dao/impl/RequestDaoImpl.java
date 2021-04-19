@@ -22,7 +22,7 @@ public class RequestDaoImpl implements RequestDao {
     private final String SQL_DELETE = "DELETE FROM Request WHERE id = ";
     private final String SQL_UPDATE = "UPDATE Request SET ";
 
-    private Optional<Request> getRequest(ResultSet resultSet) throws SQLException {
+    private Optional<Request> getRequest(ResultSet resultSet) throws DaoException {
         Optional<Request> request = Optional.empty();
         try {
             int id = resultSet.getInt(1);
@@ -40,14 +40,14 @@ public class RequestDaoImpl implements RequestDao {
             if(userDao.findEntityById(userId).isPresent() && roomDao.findEntityById(roomId).isPresent()) {
                 request = Optional.of(new Request(numberOfSeats, start, end, userDao.findEntityById(userId).get(), id, requestStatus, roomDao.findEntityById(roomId).get()));
             }
-        }catch(DaoException e){
-            System.out.println(e.getMessage());
+        }catch(SQLException e){
+           throw new DaoException(e);
         }
         return request;
     }
 
     @Override
-    public List<Request> findAllEntities() throws SQLException {
+    public List<Request> findAllEntities() throws DaoException {
         List<Request> list = new ArrayList<>();
         Connection connection = ConnectionPool.getInstance().getConnection();
         try {
@@ -57,8 +57,8 @@ public class RequestDaoImpl implements RequestDao {
                     list.add(getRequest(resultSet).get());
                 }
             }
-        }catch(DaoException e){
-            System.out.println(e.getMessage());
+        }catch(SQLException e){
+            throw new DaoException(e);
         }
         finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -68,7 +68,7 @@ public class RequestDaoImpl implements RequestDao {
     }
 
     @Override
-    public Optional<Request> findEntityById(Integer id) throws SQLException {
+    public Optional<Request> findEntityById(Integer id) throws DaoException {
         Connection connection = ConnectionPool.getInstance().getConnection();
         Optional<Request> request = Optional.empty();
         try {
@@ -78,8 +78,8 @@ public class RequestDaoImpl implements RequestDao {
             if (resultSet.next()) {
                 request = getRequest(resultSet);
             }
-        }catch(DaoException e){
-            System.out.println(e.getMessage());
+        }catch(SQLException e){
+            throw new DaoException(e);
         }
         finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -89,15 +89,15 @@ public class RequestDaoImpl implements RequestDao {
     }
 
     @Override
-    public boolean create(Request request) throws SQLException {
+    public boolean create(Request request) throws DaoException {
         boolean result = false;
         if(request != null) {
             Connection connection = ConnectionPool.getInstance().getConnection();
             try {
                 connection.createStatement().executeUpdate(SQL_INSERT +request.getNumberOfSeats()+","+request.getStart()+","+request.getEnd()+","+request.getUser().getId()+","+RequestStatus.getIdByRequestStatus(request.getRequestStatus())+","+request.getRoom().getId()+ ")");
                 result = true;
-            } catch (DaoException e) {
-                System.out.println(e.getMessage());
+            } catch (SQLException e) {
+                throw new DaoException(e);
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
                 connectionPool.close(connection);
@@ -107,7 +107,7 @@ public class RequestDaoImpl implements RequestDao {
     }
 
     @Override
-    public boolean delete(Integer id) throws SQLException {
+    public boolean delete(Integer id) throws DaoException {
         Connection connection = ConnectionPool.getInstance().getConnection();
         boolean result = false;
         try{
@@ -115,8 +115,8 @@ public class RequestDaoImpl implements RequestDao {
                 connection.createStatement().executeUpdate(SQL_DELETE+id);
                 result = true;
             }
-        }catch(DaoException e){
-            System.out.println(e.getMessage());
+        }catch(SQLException e){
+            throw new DaoException(e);
         }finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connectionPool.close(connection);
@@ -125,7 +125,7 @@ public class RequestDaoImpl implements RequestDao {
     }
 
     @Override
-    public Optional<Request> update(Request request) throws SQLException {
+    public Optional<Request> update(Request request) throws DaoException {
         Optional<Request> requestOptional = Optional.empty();
         if(request != null) {
             Connection connection = ConnectionPool.getInstance().getConnection();
@@ -133,8 +133,8 @@ public class RequestDaoImpl implements RequestDao {
                 connection.createStatement().executeUpdate(SQL_UPDATE + "number_of_seats = " + request.getNumberOfSeats()
                         + ", start_date = " + request.getStart() + ", end_date = " + request.getEnd() + ", user_id = " + request.getUser().getId() +", request_status = "+RequestStatus.getIdByRequestStatus(request.getRequestStatus())+", room = " +request.getRoom().getId()+" WHERE id = " + request.getId());
                 requestOptional = findEntityById(request.getId());
-            } catch (DaoException e) {
-                System.out.println(e.getMessage());
+            } catch (SQLException e) {
+                throw new DaoException(e);
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
                 connectionPool.close(connection);
@@ -145,7 +145,7 @@ public class RequestDaoImpl implements RequestDao {
 
 
     @Override
-    public List<Request> findAllRequestByCriteria(RequestCriteria requestCriteria) throws SQLException {
+    public List<Request> findAllRequestByCriteria(RequestCriteria requestCriteria) throws DaoException {
         List<Request> list = new ArrayList<>();
         if(requestCriteria.getRequestStatus() != null) {
             findAllEntities()

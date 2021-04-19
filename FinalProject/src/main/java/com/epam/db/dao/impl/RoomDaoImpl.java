@@ -21,7 +21,7 @@ public class RoomDaoImpl implements RoomDao {
     private final String SQL_DELETE = "DELETE FROM Room WHERE id = ";
     private final String SQL_UPDATE = "UPDATE Room SET ";
 
-    private Optional<Room> getRoom(ResultSet resultSet) throws SQLException {
+    private Optional<Room> getRoom(ResultSet resultSet) throws DaoException {
         Optional<Room> room = Optional.empty();
         try {
             int id = resultSet.getInt(1);
@@ -38,14 +38,14 @@ public class RoomDaoImpl implements RoomDao {
             if(roomStatus != null && roomClass != null){
                 room = Optional.of(new Room(roomClass,price,numberOfSeats,roomStatus,id));
             }
-        }catch(DaoException e){
-            System.out.println(e.getMessage());
+        }catch(SQLException e){
+            throw new DaoException(e);
         }
         return room;
     }
 
     @Override
-    public List<Room> findAllEntities() throws SQLException {
+    public List<Room> findAllEntities() throws DaoException {
         List<Room> list = new ArrayList<>();
         Connection connection = ConnectionPool.getInstance().getConnection();
         try {
@@ -55,8 +55,8 @@ public class RoomDaoImpl implements RoomDao {
                     list.add(getRoom(resultSet).get());
                 }
             }
-        }catch(DaoException e){
-            System.out.println(e.getMessage());
+        }catch(SQLException e){
+            throw new DaoException(e);
         }
         finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -66,7 +66,7 @@ public class RoomDaoImpl implements RoomDao {
     }
 
     @Override
-    public Optional<Room> findEntityById(Integer id) throws SQLException {
+    public Optional<Room> findEntityById(Integer id) throws DaoException {
         Connection connection = ConnectionPool.getInstance().getConnection();
         Optional<Room> room = Optional.empty();
         try {
@@ -76,8 +76,8 @@ public class RoomDaoImpl implements RoomDao {
             if (resultSet.next()) {
                 room = getRoom(resultSet);
             }
-        }catch(DaoException e){
-            System.out.println(e.getMessage());
+        }catch(SQLException e){
+            throw new DaoException(e);
         }
         finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -87,15 +87,15 @@ public class RoomDaoImpl implements RoomDao {
     }
 
     @Override
-    public boolean create(Room room) throws SQLException {
+    public boolean create(Room room) throws DaoException {
         boolean result = false;
         if(room != null) {
             Connection connection = ConnectionPool.getInstance().getConnection();
             try {
                 connection.createStatement().executeUpdate(SQL_INSERT + room.getNumberOfSeats() + ", " + room.getPrice() + ", " + RoomStatus.getIdByRoomStatus(room.getRoomStatus()) + "," + RoomClass.getIdByRoomClass(room.getRoomClass()) + ")");
                 result = true;
-            } catch (DaoException e) {
-                System.out.println(e.getMessage());
+            } catch (SQLException e) {
+                throw new DaoException(e);
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
                 connectionPool.close(connection);
@@ -105,7 +105,7 @@ public class RoomDaoImpl implements RoomDao {
     }
 
     @Override
-    public boolean delete(Integer id) throws SQLException {
+    public boolean delete(Integer id) throws DaoException {
         Connection connection = ConnectionPool.getInstance().getConnection();
         boolean result = false;
         try{
@@ -113,8 +113,8 @@ public class RoomDaoImpl implements RoomDao {
                 connection.createStatement().executeUpdate(SQL_DELETE+id);
                 result = true;
             }
-        }catch(DaoException e){
-            System.out.println(e.getMessage());
+        }catch(SQLException e){
+            throw new DaoException(e);
         }finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connectionPool.close(connection);
@@ -123,7 +123,7 @@ public class RoomDaoImpl implements RoomDao {
     }
 
     @Override
-    public Optional<Room> update(Room room) throws SQLException {
+    public Optional<Room> update(Room room) throws DaoException {
         Optional<Room> roomOptional = Optional.empty();
         if(room != null) {
             Connection connection = ConnectionPool.getInstance().getConnection();
@@ -131,8 +131,8 @@ public class RoomDaoImpl implements RoomDao {
                 connection.createStatement().executeUpdate(SQL_UPDATE + "number_of_seats = " + room.getNumberOfSeats()
                         + ", price = " + room.getPrice() + ", room_status_fk = " + RoomStatus.getIdByRoomStatus(room.getRoomStatus()) + ", room_class_fk = " + RoomClass.getIdByRoomClass(room.getRoomClass()) +" WHERE id = " + room.getId());
                 roomOptional = findEntityById(room.getId());
-            } catch (DaoException e) {
-                System.out.println(e.getMessage());
+            } catch (SQLException e) {
+                throw new DaoException(e);
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
                 connectionPool.close(connection);
@@ -142,7 +142,7 @@ public class RoomDaoImpl implements RoomDao {
     }
 
     @Override
-    public List<Room> findAllRoomsByCriteria(RoomCriteria roomCriteria) throws SQLException {
+    public List<Room> findAllRoomsByCriteria(RoomCriteria roomCriteria) throws DaoException {
         List<Room> list = new ArrayList<>();
         if(roomCriteria.getRoomClass() != null){
             findAllEntities()

@@ -2,12 +2,23 @@ package com.epam.exceptions;
 
 import java.io.IOException;
 
-public class FileException extends IOException {
+public class FileException extends Exception {
     String str;
 
     public FileException(String str){
-        super();
+        super(str);
         this.str = str;
+    }
+
+    public FileException(){}
+
+    public FileException(String str, Throwable cause){
+        super(str,cause);
+        this.str = str;
+    }
+
+    public FileException(Throwable cause){
+        super(cause);
     }
 
     @Override

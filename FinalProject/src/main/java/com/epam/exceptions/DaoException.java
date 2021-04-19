@@ -2,16 +2,20 @@ package com.epam.exceptions;
 
 import java.sql.SQLException;
 
-public class DaoException extends SQLException {
-    private String str;
+public class DaoException extends Exception {
+
+    public DaoException(){}
 
     public DaoException(String str){
-        super();
-        this.str = str;
+        super(str);
     }
 
-    @Override
-    public String getMessage() {
-        return str;
+    public DaoException(String str, Throwable cause){
+        super(str,cause);
     }
+
+    public DaoException(Throwable cause){
+        super(cause);
+    }
+
 }

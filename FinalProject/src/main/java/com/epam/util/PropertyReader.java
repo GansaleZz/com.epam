@@ -31,14 +31,14 @@ public class PropertyReader {
             inputStream = new FileInputStream(propertiesFileName);
             properties.load(inputStream);
             logger.info("Info from "+propertiesFileName+" were completely read");
-        }catch (IOException e){ // <- need custom Exception
+        }catch (IOException e){
             logger.error(e.getMessage());
         } finally {
             try{
                 if(inputStream != null){
                     inputStream.close();
                 }
-            }catch(IOException e){ // <- need custom Exception
+            }catch(IOException e){
                 logger.error(e.getMessage());
             }
         }
