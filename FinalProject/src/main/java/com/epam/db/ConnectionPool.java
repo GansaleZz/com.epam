@@ -1,5 +1,6 @@
 package com.epam.db;
 
+import com.epam.exceptions.DaoException;
 import com.epam.util.PropertyReader;
 
 import java.sql.Connection;
@@ -12,26 +13,26 @@ public final class ConnectionPool {
     private List<Connection> notAvailableConnectionList = new ArrayList<>();
     Properties properties = PropertyReader.getProperties();
     private static ConnectionPool instance = null;
-    private String url = properties.getProperty("db.url");
-    private String password = properties.getProperty("db.password");
-    private String user = properties.getProperty("db.user");
+    private final String URL = properties.getProperty("db.url");
+    private final String PASSWORD = properties.getProperty("db.password");
+    private final String USER = properties.getProperty("db.user");
 
-    private ConnectionPool(){
+    private ConnectionPool() throws DaoException {
         init();
     }
 
-    private void init(){
+    private void init() throws DaoException{
         try {
             for (int i = 0; i < Integer.valueOf(properties.getProperty("db.initpoolsize")); ++i) {
-                Connection connection = DriverManager.getConnection(url, user, password);
+                Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
                 availableConnectionList.add(connection);
             }
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            throw new DaoException(e);
         }
     }
 
-    public static ConnectionPool getInstance(){
+    public static ConnectionPool getInstance() throws DaoException {
         if(instance == null){
             instance = new ConnectionPool();
         }
@@ -41,7 +42,7 @@ public final class ConnectionPool {
     private void addConnection(){
         if(availableConnectionList.size()+notAvailableConnectionList.size()<Integer.valueOf(properties.getProperty("db.maxpoolsize"))) {
             try {
-                Connection connection = DriverManager.getConnection(url, user, password);
+                Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
                 availableConnectionList.add(connection);
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -49,12 +50,15 @@ public final class ConnectionPool {
         }
     }
 
-    public Connection getConnection(){
+    public Optional<Connection> getConnection(){
+        Optional<Connection> pool = Optional.empty();
         if(availableConnectionList.size()<=0){
             addConnection();
         }
-        final Connection pool = availableConnectionList.poll();
-        notAvailableConnectionList.add(pool);
+        if(availableConnectionList.size()>0) {
+            pool = Optional.of(availableConnectionList.poll());
+            notAvailableConnectionList.add(pool.get());
+        }
         return pool;
     }
 

@@ -18,4 +18,5 @@ public interface BaseDao <K,T extends Entity> {
     boolean delete(K id) throws DaoException;
 
     Optional<T> update(T t) throws DaoException;
+
 }

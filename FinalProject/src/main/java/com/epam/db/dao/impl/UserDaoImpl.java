@@ -51,41 +51,43 @@ public class UserDaoImpl implements UserDao {
     @Override
     public List<User> findAllEntities() throws DaoException {
         List<User> list = new ArrayList<>();
-        Connection connection = ConnectionPool.getInstance().getConnection();
-        try {
-            ResultSet resultSet = connection.createStatement().executeQuery(SQL_SELECT_ALL);
-            while (resultSet.next()){
-                if(getUser(resultSet).isPresent()){
-                    list.add(getUser(resultSet).get());
+        Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
+        if(connection.isPresent()) {
+            try {
+                ResultSet resultSet = connection.get().createStatement().executeQuery(SQL_SELECT_ALL);
+                while (resultSet.next()) {
+                    if (getUser(resultSet).isPresent()) {
+                        list.add(getUser(resultSet).get());
+                    }
                 }
+            } catch (SQLException e) {
+                throw new DaoException(e);
+            } finally {
+                ConnectionPool connectionPool = ConnectionPool.getInstance();
+                connectionPool.close(connection.get());
             }
-        }catch(SQLException e){
-            throw new DaoException(e);
-        }
-        finally {
-            ConnectionPool connectionPool = ConnectionPool.getInstance();
-            connectionPool.close(connection);
         }
         return list;
     }
 
     @Override
     public Optional<User> findEntityById(Integer id) throws DaoException {
-        Connection connection = ConnectionPool.getInstance().getConnection();
+        Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
         Optional<User> user = Optional.empty();
-        try {
-            ResultSet tempSet = connection.createStatement().executeQuery(SQL_GET_COUNT);
-            tempSet.next();
-                ResultSet resultSet = connection.createStatement().executeQuery(SQL_SELECT_BY_CRITERIA+"id = "+id);
+        if(connection.isPresent()) {
+            try {
+                ResultSet tempSet = connection.get().createStatement().executeQuery(SQL_GET_COUNT);
+                tempSet.next();
+                ResultSet resultSet = connection.get().createStatement().executeQuery(SQL_SELECT_BY_CRITERIA + "id = " + id);
                 if (resultSet.next()) {
                     user = getUser(resultSet);
                 }
-        }catch(SQLException e){
-            throw new DaoException(e);
-        }
-        finally {
-            ConnectionPool connectionPool = ConnectionPool.getInstance();
-            connectionPool.close(connection);
+            } catch (SQLException e) {
+                throw new DaoException(e);
+            } finally {
+                ConnectionPool connectionPool = ConnectionPool.getInstance();
+                connectionPool.close(connection.get());
+            }
         }
         return user;
     }
@@ -94,19 +96,21 @@ public class UserDaoImpl implements UserDao {
     public boolean create(User user) throws DaoException {
         boolean result = false;
         if(user!=null) {
-            Connection connection = ConnectionPool.getInstance().getConnection();
-            try {
-                if (!connection.createStatement().executeQuery(SQL_SELECT_BY_CRITERIA + "login = '" + user.getLogin() + "'").next()
-                        && !connection.createStatement().executeQuery(SQL_SELECT_BY_CRITERIA + "email = '" + user.getEmail() + "'").next()) {
-                    connection.createStatement().executeUpdate(SQL_INSERT + "'" + user.getLogin() + "','" + user.getPassword() + "','" + user.getName()
-                            + "','" + user.getEmail() + "'," + UserRole.getIdByUserRole(UserRole.CLIENT) + "," + UserStatus.getIdByUserStatus(UserStatus.AVAILABLE) + ")");
-                    result = true;
+            Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
+            if(connection.isPresent()) {
+                try {
+                    if (!connection.get().createStatement().executeQuery(SQL_SELECT_BY_CRITERIA + "login = '" + user.getLogin() + "'").next()
+                            && !connection.get().createStatement().executeQuery(SQL_SELECT_BY_CRITERIA + "email = '" + user.getEmail() + "'").next()) {
+                        connection.get().createStatement().executeUpdate(SQL_INSERT + "'" + user.getLogin() + "','" + user.getPassword() + "','" + user.getName()
+                                + "','" + user.getEmail() + "'," + UserRole.getIdByUserRole(UserRole.CLIENT) + "," + UserStatus.getIdByUserStatus(UserStatus.AVAILABLE) + ")");
+                        result = true;
+                    }
+                } catch (SQLException e) {
+                    throw new DaoException(e);
+                } finally {
+                    ConnectionPool connectionPool = ConnectionPool.getInstance();
+                    connectionPool.close(connection.get());
                 }
-            } catch (SQLException e) {
-                throw new DaoException(e);
-            } finally {
-                ConnectionPool connectionPool = ConnectionPool.getInstance();
-                connectionPool.close(connection);
             }
         }
         return result;
@@ -114,18 +118,20 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean delete(Integer id) throws DaoException {
-        Connection connection = ConnectionPool.getInstance().getConnection();
+        Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
         boolean result = false;
-        try{
-            if(findEntityById(id).isPresent()){
-                connection.createStatement().executeUpdate(SQL_DELETE+id);
-                result = true;
+        if(connection.isPresent()) {
+            try {
+                if (findEntityById(id).isPresent()) {
+                    connection.get().createStatement().executeUpdate(SQL_DELETE + id);
+                    result = true;
+                }
+            } catch (SQLException e) {
+                throw new DaoException(e);
+            } finally {
+                ConnectionPool connectionPool = ConnectionPool.getInstance();
+                connectionPool.close(connection.get());
             }
-        }catch(SQLException e){
-           throw new DaoException(e);
-        }finally {
-            ConnectionPool connectionPool = ConnectionPool.getInstance();
-            connectionPool.close(connection);
         }
         return result;
     }
@@ -133,16 +139,18 @@ public class UserDaoImpl implements UserDao {
     @Override
     public Optional<User> update(User user) throws DaoException {
         Optional<User> userOptional = Optional.empty();
-        Connection connection = ConnectionPool.getInstance().getConnection();
-        try{
-            connection.createStatement().executeUpdate(SQL_UPDATE +"name = '"+user.getName()
-            +"', email = '"+user.getEmail()+"', password = '"+user.getPassword()+"' WHERE id = "+user.getId()+" AND login = '"+user.getLogin()+"'");
-            userOptional = findEntityById(user.getId());
-        }catch(SQLException e){
-            throw new DaoException(e);
-        }finally {
-            ConnectionPool connectionPool = ConnectionPool.getInstance();
-            connectionPool.close(connection);
+        Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
+        if(connection.isPresent()) {
+            try {
+                connection.get().createStatement().executeUpdate(SQL_UPDATE + "name = '" + user.getName()
+                        + "', email = '" + user.getEmail() + "', password = '" + user.getPassword() + "' WHERE id = " + user.getId() + " AND login = '" + user.getLogin() + "'");
+                userOptional = findEntityById(user.getId());
+            } catch (SQLException e) {
+                throw new DaoException(e);
+            } finally {
+                ConnectionPool connectionPool = ConnectionPool.getInstance();
+                connectionPool.close(connection.get());
+            }
         }
         return userOptional;
     }

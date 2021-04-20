@@ -1,27 +1,51 @@
 package com.epam.entity;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Objects;
 
 public class Payment extends Entity{
-    private final int amount;
-    private LocalDateTime date;
+    private int amount;
+    private Date date;
     private PaymentStatus payment_status = PaymentStatus.INPROGRESS;
     private int id;
 
-    public Payment(int amount){
+    public Payment(int id, int amount, Date date, PaymentStatus payment_status ){
         this.amount = amount;
+        this.id = id;
+        this.date = date;
+        this.payment_status = payment_status;
+    }
+
+    public Payment(int id, int amount, PaymentStatus payment_status){
+        this.id = id;
+        this.amount = amount;
+        this.payment_status = payment_status;
+    }
+
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getAmount() {
         return amount;
     }
 
-    public LocalDateTime getDate() {
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -39,17 +63,8 @@ public class Payment extends Entity{
                 "amount=" + amount +
                 ", date=" + date +
                 ", payment_status=" + payment_status +
+                ", id=" + id +
                 '}';
-    }
-
-    @Override
-    public int getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(int id) {
-        this.id = id;
     }
 
     @Override
@@ -57,7 +72,7 @@ public class Payment extends Entity{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Payment payment = (Payment) o;
-        return amount == payment.amount && id == payment.id && date.equals(payment.date) && payment_status == payment.payment_status;
+        return amount == payment.amount && id == payment.id && Objects.equals(date, payment.date) && payment_status == payment.payment_status;
     }
 
     @Override
