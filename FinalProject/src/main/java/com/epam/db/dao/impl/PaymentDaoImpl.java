@@ -21,7 +21,7 @@ public class PaymentDaoImpl implements PaymentDao {
     private final String SQL_SELECT_ALL = "SELECT * FROM Payment";
     private final String SQL_SELECT_BY_CRITERIA = "SELECT * FROM Payment WHERE ";
     private final String SQL_GET_COUNT = "SELECT COUNT(*) FROM Payment";
-    private final String SQL_INSERT = "INSERT INTO Request (number_of_seats,start_date,end_date,user_id,request_status,room) VALUES(";
+    private final String SQL_INSERT = "INSERT INTO Request (status,amount,date) VALUES(";
     private final String SQL_DELETE = "DELETE FROM Payment WHERE id = ";
     private final String SQL_UPDATE = "UPDATE Payment SET ";
 
@@ -70,31 +70,104 @@ public class PaymentDaoImpl implements PaymentDao {
 
     @Override
     public Optional<Payment> findEntityById(Integer id) throws DaoException {
-        return Optional.empty();
+        Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
+        Optional<Payment> payment = Optional.empty();
+        if(connection.isPresent()) {
+            try {
+                ResultSet tempSet = connection.get().createStatement().executeQuery(SQL_GET_COUNT);
+                tempSet.next();
+                ResultSet resultSet = connection.get().createStatement().executeQuery(SQL_SELECT_BY_CRITERIA + "id = " + id);
+                if (resultSet.next()) {
+                    payment = getPayment(resultSet);
+                }
+            } catch (SQLException e) {
+                throw new DaoException(e);
+            } finally {
+                ConnectionPool connectionPool = ConnectionPool.getInstance();
+                connectionPool.close(connection.get());
+            }
+        }
+        return payment;
     }
 
     @Override
     public boolean create(Payment payment) throws DaoException {
-        return false;
+        boolean result = false;
+        if(payment != null) {
+            Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
+            if(connection.isPresent()) {
+                try {
+                    connection.get().createStatement().executeUpdate(SQL_INSERT +PaymentStatus.getIdByPaymentStatus(payment.getPaymentStatus())+","+payment.getAmount()+","+payment.getDate()+")");
+                    result = true;
+                } catch (SQLException e) {
+                    throw new DaoException(e);
+                } finally {
+                    ConnectionPool connectionPool = ConnectionPool.getInstance();
+                    connectionPool.close(connection.get());
+                }
+            }
+        }
+        return result;
     }
 
     @Override
     public boolean delete(Integer id) throws DaoException {
-        return false;
+        Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
+        boolean result = false;
+        if(connection.isPresent()) {
+            try {
+                if (findEntityById(id).isPresent()) {
+                    connection.get().createStatement().executeUpdate(SQL_DELETE + id);
+                    result = true;
+                }
+            } catch (SQLException e) {
+                throw new DaoException(e);
+            } finally {
+                ConnectionPool connectionPool = ConnectionPool.getInstance();
+                connectionPool.close(connection.get());
+            }
+        }
+        return result;
     }
 
     @Override
     public Optional<Payment> update(Payment payment) throws DaoException {
-        return Optional.empty();
+        Optional<Payment> paymentOptional = Optional.empty();
+        if(payment != null) {
+            Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
+            if(connection.isPresent()) {
+                try {
+                    connection.get().createStatement().executeUpdate(SQL_UPDATE + "amount = " + payment.getAmount()
+                            + ", date = " + payment.getDate() + ", payment_status = " + PaymentStatus.getIdByPaymentStatus(payment.getPaymentStatus()) + " WHERE id = " + payment.getId());
+                    paymentOptional = findEntityById(payment.getId());
+                } catch (SQLException e) {
+                    throw new DaoException(e);
+                } finally {
+                    ConnectionPool connectionPool = ConnectionPool.getInstance();
+                    connectionPool.close(connection.get());
+                }
+            }
+        }
+        return paymentOptional;
     }
 
-    @Override
-    public Optional<Payment> findPaymentByCriteria(PaymentCriteria paymentCriteria) throws DaoException {
-        return Optional.empty();
-    }
 
     @Override
     public List<Payment> findAllPaymentByCriteria(PaymentCriteria paymentCriteria) throws DaoException {
-        return null;
+        List<Payment> list = new ArrayList<>();
+        if(paymentCriteria.getPaymentStatus() != null) {
+            findAllEntities()
+                    .stream()
+                    .filter(i -> i.getPaymentStatus() == paymentCriteria.getPaymentStatus())
+                    .forEach(i -> list.add(i));
+        }else{
+            if(paymentCriteria.getAmount()!=0) {
+                findAllEntities()
+                        .stream()
+                        .filter(i -> i.getAmount() == paymentCriteria.getAmount())
+                        .forEach(i -> list.add(i));
+            }
+        }
+        return list;
     }
 }

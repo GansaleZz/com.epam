@@ -5,9 +5,8 @@ import com.epam.entity.PaymentStatus;
 import java.time.LocalDateTime;
 
 public class PaymentCriteria extends BaseCriteria{
-    private  int amount = Integer.valueOf(null);
-    private LocalDateTime date = null;
-    private PaymentStatus payment_status = null;
+    private  int amount = 0;
+    private PaymentStatus paymentStatus = null;
 
     public PaymentCriteria(){}
 
@@ -19,19 +18,11 @@ public class PaymentCriteria extends BaseCriteria{
         this.amount = amount;
     }
 
-    public LocalDateTime getDate() {
-        return date;
+    public PaymentStatus getPaymentStatus() {
+        return paymentStatus;
     }
 
-    public void setDate(LocalDateTime date) {
-        this.date = date;
-    }
-
-    public PaymentStatus getPayment_status() {
-        return payment_status;
-    }
-
-    public void setPayment_status(PaymentStatus payment_status) {
-        this.payment_status = payment_status;
+    public void setPaymentStatus(PaymentStatus paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 }

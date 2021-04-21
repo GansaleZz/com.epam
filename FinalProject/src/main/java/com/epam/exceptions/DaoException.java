@@ -1,6 +1,5 @@
 package com.epam.exceptions;
 
-import java.sql.SQLException;
 
 public class DaoException extends Exception {
 
