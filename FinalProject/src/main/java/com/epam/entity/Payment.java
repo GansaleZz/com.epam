@@ -23,6 +23,10 @@ public class Payment extends Entity{
         this.status = status;
     }
 
+    public Payment(PaymentStatus status){
+        this.status = status;
+    }
+
     @Override
     public int getId() {
         return id;

@@ -39,7 +39,7 @@ class RequestsDaoImplTest {
     void findEntityById() throws FileException, DaoException {
         int numberOfSeats = 2;
         UserDaoImpl userDao = new UserDaoImpl();
-        User user = userDao.findEntityById(1).get();
+        User user = userDao.findEntityById(this.id).get();
         RequestDaoImpl requestDao = new RequestDaoImpl();
         assertEquals(numberOfSeats,requestDao.findEntityById(this.id).get().getNumberOfSeats());
         assertEquals(user,requestDao.findEntityById(this.id).get().getUser());
@@ -54,7 +54,6 @@ class RequestsDaoImplTest {
         User user = userDao.findEntityById(2).get();
         request.setUser(user);
         assertEquals(true,requestDao.create(request));
-
     }
 
     @Test

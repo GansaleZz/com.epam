@@ -23,7 +23,7 @@ import java.util.Optional;
 public class PaymentDaoImpl implements PaymentDao {
     private final String SQL_SELECT_ALL = "SELECT * FROM Payment";
     private final String SQL_SELECT_BY_CRITERIA = "SELECT * FROM Payment WHERE ";
-    private final String SQL_INSERT = "INSERT INTO Request (status,amount,date) VALUES(";
+    private final String SQL_INSERT = "INSERT INTO Payment (amount,date,payment_status) VALUES(";
     private final String SQL_DELETE = "DELETE FROM Payment WHERE id = ";
     private final String SQL_UPDATE = "UPDATE Payment SET ";
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(PaymentDaoImpl.class);
@@ -102,7 +102,7 @@ public class PaymentDaoImpl implements PaymentDao {
             if(connection.isPresent()) {
                 try {
                     logger.info(payment + "successfully created!");
-                    connection.get().createStatement().executeUpdate(SQL_INSERT +PaymentStatus.getIdByPaymentStatus(payment.getPaymentStatus())+","+payment.getAmount()+","+payment.getDate()+")");
+                    connection.get().createStatement().executeUpdate(SQL_INSERT +payment.getAmount()+",'"+payment.getDate()+"',"+PaymentStatus.getIdByPaymentStatus(payment.getPaymentStatus())+")");
                     result = true;
                 } catch (SQLException e) {
                     logger.error(e.getMessage());
@@ -146,7 +146,7 @@ public class PaymentDaoImpl implements PaymentDao {
             if(connection.isPresent()) {
                 try {
                     connection.get().createStatement().executeUpdate(SQL_UPDATE + "amount = " + payment.getAmount()
-                            + ", date = " + payment.getDate() + ", payment_status = " + PaymentStatus.getIdByPaymentStatus(payment.getPaymentStatus()) + " WHERE id = " + payment.getId());
+                            + ", date = '" + payment.getDate() + "', payment_status = " + PaymentStatus.getIdByPaymentStatus(payment.getPaymentStatus()) + " WHERE id = " + payment.getId());
                     paymentOptional = findEntityById(payment.getId());
                     logger.info(payment + " successfully updated!");
                 } catch (SQLException e) {
