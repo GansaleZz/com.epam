@@ -18,7 +18,6 @@ import java.util.Optional;
 public class RequestDaoImpl implements RequestDao {
     private final String SQL_SELECT_ALL = "SELECT * FROM Request";
     private final String SQL_SELECT_BY_CRITERIA = "SELECT * FROM Request WHERE ";
-    private final String SQL_GET_COUNT = "SELECT COUNT(*) FROM Request";
     private final String SQL_INSERT = "INSERT INTO Request (number_of_seats,start_date,end_date,user_id,request_status,room) VALUES(";
     private final String SQL_DELETE = "DELETE FROM Request WHERE id = ";
     private final String SQL_UPDATE = "UPDATE Request SET ";
@@ -78,8 +77,6 @@ public class RequestDaoImpl implements RequestDao {
         Optional<Request> request = Optional.empty();
         if(connection.isPresent()) {
             try {
-                ResultSet tempSet = connection.get().createStatement().executeQuery(SQL_GET_COUNT);
-                tempSet.next();
                 ResultSet resultSet = connection.get().createStatement().executeQuery(SQL_SELECT_BY_CRITERIA + "id = " + id);
                 if (resultSet.next()) {
                     request = getRequest(resultSet);

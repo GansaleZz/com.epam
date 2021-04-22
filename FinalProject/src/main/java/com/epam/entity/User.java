@@ -3,7 +3,7 @@ package com.epam.entity;
 import java.util.Objects;
 
 public class User extends Entity{
-    private final String login;
+    private String login;
     private String password;
     private String email;
     private UserStatus status;
@@ -29,6 +29,14 @@ public class User extends Entity{
         this.status = status;
         this.name = name;
     }
+
+    public User(String login, String password, String email, String name){
+        this.login = login;
+        this.password = password;
+        this.email = email;
+        this.name = name;
+    }
+
 
     public String getName() {
         return name;

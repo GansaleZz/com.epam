@@ -17,7 +17,6 @@ import java.util.Optional;
 public class RoomDaoImpl implements RoomDao {
     private final String SQL_SELECT_ALL = "SELECT * FROM Room";
     private final String SQL_SELECT_BY_CRITERIA = "SELECT * FROM Room WHERE ";
-    private final String SQL_GET_COUNT = "SELECT COUNT(*) FROM Room";
     private final String SQL_INSERT = "INSERT INTO Room (number_of_seats,price,room_status_fk,room_class_fk) VALUES(";
     private final String SQL_DELETE = "DELETE FROM Room WHERE id = ";
     private final String SQL_UPDATE = "UPDATE Room SET ";
@@ -76,8 +75,6 @@ public class RoomDaoImpl implements RoomDao {
         Optional<Room> room = Optional.empty();
         if(connection.isPresent()) {
             try {
-                ResultSet tempSet = connection.get().createStatement().executeQuery(SQL_GET_COUNT);
-                tempSet.next();
                 ResultSet resultSet = connection.get().createStatement().executeQuery(SQL_SELECT_BY_CRITERIA + "id = " + id);
                 if (resultSet.next()) {
                     room = getRoom(resultSet);

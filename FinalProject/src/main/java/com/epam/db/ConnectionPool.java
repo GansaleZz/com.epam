@@ -70,11 +70,7 @@ public final class ConnectionPool {
     public void close(Connection connection){
         notAvailableConnectionList.remove(connection);
         availableConnectionList.add(connection);
-        try {
-            connection.close();
-        }catch (SQLException e){
-            logger.error(e.getMessage());
-        }
+
     }
 
     public void closeAllConnections(){

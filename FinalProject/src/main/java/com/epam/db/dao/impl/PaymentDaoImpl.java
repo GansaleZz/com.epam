@@ -23,7 +23,6 @@ import java.util.Optional;
 public class PaymentDaoImpl implements PaymentDao {
     private final String SQL_SELECT_ALL = "SELECT * FROM Payment";
     private final String SQL_SELECT_BY_CRITERIA = "SELECT * FROM Payment WHERE ";
-    private final String SQL_GET_COUNT = "SELECT COUNT(*) FROM Payment";
     private final String SQL_INSERT = "INSERT INTO Request (status,amount,date) VALUES(";
     private final String SQL_DELETE = "DELETE FROM Payment WHERE id = ";
     private final String SQL_UPDATE = "UPDATE Payment SET ";
@@ -80,8 +79,6 @@ public class PaymentDaoImpl implements PaymentDao {
         Optional<Payment> payment = Optional.empty();
         if(connection.isPresent()) {
             try {
-                ResultSet tempSet = connection.get().createStatement().executeQuery(SQL_GET_COUNT);
-                tempSet.next();
                 ResultSet resultSet = connection.get().createStatement().executeQuery(SQL_SELECT_BY_CRITERIA + "id = " + id);
                 if (resultSet.next()) {
                     payment = getPayment(resultSet);

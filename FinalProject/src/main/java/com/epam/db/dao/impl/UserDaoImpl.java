@@ -8,7 +8,6 @@ import com.epam.entity.UserRole;
 import com.epam.entity.UserStatus;
 import com.epam.exceptions.DaoException;
 import com.epam.exceptions.FileException;
-import com.epam.util.PropertyReader;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -20,7 +19,6 @@ import java.util.Optional;
 public class UserDaoImpl implements UserDao {
     private final String SQL_SELECT_ALL = "SELECT * FROM USER";
     private final String SQL_SELECT_BY_CRITERIA = "SELECT * FROM USER WHERE ";
-    private final String SQL_GET_COUNT = "SELECT COUNT(*) FROM USER";
     private final String SQL_INSERT = "INSERT INTO User (login,password,name,email,role_fk,status_fk) VALUES(";
     private final String SQL_DELETE = "DELETE FROM User WHERE id = ";
     private final String SQL_UPDATE = "UPDATE User SET ";
@@ -81,8 +79,6 @@ public class UserDaoImpl implements UserDao {
         Optional<User> user = Optional.empty();
         if(connection.isPresent()) {
             try {
-                ResultSet tempSet = connection.get().createStatement().executeQuery(SQL_GET_COUNT);
-                tempSet.next();
                 ResultSet resultSet = connection.get().createStatement().executeQuery(SQL_SELECT_BY_CRITERIA + "id = " + id);
                 if (resultSet.next()) {
                     user = getUser(resultSet);
