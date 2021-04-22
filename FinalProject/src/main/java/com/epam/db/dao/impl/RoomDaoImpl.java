@@ -97,7 +97,7 @@ public class RoomDaoImpl implements RoomDao {
             Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
             if(connection.isPresent()) {
                 try {
-                    connection.get().createStatement().executeUpdate(SQL_INSERT + room.getNumberOfSeats() + ", " + room.getPrice() + ", " + RoomStatus.getIdByRoomStatus(room.getRoomStatus()) + "," + RoomClass.getIdByRoomClass(room.getRoomClass()) + ")");
+                    connection.get().createStatement().executeUpdate(SQL_INSERT + room.getNumberOfSeats() + ", " + room.getPrice() + ", " + RoomStatus.getIdByRoomStatus(RoomStatus.AVAILABLE) + "," + RoomClass.getIdByRoomClass(room.getRoomClass()) + ")");
                     result = true;
                     logger.info(room + " successfully created!");
                 } catch (SQLException e) {

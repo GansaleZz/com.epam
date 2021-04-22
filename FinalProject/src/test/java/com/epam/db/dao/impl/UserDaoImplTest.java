@@ -21,10 +21,15 @@ class UserDaoImplTest {
 
 
     @org.junit.jupiter.api.Test
-    void findAllEntities() throws FileException, DaoException {
+    void findAllEntities() throws FileException, DaoException, SQLException {
         UserDaoImpl userDao = new UserDaoImpl();
         List<User> list = userDao.findAllEntities();
-        assertEquals(5,list.size());
+        Connection connection = ConnectionPool.getInstance().getConnection().get();
+        final String COUNT = "SELECT COUNT(*) FROM USER";
+        ResultSet resultSet = connection.createStatement().executeQuery(COUNT);
+        resultSet.next();
+        int count = resultSet.getInt(1);
+        assertEquals(count,list.size());
     }
 
     @org.junit.jupiter.api.Test

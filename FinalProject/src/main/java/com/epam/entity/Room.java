@@ -17,11 +17,17 @@ public class Room extends Entity{
         this.id = id;
     }
 
-    public Room(RoomClass room_class, int price, int numberOfSeats, RoomStatus roomStatus) {
-        this.roomClass = room_class;
+    public Room(RoomClass roomClass, int price, int numberOfSeats, RoomStatus roomStatus) {
+        this.roomClass = roomClass;
         this.price = price;
         this.numberOfSeats = numberOfSeats;
         this.roomStatus = roomStatus;
+    }
+
+    public Room(RoomClass roomClass, int price, int numberOfSeats){
+        this.roomClass = roomClass;
+        this.price = price;
+        this.numberOfSeats = numberOfSeats;
     }
 
     public RoomClass getRoomClass() {
@@ -36,8 +42,8 @@ public class Room extends Entity{
         return roomStatus;
     }
 
-    public void setRoomStatus(RoomStatus room_status) {
-        this.roomStatus = room_status;
+    public void setRoomStatus(RoomStatus roomStatus) {
+        this.roomStatus = roomStatus;
     }
 
     public int getPrice() {
