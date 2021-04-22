@@ -18,6 +18,7 @@ public final class ConnectionPool {
     private final String URL = properties.getProperty("db.url");
     private final String PASSWORD = properties.getProperty("db.password");
     private final String USER = properties.getProperty("db.user");
+    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ConnectionPool.class);
 
     private ConnectionPool() throws DaoException, FileException {
         init();
@@ -29,7 +30,9 @@ public final class ConnectionPool {
                 Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
                 availableConnectionList.add(connection);
             }
+            logger.info("Connection pool successfully inited!");
         }catch(SQLException e){
+            logger.fatal(e);
             throw new DaoException(e);
         }
     }
@@ -41,18 +44,18 @@ public final class ConnectionPool {
         return instance;
     }
 
-    private void addConnection(){
+    private void addConnection() throws DaoException {
         if(availableConnectionList.size()+notAvailableConnectionList.size()<Integer.valueOf(properties.getProperty("db.maxpoolsize"))) {
             try {
                 Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
                 availableConnectionList.add(connection);
             } catch (SQLException e) {
-                System.out.println(e.getMessage());
+                throw new DaoException(e);
             }
         }
     }
 
-    public Optional<Connection> getConnection(){
+    public Optional<Connection> getConnection() throws DaoException {
         Optional<Connection> pool = Optional.empty();
         if(availableConnectionList.size()<=0){
             addConnection();
@@ -70,7 +73,7 @@ public final class ConnectionPool {
         try {
             connection.close();
         }catch (SQLException e){
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
         }
     }
 

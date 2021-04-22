@@ -27,6 +27,7 @@ public class PaymentDaoImpl implements PaymentDao {
     private final String SQL_INSERT = "INSERT INTO Request (status,amount,date) VALUES(";
     private final String SQL_DELETE = "DELETE FROM Payment WHERE id = ";
     private final String SQL_UPDATE = "UPDATE Payment SET ";
+    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(PaymentDaoImpl.class);
 
     private Optional<Payment> getPayment(ResultSet resultSet) throws DaoException {
         Optional<Payment> payment = Optional.empty();
@@ -44,6 +45,7 @@ public class PaymentDaoImpl implements PaymentDao {
                 payment = Optional.of(new Payment(id,amount,paymentStatus));
             }
         }catch(SQLException e){
+            logger.error(e.getMessage());
             throw new DaoException(e);
         }
         return payment;
@@ -62,6 +64,7 @@ public class PaymentDaoImpl implements PaymentDao {
                     }
                 }
             } catch (SQLException e) {
+                logger.error(e.getMessage());
                 throw new DaoException(e);
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -84,6 +87,7 @@ public class PaymentDaoImpl implements PaymentDao {
                     payment = getPayment(resultSet);
                 }
             } catch (SQLException e) {
+                logger.error(e.getMessage());
                 throw new DaoException(e);
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -100,9 +104,11 @@ public class PaymentDaoImpl implements PaymentDao {
             Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
             if(connection.isPresent()) {
                 try {
+                    logger.info(payment + "successfully created!");
                     connection.get().createStatement().executeUpdate(SQL_INSERT +PaymentStatus.getIdByPaymentStatus(payment.getPaymentStatus())+","+payment.getAmount()+","+payment.getDate()+")");
                     result = true;
                 } catch (SQLException e) {
+                    logger.error(e.getMessage());
                     throw new DaoException(e);
                 } finally {
                     ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -120,10 +126,12 @@ public class PaymentDaoImpl implements PaymentDao {
         if(connection.isPresent()) {
             try {
                 if (findEntityById(id).isPresent()) {
+                    logger.info(findEntityById(id).get() + "successfully deleted!");
                     connection.get().createStatement().executeUpdate(SQL_DELETE + id);
                     result = true;
                 }
             } catch (SQLException e) {
+                logger.error(e.getMessage());
                 throw new DaoException(e);
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -143,7 +151,9 @@ public class PaymentDaoImpl implements PaymentDao {
                     connection.get().createStatement().executeUpdate(SQL_UPDATE + "amount = " + payment.getAmount()
                             + ", date = " + payment.getDate() + ", payment_status = " + PaymentStatus.getIdByPaymentStatus(payment.getPaymentStatus()) + " WHERE id = " + payment.getId());
                     paymentOptional = findEntityById(payment.getId());
+                    logger.info(payment + " successfully updated!");
                 } catch (SQLException e) {
+                    logger.error(e.getMessage());
                     throw new DaoException(e);
                 } finally {
                     ConnectionPool connectionPool = ConnectionPool.getInstance();

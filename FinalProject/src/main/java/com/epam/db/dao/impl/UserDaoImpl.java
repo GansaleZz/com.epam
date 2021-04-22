@@ -8,6 +8,7 @@ import com.epam.entity.UserRole;
 import com.epam.entity.UserStatus;
 import com.epam.exceptions.DaoException;
 import com.epam.exceptions.FileException;
+import com.epam.util.PropertyReader;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -23,6 +24,7 @@ public class UserDaoImpl implements UserDao {
     private final String SQL_INSERT = "INSERT INTO User (login,password,name,email,role_fk,status_fk) VALUES(";
     private final String SQL_DELETE = "DELETE FROM User WHERE id = ";
     private final String SQL_UPDATE = "UPDATE User SET ";
+    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(UserDaoImpl.class);
 
     private Optional<User> getUser(ResultSet resultSet) throws DaoException {
         Optional<User> user = Optional.empty();
@@ -44,6 +46,7 @@ public class UserDaoImpl implements UserDao {
                 user = Optional.of(new User(login, password, email, name, id, userStatus, userRole));
             }
         }catch(SQLException e){
+            logger.error(e.getMessage());
             throw new DaoException(e);
         }
         return user;
@@ -62,6 +65,7 @@ public class UserDaoImpl implements UserDao {
                     }
                 }
             } catch (SQLException e) {
+                logger.error(e.getMessage());
                 throw new DaoException(e);
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -84,6 +88,7 @@ public class UserDaoImpl implements UserDao {
                     user = getUser(resultSet);
                 }
             } catch (SQLException e) {
+                logger.error(e.getMessage());
                 throw new DaoException(e);
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -105,8 +110,10 @@ public class UserDaoImpl implements UserDao {
                         connection.get().createStatement().executeUpdate(SQL_INSERT + "'" + user.getLogin() + "','" + user.getPassword() + "','" + user.getName()
                                 + "','" + user.getEmail() + "'," + UserRole.getIdByUserRole(UserRole.CLIENT) + "," + UserStatus.getIdByUserStatus(UserStatus.AVAILABLE) + ")");
                         result = true;
+                        logger.info(user+" successfully created!");
                     }
                 } catch (SQLException e) {
+                    logger.error(e.getMessage());
                     throw new DaoException(e);
                 } finally {
                     ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -124,10 +131,12 @@ public class UserDaoImpl implements UserDao {
         if(connection.isPresent()) {
             try {
                 if (findEntityById(id).isPresent()) {
+                    logger.info(findEntityById(id).get()+" successfully deleted!");
                     connection.get().createStatement().executeUpdate(SQL_DELETE + id);
                     result = true;
                 }
             } catch (SQLException e) {
+                logger.error(e.getMessage());
                 throw new DaoException(e);
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -146,7 +155,9 @@ public class UserDaoImpl implements UserDao {
                 connection.get().createStatement().executeUpdate(SQL_UPDATE + "name = '" + user.getName()
                         + "', email = '" + user.getEmail() + "', password = '" + user.getPassword() + "' WHERE id = " + user.getId() + " AND login = '" + user.getLogin() + "'");
                 userOptional = findEntityById(user.getId());
+                logger.info(user +" successfully updated!");
             } catch (SQLException e) {
+                logger.error(e.getMessage());
                 throw new DaoException(e);
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();

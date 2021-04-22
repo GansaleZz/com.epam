@@ -22,6 +22,7 @@ public class RequestDaoImpl implements RequestDao {
     private final String SQL_INSERT = "INSERT INTO Request (number_of_seats,start_date,end_date,user_id,request_status,room) VALUES(";
     private final String SQL_DELETE = "DELETE FROM Request WHERE id = ";
     private final String SQL_UPDATE = "UPDATE Request SET ";
+    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(RequestDaoImpl.class);
 
     private Optional<Request> getRequest(ResultSet resultSet) throws DaoException, FileException {
         Optional<Request> request = Optional.empty();
@@ -42,7 +43,8 @@ public class RequestDaoImpl implements RequestDao {
                 request = Optional.of(new Request(numberOfSeats, start, end, userDao.findEntityById(userId).get(), id, requestStatus, roomDao.findEntityById(roomId).get()));
             }
         }catch(SQLException e){
-           throw new DaoException(e);
+            logger.error(e.getMessage());
+            throw new DaoException(e);
         }
         return request;
     }
@@ -60,6 +62,7 @@ public class RequestDaoImpl implements RequestDao {
                     }
                 }
             } catch (SQLException e) {
+                logger.error(e.getMessage());
                 throw new DaoException(e);
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -82,6 +85,7 @@ public class RequestDaoImpl implements RequestDao {
                     request = getRequest(resultSet);
                 }
             } catch (SQLException e) {
+                logger.error(e.getMessage());
                 throw new DaoException(e);
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -100,7 +104,9 @@ public class RequestDaoImpl implements RequestDao {
                 try {
                     connection.get().createStatement().executeUpdate(SQL_INSERT + request.getNumberOfSeats() + "," + request.getStart() + "," + request.getEnd() + "," + request.getUser().getId() + "," + RequestStatus.getIdByRequestStatus(request.getRequestStatus()) + "," + request.getRoom().getId() + ")");
                     result = true;
+                    logger.info(request + " successfully created!");
                 } catch (SQLException e) {
+                    logger.error(e.getMessage());
                     throw new DaoException(e);
                 } finally {
                     ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -118,10 +124,12 @@ public class RequestDaoImpl implements RequestDao {
         if(connection.isPresent()) {
             try {
                 if (findEntityById(id).isPresent()) {
+                    logger.info(findEntityById(id) + " successfully deleted!");
                     connection.get().createStatement().executeUpdate(SQL_DELETE + id);
                     result = true;
                 }
             } catch (SQLException e) {
+                logger.error(e.getMessage());
                 throw new DaoException(e);
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -141,7 +149,9 @@ public class RequestDaoImpl implements RequestDao {
                     connection.get().createStatement().executeUpdate(SQL_UPDATE + "number_of_seats = " + request.getNumberOfSeats()
                             + ", start_date = " + request.getStart() + ", end_date = " + request.getEnd() + ", user_id = " + request.getUser().getId() + ", request_status = " + RequestStatus.getIdByRequestStatus(request.getRequestStatus()) + ", room = " + request.getRoom().getId() + " WHERE id = " + request.getId());
                     requestOptional = findEntityById(request.getId());
+                    logger.info(request + " successfully updated!");
                 } catch (SQLException e) {
+                    logger.error(e.getMessage());
                     throw new DaoException(e);
                 } finally {
                     ConnectionPool connectionPool = ConnectionPool.getInstance();
