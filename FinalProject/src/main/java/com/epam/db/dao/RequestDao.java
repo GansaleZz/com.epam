@@ -9,5 +9,5 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface RequestDao extends BaseDao<Integer,Request>{
-    List<Request> findAllRequestByCriteria(RequestCriteria requestCriteria) throws DaoException, FileException;
+    List<Request> findAllRequestsByCriteria(RequestCriteria requestCriteria) throws DaoException, FileException;
 }

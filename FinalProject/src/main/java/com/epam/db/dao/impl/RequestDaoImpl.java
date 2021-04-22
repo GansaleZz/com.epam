@@ -99,7 +99,7 @@ public class RequestDaoImpl implements RequestDao {
             Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
             if(connection.isPresent()) {
                 try {
-                    connection.get().createStatement().executeUpdate(SQL_INSERT + request.getNumberOfSeats() + "," + request.getStart() + "," + request.getEnd() + "," + request.getUser().getId() + "," + RequestStatus.getIdByRequestStatus(request.getRequestStatus()) + "," + request.getRoom().getId() + ")");
+                    connection.get().createStatement().executeUpdate(SQL_INSERT + request.getNumberOfSeats() + ",'" + request.getStart() + "','" + request.getEnd() + "'," + request.getUser().getId() + "," + RequestStatus.getIdByRequestStatus(request.getRequestStatus()) + "," + request.getRoom().getId() + ")");
                     result = true;
                     logger.info(request + " successfully created!");
                 } catch (SQLException e) {
@@ -143,8 +143,8 @@ public class RequestDaoImpl implements RequestDao {
             Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
             if(connection.isPresent()) {
                 try {
-                    connection.get().createStatement().executeUpdate(SQL_UPDATE + "number_of_seats = " + request.getNumberOfSeats()
-                            + ", start_date = " + request.getStart() + ", end_date = " + request.getEnd() + ", user_id = " + request.getUser().getId() + ", request_status = " + RequestStatus.getIdByRequestStatus(request.getRequestStatus()) + ", room = " + request.getRoom().getId() + " WHERE id = " + request.getId());
+                        connection.get().createStatement().executeUpdate(SQL_UPDATE + "number_of_seats = " + request.getNumberOfSeats()
+                                + ", start_date = '" + request.getStart() + "', end_date = '" + request.getEnd() + "', user_id = " + request.getUser().getId() + ", request_status = " + RequestStatus.getIdByRequestStatus(request.getRequestStatus()) + ", room = " + request.getRoom().getId() + " WHERE id = " + request.getId());
                     requestOptional = findEntityById(request.getId());
                     logger.info(request + " successfully updated!");
                 } catch (SQLException e) {
@@ -161,7 +161,7 @@ public class RequestDaoImpl implements RequestDao {
 
 
     @Override
-    public List<Request> findAllRequestByCriteria(RequestCriteria requestCriteria) throws DaoException, FileException {
+    public List<Request> findAllRequestsByCriteria(RequestCriteria requestCriteria) throws DaoException, FileException {
         List<Request> list = new ArrayList<>();
         if(requestCriteria.getRequestStatus() != null) {
             findAllEntities()

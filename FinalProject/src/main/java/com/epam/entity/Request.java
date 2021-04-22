@@ -95,11 +95,29 @@ public class Request extends Entity{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Request request = (Request) o;
-        return numberOfSeats == request.numberOfSeats && id == request.id && start.equals(request.start) && end.equals(request.end) && user.equals(request.user) && room.equals(request.room) && requestStatus == request.requestStatus && payment.equals(request.payment);
+        if(payment != null && ((Request) o).getPayment()!=null) {
+            return numberOfSeats == request.numberOfSeats && id == request.id && start.equals(request.start) && end.equals(request.end) && user.equals(request.user) && room.equals(request.room) && requestStatus == request.requestStatus && payment.equals(request.payment);
+        }else{
+            return numberOfSeats == request.numberOfSeats && id == request.id && start.equals(request.start) && end.equals(request.end) && user.equals(request.user) && room.equals(request.room) && requestStatus == request.requestStatus ;
+        }
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(numberOfSeats, start, end, user, room, requestStatus, payment, id);
+    }
+
+    @Override
+    public String toString() {
+        return "Request{" +
+                "numberOfSeats=" + numberOfSeats +
+                ", start=" + start +
+                ", end=" + end +
+                ", user=" + user +
+                ", room=" + room +
+                ", requestStatus=" + requestStatus +
+                ", payment=" + payment +
+                ", id=" + id +
+                '}';
     }
 }

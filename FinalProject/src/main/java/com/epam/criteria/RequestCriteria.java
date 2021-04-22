@@ -9,7 +9,7 @@ public class RequestCriteria extends BaseCriteria{
     private int numberOfSeats = 0;
     private RequestStatus requestStatus = null;
 
-    RequestCriteria(){}
+    public RequestCriteria(){}
 
     public int getNumberOfSeats() {
         return numberOfSeats;
