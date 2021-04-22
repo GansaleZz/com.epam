@@ -5,6 +5,7 @@ import com.epam.db.ConnectionPool;
 import com.epam.db.dao.RoomDao;
 import com.epam.entity.*;
 import com.epam.exceptions.DaoException;
+import com.epam.exceptions.FileException;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -45,7 +46,7 @@ public class RoomDaoImpl implements RoomDao {
     }
 
     @Override
-    public List<Room> findAllEntities() throws DaoException {
+    public List<Room> findAllEntities() throws DaoException, FileException {
         List<Room> list = new ArrayList<>();
         Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
         if(connection.isPresent()) {
@@ -67,7 +68,7 @@ public class RoomDaoImpl implements RoomDao {
     }
 
     @Override
-    public Optional<Room> findEntityById(Integer id) throws DaoException {
+    public Optional<Room> findEntityById(Integer id) throws DaoException, FileException {
         Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
         Optional<Room> room = Optional.empty();
         if(connection.isPresent()) {
@@ -89,7 +90,7 @@ public class RoomDaoImpl implements RoomDao {
     }
 
     @Override
-    public boolean create(Room room) throws DaoException {
+    public boolean create(Room room) throws DaoException, FileException {
         boolean result = false;
         if(room != null) {
             Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
@@ -109,7 +110,7 @@ public class RoomDaoImpl implements RoomDao {
     }
 
     @Override
-    public boolean delete(Integer id) throws DaoException {
+    public boolean delete(Integer id) throws DaoException, FileException {
         Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
         boolean result = false;
         if(connection.isPresent()) {
@@ -129,7 +130,7 @@ public class RoomDaoImpl implements RoomDao {
     }
 
     @Override
-    public Optional<Room> update(Room room) throws DaoException {
+    public Optional<Room> update(Room room) throws DaoException, FileException {
         Optional<Room> roomOptional = Optional.empty();
         if(room != null) {
             Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
@@ -150,7 +151,7 @@ public class RoomDaoImpl implements RoomDao {
     }
 
     @Override
-    public List<Room> findAllRoomsByCriteria(RoomCriteria roomCriteria) throws DaoException {
+    public List<Room> findAllRoomsByCriteria(RoomCriteria roomCriteria) throws DaoException, FileException {
         List<Room> list = new ArrayList<>();
         if(roomCriteria.getRoomClass() != null){
             findAllEntities()

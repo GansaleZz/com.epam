@@ -5,6 +5,7 @@ import com.epam.db.ConnectionPool;
 import com.epam.db.dao.RequestDao;
 import com.epam.entity.*;
 import com.epam.exceptions.DaoException;
+import com.epam.exceptions.FileException;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -22,7 +23,7 @@ public class RequestDaoImpl implements RequestDao {
     private final String SQL_DELETE = "DELETE FROM Request WHERE id = ";
     private final String SQL_UPDATE = "UPDATE Request SET ";
 
-    private Optional<Request> getRequest(ResultSet resultSet) throws DaoException {
+    private Optional<Request> getRequest(ResultSet resultSet) throws DaoException, FileException {
         Optional<Request> request = Optional.empty();
         try {
             int id = resultSet.getInt(1);
@@ -47,7 +48,7 @@ public class RequestDaoImpl implements RequestDao {
     }
 
     @Override
-    public List<Request> findAllEntities() throws DaoException {
+    public List<Request> findAllEntities() throws DaoException, FileException {
         List<Request> list = new ArrayList<>();
         Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
         if(connection.isPresent()) {
@@ -69,7 +70,7 @@ public class RequestDaoImpl implements RequestDao {
     }
 
     @Override
-    public Optional<Request> findEntityById(Integer id) throws DaoException {
+    public Optional<Request> findEntityById(Integer id) throws DaoException, FileException {
         Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
         Optional<Request> request = Optional.empty();
         if(connection.isPresent()) {
@@ -91,7 +92,7 @@ public class RequestDaoImpl implements RequestDao {
     }
 
     @Override
-    public boolean create(Request request) throws DaoException {
+    public boolean create(Request request) throws DaoException, FileException {
         boolean result = false;
         if(request != null) {
             Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
@@ -111,7 +112,7 @@ public class RequestDaoImpl implements RequestDao {
     }
 
     @Override
-    public boolean delete(Integer id) throws DaoException {
+    public boolean delete(Integer id) throws DaoException, FileException {
         Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
         boolean result = false;
         if(connection.isPresent()) {
@@ -131,7 +132,7 @@ public class RequestDaoImpl implements RequestDao {
     }
 
     @Override
-    public Optional<Request> update(Request request) throws DaoException {
+    public Optional<Request> update(Request request) throws DaoException, FileException {
         Optional<Request> requestOptional = Optional.empty();
         if(request != null) {
             Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
@@ -153,7 +154,7 @@ public class RequestDaoImpl implements RequestDao {
 
 
     @Override
-    public List<Request> findAllRequestByCriteria(RequestCriteria requestCriteria) throws DaoException {
+    public List<Request> findAllRequestByCriteria(RequestCriteria requestCriteria) throws DaoException, FileException {
         List<Request> list = new ArrayList<>();
         if(requestCriteria.getRequestStatus() != null) {
             findAllEntities()

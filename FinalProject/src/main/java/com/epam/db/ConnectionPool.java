@@ -1,8 +1,10 @@
 package com.epam.db;
 
 import com.epam.exceptions.DaoException;
+import com.epam.exceptions.FileException;
 import com.epam.util.PropertyReader;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -11,13 +13,13 @@ import java.util.*;
 public final class ConnectionPool {
     private Queue<Connection> availableConnectionList = new LinkedList<>();
     private List<Connection> notAvailableConnectionList = new ArrayList<>();
-    Properties properties = PropertyReader.getProperties();
+    private final Properties properties = PropertyReader.getProperties();
     private static ConnectionPool instance = null;
     private final String URL = properties.getProperty("db.url");
     private final String PASSWORD = properties.getProperty("db.password");
     private final String USER = properties.getProperty("db.user");
 
-    private ConnectionPool() throws DaoException {
+    private ConnectionPool() throws DaoException, FileException {
         init();
     }
 
@@ -32,7 +34,7 @@ public final class ConnectionPool {
         }
     }
 
-    public static ConnectionPool getInstance() throws DaoException {
+    public static ConnectionPool getInstance() throws DaoException, FileException {
         if(instance == null){
             instance = new ConnectionPool();
         }

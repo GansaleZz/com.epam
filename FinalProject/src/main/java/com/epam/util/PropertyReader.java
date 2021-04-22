@@ -16,7 +16,7 @@ public class PropertyReader {
     private PropertyReader() {
     }
 
-    public static Properties getProperties(){
+    public static Properties getProperties() throws FileException {
         if(instance == null){
             loadProperties();
             instance = new PropertyReader();
@@ -24,7 +24,7 @@ public class PropertyReader {
         return properties;
     }
 
-    public static void loadProperties() {
+    public static void loadProperties() throws FileException {
         final String propertiesFileName = "/Users/andrew_wannasesh/Folders/EpamJAva/FinalProject/src/main/resources/application.properties";
         InputStream inputStream = null;
         try{
@@ -33,6 +33,7 @@ public class PropertyReader {
             logger.info("Info from "+propertiesFileName+" were completely read");
         }catch (IOException e){
             logger.error(e.getMessage());
+            throw new FileException(e);
         } finally {
             try{
                 if(inputStream != null){
@@ -40,6 +41,7 @@ public class PropertyReader {
                 }
             }catch(IOException e){
                 logger.error(e.getMessage());
+                throw new FileException(e);
             }
         }
     }

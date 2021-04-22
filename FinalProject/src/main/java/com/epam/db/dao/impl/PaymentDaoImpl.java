@@ -8,7 +8,10 @@ import com.epam.entity.PaymentStatus;
 import com.epam.entity.Request;
 import com.epam.entity.RequestStatus;
 import com.epam.exceptions.DaoException;
+import com.epam.exceptions.FileException;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -47,7 +50,7 @@ public class PaymentDaoImpl implements PaymentDao {
     }
 
     @Override
-    public List<Payment> findAllEntities() throws DaoException {
+    public List<Payment> findAllEntities() throws DaoException, FileException {
         List<Payment> list = new ArrayList<>();
         Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
         if(connection.isPresent()) {
@@ -69,7 +72,7 @@ public class PaymentDaoImpl implements PaymentDao {
     }
 
     @Override
-    public Optional<Payment> findEntityById(Integer id) throws DaoException {
+    public Optional<Payment> findEntityById(Integer id) throws DaoException, FileException {
         Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
         Optional<Payment> payment = Optional.empty();
         if(connection.isPresent()) {
@@ -91,7 +94,7 @@ public class PaymentDaoImpl implements PaymentDao {
     }
 
     @Override
-    public boolean create(Payment payment) throws DaoException {
+    public boolean create(Payment payment) throws DaoException, FileException {
         boolean result = false;
         if(payment != null) {
             Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
@@ -111,7 +114,7 @@ public class PaymentDaoImpl implements PaymentDao {
     }
 
     @Override
-    public boolean delete(Integer id) throws DaoException {
+    public boolean delete(Integer id) throws DaoException, FileException {
         Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
         boolean result = false;
         if(connection.isPresent()) {
@@ -131,7 +134,7 @@ public class PaymentDaoImpl implements PaymentDao {
     }
 
     @Override
-    public Optional<Payment> update(Payment payment) throws DaoException {
+    public Optional<Payment> update(Payment payment) throws DaoException, FileException {
         Optional<Payment> paymentOptional = Optional.empty();
         if(payment != null) {
             Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
@@ -153,7 +156,7 @@ public class PaymentDaoImpl implements PaymentDao {
 
 
     @Override
-    public List<Payment> findAllPaymentByCriteria(PaymentCriteria paymentCriteria) throws DaoException {
+    public List<Payment> findAllPaymentByCriteria(PaymentCriteria paymentCriteria) throws DaoException, FileException {
         List<Payment> list = new ArrayList<>();
         if(paymentCriteria.getPaymentStatus() != null) {
             findAllEntities()
