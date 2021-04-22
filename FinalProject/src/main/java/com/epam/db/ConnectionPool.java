@@ -77,4 +77,16 @@ public final class ConnectionPool {
         }
     }
 
+    public void closeAllConnections(){
+        while(notAvailableConnectionList.size()>0){
+            Connection connection = notAvailableConnectionList.remove(notAvailableConnectionList.size()-1);
+            availableConnectionList.add(connection);
+            try {
+                connection.close();
+            }catch (SQLException e){
+                logger.error(e.getMessage());
+            }
+        }
+    }
+
 }
