@@ -3,7 +3,7 @@ package com.epam.criteria;
 import com.epam.entity.UserRole;
 import com.epam.entity.UserStatus;
 
-public class UserCriteria extends BaseCriteria{
+public class UserCriteria {
     private String name = null;
     private String login = null;
     private String email = null;

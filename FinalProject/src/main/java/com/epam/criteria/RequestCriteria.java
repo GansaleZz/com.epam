@@ -1,11 +1,8 @@
 package com.epam.criteria;
 
-import com.epam.entity.Payment;
 import com.epam.entity.RequestStatus;
 
-import java.time.LocalDateTime;
-
-public class RequestCriteria extends BaseCriteria{
+public class RequestCriteria {
     private int numberOfSeats = 0;
     private RequestStatus requestStatus = null;
 

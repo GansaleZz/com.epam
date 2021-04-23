@@ -3,7 +3,7 @@ package com.epam.criteria;
 import com.epam.entity.RoomClass;
 import com.epam.entity.RoomStatus;
 
-public class RoomCriteria extends BaseCriteria{
+public class RoomCriteria {
     private RoomClass roomClass = null;
     private RoomStatus roomStatus = null;
     private int price = 0;
