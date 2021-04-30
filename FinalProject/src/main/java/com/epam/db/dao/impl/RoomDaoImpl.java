@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 public class RoomDaoImpl implements RoomDao {
     private final String SQL_SELECT_ALL = "SELECT * FROM Room";
@@ -22,29 +23,6 @@ public class RoomDaoImpl implements RoomDao {
     private final String SQL_UPDATE = "UPDATE Room SET ";
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(RoomDaoImpl.class);
 
-    private Optional<Room> getRoom(ResultSet resultSet) throws DaoException {
-        Optional<Room> room = Optional.empty();
-        try {
-            int id = resultSet.getInt(1);
-            int numberOfSeats = resultSet.getInt(2);
-            int price = resultSet.getInt(3);
-            RoomStatus roomStatus =null;
-            if(RoomStatus.extractRoomStatusById(resultSet.getInt(4)).isPresent()){
-                roomStatus = RoomStatus.extractRoomStatusById(resultSet.getInt(4)).get();
-            }
-            RoomClass roomClass = null;
-            if(RoomClass.extractRoomClassById(resultSet.getInt(5)).isPresent()){
-                roomClass = RoomClass.extractRoomClassById(resultSet.getInt(5)).get();
-            }
-            if(roomStatus != null && roomClass != null){
-                room = Optional.of(new Room(roomClass,price,numberOfSeats,roomStatus,id));
-            }
-        }catch(SQLException e){
-            logger.error(e.getMessage());
-            throw new DaoException(e);
-        }
-        return room;
-    }
 
     @Override
     public List<Room> findAllEntities() throws DaoException, FileException {
@@ -161,32 +139,53 @@ public class RoomDaoImpl implements RoomDao {
     public List<Room> findAllRoomsByCriteria(RoomCriteria roomCriteria) throws DaoException, FileException {
         List<Room> list = new ArrayList<>();
         if(roomCriteria.getRoomClass() != null){
-            findAllEntities()
-                    .stream()
-                    .filter(i -> i.getRoomClass().equals(roomCriteria.getRoomClass()))
-                    .forEach(i -> list.add(i));
+            list = chooseAllByPredicate(i -> ((Room)i).getRoomClass().equals(roomCriteria.getRoomClass()));
         }else{
             if(roomCriteria.getRoomStatus()!=null){
-                findAllEntities()
-                        .stream()
-                        .filter(i -> i.getRoomStatus().equals(roomCriteria.getRoomStatus()))
-                        .forEach(i -> list.add(i));
+                list = chooseAllByPredicate(i -> ((Room)i).getRoomStatus().equals(roomCriteria.getRoomStatus()));
             }else{
                 if(roomCriteria.getPrice()!=0){
-                    findAllEntities()
-                            .stream()
-                            .filter(i -> i.getPrice() == roomCriteria.getPrice())
-                            .forEach(i -> list.add(i));
+                    list = chooseAllByPredicate(i -> ((Room)i).getPrice() == roomCriteria.getPrice());
                 }else{
                     if(roomCriteria.getNumberOfSeats()!=0){
-                        findAllEntities()
-                                .stream()
-                                .filter(i -> i.getNumberOfSeats() == roomCriteria.getNumberOfSeats())
-                                .forEach(i -> list.add(i));
+                        list = chooseAllByPredicate(i -> ((Room)i).getNumberOfSeats() == roomCriteria.getNumberOfSeats());
                     }
                 }
             }
         }
         return list;
+    }
+
+    private List<Room> chooseAllByPredicate(Predicate predicate) throws FileException, DaoException {
+        List<Room> list = new ArrayList<>();
+        findAllEntities()
+                .stream()
+                .filter(predicate)
+                .forEach(i -> list.add((Room) i));
+        return list;
+    }
+
+    private Optional<Room> getRoom(ResultSet resultSet) throws DaoException {
+        Optional<Room> room = Optional.empty();
+        try {
+            int id = resultSet.getInt(1);
+            int numberOfSeats = resultSet.getInt(2);
+            int price = resultSet.getInt(3);
+            RoomStatus roomStatus =null;
+            if(RoomStatus.extractRoomStatusById(resultSet.getInt(4)).isPresent()){
+                roomStatus = RoomStatus.extractRoomStatusById(resultSet.getInt(4)).get();
+            }
+            RoomClass roomClass = null;
+            if(RoomClass.extractRoomClassById(resultSet.getInt(5)).isPresent()){
+                roomClass = RoomClass.extractRoomClassById(resultSet.getInt(5)).get();
+            }
+            if(roomStatus != null && roomClass != null){
+                room = Optional.of(new Room(roomClass,price,numberOfSeats,roomStatus,id));
+            }
+        }catch(SQLException e){
+            logger.error(e.getMessage());
+            throw new DaoException(e);
+        }
+        return room;
     }
 }

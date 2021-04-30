@@ -19,6 +19,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 public class PaymentDaoImpl implements PaymentDao {
     private final String SQL_SELECT_ALL = "SELECT * FROM Payment";
@@ -27,28 +28,6 @@ public class PaymentDaoImpl implements PaymentDao {
     private final String SQL_DELETE = "DELETE FROM Payment WHERE id = ";
     private final String SQL_UPDATE = "UPDATE Payment SET ";
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(PaymentDaoImpl.class);
-
-    private Optional<Payment> getPayment(ResultSet resultSet) throws DaoException {
-        Optional<Payment> payment = Optional.empty();
-        try {
-            int id = resultSet.getInt(1);
-            int amount = resultSet.getInt(2);
-            Date date = resultSet.getDate(3);
-            PaymentStatus paymentStatus = null;
-            if(PaymentStatus.extractPaymentStatusById(resultSet.getInt(4)).isPresent()){
-                paymentStatus = PaymentStatus.extractPaymentStatusById(resultSet.getInt(4)).get();
-            }
-            if(date != null) {
-                payment = Optional.of(new Payment(id,amount,date,paymentStatus));
-            }else{
-                payment = Optional.of(new Payment(id,amount,paymentStatus));
-            }
-        }catch(SQLException e){
-            logger.error(e.getMessage());
-            throw new DaoException(e);
-        }
-        return payment;
-    }
 
     @Override
     public List<Payment> findAllEntities() throws DaoException, FileException {
@@ -166,18 +145,43 @@ public class PaymentDaoImpl implements PaymentDao {
     public List<Payment> findAllPaymentByCriteria(PaymentCriteria paymentCriteria) throws DaoException, FileException {
         List<Payment> list = new ArrayList<>();
         if(paymentCriteria.getPaymentStatus() != null) {
-            findAllEntities()
-                    .stream()
-                    .filter(i -> i.getPaymentStatus() == paymentCriteria.getPaymentStatus())
-                    .forEach(i -> list.add(i));
+            list = chooseAllByPredicate(i -> ((Payment)i).getPaymentStatus() == paymentCriteria.getPaymentStatus());
         }else{
             if(paymentCriteria.getAmount()!=0) {
-                findAllEntities()
-                        .stream()
-                        .filter(i -> i.getAmount() == paymentCriteria.getAmount())
-                        .forEach(i -> list.add(i));
+                list = chooseAllByPredicate(i -> ((Payment)i).getAmount() == paymentCriteria.getAmount());
             }
         }
         return list;
+    }
+
+    private List<Payment> chooseAllByPredicate(Predicate predicate) throws FileException, DaoException {
+        List<Payment> list = new ArrayList<>();
+        findAllEntities()
+                .stream()
+                .filter(predicate)
+                .forEach(i -> list.add((Payment) i));
+        return list;
+    }
+
+    private Optional<Payment> getPayment(ResultSet resultSet) throws DaoException {
+        Optional<Payment> payment = Optional.empty();
+        try {
+            int id = resultSet.getInt(1);
+            int amount = resultSet.getInt(2);
+            Date date = resultSet.getDate(3);
+            PaymentStatus paymentStatus = null;
+            if(PaymentStatus.extractPaymentStatusById(resultSet.getInt(4)).isPresent()){
+                paymentStatus = PaymentStatus.extractPaymentStatusById(resultSet.getInt(4)).get();
+            }
+            if(date != null) {
+                payment = Optional.of(new Payment(id,amount,date,paymentStatus));
+            }else{
+                payment = Optional.of(new Payment(id,amount,paymentStatus));
+            }
+        }catch(SQLException e){
+            logger.error(e.getMessage());
+            throw new DaoException(e);
+        }
+        return payment;
     }
 }

@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 public class RequestDaoImpl implements RequestDao {
     private final String SQL_SELECT_ALL = "SELECT * FROM Request";
@@ -23,30 +24,6 @@ public class RequestDaoImpl implements RequestDao {
     private final String SQL_UPDATE = "UPDATE Request SET ";
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(RequestDaoImpl.class);
 
-    private Optional<Request> getRequest(ResultSet resultSet) throws DaoException, FileException {
-        Optional<Request> request = Optional.empty();
-        try {
-            int id = resultSet.getInt(1);
-            int numberOfSeats = resultSet.getInt(2);
-            Date start = resultSet.getDate(3);
-            Date end = resultSet.getDate(4);
-            int userId = resultSet.getInt(5);
-            RequestStatus requestStatus = null;
-            if(RequestStatus.extractRequestStatusById(resultSet.getInt(6)).isPresent()){
-                requestStatus = RequestStatus.extractRequestStatusById(resultSet.getInt(6)).get();
-            }
-            int roomId = resultSet.getInt(7);
-            UserDaoImpl userDao = new UserDaoImpl();
-            RoomDaoImpl roomDao = new RoomDaoImpl();
-            if(userDao.findEntityById(userId).isPresent() && roomDao.findEntityById(roomId).isPresent()) {
-                request = Optional.of(new Request(numberOfSeats, start, end, userDao.findEntityById(userId).get(), id, requestStatus, roomDao.findEntityById(roomId).get()));
-            }
-        }catch(SQLException e){
-            logger.error(e.getMessage());
-            throw new DaoException(e);
-        }
-        return request;
-    }
 
     @Override
     public List<Request> findAllEntities() throws DaoException, FileException {
@@ -164,18 +141,46 @@ public class RequestDaoImpl implements RequestDao {
     public List<Request> findAllRequestsByCriteria(RequestCriteria requestCriteria) throws DaoException, FileException {
         List<Request> list = new ArrayList<>();
         if(requestCriteria.getRequestStatus() != null) {
-            findAllEntities()
-                    .stream()
-                    .filter(i -> i.getRequestStatus() == requestCriteria.getRequestStatus())
-                    .forEach(i -> list.add(i));
+            list = chooseAllByPredicate(i -> ((Request)i).getRequestStatus() == requestCriteria.getRequestStatus());
         }else{
             if(requestCriteria.getNumberOfSeats()!=0) {
-                findAllEntities()
-                        .stream()
-                        .filter(i -> i.getNumberOfSeats() == requestCriteria.getNumberOfSeats())
-                        .forEach(i -> list.add(i));
+                list = chooseAllByPredicate(i -> ((Request)i).getNumberOfSeats() == requestCriteria.getNumberOfSeats());
             }
         }
         return list;
+    }
+
+    private List<Request> chooseAllByPredicate(Predicate predicate) throws FileException, DaoException {
+        List<Request> list = new ArrayList<>();
+        findAllEntities()
+                .stream()
+                .filter(predicate)
+                .forEach(i -> list.add((Request) i));
+        return list;
+    }
+
+    private Optional<Request> getRequest(ResultSet resultSet) throws DaoException, FileException {
+        Optional<Request> request = Optional.empty();
+        try {
+            int id = resultSet.getInt(1);
+            int numberOfSeats = resultSet.getInt(2);
+            Date start = resultSet.getDate(3);
+            Date end = resultSet.getDate(4);
+            int userId = resultSet.getInt(5);
+            RequestStatus requestStatus = null;
+            if(RequestStatus.extractRequestStatusById(resultSet.getInt(6)).isPresent()){
+                requestStatus = RequestStatus.extractRequestStatusById(resultSet.getInt(6)).get();
+            }
+            int roomId = resultSet.getInt(7);
+            UserDaoImpl userDao = new UserDaoImpl();
+            RoomDaoImpl roomDao = new RoomDaoImpl();
+            if(userDao.findEntityById(userId).isPresent() && roomDao.findEntityById(roomId).isPresent()) {
+                request = Optional.of(new Request(numberOfSeats, start, end, userDao.findEntityById(userId).get(), id, requestStatus, roomDao.findEntityById(roomId).get()));
+            }
+        }catch(SQLException e){
+            logger.error(e.getMessage());
+            throw new DaoException(e);
+        }
+        return request;
     }
 }

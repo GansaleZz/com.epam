@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 public class UserDaoImpl implements UserDao {
     private final String SQL_SELECT_ALL = "SELECT * FROM USER";
@@ -24,31 +25,6 @@ public class UserDaoImpl implements UserDao {
     private final String SQL_UPDATE = "UPDATE User SET ";
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(UserDaoImpl.class);
 
-    private Optional<User> getUser(ResultSet resultSet) throws DaoException {
-        Optional<User> user = Optional.empty();
-        try {
-            int id = resultSet.getInt("id");
-            String name = resultSet.getString("name");
-            String email = resultSet.getString("email");
-            String login = resultSet.getString("login");
-            String password = resultSet.getString("password");
-            UserStatus userStatus = null;
-            if (UserStatus.extractUserStatusById(resultSet.getInt("status_fk")).isPresent()) {
-                userStatus = UserStatus.extractUserStatusById(resultSet.getInt("status_fk")).get();
-            }
-            UserRole userRole = null;
-            if (UserRole.extractUserRolebyId(resultSet.getInt("role_fk")).isPresent()) {
-                userRole = UserRole.extractUserRolebyId(resultSet.getInt("role_fk")).get();
-            }
-            if (userRole != null && userStatus != null) {
-                user = Optional.of(new User(login, password, email, name, id, userStatus, userRole));
-            }
-        }catch(SQLException e){
-            logger.error(e.getMessage());
-            throw new DaoException(e);
-        }
-        return user;
-    }
 
     @Override
     public List<User> findAllEntities() throws DaoException, FileException {
@@ -167,24 +143,13 @@ public class UserDaoImpl implements UserDao {
     public List<User> findAllUsersByCriteria(UserCriteria userCriteria) throws DaoException, FileException {
         List<User> list = new ArrayList<>();
             if(userCriteria.getName() != null) {
-                findAllEntities()
-                        .stream()
-                        .filter(i -> i.getEmail().equals(userCriteria.getName()))
-                        .forEach(i -> list.add(i));
+                list = chooseAllByPredicate(i -> ((User)i).getEmail().equals(userCriteria.getName()));
             }else{
                 if(userCriteria.getStatus()!=null){
-                    if(userCriteria.getStatus()!=null){
-                        findAllEntities()
-                                .stream()
-                                .filter(i -> i.getStatus() == userCriteria.getStatus())
-                                .forEach(i -> list.add(i));
-                    }
+                    list = chooseAllByPredicate(i -> ((User)i).getStatus() == userCriteria.getStatus());
                 }else{
                     if(userCriteria.getRole()!=null){
-                        findAllEntities()
-                                .stream()
-                                .filter(i -> i.getRole() == userCriteria.getRole())
-                                .forEach(i -> list.add(i));
+                        list = chooseAllByPredicate(i -> ((User)i).getRole() == userCriteria.getRole());
                     }
                 }
             }
@@ -195,17 +160,54 @@ public class UserDaoImpl implements UserDao {
     public Optional<User> findUserByCriteria(UserCriteria userCriteria) throws DaoException, FileException {
         Optional<User> user = Optional.empty();
         if(userCriteria.getEmail() != null){
-            user = findAllEntities()
-                    .stream()
-                    .filter(i -> i.getEmail().equals(userCriteria.getEmail()))
-                    .findAny();
+            user = chooseByPredicate(i -> ((User)i).getEmail().equals(userCriteria.getEmail()));
         }else{
             if(userCriteria.getLogin() != null){
-                user = findAllEntities()
-                        .stream()
-                        .filter(i -> i.getLogin().equals(userCriteria.getLogin()))
-                        .findAny();
+                user = chooseByPredicate(i -> ((User)i).getLogin().equals(userCriteria.getLogin()));
             }
+        }
+        return user;
+    }
+
+    private Optional<User> chooseByPredicate(Predicate predicate) throws FileException, DaoException {
+        Optional<User> user = findAllEntities()
+                .stream()
+                .filter(predicate)
+                .findAny();
+        return user;
+    }
+
+    private List<User> chooseAllByPredicate(Predicate predicate) throws FileException, DaoException {
+        List<User> list = new ArrayList<>();
+        findAllEntities()
+                .stream()
+                .filter(predicate)
+                .forEach(i -> list.add((User)i));
+        return list;
+    }
+
+    private Optional<User> getUser(ResultSet resultSet) throws DaoException {
+        Optional<User> user = Optional.empty();
+        try {
+            int id = resultSet.getInt("id");
+            String name = resultSet.getString("name");
+            String email = resultSet.getString("email");
+            String login = resultSet.getString("login");
+            String password = resultSet.getString("password");
+            UserStatus userStatus = null;
+            if (UserStatus.extractUserStatusById(resultSet.getInt("status_fk")).isPresent()) {
+                userStatus = UserStatus.extractUserStatusById(resultSet.getInt("status_fk")).get();
+            }
+            UserRole userRole = null;
+            if (UserRole.extractUserRolebyId(resultSet.getInt("role_fk")).isPresent()) {
+                userRole = UserRole.extractUserRolebyId(resultSet.getInt("role_fk")).get();
+            }
+            if (userRole != null && userStatus != null) {
+                user = Optional.of(new User(login, password, email, name, id, userStatus, userRole));
+            }
+        }catch(SQLException e){
+            logger.error(e.getMessage());
+            throw new DaoException(e);
         }
         return user;
     }

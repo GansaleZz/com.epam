@@ -3,22 +3,19 @@ package com.epam.db;
 import com.epam.entity.Property;
 import com.epam.exceptions.DaoException;
 import com.epam.exceptions.FileException;
-import com.epam.util.PropertyReader;
-
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 import java.util.Optional;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 
 public final class ConnectionPool {
-    private Queue<Connection> availableConnectionList = new LinkedList<>();
-    private List<Connection> notAvailableConnectionList = new ArrayList<>();
+    private Queue<Connection> availableConnectionList = new ConcurrentLinkedQueue<>();
+    private List<Connection> engagedConnectionList = new CopyOnWriteArrayList<>();
     private static ConnectionPool instance = null;
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ConnectionPool.class);
     private Property property = Property.getInstance();
@@ -47,7 +44,7 @@ public final class ConnectionPool {
     }
 
     private void addConnection() throws DaoException {
-        if(availableConnectionList.size()+notAvailableConnectionList.size()<property.getMAXPOOLSIZE()) {
+        if(availableConnectionList.size()+ engagedConnectionList.size()<property.getMAXPOOLSIZE()) {
             try {
                 Connection connection = DriverManager.getConnection(property.getURL()+property.getSCHEME(), property.getUSER(), property.getPASSWORD());
                 availableConnectionList.add(connection);
@@ -64,20 +61,19 @@ public final class ConnectionPool {
         }
         if(availableConnectionList.size()>0) {
             pool = Optional.of(availableConnectionList.poll());
-            notAvailableConnectionList.add(pool.get());
+            engagedConnectionList.add(pool.get());
         }
         return pool;
     }
 
     public void close(Connection connection){
-        notAvailableConnectionList.remove(connection);
+        engagedConnectionList.remove(connection);
         availableConnectionList.add(connection);
-
     }
 
     public void closeAllConnections(){
-        while(notAvailableConnectionList.size()>0){
-            Connection connection = notAvailableConnectionList.remove(notAvailableConnectionList.size()-1);
+        while(engagedConnectionList.size()>0){
+            Connection connection = engagedConnectionList.remove(engagedConnectionList.size()-1);
             availableConnectionList.add(connection);
             try {
                 connection.close();
