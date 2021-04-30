@@ -1,24 +1,22 @@
 package com.epam.entity;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 
-public class Payment extends Entity{
+public class Payment extends BaseEntity {
     private int amount;
     private Date date;
     private PaymentStatus status;
-    private int id;
 
     public Payment(int id, int amount, Date date, PaymentStatus status ){
+        super(id);
         this.amount = amount;
-        this.id = id;
         this.date = date;
         this.status = status;
     }
 
     public Payment(int id, int amount, PaymentStatus status){
-        this.id = id;
+        super(id);
         this.amount = amount;
         this.status = status;
     }
@@ -27,15 +25,6 @@ public class Payment extends Entity{
         this.status = status;
     }
 
-    @Override
-    public int getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public int getAmount() {
         return amount;
@@ -67,7 +56,7 @@ public class Payment extends Entity{
                 "amount=" + amount +
                 ", date=" + date +
                 ", payment_status=" + status +
-                ", id=" + id +
+                ", id=" + super.getId() +
                 '}';
     }
 
@@ -76,11 +65,12 @@ public class Payment extends Entity{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Payment payment = (Payment) o;
-        return amount == payment.amount && id == payment.id && Objects.equals(date, payment.date) && status == payment.status;
+        return amount == payment.amount && Objects.equals(date, payment.date) && status == payment.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(amount, date, status, id);
+        return Objects.hash(amount, date, status);
     }
+
 }

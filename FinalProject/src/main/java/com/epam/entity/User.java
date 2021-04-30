@@ -2,17 +2,16 @@ package com.epam.entity;
 
 import java.util.Objects;
 
-public class User extends Entity{
+public class User extends BaseEntity {
     private String login;
     private String password;
     private String email;
     private UserStatus status;
     private UserRole user_role;
     private String name;
-    private int id;
 
     public User(String login, String password, String email,String name,int id , UserStatus status, UserRole role){
-        this.id = id;
+        super(id);
         this.login = login;
         this.email = email;
         this.password = password;
@@ -81,17 +80,6 @@ public class User extends Entity{
     public String getLogin() {
         return login;
     }
-
-    @Override
-    public int getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(int id) {
-        this.id = id;
-    }
-
     @Override
     public String toString() {
         return "User{" +
@@ -101,7 +89,7 @@ public class User extends Entity{
                 ", status=" + status +
                 ", user_role=" + user_role +
                 ", name='" + name + '\'' +
-                ", id=" + id +
+                ", id=" + super.getId() +
                 '}';
     }
 
@@ -110,11 +98,11 @@ public class User extends Entity{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id && login.equals(user.login) && password.equals(user.password) && email.equals(user.email) && status == user.status && user_role == user.user_role && name.equals(user.name);
+        return login.equals(user.login) && password.equals(user.password) && email.equals(user.email) && status == user.status && user_role == user.user_role && name.equals(user.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(login, password, email, status, user_role, name, id);
+        return Objects.hash(login, password, email, status, user_role, name);
     }
 }

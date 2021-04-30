@@ -1,5 +1,6 @@
 package com.epam.db;
 
+import com.epam.entity.Property;
 import com.epam.exceptions.DaoException;
 import com.epam.exceptions.FileException;
 import com.epam.util.PropertyReader;
@@ -8,26 +9,27 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.Optional;
+
 
 public final class ConnectionPool {
     private Queue<Connection> availableConnectionList = new LinkedList<>();
     private List<Connection> notAvailableConnectionList = new ArrayList<>();
-    private final Properties properties = PropertyReader.getProperties();
     private static ConnectionPool instance = null;
-    private final String URL = properties.getProperty("db.url");
-    private final String PASSWORD = properties.getProperty("db.password");
-    private final String USER = properties.getProperty("db.user");
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ConnectionPool.class);
-
-    private ConnectionPool() throws DaoException, FileException {
+    private Property property = Property.getInstance();
+    private ConnectionPool() throws DaoException {
         init();
     }
 
     private void init() throws DaoException{
         try {
-            for (int i = 0; i < Integer.valueOf(properties.getProperty("db.initpoolsize")); ++i) {
-                Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            for (int i = 0; i < property.getINITPOOLSIZE(); ++i) {
+                Connection connection = DriverManager.getConnection(property.getURL()+property.getSCHEME(), property.getUSER(), property.getPASSWORD());
                 availableConnectionList.add(connection);
             }
             logger.info("Connection pool successfully inited!");
@@ -45,9 +47,9 @@ public final class ConnectionPool {
     }
 
     private void addConnection() throws DaoException {
-        if(availableConnectionList.size()+notAvailableConnectionList.size()<Integer.valueOf(properties.getProperty("db.maxpoolsize"))) {
+        if(availableConnectionList.size()+notAvailableConnectionList.size()<property.getMAXPOOLSIZE()) {
             try {
-                Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+                Connection connection = DriverManager.getConnection(property.getURL()+property.getSCHEME(), property.getUSER(), property.getPASSWORD());
                 availableConnectionList.add(connection);
             } catch (SQLException e) {
                 throw new DaoException(e);

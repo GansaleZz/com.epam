@@ -1,10 +1,9 @@
 package com.epam.entity;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 
-public class Request extends Entity{
+public class Request extends BaseEntity {
     private int numberOfSeats;
     private Date start;
     private Date end;
@@ -12,14 +11,13 @@ public class Request extends Entity{
     private Room room;
     private RequestStatus requestStatus;
     private Payment payment;
-    private int id;
 
     public Request(int numberOfSeats, Date start, Date end, User user,int id, RequestStatus requestStatus, Room room){
+        super(id);
         this.numberOfSeats = numberOfSeats;
         this.start = start;
         this.end = end;
         this.user = user;
-        this.id = id;
         this.requestStatus = requestStatus;
         this.room = room;
     }
@@ -81,30 +79,20 @@ public class Request extends Entity{
     }
 
     @Override
-    public int getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Request request = (Request) o;
         if(payment != null && ((Request) o).getPayment()!=null) {
-            return numberOfSeats == request.numberOfSeats && id == request.id && start.equals(request.start) && end.equals(request.end) && user.equals(request.user) && room.equals(request.room) && requestStatus == request.requestStatus && payment.equals(request.payment);
+            return numberOfSeats == request.numberOfSeats && start.equals(request.start) && end.equals(request.end) && user.equals(request.user) && room.equals(request.room) && requestStatus == request.requestStatus && payment.equals(request.payment);
         }else{
-            return numberOfSeats == request.numberOfSeats && id == request.id && start.equals(request.start) && end.equals(request.end) && user.equals(request.user) && room.equals(request.room) && requestStatus == request.requestStatus ;
+            return numberOfSeats == request.numberOfSeats && start.equals(request.start) && end.equals(request.end) && user.equals(request.user) && room.equals(request.room) && requestStatus == request.requestStatus ;
         }
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(numberOfSeats, start, end, user, room, requestStatus, payment, id);
+        return Objects.hash(numberOfSeats, start, end, user, room, requestStatus, payment);
     }
 
     @Override
@@ -117,7 +105,7 @@ public class Request extends Entity{
                 ", room=" + room +
                 ", requestStatus=" + requestStatus +
                 ", payment=" + payment +
-                ", id=" + id +
+                ", id=" + super.getId()+
                 '}';
     }
 }
