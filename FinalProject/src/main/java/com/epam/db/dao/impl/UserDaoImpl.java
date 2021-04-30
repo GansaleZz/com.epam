@@ -90,8 +90,7 @@ public class UserDaoImpl implements UserDao {
             Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
             if(connection.isPresent()) {
                 try {
-                    if (!connection.get().createStatement().executeQuery(SQL_SELECT_BY_CRITERIA + "login = '" + user.getLogin() + "'").next()
-                            && !connection.get().createStatement().executeQuery(SQL_SELECT_BY_CRITERIA + "email = '" + user.getEmail() + "'").next()) {
+                    if (!connection.get().createStatement().executeQuery(SQL_SELECT_BY_CRITERIA + "login = '" + user.getLogin() + "'").next()) {
                         connection.get().createStatement().executeUpdate(SQL_INSERT + "'" + user.getLogin() + "','" + user.getPassword() + "','" + user.getName()
                                 + "','" + user.getEmail() + "'," + UserRole.getIdByUserRole(UserRole.CLIENT) + "," + UserStatus.getIdByUserStatus(UserStatus.AVAILABLE) + ")");
                         result = true;

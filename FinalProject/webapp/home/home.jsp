@@ -8,10 +8,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Home</title>
+    <title>Home page</title>
 </head>
 <body>
-   <a href="http://localhost:8080/authentication/logOut.jsp">LogOut</a>
+   <a href="http://localhost:8080/authentication/logOut.jsp">Log Out</a>
 
    <a href="http://localhost:8080/home/home.jsp">Home</a>
 </body>

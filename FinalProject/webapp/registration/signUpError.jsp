@@ -1,18 +1,17 @@
 <%--
   Created by IntelliJ IDEA.
   User: andrew_wannasesh
-  Date: 25.04.21
-  Time: 23:50
+  Date: 30.04.21
+  Time: 15:55
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Sign Up Error</title>
 </head>
 <body>
-<h3>Welcome!</h3>
-<a href="http://localhost:8080/authentication/logInPage.jsp">Log In</a>
-<a href="http://localhost:8080/registration/signUpPage.jsp">Sign Up</a>
+  <h1>User with this login already exists or input data incorrect.</h1>
+  <a href="http://localhost:8080/registration/signUpPage.jsp">Try again</a>
 </body>
 </html>
