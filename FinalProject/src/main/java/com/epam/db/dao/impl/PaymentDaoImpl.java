@@ -41,6 +41,7 @@ public class PaymentDaoImpl implements PaymentDao {
                         list.add(getPayment(resultSet).get());
                     }
                 }
+                resultSet.close();
             } catch (SQLException e) {
                 logger.error(e.getMessage());
                 throw new DaoException(e);
@@ -67,6 +68,7 @@ public class PaymentDaoImpl implements PaymentDao {
                 if (resultSet.next()) {
                     payment = getPayment(resultSet);
                 }
+                resultSet.close();
             } catch (SQLException e) {
                 logger.error(e.getMessage());
                 throw new DaoException(e);

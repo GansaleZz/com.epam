@@ -36,6 +36,7 @@ public class RoomDaoImpl implements RoomDao {
                         list.add(getRoom(resultSet).get());
                     }
                 }
+                resultSet.close();
             } catch (SQLException e) {
                 logger.error(e.getMessage());
                 throw new DaoException(e);
@@ -62,6 +63,7 @@ public class RoomDaoImpl implements RoomDao {
                 if (resultSet.next()) {
                     room = getRoom(resultSet);
                 }
+                resultSet.close();
             } catch (SQLException e) {
                 logger.error(e.getMessage());
                 throw new DaoException(e);

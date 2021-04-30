@@ -7,6 +7,8 @@ import com.epam.exceptions.DaoException;
 import com.epam.exceptions.FileException;
 
 public class Main {
-    public static void main(String[] args){
+    public static void main(String[] args) throws DaoException {
+//        UserDaoImpl userDao = new UserDaoImpl();
+//        System.out.println(userDao.findAllEntities());
     }
 }

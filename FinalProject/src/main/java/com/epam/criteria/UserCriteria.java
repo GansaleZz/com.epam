@@ -7,6 +7,7 @@ public class UserCriteria {
     private String name = null;
     private String login = null;
     private String email = null;
+    private String password = null;
     private UserRole role = null;
     private UserStatus status = null;
 
@@ -50,5 +51,13 @@ public class UserCriteria {
 
     public void setStatus(UserStatus status) {
         this.status = status;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

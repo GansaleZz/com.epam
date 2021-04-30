@@ -7,8 +7,8 @@
     <login-config>
         <auth-method>FORM</auth-method>
          <form-login-config>
-             <form-login-page>/authentication/loginPage.jsp</form-login-page>
-             <form-error-page>/authentication/loginError.jsp</form-error-page>
+             <form-login-page>/authentication/logInPage.jsp</form-login-page>
+             <form-error-page>/authentication/logInError.jsp</form-error-page>
          </form-login-config>
     </login-config>
     <security-constraint>
@@ -16,14 +16,5 @@
             <web-resource-name>AuthJsp</web-resource-name>
             <url-pattern>/home/*</url-pattern>
         </web-resource-collection>
-<!--        <auth-constraint>-->
-<!--            <role-name>ADMIN</role-name>-->
-<!--        </auth-constraint>-->
     </security-constraint>
-<!--    <security-role>-->
-<!--        <role-name>ADMIN</role-name>-->
-<!--    </security-role>-->
-<!--    <security-role>-->
-<!--        <role-name>USER</role-name>-->
-<!--    </security-role>-->
 </web-app>

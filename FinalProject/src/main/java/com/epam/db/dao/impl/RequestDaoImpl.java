@@ -37,6 +37,7 @@ public class RequestDaoImpl implements RequestDao {
                         list.add(getRequest(resultSet).get());
                     }
                 }
+                resultSet.close();
             } catch (SQLException e) {
                 logger.error(e.getMessage());
                 throw new DaoException(e);
@@ -63,6 +64,7 @@ public class RequestDaoImpl implements RequestDao {
                 if (resultSet.next()) {
                     request = getRequest(resultSet);
                 }
+                resultSet.close();
             } catch (SQLException e) {
                 logger.error(e.getMessage());
                 throw new DaoException(e);

@@ -55,7 +55,6 @@ public class ConnectionProxy implements Connection {
 
     @Override
     public void close(){
-        System.out.println("f");
         ConnectionPool.getInstance().close(this);
     }
 

@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: andrew_wannasesh
-  Date: 25.04.21
-  Time: 23:50
+  Date: 30.04.21
+  Time: 15:25
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -11,7 +11,7 @@
     <title>Title</title>
 </head>
 <body>
-<a href="http://localhost:8080/authentication/logInPage.jsp">LogIn</a>
-
+  <% request.getSession().invalidate();%>
+  <% response.sendRedirect("/authentication/authPage.jsp");%>
 </body>
 </html>

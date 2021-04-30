@@ -38,6 +38,7 @@ public class UserDaoImpl implements UserDao {
                         list.add(getUser(resultSet).get());
                     }
                 }
+                resultSet.close();
             } catch (SQLException e) {
                 logger.error(e.getMessage());
                 throw new DaoException(e);
@@ -46,6 +47,7 @@ public class UserDaoImpl implements UserDao {
                 connectionPool.close(connection.get());
                 try {
                     connection.get().close();
+
                 }catch(SQLException e){
                     throw new DaoException(e);
                 }
@@ -64,6 +66,7 @@ public class UserDaoImpl implements UserDao {
                 if (resultSet.next()) {
                     user = getUser(resultSet);
                 }
+                resultSet.close();
             } catch (SQLException e) {
                 logger.error(e.getMessage());
                 throw new DaoException(e);
@@ -189,6 +192,10 @@ public class UserDaoImpl implements UserDao {
         }else{
             if(userCriteria.getLogin() != null){
                 user = chooseByPredicate(i -> ((User)i).getLogin().equals(userCriteria.getLogin()));
+            }else{
+                if(userCriteria.getPassword() != null){
+                    user = chooseByPredicate(i -> ((User)i).getPassword().equals(userCriteria.getPassword()));
+                }
             }
         }
         return user;
