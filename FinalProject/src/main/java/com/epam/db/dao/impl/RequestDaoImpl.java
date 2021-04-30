@@ -26,7 +26,7 @@ public class RequestDaoImpl implements RequestDao {
 
 
     @Override
-    public List<Request> findAllEntities() throws DaoException, FileException {
+    public List<Request> findAllEntities() throws DaoException{
         List<Request> list = new ArrayList<>();
         Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
         if(connection.isPresent()) {
@@ -43,13 +43,18 @@ public class RequestDaoImpl implements RequestDao {
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
                 connectionPool.close(connection.get());
+                try {
+                    connection.get().close();
+                }catch(SQLException e){
+                    throw new DaoException(e);
+                }
             }
         }
         return list;
     }
 
     @Override
-    public Optional<Request> findEntityById(Integer id) throws DaoException, FileException {
+    public Optional<Request> findEntityById(Integer id) throws DaoException{
         Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
         Optional<Request> request = Optional.empty();
         if(connection.isPresent()) {
@@ -64,13 +69,18 @@ public class RequestDaoImpl implements RequestDao {
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
                 connectionPool.close(connection.get());
+                try {
+                    connection.get().close();
+                }catch(SQLException e){
+                    throw new DaoException(e);
+                }
             }
         }
         return request;
     }
 
     @Override
-    public boolean create(Request request) throws DaoException, FileException {
+    public boolean create(Request request) throws DaoException{
         boolean result = false;
         if(request != null) {
             Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
@@ -85,6 +95,11 @@ public class RequestDaoImpl implements RequestDao {
                 } finally {
                     ConnectionPool connectionPool = ConnectionPool.getInstance();
                     connectionPool.close(connection.get());
+                    try {
+                        connection.get().close();
+                    }catch(SQLException e){
+                        throw new DaoException(e);
+                    }
                 }
             }
         }
@@ -92,7 +107,7 @@ public class RequestDaoImpl implements RequestDao {
     }
 
     @Override
-    public boolean delete(Integer id) throws DaoException, FileException {
+    public boolean delete(Integer id) throws DaoException{
         Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
         boolean result = false;
         if(connection.isPresent()) {
@@ -108,13 +123,18 @@ public class RequestDaoImpl implements RequestDao {
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
                 connectionPool.close(connection.get());
+                try {
+                    connection.get().close();
+                }catch(SQLException e){
+                    throw new DaoException(e);
+                }
             }
         }
         return result;
     }
 
     @Override
-    public Optional<Request> update(Request request) throws DaoException, FileException {
+    public Optional<Request> update(Request request) throws DaoException{
         Optional<Request> requestOptional = Optional.empty();
         if(request != null) {
             Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
@@ -130,6 +150,11 @@ public class RequestDaoImpl implements RequestDao {
                 } finally {
                     ConnectionPool connectionPool = ConnectionPool.getInstance();
                     connectionPool.close(connection.get());
+                    try {
+                        connection.get().close();
+                    }catch(SQLException e){
+                        throw new DaoException(e);
+                    }
                 }
             }
         }
@@ -138,7 +163,7 @@ public class RequestDaoImpl implements RequestDao {
 
 
     @Override
-    public List<Request> findAllRequestsByCriteria(RequestCriteria requestCriteria) throws DaoException, FileException {
+    public List<Request> findAllRequestsByCriteria(RequestCriteria requestCriteria) throws DaoException{
         List<Request> list = new ArrayList<>();
         if(requestCriteria.getRequestStatus() != null) {
             list = chooseAllByPredicate(i -> ((Request)i).getRequestStatus() == requestCriteria.getRequestStatus());
@@ -150,7 +175,7 @@ public class RequestDaoImpl implements RequestDao {
         return list;
     }
 
-    private List<Request> chooseAllByPredicate(Predicate predicate) throws FileException, DaoException {
+    private List<Request> chooseAllByPredicate(Predicate predicate) throws DaoException {
         List<Request> list = new ArrayList<>();
         findAllEntities()
                 .stream()
@@ -159,7 +184,7 @@ public class RequestDaoImpl implements RequestDao {
         return list;
     }
 
-    private Optional<Request> getRequest(ResultSet resultSet) throws DaoException, FileException {
+    private Optional<Request> getRequest(ResultSet resultSet) throws DaoException{
         Optional<Request> request = Optional.empty();
         try {
             int id = resultSet.getInt(1);

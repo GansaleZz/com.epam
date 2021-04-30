@@ -9,14 +9,14 @@ import java.util.Optional;
 
 public interface BaseDao <K,T extends BaseEntity> {
 
-    List<T> findAllEntities() throws DaoException, FileException;
+    List<T> findAllEntities() throws DaoException;
 
-    Optional<T> findEntityById(K id) throws DaoException, FileException;
+    Optional<T> findEntityById(K id) throws DaoException;
 
-    boolean create(T t) throws DaoException, FileException;
+    boolean create(T t) throws DaoException;
 
-    boolean delete(K id) throws DaoException, FileException;
+    boolean delete(K id) throws DaoException;
 
-    Optional<T> update(T t) throws DaoException, FileException;
+    Optional<T> update(T t) throws DaoException;
 
 }

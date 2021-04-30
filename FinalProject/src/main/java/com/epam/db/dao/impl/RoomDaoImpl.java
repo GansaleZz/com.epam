@@ -25,7 +25,7 @@ public class RoomDaoImpl implements RoomDao {
 
 
     @Override
-    public List<Room> findAllEntities() throws DaoException, FileException {
+    public List<Room> findAllEntities() throws DaoException{
         List<Room> list = new ArrayList<>();
         Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
         if(connection.isPresent()) {
@@ -42,13 +42,18 @@ public class RoomDaoImpl implements RoomDao {
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
                 connectionPool.close(connection.get());
+                try {
+                    connection.get().close();
+                }catch(SQLException e){
+                    throw new DaoException(e);
+                }
             }
         }
         return list;
     }
 
     @Override
-    public Optional<Room> findEntityById(Integer id) throws DaoException, FileException {
+    public Optional<Room> findEntityById(Integer id) throws DaoException{
         Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
         Optional<Room> room = Optional.empty();
         if(connection.isPresent()) {
@@ -63,13 +68,18 @@ public class RoomDaoImpl implements RoomDao {
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
                 connectionPool.close(connection.get());
+                try {
+                    connection.get().close();
+                }catch(SQLException e){
+                    throw new DaoException(e);
+                }
             }
         }
         return room;
     }
 
     @Override
-    public boolean create(Room room) throws DaoException, FileException {
+    public boolean create(Room room) throws DaoException{
         boolean result = false;
         if(room != null) {
             Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
@@ -84,6 +94,11 @@ public class RoomDaoImpl implements RoomDao {
                 } finally {
                     ConnectionPool connectionPool = ConnectionPool.getInstance();
                     connectionPool.close(connection.get());
+                    try {
+                        connection.get().close();
+                    }catch(SQLException e){
+                        throw new DaoException(e);
+                    }
                 }
             }
         }
@@ -91,7 +106,7 @@ public class RoomDaoImpl implements RoomDao {
     }
 
     @Override
-    public boolean delete(Integer id) throws DaoException, FileException {
+    public boolean delete(Integer id) throws DaoException{
         Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
         boolean result = false;
         if(connection.isPresent()) {
@@ -107,13 +122,18 @@ public class RoomDaoImpl implements RoomDao {
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
                 connectionPool.close(connection.get());
+                try {
+                    connection.get().close();
+                }catch(SQLException e){
+                    throw new DaoException(e);
+                }
             }
         }
         return result;
     }
 
     @Override
-    public Optional<Room> update(Room room) throws DaoException, FileException {
+    public Optional<Room> update(Room room) throws DaoException{
         Optional<Room> roomOptional = Optional.empty();
         if(room != null) {
             Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
@@ -129,6 +149,11 @@ public class RoomDaoImpl implements RoomDao {
                 } finally {
                     ConnectionPool connectionPool = ConnectionPool.getInstance();
                     connectionPool.close(connection.get());
+                    try {
+                        connection.get().close();
+                    }catch(SQLException e){
+                        throw new DaoException(e);
+                    }
                 }
             }
         }
@@ -136,7 +161,7 @@ public class RoomDaoImpl implements RoomDao {
     }
 
     @Override
-    public List<Room> findAllRoomsByCriteria(RoomCriteria roomCriteria) throws DaoException, FileException {
+    public List<Room> findAllRoomsByCriteria(RoomCriteria roomCriteria) throws DaoException{
         List<Room> list = new ArrayList<>();
         if(roomCriteria.getRoomClass() != null){
             list = chooseAllByPredicate(i -> ((Room)i).getRoomClass().equals(roomCriteria.getRoomClass()));
@@ -156,7 +181,7 @@ public class RoomDaoImpl implements RoomDao {
         return list;
     }
 
-    private List<Room> chooseAllByPredicate(Predicate predicate) throws FileException, DaoException {
+    private List<Room> chooseAllByPredicate(Predicate predicate) throws DaoException {
         List<Room> list = new ArrayList<>();
         findAllEntities()
                 .stream()

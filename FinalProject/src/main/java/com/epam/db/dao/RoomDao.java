@@ -10,5 +10,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface RoomDao extends BaseDao<Integer,Room>{
-    List<Room> findAllRoomsByCriteria(RoomCriteria roomCriteria) throws DaoException, FileException;
+    List<Room> findAllRoomsByCriteria(RoomCriteria roomCriteria) throws DaoException;
 }

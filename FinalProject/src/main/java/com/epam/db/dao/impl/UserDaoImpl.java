@@ -27,7 +27,7 @@ public class UserDaoImpl implements UserDao {
 
 
     @Override
-    public List<User> findAllEntities() throws DaoException, FileException {
+    public List<User> findAllEntities() throws DaoException{
         List<User> list = new ArrayList<>();
         Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
         if(connection.isPresent()) {
@@ -44,13 +44,18 @@ public class UserDaoImpl implements UserDao {
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
                 connectionPool.close(connection.get());
+                try {
+                    connection.get().close();
+                }catch(SQLException e){
+                    throw new DaoException(e);
+                }
             }
         }
         return list;
     }
 
     @Override
-    public Optional<User> findEntityById(Integer id) throws DaoException, FileException {
+    public Optional<User> findEntityById(Integer id) throws DaoException{
         Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
         Optional<User> user = Optional.empty();
         if(connection.isPresent()) {
@@ -65,13 +70,18 @@ public class UserDaoImpl implements UserDao {
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
                 connectionPool.close(connection.get());
+                try {
+                    connection.get().close();
+                }catch(SQLException e){
+                    throw new DaoException(e);
+                }
             }
         }
         return user;
     }
 
     @Override
-    public boolean create(User user) throws DaoException, FileException {
+    public boolean create(User user) throws DaoException{
         boolean result = false;
         if(user!=null) {
             Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
@@ -90,6 +100,11 @@ public class UserDaoImpl implements UserDao {
                 } finally {
                     ConnectionPool connectionPool = ConnectionPool.getInstance();
                     connectionPool.close(connection.get());
+                    try {
+                        connection.get().close();
+                    }catch(SQLException e){
+                        throw new DaoException(e);
+                    }
                 }
             }
         }
@@ -97,7 +112,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean delete(Integer id) throws DaoException, FileException {
+    public boolean delete(Integer id) throws DaoException{
         Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
         boolean result = false;
         if(connection.isPresent()) {
@@ -113,13 +128,18 @@ public class UserDaoImpl implements UserDao {
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
                 connectionPool.close(connection.get());
+                try {
+                    connection.get().close();
+                }catch(SQLException e){
+                    throw new DaoException(e);
+                }
             }
         }
         return result;
     }
 
     @Override
-    public Optional<User> update(User user) throws DaoException, FileException {
+    public Optional<User> update(User user) throws DaoException {
         Optional<User> userOptional = Optional.empty();
         Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
         if(connection.isPresent()) {
@@ -134,13 +154,18 @@ public class UserDaoImpl implements UserDao {
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
                 connectionPool.close(connection.get());
+                try {
+                    connection.get().close();
+                }catch(SQLException e){
+                    throw new DaoException(e);
+                }
             }
         }
         return userOptional;
     }
 
     @Override
-    public List<User> findAllUsersByCriteria(UserCriteria userCriteria) throws DaoException, FileException {
+    public List<User> findAllUsersByCriteria(UserCriteria userCriteria) throws DaoException{
         List<User> list = new ArrayList<>();
             if(userCriteria.getName() != null) {
                 list = chooseAllByPredicate(i -> ((User)i).getEmail().equals(userCriteria.getName()));
@@ -157,7 +182,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Optional<User> findUserByCriteria(UserCriteria userCriteria) throws DaoException, FileException {
+    public Optional<User> findUserByCriteria(UserCriteria userCriteria) throws DaoException{
         Optional<User> user = Optional.empty();
         if(userCriteria.getEmail() != null){
             user = chooseByPredicate(i -> ((User)i).getEmail().equals(userCriteria.getEmail()));
@@ -169,7 +194,7 @@ public class UserDaoImpl implements UserDao {
         return user;
     }
 
-    private Optional<User> chooseByPredicate(Predicate predicate) throws FileException, DaoException {
+    private Optional<User> chooseByPredicate(Predicate predicate) throws DaoException {
         Optional<User> user = findAllEntities()
                 .stream()
                 .filter(predicate)
@@ -177,7 +202,7 @@ public class UserDaoImpl implements UserDao {
         return user;
     }
 
-    private List<User> chooseAllByPredicate(Predicate predicate) throws FileException, DaoException {
+    private List<User> chooseAllByPredicate(Predicate predicate) throws DaoException {
         List<User> list = new ArrayList<>();
         findAllEntities()
                 .stream()

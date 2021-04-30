@@ -19,42 +19,41 @@ public final class ConnectionPool {
     private static ConnectionPool instance = null;
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ConnectionPool.class);
     private Property property = Property.getInstance();
-    private ConnectionPool() throws DaoException {
+    private ConnectionPool(){
         init();
     }
 
-    private void init() throws DaoException{
+    private void init(){
         try {
             for (int i = 0; i < property.getINITPOOLSIZE(); ++i) {
-                Connection connection = DriverManager.getConnection(property.getURL()+property.getSCHEME(), property.getUSER(), property.getPASSWORD());
+                Connection connection = new ConnectionProxy(DriverManager.getConnection(property.getURL()+property.getSCHEME(), property.getUSER(), property.getPASSWORD()));
                 availableConnectionList.add(connection);
             }
             logger.info("Connection pool successfully inited!");
         }catch(SQLException e){
-            logger.fatal(e);
-            throw new DaoException(e);
+            logger.fatal(e.getMessage());
         }
     }
 
-    public static ConnectionPool getInstance() throws DaoException, FileException {
+    public static ConnectionPool getInstance(){
         if(instance == null){
             instance = new ConnectionPool();
         }
         return instance;
     }
 
-    private void addConnection() throws DaoException {
+    private void addConnection(){
         if(availableConnectionList.size()+ engagedConnectionList.size()<property.getMAXPOOLSIZE()) {
             try {
                 Connection connection = DriverManager.getConnection(property.getURL()+property.getSCHEME(), property.getUSER(), property.getPASSWORD());
                 availableConnectionList.add(connection);
             } catch (SQLException e) {
-                throw new DaoException(e);
+                logger.fatal(e.getMessage());
             }
         }
     }
 
-    public Optional<Connection> getConnection() throws DaoException {
+    public Optional<Connection> getConnection() {
         Optional<Connection> pool = Optional.empty();
         if(availableConnectionList.size()<=0){
             addConnection();

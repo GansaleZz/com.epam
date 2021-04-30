@@ -8,6 +8,6 @@ import com.epam.exceptions.FileException;
 import java.util.List;
 
 public interface PaymentDao extends BaseDao<Integer,Payment>{
-    List<Payment> findAllPaymentByCriteria(PaymentCriteria paymentCriteria) throws DaoException, FileException;
+    List<Payment> findAllPaymentByCriteria(PaymentCriteria paymentCriteria) throws DaoException;
 
 }
