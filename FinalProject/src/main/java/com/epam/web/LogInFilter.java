@@ -1,5 +1,7 @@
 package com.epam.web;
 
+import com.epam.service.ServletDestination;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -15,17 +17,17 @@ public class LogInFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest) servletRequest;
-        HttpServletResponse response = (HttpServletResponse) servletResponse;
-        HttpSession session = request.getSession(false);
-        String loginURI = request.getContextPath() + "/logIn/logInPage.jsp";
-        boolean loggedIn = session != null && session.getAttribute("login") != null && session.getAttribute("userRole") != null;
-        boolean loginRequest = request.getRequestURI().equals(loginURI);
-        if (loggedIn || loginRequest) {
-            filterChain.doFilter(request, response);
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
+        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+        HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
+        HttpSession session = httpServletRequest.getSession(false);
+        final String LOGINPAGEURL = httpServletRequest.getContextPath() + ServletDestination.LOGINPAGE.getPath();
+        boolean loggedIn = session != null && session.getAttribute("login") != null;
+        boolean logInRequest = httpServletRequest.getRequestURL().equals(LOGINPAGEURL);
+        if (loggedIn || logInRequest) {
+            chain.doFilter(httpServletRequest, httpServletResponse);
         } else {
-            response.sendRedirect(loginURI);
+            httpServletResponse.sendRedirect(LOGINPAGEURL);
         }
     }
 
