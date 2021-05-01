@@ -24,7 +24,7 @@ public class LogIn implements Command{
                     session.setAttribute("login",login.getLogin());
                     session.setAttribute("password",pass);
                     session.setAttribute("userRole",userRole);
-                    response.sendRedirect(ServletDestination.HOMEPAGE.getPath());
+                    response.sendRedirect(ServletDestination.ADMINHOMEPAGE.getPath());
             }else{
                 response.sendRedirect(ServletDestination.LOGINERROR.getPath());
             }

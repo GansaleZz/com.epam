@@ -4,7 +4,8 @@ import java.util.Optional;
 
 public enum UserRole {
     ADMIN(1),
-    CLIENT(2);
+    MODERATOR(2),
+    CLIENT(3);
 
     private final int id;
 
@@ -16,7 +17,8 @@ public enum UserRole {
         int id = 0;
         switch (userRole){
             case ADMIN -> id = 1;
-            case CLIENT -> id = 2;
+            case MODERATOR -> id = 2;
+            case CLIENT -> id = 3;
         }
         return id;
     }
@@ -25,7 +27,8 @@ public enum UserRole {
         Optional<UserRole> userRole = Optional.empty();
         switch(id){
             case 1 -> userRole = Optional.of(ADMIN);
-            case 2 -> userRole = Optional.of(CLIENT);
+            case 2 -> userRole = Optional.of(MODERATOR);
+            case 3 -> userRole = Optional.of(CLIENT);
         }
         return userRole;
     }

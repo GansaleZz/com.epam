@@ -16,6 +16,6 @@
         Password:<input type = "password" name="password"/><br/>
         <input type = "submit" value="Log In" />
     </form>
-<a href="http://localhost:8080/logIn/authPage.jsp">Back</a>
+<a href="http://localhost:8080/auth/authPage.jsp">Back</a>
 </body>
 </html>

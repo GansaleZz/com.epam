@@ -12,7 +12,7 @@
 </head>
 <body>
   <h1>User with this login already exists or input data incorrect.</h1>
-  <a href="http://localhost:8080/signUp/signUpPage.jsp">Try again</a>
-  <a href="http://localhost:8080/logIn/authPage.jsp">Back</a>
+  <a href="http://localhost:8080/auth/signUpPage.jsp">Try again</a>
+  <a href="http://localhost:8080/auth/authPage.jsp">Back</a>
 </body>
 </html>

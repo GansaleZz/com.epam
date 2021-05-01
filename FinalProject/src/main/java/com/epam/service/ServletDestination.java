@@ -1,13 +1,15 @@
 package com.epam.service;
 
 public enum ServletDestination implements Destination{
-    HOMEPAGE("/home/home.jsp"),
-    SIGNUPERROR("/signUp/signUpError.jsp"),
-    SIGNUPSUCC("/signUp/signUpSucc.jsp"),
-    SIGNUPPAGE("/signUp/signUpPage.jsp"),
-    LOGINERROR("/logIn/logInError.jsp"),
-    LOGINPAGE("/logIn/logInPage.jsp"),
-    AUTHPAGE("/logIn/authPage.jsp");
+    ADMINHOMEPAGE("/usersView/admin/home/home.jsp"),
+    MODERATORHOMEPAGE("/usersView/moderator/home/home.jsp"),
+    CLIENTHOMEPAGE("/usersView/client/home/home.jsp"),
+    SIGNUPERROR("/auth/signUpError.jsp"),
+    SIGNUPSUCC("/auth/signUpSucc.jsp"),
+    SIGNUPPAGE("/auth/signUpPage.jsp"),
+    LOGINERROR("/auth/logInError.jsp"),
+    LOGINPAGE("/auth/logInPage.jsp"),
+    AUTHPAGE("/auth/authPage.jsp");
 
     private final String PATH;
 
