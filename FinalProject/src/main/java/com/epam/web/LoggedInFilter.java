@@ -28,6 +28,7 @@ public class LoggedInFilter implements Filter {
         final String SIGNUPERROR = httpServletRequest.getContextPath() + ServletDestination.SIGNUPERROR.getPath();
         final String SIGNUPSUCC = httpServletRequest.getContextPath() + ServletDestination.SIGNUPSUCC.getPath();
         final String SIGNUPPAGE = httpServletRequest.getContextPath() + ServletDestination.SIGNUPPAGE.getPath();
+        final String HOMEPAGE = httpServletRequest.getContextPath() + ServletDestination.HOMEPAGE.getPath();
         boolean loggedIn = session != null && session.getAttribute("login")!=null;
         boolean logInRequest = httpServletRequest.getRequestURI().equals(LOGINPAGE) ||
                 httpServletRequest.getRequestURI().equals(LOGINERROR) ||
@@ -35,9 +36,8 @@ public class LoggedInFilter implements Filter {
                 httpServletRequest.getRequestURI().equals(SIGNUPERROR) ||
                 httpServletRequest.getRequestURI().equals(SIGNUPSUCC) ||
                 httpServletRequest.getRequestURI().equals(SIGNUPPAGE);
-
         if(loggedIn && logInRequest){
-            httpServletResponse.sendRedirect(httpServletRequest.getContextPath()+ServletDestination.HOMEPAGE.getPath());
+            httpServletResponse.sendRedirect(HOMEPAGE);
         }else{
             chain.doFilter(httpServletRequest, httpServletResponse);
         }
