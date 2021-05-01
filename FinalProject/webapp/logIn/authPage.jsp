@@ -12,7 +12,7 @@
 </head>
 <body>
 <h3>Welcome!</h3>
-<a href="http://localhost:8080/authentication/logInPage.jsp">Log In</a>
-<a href="http://localhost:8080/registration/signUpPage.jsp">Sign Up</a>
+<a href="http://localhost:8080/logIn/logInPage.jsp">Log In</a>
+<a href="http://localhost:8080/signUp/signUpPage.jsp">Sign Up</a>
 </body>
 </html>

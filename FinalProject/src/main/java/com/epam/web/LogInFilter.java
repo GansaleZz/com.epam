@@ -19,7 +19,7 @@ public class LogInFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession(false);
-        String loginURI = request.getContextPath() + "/authentication/logInPage.jsp";
+        String loginURI = request.getContextPath() + "/logIn/logInPage.jsp";
         boolean loggedIn = session != null && session.getAttribute("login") != null && session.getAttribute("userRole") != null;
         boolean loginRequest = request.getRequestURI().equals(loginURI);
         if (loggedIn || loginRequest) {

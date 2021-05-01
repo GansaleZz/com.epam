@@ -12,6 +12,7 @@
 </head>
 <body>
   <h1>You were successfully signed up! Now you can log in.</h1>
-  <a href="http://localhost:8080/authentication/logInPage.jsp">Log In</a>
+  <a href="http://localhost:8080/logIn/logInPage.jsp">Log In</a>
+  <a href="http://localhost:8080/logIn/authPage.jsp">Back</a>
 </body>
 </html>
