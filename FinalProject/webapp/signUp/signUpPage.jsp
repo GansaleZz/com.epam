@@ -11,7 +11,7 @@
     <title>Sign Up</title>
 </head>
 <body>
-    <form action="/controller?command=SIGN_UP" method = "post">
+    <form action="/controller?command=SIGNUP" method = "post">
         Login:<input type = "text" name="login"/><br/>
         Password:<input type = "password" name="password"/><br/>
         Name:<input type = "text" name="name"/><br/>

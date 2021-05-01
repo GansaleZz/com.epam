@@ -3,8 +3,8 @@ package com.epam.service;
 import java.util.Arrays;
 
 public enum CommandInstance {
-    LOG_IN(new LogIn()),
-    SIGN_UP(new SignUp());
+    LOGIN(new LogIn()),
+    SIGNUP(new SignUp());
 
     private final Command command;
 

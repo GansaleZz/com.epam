@@ -24,9 +24,9 @@ public class LogIn implements Command{
                     session.setAttribute("login",login.getLogin());
                     session.setAttribute("password",pass);
                     session.setAttribute("userRole",userRole);
-                    response.sendRedirect("home/home.jsp");
+                    response.sendRedirect(ServletDestination.HOMEPAGE.getPath());
             }else{
-                response.sendRedirect("logIn/logInError.jsp");
+                response.sendRedirect(ServletDestination.LOGINERROR.getPath());
             }
         } catch (DaoException | IOException e) {
             e.printStackTrace();

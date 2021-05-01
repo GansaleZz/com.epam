@@ -11,7 +11,7 @@
     <title>Log in</title>
 </head>
 <body>
-    <form action="/controller?command=LOG_IN" method = "post">
+    <form action="/controller?command=LOGIN" method = "post">
         Login:<input type = "text" name="login"/><br/>
         Password:<input type = "password" name="password"/><br/>
         <input type = "submit" value="Log In" />

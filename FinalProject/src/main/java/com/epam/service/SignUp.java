@@ -19,15 +19,15 @@ public class SignUp implements Command{
             User user = new User(login,password,name);
             try {
                 if(userDao.create(user)){
-                    response.sendRedirect("signUp/signUpSucc.jsp");
+                    response.sendRedirect(ServletDestination.SIGNUPSUCC.getPath());
                 }else{
-                    response.sendRedirect("signUp/signUpError.jsp");
+                    response.sendRedirect(ServletDestination.SIGNUPERROR.getPath());
                 }
             } catch (DaoException | IOException e) {
                 e.printStackTrace();
             }
         }else{
-            response.sendRedirect("signUp/signUpError.jsp");
+            response.sendRedirect(ServletDestination.SIGNUPERROR.getPath());
         }
     }
 }
