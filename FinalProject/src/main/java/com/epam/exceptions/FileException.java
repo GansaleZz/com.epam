@@ -1,6 +1,6 @@
 package com.epam.exceptions;
 
-import java.io.IOException;
+
 
 public class FileException extends Exception {
     String str;
