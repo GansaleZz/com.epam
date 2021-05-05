@@ -13,23 +13,25 @@ public class LogIn implements Command{
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
-        String pass = request.getParameter("password");
-        UserDaoImpl userDao = new UserDaoImpl();
-        UserCriteria login = new UserCriteria();
-        login.setLogin(request.getParameter("login"));
-        try {
-            if(userDao.findUserByCriteria(login).isPresent() && userDao.findUserByCriteria(login).get().getPassword().equals(pass)){
+        if(request.getSession() == null) {
+            String pass = request.getParameter("password");
+            UserDaoImpl userDao = new UserDaoImpl();
+            UserCriteria login = new UserCriteria();
+            login.setLogin(request.getParameter("login"));
+            try {
+                if (userDao.findUserByCriteria(login).isPresent() && userDao.findUserByCriteria(login).get().getPassword().equals(pass)) {
                     HttpSession session = request.getSession();
                     String userRole = String.valueOf(userDao.findUserByCriteria(login).get().getRole());
-                    session.setAttribute("login",login.getLogin());
-                    session.setAttribute("password",pass);
-                    session.setAttribute("userRole",userRole);
+                    session.setAttribute("login", login.getLogin());
+                    session.setAttribute("password", pass);
+                    session.setAttribute("userRole", userRole);
                     response.sendRedirect(ServletDestination.ADMINHOMEPAGE.getPath());
-            }else{
-                response.sendRedirect(ServletDestination.LOGINERROR.getPath());
+                } else {
+                    response.sendRedirect(ServletDestination.LOGINERROR.getPath());
+                }
+            } catch (DaoException | IOException e) {
+                e.printStackTrace();
             }
-        } catch (DaoException | IOException e) {
-            e.printStackTrace();
         }
     }
 }
