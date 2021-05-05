@@ -1,6 +1,6 @@
 package com.epam.entity;
 
-public class BaseEntity {
+public abstract class BaseEntity {
     private int id;
 
     BaseEntity(int id){
