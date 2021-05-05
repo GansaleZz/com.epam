@@ -5,13 +5,8 @@ import com.epam.db.ConnectionPool;
 import com.epam.db.dao.PaymentDao;
 import com.epam.entity.Payment;
 import com.epam.entity.PaymentStatus;
-import com.epam.entity.Request;
-import com.epam.entity.RequestStatus;
 import com.epam.exceptions.DaoException;
-import com.epam.exceptions.FileException;
 
-import java.io.File;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;

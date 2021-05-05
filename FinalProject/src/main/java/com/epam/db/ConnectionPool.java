@@ -1,8 +1,6 @@
 package com.epam.db;
 
 import com.epam.entity.Property;
-import com.epam.exceptions.DaoException;
-import com.epam.exceptions.FileException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;

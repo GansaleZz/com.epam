@@ -1,6 +1,5 @@
 package com.epam.util;
 
-import com.epam.exceptions.FileException;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

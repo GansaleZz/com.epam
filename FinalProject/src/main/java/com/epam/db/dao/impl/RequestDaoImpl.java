@@ -3,9 +3,9 @@ package com.epam.db.dao.impl;
 import com.epam.criteria.RequestCriteria;
 import com.epam.db.ConnectionPool;
 import com.epam.db.dao.RequestDao;
-import com.epam.entity.*;
+import com.epam.entity.Request;
+import com.epam.entity.RequestStatus;
 import com.epam.exceptions.DaoException;
-import com.epam.exceptions.FileException;
 
 import java.sql.Connection;
 import java.sql.Date;
