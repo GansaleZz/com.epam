@@ -15,6 +15,11 @@
     <title>Rooms</title>
 </head>
 <body>
+    <a href="http://localhost:8080/auth/logOut.jsp">Log Out</a>
+
+    <a href="http://localhost:8080/usersView/moderator/home/home.jsp">Home</a>
+
+    <a href="http://localhost:8080/usersView/moderator/rooms/rooms.jsp">Rooms</a>
     <%
         PrintWriter printWriter = response.getWriter();
         RoomDaoImpl roomDao = new RoomDaoImpl();
