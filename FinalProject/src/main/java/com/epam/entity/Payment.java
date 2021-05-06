@@ -8,6 +8,8 @@ public class Payment extends BaseEntity {
     private Date date;
     private PaymentStatus status;
 
+    public Payment(){}
+
     public Payment(int id, int amount, Date date, PaymentStatus status ){
         super(id);
         this.amount = amount;
@@ -46,7 +48,7 @@ public class Payment extends BaseEntity {
         return status;
     }
 
-    public void setPayment_status(PaymentStatus status) {
+    public void setPaymentstatus(PaymentStatus status) {
         this.status = status;
     }
 

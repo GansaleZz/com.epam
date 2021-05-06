@@ -1,13 +1,52 @@
 package com.epam.criteria;
 
+import com.epam.entity.Room;
 import com.epam.entity.RoomClass;
 import com.epam.entity.RoomStatus;
 
-public class RoomCriteria {
+public class RoomCriteria extends BaseCriteria<Room>{
     private RoomClass roomClass = null;
     private RoomStatus roomStatus = null;
     private int price = 0;
     private int numberOfSeats = 0;
+
+    public static class Builder extends BaseBuilder<Room>{
+
+        public Builder newBuilder(){
+            actualClass = new Room();
+            return this;
+        }
+
+        public Builder withId(int id){
+            actualClass.setId(id);
+            return this;
+        }
+
+        public Builder withRoomClass(RoomClass roomClass){
+            actualClass.setRoomClass(roomClass);
+            return this;
+        }
+
+        public Builder withRoomStatus(RoomStatus roomStatus){
+            actualClass.setRoomStatus(roomStatus);
+            return this;
+        }
+
+        public Builder withPrice(int price){
+            actualClass.setPrice(price);
+            return this;
+        }
+
+        public Builder withNumberOfSeats(int numberOfSeats){
+            actualClass.setNumberOfSeats(numberOfSeats);
+            return this;
+        }
+
+        @Override
+        protected Room getActual() {
+            return actualClass;
+        }
+    }
 
     public RoomCriteria(){}
 

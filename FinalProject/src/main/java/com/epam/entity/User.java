@@ -7,15 +7,17 @@ public class User extends BaseEntity {
     private String password;
     private String email;
     private UserStatus status;
-    private UserRole user_role;
+    private UserRole userRole;
     private String name;
+
+    public User(){}
 
     public User(String login, String password, String email,String name,int id , UserStatus status, UserRole role){
         super(id);
         this.login = login;
         this.email = email;
         this.password = password;
-        this.user_role = role;
+        this.userRole = role;
         this.status = status;
         this.name = name;
     }
@@ -24,7 +26,7 @@ public class User extends BaseEntity {
         this.login = login;
         this.email = email;
         this.password = password;
-        this.user_role = role;
+        this.userRole = role;
         this.status = status;
         this.name = name;
     }
@@ -42,17 +44,12 @@ public class User extends BaseEntity {
         this.name = name;
     }
 
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setRole(UserRole user_role) {
-        this.user_role = user_role;
     }
 
     public String getPassword() {
@@ -79,13 +76,22 @@ public class User extends BaseEntity {
         this.status = status;
     }
 
-    public UserRole getRole() {
-        return user_role;
-    }
-
     public String getLogin() {
         return login;
     }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public UserRole getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -93,7 +99,7 @@ public class User extends BaseEntity {
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", status=" + status +
-                ", user_role=" + user_role +
+                ", user_role=" + userRole +
                 ", name='" + name + '\'' +
                 ", id=" + super.getId() +
                 '}';
@@ -104,11 +110,11 @@ public class User extends BaseEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return login.equals(user.login) && password.equals(user.password) && email.equals(user.email) && status == user.status && user_role == user.user_role && name.equals(user.name);
+        return login.equals(user.login) && password.equals(user.password) && email.equals(user.email) && status == user.status && userRole == user.userRole && name.equals(user.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(login, password, email, status, user_role, name);
+        return Objects.hash(login, password, email, status, userRole, name);
     }
 }

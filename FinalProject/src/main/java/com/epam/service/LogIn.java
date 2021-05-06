@@ -20,7 +20,7 @@ public class LogIn implements Command{
         try {
             if (userDao.findUserByCriteria(login).isPresent() && userDao.findUserByCriteria(login).get().getPassword().equals(pass)) {
                 HttpSession session = request.getSession();
-                String userRole = String.valueOf(userDao.findUserByCriteria(login).get().getRole());
+                String userRole = String.valueOf(userDao.findUserByCriteria(login).get().getUserRole());
                 session.setAttribute("login", login.getLogin());
                 session.setAttribute("password", pass);
                 session.setAttribute("userRole", userRole);

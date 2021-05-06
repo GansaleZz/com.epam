@@ -7,6 +7,9 @@ public class Room extends BaseEntity {
     private RoomStatus roomStatus;
     private int price;
     private int numberOfSeats;
+
+    public Room(){}
+
     public Room(RoomClass room_class, int price, int numberOfSeats, RoomStatus roomStatus,int id) {
         super(id);
         this.roomClass = room_class;
@@ -54,6 +57,10 @@ public class Room extends BaseEntity {
 
     public int getNumberOfSeats() {
         return numberOfSeats;
+    }
+
+    public void setNumberOfSeats(int numberOfSeats){
+        this.numberOfSeats = numberOfSeats;
     }
 
     @Override

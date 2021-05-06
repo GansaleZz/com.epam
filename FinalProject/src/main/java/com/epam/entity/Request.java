@@ -12,6 +12,8 @@ public class Request extends BaseEntity {
     private RequestStatus requestStatus;
     private Payment payment;
 
+    public Request(){}
+
     public Request(int numberOfSeats, Date start, Date end, User user,int id, RequestStatus requestStatus, Room room){
         super(id);
         this.numberOfSeats = numberOfSeats;
