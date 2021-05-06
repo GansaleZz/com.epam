@@ -28,28 +28,25 @@ public class UserDaoImpl implements UserDao {
     @Override
     public List<User> findAllEntities() throws DaoException{
         List<User> list = new ArrayList<>();
-        Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
-        if(connection.isPresent()) {
+        Connection connection = ConnectionPool.getInstance().getConnection();
+        try {
+            ResultSet resultSet = connection.createStatement().executeQuery(SQL_SELECT_ALL);
+            while (resultSet.next()) {
+                if (getUser(resultSet).isPresent()) {
+                    list.add(getUser(resultSet).get());
+                }
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+            throw new DaoException(e);
+        } finally {
+            ConnectionPool connectionPool = ConnectionPool.getInstance();
+            connectionPool.close(connection);
             try {
-                ResultSet resultSet = connection.get().createStatement().executeQuery(SQL_SELECT_ALL);
-                while (resultSet.next()) {
-                    if (getUser(resultSet).isPresent()) {
-                        list.add(getUser(resultSet).get());
-                    }
-                }
-                resultSet.close();
-            } catch (SQLException e) {
-                logger.error(e.getMessage());
+                connection.close();
+            }catch(SQLException e){
                 throw new DaoException(e);
-            } finally {
-                ConnectionPool connectionPool = ConnectionPool.getInstance();
-                connectionPool.close(connection.get());
-                try {
-                    connection.get().close();
-
-                }catch(SQLException e){
-                    throw new DaoException(e);
-                }
             }
         }
         return list;
@@ -57,26 +54,24 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Optional<User> findEntityById(Integer id) throws DaoException{
-        Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
+        Connection connection = ConnectionPool.getInstance().getConnection();
         Optional<User> user = Optional.empty();
-        if(connection.isPresent()) {
+        try {
+            ResultSet resultSet = connection.createStatement().executeQuery(SQL_SELECT_BY_CRITERIA + "id = " + id);
+            if (resultSet.next()) {
+                user = getUser(resultSet);
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+            throw new DaoException(e);
+        } finally {
+            ConnectionPool connectionPool = ConnectionPool.getInstance();
+            connectionPool.close(connection);
             try {
-                ResultSet resultSet = connection.get().createStatement().executeQuery(SQL_SELECT_BY_CRITERIA + "id = " + id);
-                if (resultSet.next()) {
-                    user = getUser(resultSet);
-                }
-                resultSet.close();
-            } catch (SQLException e) {
-                logger.error(e.getMessage());
+                connection.close();
+            }catch(SQLException e){
                 throw new DaoException(e);
-            } finally {
-                ConnectionPool connectionPool = ConnectionPool.getInstance();
-                connectionPool.close(connection.get());
-                try {
-                    connection.get().close();
-                }catch(SQLException e){
-                    throw new DaoException(e);
-                }
             }
         }
         return user;
@@ -86,26 +81,24 @@ public class UserDaoImpl implements UserDao {
     public boolean create(User user) throws DaoException{
         boolean result = false;
         if(user!=null) {
-            Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
-            if(connection.isPresent()) {
+            Connection connection = ConnectionPool.getInstance().getConnection();
+            try {
+                if (!connection.createStatement().executeQuery(SQL_SELECT_BY_CRITERIA + "login = '" + user.getLogin() + "'").next()) {
+                    connection.createStatement().executeUpdate(SQL_INSERT + "'" + user.getLogin() + "','" + user.getPassword() + "','" + user.getName()
+                            + "','" + user.getEmail() + "'," + UserRole.getIdByUserRole(UserRole.CLIENT) + "," + UserStatus.getIdByUserStatus(UserStatus.AVAILABLE) + ")");
+                    result = true;
+                    logger.info(user+" successfully created!");
+                }
+            } catch (SQLException e) {
+                logger.error(e.getMessage());
+                throw new DaoException(e);
+            } finally {
+                ConnectionPool connectionPool = ConnectionPool.getInstance();
+                connectionPool.close(connection);
                 try {
-                    if (!connection.get().createStatement().executeQuery(SQL_SELECT_BY_CRITERIA + "login = '" + user.getLogin() + "'").next()) {
-                        connection.get().createStatement().executeUpdate(SQL_INSERT + "'" + user.getLogin() + "','" + user.getPassword() + "','" + user.getName()
-                                + "','" + user.getEmail() + "'," + UserRole.getIdByUserRole(UserRole.CLIENT) + "," + UserStatus.getIdByUserStatus(UserStatus.AVAILABLE) + ")");
-                        result = true;
-                        logger.info(user+" successfully created!");
-                    }
-                } catch (SQLException e) {
-                    logger.error(e.getMessage());
+                    connection.close();
+                }catch(SQLException e){
                     throw new DaoException(e);
-                } finally {
-                    ConnectionPool connectionPool = ConnectionPool.getInstance();
-                    connectionPool.close(connection.get());
-                    try {
-                        connection.get().close();
-                    }catch(SQLException e){
-                        throw new DaoException(e);
-                    }
                 }
             }
         }
@@ -114,26 +107,24 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean delete(Integer id) throws DaoException{
-        Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
+        Connection connection = ConnectionPool.getInstance().getConnection();
         boolean result = false;
-        if(connection.isPresent()) {
+        try {
+            if (findEntityById(id).isPresent()) {
+                logger.info(findEntityById(id).get()+" successfully deleted!");
+                connection.createStatement().executeUpdate(SQL_DELETE + id);
+                result = true;
+            }
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+            throw new DaoException(e);
+        } finally {
+            ConnectionPool connectionPool = ConnectionPool.getInstance();
+            connectionPool.close(connection);
             try {
-                if (findEntityById(id).isPresent()) {
-                    logger.info(findEntityById(id).get()+" successfully deleted!");
-                    connection.get().createStatement().executeUpdate(SQL_DELETE + id);
-                    result = true;
-                }
-            } catch (SQLException e) {
-                logger.error(e.getMessage());
+                connection.close();
+            }catch(SQLException e){
                 throw new DaoException(e);
-            } finally {
-                ConnectionPool connectionPool = ConnectionPool.getInstance();
-                connectionPool.close(connection.get());
-                try {
-                    connection.get().close();
-                }catch(SQLException e){
-                    throw new DaoException(e);
-                }
             }
         }
         return result;
@@ -142,22 +133,22 @@ public class UserDaoImpl implements UserDao {
     @Override
     public Optional<User> update(User user) throws DaoException {
         Optional<User> userOptional = Optional.empty();
-        Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
-        if(connection.isPresent()) {
+        Connection connection = ConnectionPool.getInstance().getConnection();
+        if(user != null) {
             try {
-                connection.get().createStatement().executeUpdate(SQL_UPDATE + "name = '" + user.getName()
+                connection.createStatement().executeUpdate(SQL_UPDATE + "name = '" + user.getName()
                         + "', email = '" + user.getEmail() + "', password = '" + user.getPassword() + "' WHERE id = " + user.getId() + " AND login = '" + user.getLogin() + "'");
                 userOptional = findEntityById(user.getId());
-                logger.info(user +" successfully updated!");
+                logger.info(user + " successfully updated!");
             } catch (SQLException e) {
                 logger.error(e.getMessage());
                 throw new DaoException(e);
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
-                connectionPool.close(connection.get());
+                connectionPool.close(connection);
                 try {
-                    connection.get().close();
-                }catch(SQLException e){
+                    connection.close();
+                } catch (SQLException e) {
                     throw new DaoException(e);
                 }
             }

@@ -21,10 +21,10 @@ class PaymentDaoImplTest {
     private final int id = 1;
 
     @Test
-    void findAllEntities() throws FileException, DaoException, SQLException {
+    void findAllEntities() throws DaoException, SQLException {
         PaymentDaoImpl paymentDao = new PaymentDaoImpl();
         List<Payment> list = paymentDao.findAllEntities();
-        Connection connection = ConnectionPool.getInstance().getConnection().get();
+        Connection connection = ConnectionPool.getInstance().getConnection();
         final String COUNT = "SELECT COUNT(*) FROM Payment";
         ResultSet resultSet = connection.createStatement().executeQuery(COUNT);
         resultSet.next();
@@ -33,14 +33,14 @@ class PaymentDaoImplTest {
     }
 
     @Test
-    void findEntityById() throws FileException, DaoException {
+    void findEntityById() throws DaoException {
         int amount = 123;
         PaymentDaoImpl paymentDao = new PaymentDaoImpl();
         assertEquals(amount,paymentDao.findEntityById(this.id).get().getAmount());
     }
 
     @Test
-    void create() throws FileException, DaoException {
+    void create() throws DaoException {
         PaymentDaoImpl paymentDao = new PaymentDaoImpl();
         Payment payment = paymentDao.findEntityById(this.id).get();
         payment.setAmount(190);
@@ -48,8 +48,8 @@ class PaymentDaoImplTest {
     }
 
     @Test
-    void delete() throws SQLException, FileException, DaoException {
-        Connection connection = ConnectionPool.getInstance().getConnection().get();
+    void delete() throws SQLException, DaoException {
+        Connection connection = ConnectionPool.getInstance().getConnection();
         ResultSet resultSet = connection.createStatement().executeQuery("SELECT * FROM Payment");
         int id = 0;
         while(resultSet.next()){
@@ -65,7 +65,7 @@ class PaymentDaoImplTest {
     }
 
     @Test
-    void update() throws FileException, DaoException {
+    void update() throws DaoException {
         PaymentDaoImpl paymentDao = new PaymentDaoImpl();
         if(paymentDao.findEntityById(this.id).isPresent()) {
             Payment payment = paymentDao.findEntityById(this.id).get();
@@ -79,7 +79,7 @@ class PaymentDaoImplTest {
     }
 
     @Test
-    void findAllPaymentByCriteria() throws FileException, DaoException {
+    void findAllPaymentByCriteria() throws DaoException {
         PaymentCriteria paymentCriteria = new PaymentCriteria();
         paymentCriteria.setPaymentStatus(PaymentStatus.INPROGRESS);
         PaymentDaoImpl paymentDao = new PaymentDaoImpl();

@@ -24,10 +24,10 @@ class RequestsDaoImplTest {
 
 
     @Test
-    void findAllEntities() throws FileException, DaoException, SQLException {
+    void findAllEntities() throws DaoException, SQLException {
         RequestDaoImpl requestDao = new RequestDaoImpl();
         List<Request> list = requestDao.findAllEntities();
-        Connection connection = ConnectionPool.getInstance().getConnection().get();
+        Connection connection = ConnectionPool.getInstance().getConnection();
         final String COUNT = "SELECT COUNT(*) FROM Request";
         ResultSet resultSet = connection.createStatement().executeQuery(COUNT);
         resultSet.next();
@@ -36,7 +36,7 @@ class RequestsDaoImplTest {
     }
 
     @Test
-    void findEntityById() throws FileException, DaoException {
+    void findEntityById() throws DaoException {
         int numberOfSeats = 2;
         UserDaoImpl userDao = new UserDaoImpl();
         User user = userDao.findEntityById(this.id).get();
@@ -46,7 +46,7 @@ class RequestsDaoImplTest {
     }
 
     @Test
-    void create() throws FileException, DaoException {
+    void create() throws DaoException {
         RequestDaoImpl requestDao = new RequestDaoImpl();
         Request request = requestDao.findEntityById(this.id).get();
         request.setNumberOfSeats(5);
@@ -57,8 +57,8 @@ class RequestsDaoImplTest {
     }
 
     @Test
-    void delete() throws FileException, DaoException, SQLException {
-        Connection connection = ConnectionPool.getInstance().getConnection().get();
+    void delete() throws DaoException, SQLException {
+        Connection connection = ConnectionPool.getInstance().getConnection();
         ResultSet resultSet = connection.createStatement().executeQuery("SELECT * FROM Request");
         int id = 0;
         while(resultSet.next()){
@@ -74,7 +74,7 @@ class RequestsDaoImplTest {
     }
 
     @Test
-    void update() throws FileException, DaoException {
+    void update() throws DaoException {
         RequestDaoImpl requestDao = new RequestDaoImpl();
         Request request = requestDao.findEntityById(this.id).get();
         final int numberOfSeats = 6;
@@ -86,7 +86,7 @@ class RequestsDaoImplTest {
     }
 
     @Test
-    void findAllRequestByCriteria() throws FileException, DaoException {
+    void findAllRequestByCriteria() throws DaoException {
         RequestCriteria requestCriteria = new RequestCriteria();
         requestCriteria.setNumberOfSeats(2);
         RequestDaoImpl requestDao = new RequestDaoImpl();

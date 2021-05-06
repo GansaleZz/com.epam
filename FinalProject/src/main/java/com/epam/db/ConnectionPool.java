@@ -51,14 +51,24 @@ public final class ConnectionPool {
         }
     }
 
-    public Optional<Connection> getConnection() {
-        Optional<Connection> pool = Optional.empty();
+    public Connection getConnection() {
+        Connection pool = null;
         if(availableConnectionList.size()<=0){
             addConnection();
         }
+        if(availableConnectionList.size()<= 0 && availableConnectionList.size() + engagedConnectionList.size() >= Property.getInstance().getMAXPOOLSIZE())
+        {
+            while(availableConnectionList.size()<=0) {
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    logger.error(e.getMessage());
+                }
+            }
+        }
         if(availableConnectionList.size()>0) {
-            pool = Optional.of(availableConnectionList.poll());
-            engagedConnectionList.add(pool.get());
+            pool = availableConnectionList.poll();
+            engagedConnectionList.add(pool);
         }
         return pool;
     }

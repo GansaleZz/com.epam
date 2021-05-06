@@ -21,10 +21,10 @@ class UserDaoImplTest {
 
 
     @org.junit.jupiter.api.Test
-    void findAllEntities() throws FileException, DaoException, SQLException {
+    void findAllEntities() throws DaoException, SQLException {
         UserDaoImpl userDao = new UserDaoImpl();
         List<User> list = userDao.findAllEntities();
-        Connection connection = ConnectionPool.getInstance().getConnection().get();
+        Connection connection = ConnectionPool.getInstance().getConnection();
         final String COUNT = "SELECT COUNT(*) FROM USER";
         ResultSet resultSet = connection.createStatement().executeQuery(COUNT);
         resultSet.next();
@@ -33,7 +33,7 @@ class UserDaoImplTest {
     }
 
     @org.junit.jupiter.api.Test
-    void findEntityById() throws FileException, DaoException {
+    void findEntityById() throws DaoException {
         String login = "Test";
         String password = "12345";
         String name = "Sasha";
@@ -48,7 +48,7 @@ class UserDaoImplTest {
     }
 
     @org.junit.jupiter.api.Test
-    void create() throws FileException, DaoException {
+    void create() throws DaoException {
         String name = "Test";
         String login = "Test001";
         String password = "asd";
@@ -65,8 +65,8 @@ class UserDaoImplTest {
     }
 
     @org.junit.jupiter.api.Test
-    void delete() throws FileException, DaoException, SQLException {
-        Connection connection = ConnectionPool.getInstance().getConnection().get();
+    void delete() throws DaoException, SQLException {
+        Connection connection = ConnectionPool.getInstance().getConnection();
         ResultSet resultSet = connection.createStatement().executeQuery("SELECT * FROM USER");
         int id = 0;
         while(resultSet.next()){
@@ -82,7 +82,7 @@ class UserDaoImplTest {
     }
 
     @org.junit.jupiter.api.Test
-    void update() throws FileException, DaoException {
+    void update() throws DaoException {
         UserDaoImpl userDao = new UserDaoImpl();
         if(userDao.findEntityById(this.id).isPresent()) {
             User user = userDao.findEntityById(1).get();
@@ -96,7 +96,7 @@ class UserDaoImplTest {
     }
 
     @org.junit.jupiter.api.Test
-    void findAllUsersByCriteria() throws FileException, DaoException {
+    void findAllUsersByCriteria() throws DaoException {
         UserCriteria userCriteria = new UserCriteria();
         userCriteria.setStatus(UserStatus.AVAILABLE);
         UserDaoImpl userDao = new UserDaoImpl();
@@ -108,7 +108,7 @@ class UserDaoImplTest {
     }
 
     @org.junit.jupiter.api.Test
-    void findUserByCriteria() throws FileException, DaoException {
+    void findUserByCriteria() throws DaoException {
         UserCriteria userCriteria = new UserCriteria();
         UserDaoImpl userDao = new UserDaoImpl();
         if(userDao.findEntityById(this.id).isPresent()){

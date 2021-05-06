@@ -28,27 +28,25 @@ public class RequestDaoImpl implements RequestDao {
     @Override
     public List<Request> findAllEntities() throws DaoException{
         List<Request> list = new ArrayList<>();
-        Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
-        if(connection.isPresent()) {
+        Connection connection = ConnectionPool.getInstance().getConnection();
+        try {
+            ResultSet resultSet = connection.createStatement().executeQuery(SQL_SELECT_ALL);
+            while (resultSet.next()) {
+                if (getRequest(resultSet).isPresent()) {
+                    list.add(getRequest(resultSet).get());
+                }
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+            throw new DaoException(e);
+        } finally {
+            ConnectionPool connectionPool = ConnectionPool.getInstance();
+            connectionPool.close(connection);
             try {
-                ResultSet resultSet = connection.get().createStatement().executeQuery(SQL_SELECT_ALL);
-                while (resultSet.next()) {
-                    if (getRequest(resultSet).isPresent()) {
-                        list.add(getRequest(resultSet).get());
-                    }
-                }
-                resultSet.close();
-            } catch (SQLException e) {
-                logger.error(e.getMessage());
+                connection.close();
+            }catch(SQLException e){
                 throw new DaoException(e);
-            } finally {
-                ConnectionPool connectionPool = ConnectionPool.getInstance();
-                connectionPool.close(connection.get());
-                try {
-                    connection.get().close();
-                }catch(SQLException e){
-                    throw new DaoException(e);
-                }
             }
         }
         return list;
@@ -56,26 +54,24 @@ public class RequestDaoImpl implements RequestDao {
 
     @Override
     public Optional<Request> findEntityById(Integer id) throws DaoException{
-        Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
+        Connection connection = ConnectionPool.getInstance().getConnection();
         Optional<Request> request = Optional.empty();
-        if(connection.isPresent()) {
+        try {
+            ResultSet resultSet = connection.createStatement().executeQuery(SQL_SELECT_BY_CRITERIA + "id = " + id);
+            if (resultSet.next()) {
+                request = getRequest(resultSet);
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+            throw new DaoException(e);
+        } finally {
+            ConnectionPool connectionPool = ConnectionPool.getInstance();
+            connectionPool.close(connection);
             try {
-                ResultSet resultSet = connection.get().createStatement().executeQuery(SQL_SELECT_BY_CRITERIA + "id = " + id);
-                if (resultSet.next()) {
-                    request = getRequest(resultSet);
-                }
-                resultSet.close();
-            } catch (SQLException e) {
-                logger.error(e.getMessage());
+                connection.close();
+            }catch(SQLException e){
                 throw new DaoException(e);
-            } finally {
-                ConnectionPool connectionPool = ConnectionPool.getInstance();
-                connectionPool.close(connection.get());
-                try {
-                    connection.get().close();
-                }catch(SQLException e){
-                    throw new DaoException(e);
-                }
             }
         }
         return request;
@@ -85,48 +81,19 @@ public class RequestDaoImpl implements RequestDao {
     public boolean create(Request request) throws DaoException{
         boolean result = false;
         if(request != null) {
-            Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
-            if(connection.isPresent()) {
-                try {
-                    connection.get().createStatement().executeUpdate(SQL_INSERT + request.getNumberOfSeats() + ",'" + request.getStart() + "','" + request.getEnd() + "'," + request.getUser().getId() + "," + RequestStatus.getIdByRequestStatus(request.getRequestStatus()) + "," + request.getRoom().getId() + ")");
-                    result = true;
-                    logger.info(request + " successfully created!");
-                } catch (SQLException e) {
-                    logger.error(e.getMessage());
-                    throw new DaoException(e);
-                } finally {
-                    ConnectionPool connectionPool = ConnectionPool.getInstance();
-                    connectionPool.close(connection.get());
-                    try {
-                        connection.get().close();
-                    }catch(SQLException e){
-                        throw new DaoException(e);
-                    }
-                }
-            }
-        }
-        return result;
-    }
-
-    @Override
-    public boolean delete(Integer id) throws DaoException{
-        Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
-        boolean result = false;
-        if(connection.isPresent()) {
+            Connection connection = ConnectionPool.getInstance().getConnection();
             try {
-                if (findEntityById(id).isPresent()) {
-                    logger.info(findEntityById(id) + " successfully deleted!");
-                    connection.get().createStatement().executeUpdate(SQL_DELETE + id);
-                    result = true;
-                }
+                connection.createStatement().executeUpdate(SQL_INSERT + request.getNumberOfSeats() + ",'" + request.getStart() + "','" + request.getEnd() + "'," + request.getUser().getId() + "," + RequestStatus.getIdByRequestStatus(request.getRequestStatus()) + "," + request.getRoom().getId() + ")");
+                result = true;
+                logger.info(request + " successfully created!");
             } catch (SQLException e) {
                 logger.error(e.getMessage());
                 throw new DaoException(e);
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
-                connectionPool.close(connection.get());
+                connectionPool.close(connection);
                 try {
-                    connection.get().close();
+                    connection.close();
                 }catch(SQLException e){
                     throw new DaoException(e);
                 }
@@ -136,27 +103,50 @@ public class RequestDaoImpl implements RequestDao {
     }
 
     @Override
+    public boolean delete(Integer id) throws DaoException{
+        Connection connection = ConnectionPool.getInstance().getConnection();
+        boolean result = false;
+        try {
+            if (findEntityById(id).isPresent()) {
+                logger.info(findEntityById(id) + " successfully deleted!");
+                connection.createStatement().executeUpdate(SQL_DELETE + id);
+                result = true;
+            }
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+            throw new DaoException(e);
+        } finally {
+            ConnectionPool connectionPool = ConnectionPool.getInstance();
+            connectionPool.close(connection);
+            try {
+                connection.close();
+            }catch(SQLException e){
+                throw new DaoException(e);
+            }
+        }
+        return result;
+    }
+
+    @Override
     public Optional<Request> update(Request request) throws DaoException{
         Optional<Request> requestOptional = Optional.empty();
         if(request != null) {
-            Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
-            if(connection.isPresent()) {
+            Connection connection = ConnectionPool.getInstance().getConnection();
+            try {
+                connection.createStatement().executeUpdate(SQL_UPDATE + "number_of_seats = " + request.getNumberOfSeats()
+                        + ", start_date = '" + request.getStart() + "', end_date = '" + request.getEnd() + "', user_id = " + request.getUser().getId() + ", request_status = " + RequestStatus.getIdByRequestStatus(request.getRequestStatus()) + ", room = " + request.getRoom().getId() + " WHERE id = " + request.getId());
+                requestOptional = findEntityById(request.getId());
+                logger.info(request + " successfully updated!");
+            } catch (SQLException e) {
+                logger.error(e.getMessage());
+                throw new DaoException(e);
+            } finally {
+                ConnectionPool connectionPool = ConnectionPool.getInstance();
+                connectionPool.close(connection);
                 try {
-                        connection.get().createStatement().executeUpdate(SQL_UPDATE + "number_of_seats = " + request.getNumberOfSeats()
-                                + ", start_date = '" + request.getStart() + "', end_date = '" + request.getEnd() + "', user_id = " + request.getUser().getId() + ", request_status = " + RequestStatus.getIdByRequestStatus(request.getRequestStatus()) + ", room = " + request.getRoom().getId() + " WHERE id = " + request.getId());
-                    requestOptional = findEntityById(request.getId());
-                    logger.info(request + " successfully updated!");
-                } catch (SQLException e) {
-                    logger.error(e.getMessage());
+                    connection.close();
+                }catch(SQLException e){
                     throw new DaoException(e);
-                } finally {
-                    ConnectionPool connectionPool = ConnectionPool.getInstance();
-                    connectionPool.close(connection.get());
-                    try {
-                        connection.get().close();
-                    }catch(SQLException e){
-                        throw new DaoException(e);
-                    }
                 }
             }
         }

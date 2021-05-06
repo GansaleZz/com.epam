@@ -27,27 +27,25 @@ public class PaymentDaoImpl implements PaymentDao {
     @Override
     public List<Payment> findAllEntities() throws DaoException{
         List<Payment> list = new ArrayList<>();
-        Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
-        if(connection.isPresent()) {
+        Connection connection = ConnectionPool.getInstance().getConnection();
+        try {
+            ResultSet resultSet = connection.createStatement().executeQuery(SQL_SELECT_ALL);
+            while (resultSet.next()) {
+                if (getPayment(resultSet).isPresent()) {
+                    list.add(getPayment(resultSet).get());
+                }
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+            throw new DaoException(e);
+        } finally {
+            ConnectionPool connectionPool = ConnectionPool.getInstance();
+            connectionPool.close(connection);
             try {
-                ResultSet resultSet = connection.get().createStatement().executeQuery(SQL_SELECT_ALL);
-                while (resultSet.next()) {
-                    if (getPayment(resultSet).isPresent()) {
-                        list.add(getPayment(resultSet).get());
-                    }
-                }
-                resultSet.close();
+                connection.close();
             } catch (SQLException e) {
-                logger.error(e.getMessage());
                 throw new DaoException(e);
-            } finally {
-                ConnectionPool connectionPool = ConnectionPool.getInstance();
-                connectionPool.close(connection.get());
-                try {
-                    connection.get().close();
-                }catch(SQLException e){
-                    throw new DaoException(e);
-                }
             }
         }
         return list;
@@ -55,26 +53,24 @@ public class PaymentDaoImpl implements PaymentDao {
 
     @Override
     public Optional<Payment> findEntityById(Integer id) throws DaoException{
-        Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
+        Connection connection = ConnectionPool.getInstance().getConnection();
         Optional<Payment> payment = Optional.empty();
-        if(connection.isPresent()) {
+        try {
+            ResultSet resultSet = connection.createStatement().executeQuery(SQL_SELECT_BY_CRITERIA + "id = " + id);
+            if (resultSet.next()) {
+                payment = getPayment(resultSet);
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+            throw new DaoException(e);
+        } finally {
+            ConnectionPool connectionPool = ConnectionPool.getInstance();
+            connectionPool.close(connection);
             try {
-                ResultSet resultSet = connection.get().createStatement().executeQuery(SQL_SELECT_BY_CRITERIA + "id = " + id);
-                if (resultSet.next()) {
-                    payment = getPayment(resultSet);
-                }
-                resultSet.close();
-            } catch (SQLException e) {
-                logger.error(e.getMessage());
+                connection.close();
+            }catch(SQLException e){
                 throw new DaoException(e);
-            } finally {
-                ConnectionPool connectionPool = ConnectionPool.getInstance();
-                connectionPool.close(connection.get());
-                try {
-                    connection.get().close();
-                }catch(SQLException e){
-                    throw new DaoException(e);
-                }
             }
         }
         return payment;
@@ -84,48 +80,19 @@ public class PaymentDaoImpl implements PaymentDao {
     public boolean create(Payment payment) throws DaoException{
         boolean result = false;
         if(payment != null) {
-            Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
-            if(connection.isPresent()) {
-                try {
-                    logger.info(payment + "successfully created!");
-                    connection.get().createStatement().executeUpdate(SQL_INSERT +payment.getAmount()+",'"+payment.getDate()+"',"+PaymentStatus.getIdByPaymentStatus(payment.getPaymentStatus())+")");
-                    result = true;
-                } catch (SQLException e) {
-                    logger.error(e.getMessage());
-                    throw new DaoException(e);
-                } finally {
-                    ConnectionPool connectionPool = ConnectionPool.getInstance();
-                    connectionPool.close(connection.get());
-                    try {
-                        connection.get().close();
-                    }catch(SQLException e){
-                        throw new DaoException(e);
-                    }
-                }
-            }
-        }
-        return result;
-    }
-
-    @Override
-    public boolean delete(Integer id) throws DaoException{
-        Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
-        boolean result = false;
-        if(connection.isPresent()) {
-            try {
-                if (findEntityById(id).isPresent()) {
-                    logger.info(findEntityById(id).get() + "successfully deleted!");
-                    connection.get().createStatement().executeUpdate(SQL_DELETE + id);
-                    result = true;
-                }
+            Connection connection = ConnectionPool.getInstance().getConnection();
+            try{
+                logger.info(payment + "successfully created!");
+                connection.createStatement().executeUpdate(SQL_INSERT +payment.getAmount()+",'"+payment.getDate()+"',"+PaymentStatus.getIdByPaymentStatus(payment.getPaymentStatus())+")");
+                result = true;
             } catch (SQLException e) {
                 logger.error(e.getMessage());
                 throw new DaoException(e);
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
-                connectionPool.close(connection.get());
+                connectionPool.close(connection);
                 try {
-                    connection.get().close();
+                    connection.close();
                 }catch(SQLException e){
                     throw new DaoException(e);
                 }
@@ -135,27 +102,50 @@ public class PaymentDaoImpl implements PaymentDao {
     }
 
     @Override
+    public boolean delete(Integer id) throws DaoException{
+        Connection connection = ConnectionPool.getInstance().getConnection();
+        boolean result = false;
+        try {
+            if (findEntityById(id).isPresent()) {
+                logger.info(findEntityById(id).get() + "successfully deleted!");
+                connection.createStatement().executeUpdate(SQL_DELETE + id);
+                result = true;
+            }
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+            throw new DaoException(e);
+        } finally {
+            ConnectionPool connectionPool = ConnectionPool.getInstance();
+            connectionPool.close(connection);
+            try {
+                connection.close();
+            }catch(SQLException e){
+                throw new DaoException(e);
+            }
+        }
+        return result;
+    }
+
+    @Override
     public Optional<Payment> update(Payment payment) throws DaoException{
         Optional<Payment> paymentOptional = Optional.empty();
         if(payment != null) {
-            Optional<Connection> connection = ConnectionPool.getInstance().getConnection();
-            if(connection.isPresent()) {
+            Connection connection = ConnectionPool.getInstance().getConnection();
+            try {
+                connection.createStatement().executeUpdate(SQL_UPDATE + "amount = " + payment.getAmount()
+                        + ", date = '" + payment.getDate() + "', payment_status = " + PaymentStatus.getIdByPaymentStatus(payment.getPaymentStatus()) + " WHERE id = " + payment.getId());
+                paymentOptional = findEntityById(payment.getId());
+                logger.info(payment + " successfully updated!");
+            } catch (SQLException e) {
+                logger.error(e.getMessage());
+                throw new DaoException(e);
+            } finally {
+                ConnectionPool connectionPool = ConnectionPool.getInstance();
+                connectionPool.close(connection);
                 try {
-                    connection.get().createStatement().executeUpdate(SQL_UPDATE + "amount = " + payment.getAmount()
-                            + ", date = '" + payment.getDate() + "', payment_status = " + PaymentStatus.getIdByPaymentStatus(payment.getPaymentStatus()) + " WHERE id = " + payment.getId());
-                    paymentOptional = findEntityById(payment.getId());
-                    logger.info(payment + " successfully updated!");
-                } catch (SQLException e) {
-                    logger.error(e.getMessage());
+                    connection.close();
+                }catch(SQLException e){
                     throw new DaoException(e);
-                } finally {
-                    ConnectionPool connectionPool = ConnectionPool.getInstance();
-                    connectionPool.close(connection.get());
-                    try {
-                        connection.get().close();
-                    }catch(SQLException e){
-                        throw new DaoException(e);
-                    }
                 }
             }
         }

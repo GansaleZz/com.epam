@@ -21,10 +21,10 @@ class RoomDaoImplTest {
 
 
     @Test
-    void findAllEntities() throws FileException, DaoException, SQLException {
+    void findAllEntities() throws DaoException, SQLException {
         RoomDaoImpl roomDao = new RoomDaoImpl();
         List<Room> list = roomDao.findAllEntities();
-        Connection connection = ConnectionPool.getInstance().getConnection().get();
+        Connection connection = ConnectionPool.getInstance().getConnection();
         final String COUNT = "SELECT COUNT(*) FROM ROOM";
         ResultSet resultSet = connection.createStatement().executeQuery(COUNT);
         resultSet.next();
@@ -33,7 +33,7 @@ class RoomDaoImplTest {
     }
 
     @Test
-    void findEntityById() throws FileException, DaoException {
+    void findEntityById() throws DaoException {
         int numberOfSeats = 5;
         int price = 140;
         RoomStatus roomStatus = RoomStatus.AVAILABLE;
@@ -47,7 +47,7 @@ class RoomDaoImplTest {
     }
 
     @Test
-    void create() throws FileException, DaoException {
+    void create() throws DaoException {
         int numberOfSeats = 5;
         int price = 530;
         RoomClass roomClass = RoomClass.LUXE;
@@ -57,8 +57,8 @@ class RoomDaoImplTest {
     }
 
     @Test
-    void delete() throws SQLException, FileException, DaoException {
-        Connection connection = ConnectionPool.getInstance().getConnection().get();
+    void delete() throws SQLException, DaoException {
+        Connection connection = ConnectionPool.getInstance().getConnection();
         ResultSet resultSet = connection.createStatement().executeQuery("SELECT * FROM Room");
         int id = 0;
         while(resultSet.next()){
@@ -74,7 +74,7 @@ class RoomDaoImplTest {
     }
 
     @Test
-    void update() throws FileException, DaoException {
+    void update() throws DaoException {
         RoomDaoImpl roomDao = new RoomDaoImpl();
         if(roomDao.findEntityById(this.id).isPresent()) {
             Room room = roomDao.findEntityById(1).get();
@@ -88,7 +88,7 @@ class RoomDaoImplTest {
     }
 
     @Test
-    void findAllRoomsByCriteria() throws FileException, DaoException {
+    void findAllRoomsByCriteria() throws DaoException {
         RoomCriteria roomCriteria = new RoomCriteria();
         roomCriteria.setRoomStatus(RoomStatus.AVAILABLE);
         RoomDaoImpl roomDao = new RoomDaoImpl();
