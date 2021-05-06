@@ -10,24 +10,6 @@ public class Payment extends BaseEntity {
 
     public Payment(){}
 
-    public Payment(int id, int amount, Date date, PaymentStatus status ){
-        super(id);
-        this.amount = amount;
-        this.date = date;
-        this.status = status;
-    }
-
-    public Payment(int id, int amount, PaymentStatus status){
-        super(id);
-        this.amount = amount;
-        this.status = status;
-    }
-
-    public Payment(PaymentStatus status){
-        this.status = status;
-    }
-
-
     public int getAmount() {
         return amount;
     }

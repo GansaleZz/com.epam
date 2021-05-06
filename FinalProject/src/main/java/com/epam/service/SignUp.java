@@ -1,5 +1,6 @@
 package com.epam.service;
 
+import com.epam.criteria.UserCriteria;
 import com.epam.db.dao.impl.UserDaoImpl;
 import com.epam.entity.User;
 import com.epam.exceptions.DaoException;
@@ -16,7 +17,12 @@ public class SignUp implements Command{
         String name = request.getParameter("name");
         if (login.trim().length() != 0 && password.trim().length() != 0 && name.trim().length() != 0) {
             UserDaoImpl userDao = new UserDaoImpl();
-            User user = new User(login, password, name);
+            User user = new UserCriteria.Builder().newBuilder()
+                    .withLogin(login)
+                    .withPassword(password)
+                    .withName(name)
+                    .build();
+
             try {
                 if (userDao.create(user)) {
                     response.sendRedirect(ServletDestination.SIGNUPSUCC.getPath());

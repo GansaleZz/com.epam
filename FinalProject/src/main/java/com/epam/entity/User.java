@@ -12,38 +12,6 @@ public class User extends BaseEntity {
 
     public User(){}
 
-    public User(String login, String password, String email,String name,int id , UserStatus status, UserRole role){
-        super(id);
-        this.login = login;
-        this.email = email;
-        this.password = password;
-        this.userRole = role;
-        this.status = status;
-        this.name = name;
-    }
-
-    public User(String login, String password, String email,String name, UserStatus status, UserRole role){
-        this.login = login;
-        this.email = email;
-        this.password = password;
-        this.userRole = role;
-        this.status = status;
-        this.name = name;
-    }
-
-    public User(String login, String password, String email, String name){
-        this.login = login;
-        this.password = password;
-        this.email = email;
-        this.name = name;
-    }
-
-    public User(String login,String password,String name){
-        this.login = login;
-        this.password = password;
-        this.name = name;
-    }
-
     public String getName() {
         return name;
     }

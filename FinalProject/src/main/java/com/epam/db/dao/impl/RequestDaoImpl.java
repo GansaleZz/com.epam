@@ -167,7 +167,16 @@ public class RequestDaoImpl implements RequestDao {
             UserDaoImpl userDao = new UserDaoImpl();
             RoomDaoImpl roomDao = new RoomDaoImpl();
             if(userDao.findEntityById(userId).isPresent() && roomDao.findEntityById(roomId).isPresent()) {
-                request = Optional.of(new Request(numberOfSeats, start, end, userDao.findEntityById(userId).get(), id, requestStatus, roomDao.findEntityById(roomId).get()));
+                request = Optional.of(new RequestCriteria.Builder()
+                .newBuilder()
+                .withNumberOfSeats(numberOfSeats)
+                .withStart(start)
+                .withEnd(end)
+                .withUser(userDao.findEntityById(userId).get())
+                .withId(id)
+                .withRequestStatus(requestStatus)
+                .withRoom(roomDao.findEntityById(roomId).get())
+                .build());
             }
         }catch(SQLException e){
             logger.error(e.getMessage());

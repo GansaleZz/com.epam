@@ -173,7 +173,15 @@ public class RoomDaoImpl implements RoomDao {
                 roomClass = RoomClass.extractRoomClassById(resultSet.getInt(5)).get();
             }
             if(roomStatus != null && roomClass != null){
-                room = Optional.of(new Room(roomClass,price,numberOfSeats,roomStatus,id));
+                room = Optional.of(new RoomCriteria.Builder()
+                .newBuilder()
+                .withId(id)
+                .withRoomStatus(roomStatus)
+                .withRoomClass(roomClass)
+                .withPrice(price)
+                .withNumberOfSeats(numberOfSeats)
+                .withNumberOfSeats(numberOfSeats)
+                .build());
             }
         }catch(SQLException e){
             logger.error(e.getMessage());

@@ -161,9 +161,20 @@ public class PaymentDaoImpl implements PaymentDao {
                 paymentStatus = PaymentStatus.extractPaymentStatusById(resultSet.getInt(4)).get();
             }
             if(date != null) {
-                payment = Optional.of(new Payment(id,amount,date,paymentStatus));
+                payment = Optional.of(new PaymentCriteria.Builder()
+                .newBuilder()
+                .withId(id)
+                .withAmount(amount)
+                .withDate(date)
+                .withPaymentStatus(paymentStatus)
+                .build());
             }else{
-                payment = Optional.of(new Payment(id,amount,paymentStatus));
+                payment = Optional.of(new PaymentCriteria.Builder()
+                .newBuilder()
+                .withId(id)
+                .withAmount(amount)
+                .withPaymentStatus(paymentStatus)
+                .build());
             }
         }catch(SQLException e){
             logger.error(e.getMessage());

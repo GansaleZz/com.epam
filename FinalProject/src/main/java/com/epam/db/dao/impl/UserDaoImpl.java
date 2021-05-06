@@ -141,7 +141,7 @@ public class UserDaoImpl implements UserDao {
                     list = chooseAllByPredicate(i -> ((User)i).getStatus() == userCriteria.getStatus());
                 }else{
                     if(userCriteria.getRole()!=null){
-                        list = chooseAllByPredicate(i -> ((User)i).getRole() == userCriteria.getRole());
+                        list = chooseAllByPredicate(i -> ((User)i).getUserRole() == userCriteria.getRole());
                     }
                 }
             }
@@ -199,7 +199,16 @@ public class UserDaoImpl implements UserDao {
                 userRole = UserRole.extractUserRolebyId(resultSet.getInt("role_fk")).get();
             }
             if (userRole != null && userStatus != null) {
-                user = Optional.of(new User(login, password, email, name, id, userStatus, userRole));
+                user = Optional.of(new UserCriteria.Builder()
+                        .newBuilder()
+                        .withLogin(login)
+                        .withPassword(password)
+                        .withEmail(email)
+                        .withName(name)
+                        .withId(id)
+                        .withUserRole(userRole)
+                        .withUserStatus(userStatus)
+                        .build());
             }
         }catch(SQLException e){
             logger.error(e.getMessage());

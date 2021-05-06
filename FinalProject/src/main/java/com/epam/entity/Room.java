@@ -10,27 +10,6 @@ public class Room extends BaseEntity {
 
     public Room(){}
 
-    public Room(RoomClass room_class, int price, int numberOfSeats, RoomStatus roomStatus,int id) {
-        super(id);
-        this.roomClass = room_class;
-        this.price = price;
-        this.numberOfSeats = numberOfSeats;
-        this.roomStatus = roomStatus;
-    }
-
-    public Room(RoomClass roomClass, int price, int numberOfSeats, RoomStatus roomStatus) {
-        this.roomClass = roomClass;
-        this.price = price;
-        this.numberOfSeats = numberOfSeats;
-        this.roomStatus = roomStatus;
-    }
-
-    public Room(RoomClass roomClass, int price, int numberOfSeats){
-        this.roomClass = roomClass;
-        this.price = price;
-        this.numberOfSeats = numberOfSeats;
-    }
-
     public RoomClass getRoomClass() {
         return roomClass;
     }

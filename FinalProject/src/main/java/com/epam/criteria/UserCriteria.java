@@ -39,7 +39,7 @@ public class UserCriteria extends BaseCriteria<User> {
             return this;
         }
 
-        public Builder witUserStatus(UserStatus userStatus){
+        public Builder withUserStatus(UserStatus userStatus){
             actualClass.setStatus(userStatus);
             return this;
         }

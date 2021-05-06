@@ -14,16 +14,6 @@ public class Request extends BaseEntity {
 
     public Request(){}
 
-    public Request(int numberOfSeats, Date start, Date end, User user,int id, RequestStatus requestStatus, Room room){
-        super(id);
-        this.numberOfSeats = numberOfSeats;
-        this.start = start;
-        this.end = end;
-        this.user = user;
-        this.requestStatus = requestStatus;
-        this.room = room;
-    }
-
     public int getNumberOfSeats() {
         return numberOfSeats;
     }

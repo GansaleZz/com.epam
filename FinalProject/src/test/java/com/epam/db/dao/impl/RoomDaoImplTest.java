@@ -51,7 +51,12 @@ class RoomDaoImplTest {
         int numberOfSeats = 5;
         int price = 530;
         RoomClass roomClass = RoomClass.LUXE;
-        Room room = new Room(roomClass,price,numberOfSeats);
+        Room room = new RoomCriteria.Builder()
+                .newBuilder()
+                .withRoomClass(roomClass)
+                .withPrice(price)
+                .withPrice(numberOfSeats)
+                .build();
         RoomDaoImpl roomDao = new RoomDaoImpl();
         assertEquals(true,roomDao.create(room));
     }

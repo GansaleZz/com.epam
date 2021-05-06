@@ -34,9 +34,9 @@ class UserDaoImplTest {
 
     @org.junit.jupiter.api.Test
     void findEntityById() throws DaoException {
-        String login = "Test";
-        String password = "12345";
-        String name = "Sasha";
+        String login = "Admin";
+        String password = "admin";
+        String name = "Andrey";
         UserDaoImpl userDao = new UserDaoImpl();
         if(userDao.findEntityById(this.id).isPresent()) {
             User user = userDao.findEntityById(this.id).get();
@@ -53,7 +53,13 @@ class UserDaoImplTest {
         String login = "Test001";
         String password = "asd";
         String email = "Test001@mail.ru";
-        User user = new User(login,password,email,name);
+        User user = new UserCriteria.Builder()
+                .newBuilder()
+                .withLogin(login)
+                .withPassword(password)
+                .withEmail(email)
+                .withName(name)
+                .build();
         UserDaoImpl userDao = new UserDaoImpl();
         UserCriteria userCriteria = new UserCriteria();
         userCriteria.setLogin(login);
