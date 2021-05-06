@@ -1,5 +1,6 @@
 package com.epam.entity;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 public enum UserStatus {
@@ -13,21 +14,13 @@ public enum UserStatus {
     }
 
     public static int getIdByUserStatus(UserStatus userStatus){
-        int id = 0;
-        switch(userStatus){
-            case AVAILABLE -> id = 1;
-            case BANNED -> id = 2;
-        }
-        return  id;
+        return valueOf(userStatus.name()).id;
     }
 
     public static Optional<UserStatus> extractUserStatusById(int id){
-        Optional<UserStatus> userStatus = Optional.empty();
-        switch(id){
-            case 1 -> userStatus = Optional.of(AVAILABLE);
-            case 2 -> userStatus = Optional.of(BANNED);
-        }
-        return userStatus;
+        return Arrays.stream(values())
+                .filter(i -> i.id == id)
+                .findAny();
     }
 
 

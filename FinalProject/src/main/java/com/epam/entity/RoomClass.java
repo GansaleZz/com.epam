@@ -1,5 +1,6 @@
 package com.epam.entity;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 public enum RoomClass {
@@ -15,24 +16,12 @@ public enum RoomClass {
     }
 
     public static int getIdByRoomClass(RoomClass roomClass) {
-        int id = 0;
-        switch (roomClass){
-            case BUSINESS -> id = 1;
-            case ECONOM -> id = 2;
-            case LUXE -> id = 3;
-            case PREMIUM -> id = 4;
-        }
-        return id;
+        return valueOf(roomClass.name()).id;
     }
 
     public static Optional<RoomClass> extractRoomClassById(int id){
-        Optional<RoomClass> roomClass = Optional.empty();
-        switch(id){
-            case 1 -> roomClass = Optional.of(BUSINESS);
-            case 2 -> roomClass = Optional.of(ECONOM);
-            case 3 -> roomClass = Optional.of(LUXE);
-            case 4 -> roomClass = Optional.of(PREMIUM);
-        }
-        return roomClass;
+        return Arrays.stream(values())
+                .filter(i -> i.id == id)
+                .findAny();
     }
 }

@@ -1,5 +1,6 @@
 package com.epam.entity;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 public enum RequestStatus {
@@ -14,21 +15,11 @@ public enum RequestStatus {
     }
 
     public static int getIdByRequestStatus(RequestStatus requestStatus){
-        int id = 0;
-        switch(requestStatus){
-            case ACCEPTED -> id = 1;
-            case INPROGRESS -> id = 2;
-            case DENIED -> id = 3;
-        }
-        return  id;
+        return valueOf(requestStatus.name()).id;
     }
     public static Optional<RequestStatus> extractRequestStatusById(int id){
-        Optional<RequestStatus> requestStatus = Optional.empty();
-        switch(id){
-            case 1 -> requestStatus = Optional.of(ACCEPTED);
-            case 2 -> requestStatus = Optional.of(INPROGRESS);
-            case 3 -> requestStatus = Optional.of(DENIED);
-        }
-        return requestStatus;
+        return Arrays.stream(values())
+                .filter(i -> i.id == id)
+                .findAny();
     }
 }
