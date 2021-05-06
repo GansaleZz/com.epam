@@ -11,7 +11,9 @@
     <title>Title</title>
 </head>
 <body>
-  <% request.getSession().invalidate();%>
-  <% response.sendRedirect("/auth/authPage.jsp");%>
+  <%
+    request.getSession().invalidate();
+    response.sendRedirect("/auth/authPage.jsp");
+  %>
 </body>
 </html>

@@ -15,5 +15,7 @@
 
     <a href="http://localhost:8080/usersView/admin/home/home.jsp">Home</a>
 
+    <a href="http://localhost:8080/usersView/admin/rooms/rooms.jsp">Rooms</a>
+
 </body>
 </html>
