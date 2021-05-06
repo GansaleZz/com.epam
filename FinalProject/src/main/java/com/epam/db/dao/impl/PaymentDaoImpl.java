@@ -42,11 +42,6 @@ public class PaymentDaoImpl implements PaymentDao {
         } finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connectionPool.close(connection);
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                throw new DaoException(e);
-            }
         }
         return list;
     }
@@ -67,11 +62,6 @@ public class PaymentDaoImpl implements PaymentDao {
         } finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connectionPool.close(connection);
-            try {
-                connection.close();
-            }catch(SQLException e){
-                throw new DaoException(e);
-            }
         }
         return payment;
     }
@@ -91,11 +81,6 @@ public class PaymentDaoImpl implements PaymentDao {
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
                 connectionPool.close(connection);
-                try {
-                    connection.close();
-                }catch(SQLException e){
-                    throw new DaoException(e);
-                }
             }
         }
         return result;
@@ -117,11 +102,6 @@ public class PaymentDaoImpl implements PaymentDao {
         } finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connectionPool.close(connection);
-            try {
-                connection.close();
-            }catch(SQLException e){
-                throw new DaoException(e);
-            }
         }
         return result;
     }
@@ -142,11 +122,6 @@ public class PaymentDaoImpl implements PaymentDao {
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
                 connectionPool.close(connection);
-                try {
-                    connection.close();
-                }catch(SQLException e){
-                    throw new DaoException(e);
-                }
             }
         }
         return paymentOptional;

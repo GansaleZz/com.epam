@@ -43,11 +43,6 @@ public class RequestDaoImpl implements RequestDao {
         } finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connectionPool.close(connection);
-            try {
-                connection.close();
-            }catch(SQLException e){
-                throw new DaoException(e);
-            }
         }
         return list;
     }
@@ -68,11 +63,6 @@ public class RequestDaoImpl implements RequestDao {
         } finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connectionPool.close(connection);
-            try {
-                connection.close();
-            }catch(SQLException e){
-                throw new DaoException(e);
-            }
         }
         return request;
     }
@@ -92,11 +82,6 @@ public class RequestDaoImpl implements RequestDao {
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
                 connectionPool.close(connection);
-                try {
-                    connection.close();
-                }catch(SQLException e){
-                    throw new DaoException(e);
-                }
             }
         }
         return result;
@@ -118,11 +103,6 @@ public class RequestDaoImpl implements RequestDao {
         } finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connectionPool.close(connection);
-            try {
-                connection.close();
-            }catch(SQLException e){
-                throw new DaoException(e);
-            }
         }
         return result;
     }
@@ -143,11 +123,6 @@ public class RequestDaoImpl implements RequestDao {
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
                 connectionPool.close(connection);
-                try {
-                    connection.close();
-                }catch(SQLException e){
-                    throw new DaoException(e);
-                }
             }
         }
         return requestOptional;
