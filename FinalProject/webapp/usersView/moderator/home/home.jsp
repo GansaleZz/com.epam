@@ -11,7 +11,7 @@
     <title>Home page</title>
 </head>
 <body>
-    <a href="http://localhost:8080/auth/logOut.jsp">Log Out</a>
+    <a href="http://localhost:8080/controller?command=LOGOUT">Log Out</a>
 
     <a href="http://localhost:8080/usersView/moderator/home/home.jsp">Home</a>
 

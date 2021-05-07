@@ -20,17 +20,17 @@
     <a href="http://localhost:8080/usersView/admin/home/home.jsp">Home</a>
 
     <a href="http://localhost:8080/usersView/admin/rooms/rooms.jsp">Rooms</a>
-    <%
-        PrintWriter printWriter = response.getWriter();
-        RoomDaoImpl roomDao = new RoomDaoImpl();
-        try {
-            List<Room> list = roomDao.findAllEntities();
-            list.stream()
-                    .forEach(printWriter::println);
-        } catch (DaoException e) {
-            e.printStackTrace();
-        }
-    %>
+<%--    <%--%>
+<%--        PrintWriter printWriter = response.getWriter();--%>
+<%--        RoomDaoImpl roomDao = new RoomDaoImpl();--%>
+<%--        try {--%>
+<%--            List<Room> list = roomDao.findAllEntities();--%>
+<%--            list.stream()--%>
+<%--                    .forEach(printWriter::println);--%>
+<%--        } catch (DaoException e) {--%>
+<%--            e.printStackTrace();--%>
+<%--        }--%>
+<%--    %>--%>
 
 </body>
 </html>

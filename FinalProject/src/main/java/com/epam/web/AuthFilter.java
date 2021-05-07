@@ -33,14 +33,16 @@ public class AuthFilter implements Filter {
         final String MODERATORHOMEPAGE = ServletDestination.MODERATORHOMEPAGE.getPath();
 
         boolean loggedIn = session != null && session.getAttribute("login") != null;
-        boolean badRequest = !httpServletRequest.getRequestURI().contains("/usersView/") &&
-                !httpServletRequest.getRequestURI().equals(ServletDestination.LOGOUT.getPath());
-
+        boolean badRequest = !httpServletRequest.getRequestURI().contains("/usersView/");
         if(loggedIn && badRequest){
-            switch ((String)session.getAttribute("userRole")){
-                case "ADMIN" -> httpServletResponse.sendRedirect(ADMINHOMEPAGE);
-                case "CLIENT" -> httpServletResponse.sendRedirect(CLIENTHOMEPAGE);
-                case "MODERATOR" -> httpServletResponse.sendRedirect(MODERATORHOMEPAGE);
+            if(httpServletRequest.getQueryString().contains("LOGOUT")){
+                chain.doFilter(request,response);
+            }else {
+                switch ((String) session.getAttribute("userRole")) {
+                    case "ADMIN" -> httpServletResponse.sendRedirect(ADMINHOMEPAGE);
+                    case "CLIENT" -> httpServletResponse.sendRedirect(CLIENTHOMEPAGE);
+                    case "MODERATOR" -> httpServletResponse.sendRedirect(MODERATORHOMEPAGE);
+                }
             }
         }else{
             if(request.getParameter("password")==null && httpServletRequest.getRequestURI().contains("/controller")){
