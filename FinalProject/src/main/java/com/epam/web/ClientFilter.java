@@ -9,9 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.IOException;
 
 @WebFilter("/usersView/client/*")
@@ -24,8 +22,8 @@ public class ClientFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
-        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+        HttpServletRequest httpServletRequest = (HttpServletRequestWrapper) request;
+        HttpServletResponse httpServletResponse = (HttpServletResponseWrapper) response;
         HttpSession session = httpServletRequest.getSession(false);
 
         final String LOGINPAGEURL = httpServletRequest.getContextPath() + ServletDestination.LOGINPAGE.getPath();
