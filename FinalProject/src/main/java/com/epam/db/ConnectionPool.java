@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -29,7 +28,7 @@ public final class ConnectionPool {
             }
             logger.info("Connection pool successfully inited!");
         }catch(SQLException e){
-            logger.fatal(e.getMessage());
+            logger.error(e.getMessage());
         }
     }
 
@@ -46,30 +45,28 @@ public final class ConnectionPool {
                 Connection connection = DriverManager.getConnection(property.getURL()+property.getSCHEME(), property.getUSER(), property.getPASSWORD());
                 availableConnectionList.add(connection);
             } catch (SQLException e) {
-                logger.fatal(e.getMessage());
+                logger.error(e.getMessage());
             }
         }
     }
 
     public Connection getConnection() {
-        Connection pool = null;
-        if(availableConnectionList.size()<=0){
-            addConnection();
-        }
-        if(availableConnectionList.size()<= 0 && availableConnectionList.size() + engagedConnectionList.size() >= Property.getInstance().getMAXPOOLSIZE())
-        {
-            while(availableConnectionList.size()<=0) {
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    logger.error(e.getMessage());
+        Connection pool;
+        if(availableConnectionList.size() <= 0){
+            try {
+                if (engagedConnectionList.size() == Property.getInstance().getMAXPOOLSIZE()) {
+                    while (engagedConnectionList.size() == Property.getInstance().getMAXPOOLSIZE()) {
+                        Thread.sleep(500);
+                    }
+                }else{
+                    addConnection();
                 }
+            } catch (InterruptedException e) {
+                logger.error(e.getMessage());
             }
         }
-        if(availableConnectionList.size()>0) {
-            pool = availableConnectionList.poll();
-            engagedConnectionList.add(pool);
-        }
+        pool = availableConnectionList.poll();
+        engagedConnectionList.add(pool);
         return pool;
     }
 
@@ -79,15 +76,11 @@ public final class ConnectionPool {
     }
 
     public void closeAllConnections(){
-        while(engagedConnectionList.size()>0){
-            Connection connection = engagedConnectionList.remove(engagedConnectionList.size()-1);
-            availableConnectionList.add(connection);
-            try {
-                connection.close();
-            }catch (SQLException e){
-                logger.error(e.getMessage());
-            }
-        }
+        engagedConnectionList.stream()
+                .forEach(i -> {
+                    availableConnectionList.add(i);
+                    engagedConnectionList.remove(i);
+                });
     }
 
 }
