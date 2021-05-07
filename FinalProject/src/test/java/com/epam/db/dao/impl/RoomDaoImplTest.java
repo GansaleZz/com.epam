@@ -30,6 +30,7 @@ class RoomDaoImplTest {
         resultSet.next();
         int count = resultSet.getInt(1);
         assertEquals(count,list.size());
+        ConnectionPool.getInstance().close(connection);
     }
 
     @Test
@@ -76,6 +77,7 @@ class RoomDaoImplTest {
         }else{
             assertEquals(false, roomDao.delete(id));
         }
+        ConnectionPool.getInstance().close(connection);
     }
 
     @Test

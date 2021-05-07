@@ -33,6 +33,7 @@ class RequestsDaoImplTest {
         resultSet.next();
         int count = resultSet.getInt(1);
         assertEquals(count,list.size());
+        ConnectionPool.getInstance().close(connection);
     }
 
     @Test
@@ -71,6 +72,7 @@ class RequestsDaoImplTest {
         }else{
             assertEquals(false, requestDao.delete(id));
         }
+        ConnectionPool.getInstance().close(connection);
     }
 
     @Test

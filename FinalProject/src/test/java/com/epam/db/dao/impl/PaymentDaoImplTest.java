@@ -30,6 +30,7 @@ class PaymentDaoImplTest {
         resultSet.next();
         int count = resultSet.getInt(1);
         assertEquals(count,list.size());
+        ConnectionPool.getInstance().close(connection);
     }
 
     @Test
@@ -62,6 +63,7 @@ class PaymentDaoImplTest {
         }else{
             assertEquals(false, paymentDao.delete(id));
         }
+        ConnectionPool.getInstance().close(connection);
     }
 
     @Test

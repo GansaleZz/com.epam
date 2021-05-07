@@ -30,6 +30,7 @@ class UserDaoImplTest {
         resultSet.next();
         int count = resultSet.getInt(1);
         assertEquals(count,list.size());
+        ConnectionPool.getInstance().close(connection);
     }
 
     @org.junit.jupiter.api.Test
@@ -85,6 +86,7 @@ class UserDaoImplTest {
         }else{
             assertEquals(false, userDao.delete(id));
         }
+        ConnectionPool.getInstance().close(connection);
     }
 
     @org.junit.jupiter.api.Test
