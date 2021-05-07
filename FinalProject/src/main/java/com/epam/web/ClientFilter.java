@@ -9,7 +9,9 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebFilter("/usersView/client/*")
@@ -22,16 +24,15 @@ public class ClientFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
-        HttpServletRequest httpServletRequest = (HttpServletRequestWrapper) request;
-        HttpServletResponse httpServletResponse = (HttpServletResponseWrapper) response;
+        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         HttpSession session = httpServletRequest.getSession(false);
 
         final String LOGINPAGEURL = httpServletRequest.getContextPath() + ServletDestination.LOGINPAGE.getPath();
 
         boolean loggedIn = session != null && session.getAttribute("login") != null;
-        boolean logInRequest = httpServletRequest.getRequestURL().equals(LOGINPAGEURL);
 
-        if (loggedIn || logInRequest) {
+        if (loggedIn ) {
             chain.doFilter(httpServletRequest, httpServletResponse);
         } else {
             httpServletResponse.sendRedirect(LOGINPAGEURL);

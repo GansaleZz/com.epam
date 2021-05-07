@@ -9,7 +9,9 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebFilter("/usersView/admin/*")
@@ -22,8 +24,8 @@ public class AdminFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
-        HttpServletRequest httpServletRequest = (HttpServletRequestWrapper) request;
-        HttpServletResponse httpServletResponse = (HttpServletResponseWrapper) response;
+        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         HttpSession session = httpServletRequest.getSession(false);
 
         final String LOGINPAGE = ServletDestination.LOGINPAGE.getPath();
@@ -31,20 +33,14 @@ public class AdminFilter implements Filter {
         final String MODERATORHOMEPAGE = ServletDestination.MODERATORHOMEPAGE.getPath();
 
         boolean loggedIn = session != null && session.getAttribute("login") != null;
-        boolean logInRequest = httpServletRequest.getRequestURL().equals(LOGINPAGE);
-
-        if(loggedIn && !session.getAttribute("userRole").equals("ADMIN")){
-            if(session.getAttribute("userRole").equals("CLIENT")){
-                httpServletResponse.sendRedirect(CLIENTHOMEPAGE);
-            }else{
-                httpServletResponse.sendRedirect(MODERATORHOMEPAGE);
+        if(loggedIn){
+            switch((String)session.getAttribute("userRole")){
+                case "MODERATOR" -> httpServletResponse.sendRedirect(MODERATORHOMEPAGE);
+                case "CLIENT" -> httpServletResponse.sendRedirect(CLIENTHOMEPAGE);
+                default -> chain.doFilter(request,response);
             }
         }else {
-            if (loggedIn || logInRequest) {
-                chain.doFilter(httpServletRequest, httpServletResponse);
-            } else {
                 httpServletResponse.sendRedirect(LOGINPAGE);
-            }
         }
     }
 }
