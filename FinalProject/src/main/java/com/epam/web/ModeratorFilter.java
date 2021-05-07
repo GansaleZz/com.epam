@@ -30,7 +30,7 @@ public class ModeratorFilter implements Filter {
 
         final String LOGINPAGE = ServletDestination.LOGINPAGE.getPath();
         final String CLIENTHOMEPAGE = ServletDestination.CLIENTHOMEPAGE.getPath();
-        
+
         boolean loggedIn = session != null && session.getAttribute("login") != null;
 
         if(loggedIn){
