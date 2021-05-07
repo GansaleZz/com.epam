@@ -31,6 +31,7 @@ public class AuthFilter implements Filter {
         final String ADMINHOMEPAGE =  ServletDestination.ADMINHOMEPAGE.getPath();
         final String CLIENTHOMEPAGE = ServletDestination.CLIENTHOMEPAGE.getPath();
         final String MODERATORHOMEPAGE = ServletDestination.MODERATORHOMEPAGE.getPath();
+
         boolean loggedIn = session != null && session.getAttribute("login") != null;
         boolean badRequest = !httpServletRequest.getRequestURI().contains("/usersView/") &&
                 !httpServletRequest.getRequestURI().equals(ServletDestination.LOGOUT.getPath());
