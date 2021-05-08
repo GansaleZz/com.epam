@@ -32,6 +32,12 @@ public class LogIn implements Command{
             } catch (DaoException | IOException e) {
                 e.printStackTrace();
             }
+        }else{
+            try {
+                response.sendRedirect(ServletDestination.LOGINPAGE.getPath());
+            }catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

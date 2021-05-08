@@ -15,6 +15,6 @@
 
     <a href="http://localhost:8080/usersView/moderator/home/home.jsp">Home</a>
 
-    <a href="http://localhost:8080/usersView/moderator/rooms/rooms.jsp">Rooms</a>
+    <a href="http://localhost:8080/controller?command=ACTSHOWROOMS">Rooms</a>
 </body>
 </html>

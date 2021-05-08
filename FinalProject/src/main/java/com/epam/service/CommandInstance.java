@@ -5,7 +5,8 @@ import java.util.Arrays;
 public enum CommandInstance {
     LOGIN(new LogIn()),
     LOGOUT(new LogOut()),
-    SIGNUP(new SignUp());
+    SIGNUP(new SignUp()),
+    ACTSHOWROOMS(new ShowRooms());
 
     private final Command command;
 
