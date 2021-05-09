@@ -2,6 +2,7 @@ package com.epam.service;
 
 import com.epam.db.dao.impl.UserDaoImpl;
 import com.epam.entity.User;
+import com.epam.entity.UserRole;
 import com.epam.entity.UserStatus;
 import com.epam.exceptions.DaoException;
 
@@ -28,18 +29,18 @@ public class ShowUsers implements Command{
                 "\n" +
                 "    <a href=\"http://localhost:8080/controller?command=ACTCREATEREQUEST\">Create request</a>"+
                 "\n" +
-                "    <a href=\"http://localhost:8080/controller?command=ACTSHOWUSERS\">Users list</a>");
+                "    <a href=\"http://localhost:8080/controller?command=ACTSHOWUSERS\">Users list</a><br>");
         UserDaoImpl userDao = new UserDaoImpl();
         try {
             List<User> list = userDao.findAllEntities();
             list.stream()
                     .forEach(i -> printWriter.println(
-                            "<form action=\"/controller?command=ACTCHANGESTATUS\" method = \"post\">"+
-                            "<b>Id: </b> <input type = \"text\" size =\"5\" name = \"id\" value =\""+i.getId()+"\"  readonly>"+ "<br>"+
+                            "<form action=\"/controller?command=ACTCHANGEUSERSRS\" method = \"post\">"+
+                            "<b>Id: </b><input type = \"text\" size =\"5\" name = \"id\" value =\""+i.getId()+"\"  readonly><br>"+
                             " <b>Name: </b> " + i.getName()+ "<br>"+
                             " <b>Email: </b>"+i.getEmail()+ "<br>"+
-                            " <b>Role: </b>"+i.getUserRole()+"</br>"+
-                            "<b>Status: </b><select name=\"status\">\n" + selectedStatus(i) + "</select>"+
+                            selectedRole(i) +
+                            "<b>Status: </b><select name=\"status\">\n" + selectedStatus(i) + "</select><br>"+
                             "<input type = \"submit\" value=\"Submit\" /> </form>"));
         } catch (DaoException e) {
             e.printStackTrace();
@@ -55,5 +56,19 @@ public class ShowUsers implements Command{
             return "        <option>AVAILABLE</option>\n" +
                     "        <option selected = \"selected\">BANNED</option>\n";
         }
+    }
+
+    private String selectedRole(User user){
+        String str = "";
+        switch(user.getUserRole()){
+            case ADMIN -> str = user.getUserRole()+"</br>";
+            case MODERATOR -> str = "<b>Status: </b><select name=\"role\">" +
+                    "<option selected = \"selected\">MODERATOR</option>" +
+                    "<option>CLIENT</option></select><br>";
+            case CLIENT -> str = "<b>Status: </b><select name=\"role\">" +
+                    "<option>MODERATOR</option>" +
+                    "<option selected = \"selected\">CLIENT</option></select><br>";
+        }
+        return str;
     }
 }

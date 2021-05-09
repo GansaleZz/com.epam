@@ -21,6 +21,10 @@ public enum UserRole {
         return valueOf(userRole.name()).id;
     }
 
+    public static UserRole getRole(String role){
+        return valueOf(role);
+    }
+
     public static Optional<UserRole> extractUserRolebyId(int id){
         return Arrays.stream(values())
                 .filter(i -> i.id == id)
