@@ -19,9 +19,6 @@ public class ShowRooms implements Command{
                 "<a href=\"http://localhost:8080/usersView/admin/home/home.jsp\">Home</a>\n" +
                 "\n" +
                 "<a href=\"http://localhost:8080/controller?command=ACTSHOWROOMS\">Rooms</a>");
-        if(!request.getSession().getAttribute("userRole").equals("CLIENT")){
-            printWriter.println("<a href=\"http://localhost:8080/controller?command=ACTADDROOM\">Add new room</a>\n");
-        }
         RoomDaoImpl roomDao = new RoomDaoImpl();
         try {
             List<Room> list = roomDao.findAllEntities();
@@ -29,6 +26,10 @@ public class ShowRooms implements Command{
                     .forEach(i -> printWriter.println("<p> "+i+" </p>"));
         } catch (DaoException e) {
             e.printStackTrace();
+        }
+        if(!request.getSession().getAttribute("userRole").equals("CLIENT")){
+            printWriter.println("<a href=\"http://localhost:8080/controller?command=ACTADDROOM\">Add new room</a>\n");
+            printWriter.println("<a href=\"http://localhost:8080/controller?command=ACTDELETEROOM\">Delete room</a>\n");
         }
     }
 }
