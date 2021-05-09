@@ -7,7 +7,9 @@ public enum CommandInstance {
     LOGOUT(new LogOut()),
     SIGNUP(new SignUp()),
     ACTSHOWROOMS(new ShowRooms()),
-    ACTSHOWPROFILE(new ShowProfile());
+    ACTSHOWPROFILE(new ShowProfile()),
+    ACTSHOWUSERS(new ShowUsers()),
+    ACTCHANGESTATUS(new ChangeUserStatus());
 
     private final Command command;
 

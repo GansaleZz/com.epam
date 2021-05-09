@@ -117,7 +117,7 @@ public class UserDaoImpl implements UserDao {
         if(user != null) {
             try {
                 connection.createStatement().executeUpdate(SQL_UPDATE + "name = '" + user.getName()
-                        + "', email = '" + user.getEmail() + "', password = '" + user.getPassword() + "' WHERE id = " + user.getId() + " AND login = '" + user.getLogin() + "'");
+                        + "', email = '" + user.getEmail() + "', password = '" + user.getPassword() + "',status_fk = '"+UserStatus.getIdByUserStatus(user.getStatus())+"',role_fk = '"+UserRole.getIdByUserRole(user.getUserRole())+"' WHERE id = " + user.getId() + " AND login = '" + user.getLogin() + "'");
                 userOptional = findEntityById(user.getId());
                 logger.info(user + " successfully updated!");
             } catch (SQLException e) {

@@ -17,6 +17,10 @@ public enum UserStatus {
         return valueOf(userStatus.name()).id;
     }
 
+    public static UserStatus getStatus(String status){
+        return valueOf(status);
+    }
+
     public static Optional<UserStatus> extractUserStatusById(int id){
         return Arrays.stream(values())
                 .filter(i -> i.id == id)

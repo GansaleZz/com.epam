@@ -23,11 +23,18 @@ public class ShowRooms implements Command{
                 "    <a href=\"http://localhost:8080/controller?command=ACTSHOWPROFILE\">Profile</a>\n" +
                 "\n" +
                 "    <a href=\"http://localhost:8080/controller?command=ACTCREATEREQUEST\">Create request</a>");
+        if(!request.getSession().getAttribute("userRole").equals("CLIENT")){
+            printWriter.println("<a href=\"http://localhost:8080/controller?command=ACTSHOWUSERS\">Users list</a>");
+        }
         RoomDaoImpl roomDao = new RoomDaoImpl();
         try {
             List<Room> list = roomDao.findAllEntities();
             list.stream()
-                    .forEach(i -> printWriter.println("<p> "+i+" </p>"));
+                    .forEach(i -> printWriter.println("<p><b> Id: </b>"+i.getId()+"<br>"+
+                            "<b>Room status: </b>"+i.getRoomStatus()+"<br>"+
+                            "<b>Room class:  </b>"+i.getRoomClass()+"<br>"+
+                            "<b>Number of seats: </b>"+i.getNumberOfSeats()+"<br>"+
+                            "<b>Price: </b>"+i.getPrice()+"<br>"+"</p>"));
         } catch (DaoException e) {
             e.printStackTrace();
         }
