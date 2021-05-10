@@ -38,7 +38,7 @@
 
     <li><a href="http://localhost:8080/controller?command=ACTCREATEREQUEST">Create request</a></li>
 
-    <li><a href="http://localhost:8080/controller?command=ACTSHOWUSERS">Users list</a></li>
+    <li><a href="http://localhost:8080/controller?command=ACTSHOWUSERS">Users</a></li>
     </ul>
 
 </body>

@@ -24,7 +24,7 @@ public class ShowRooms implements Command{
                 "\n" +
                 "    <a href=\"http://localhost:8080/controller?command=ACTCREATEREQUEST\">Create request</a>");
         if(!request.getSession().getAttribute("userRole").equals("CLIENT")){
-            printWriter.println("<a href=\"http://localhost:8080/controller?command=ACTSHOWUSERS\">Users list</a>");
+            printWriter.println("<a href=\"http://localhost:8080/controller?command=ACTSHOWUSERS\">Users</a>");
         }
         RoomDaoImpl roomDao = new RoomDaoImpl();
         try {

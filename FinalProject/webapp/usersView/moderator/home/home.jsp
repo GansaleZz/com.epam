@@ -20,5 +20,7 @@
     <a href="http://localhost:8080/controller?command=ACTSHOWPROFILE">Profile</a>
 
     <a href="http://localhost:8080/controller?command=ACTCREATEREQUEST">Create request</a>
+
+    <a href="http://localhost:8080/controller?command=ACTSHOWUSERS">Users</a>
 </body>
 </html>
