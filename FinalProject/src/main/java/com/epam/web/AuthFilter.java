@@ -1,5 +1,9 @@
 package com.epam.web;
 
+import com.epam.criteria.UserCriteria;
+import com.epam.db.dao.impl.UserDaoImpl;
+import com.epam.entity.UserStatus;
+import com.epam.exceptions.DaoException;
 import com.epam.service.ServletDestination;
 
 import javax.servlet.Filter;
@@ -28,26 +32,40 @@ public class AuthFilter implements Filter {
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         HttpSession session = httpServletRequest.getSession(false);
 
-        final String ADMINHOMEPAGE =  ServletDestination.ADMINHOMEPAGE.getPath();
+        final String ADMINHOMEPAGE = ServletDestination.ADMINHOMEPAGE.getPath();
         final String CLIENTHOMEPAGE = ServletDestination.CLIENTHOMEPAGE.getPath();
         final String MODERATORHOMEPAGE = ServletDestination.MODERATORHOMEPAGE.getPath();
 
         boolean loggedIn = session != null && session.getAttribute("login") != null;
         boolean badRequestLogged = httpServletRequest.getRequestURI().contains("/auth/") ||
                 (httpServletRequest.getRequestURI().contains("/controller") &&
-                httpServletRequest.getQueryString()!=null &&
-                        (httpServletRequest.getQueryString().contains("SIGNUP")||
-                         httpServletRequest.getQueryString().contains("LOGIN")));
-        if(loggedIn && badRequestLogged){
-                switch ((String) session.getAttribute("userRole")) {
-                    case "ADMIN" -> httpServletResponse.sendRedirect(ADMINHOMEPAGE);
-                    case "CLIENT" -> httpServletResponse.sendRedirect(CLIENTHOMEPAGE);
-                    case "MODERATOR" -> httpServletResponse.sendRedirect(MODERATORHOMEPAGE);
+                        httpServletRequest.getQueryString() != null &&
+                        (httpServletRequest.getQueryString().contains("SIGNUP") ||
+                                httpServletRequest.getQueryString().contains("LOGIN")));
+        if (loggedIn) {
+            UserDaoImpl userDao = new UserDaoImpl();
+            UserCriteria userCriteria = new UserCriteria();
+            userCriteria.setLogin((String) session.getAttribute("login"));
+            try {
+                if(userDao.findUserByCriteria(userCriteria).get().getStatus().equals(UserStatus.BANNED)) {
+                    httpServletResponse.sendRedirect(ServletDestination.BANPAGE.getPath());
+                    session.invalidate();
+                    return;
                 }
-        }else{
-            if(!loggedIn && !badRequestLogged){
+            } catch (DaoException e) {
+                e.printStackTrace();
+            }
+        }
+        if (loggedIn && badRequestLogged) {
+            switch ((String) session.getAttribute("userRole")) {
+                case "ADMIN" -> httpServletResponse.sendRedirect(ADMINHOMEPAGE);
+                case "CLIENT" -> httpServletResponse.sendRedirect(CLIENTHOMEPAGE);
+                case "MODERATOR" -> httpServletResponse.sendRedirect(MODERATORHOMEPAGE);
+            }
+        } else {
+            if (!loggedIn && !badRequestLogged) {
                 httpServletResponse.sendRedirect(ServletDestination.AUTHPAGE.getPath());
-            }else {
+            } else {
                 chain.doFilter(request, response);
             }
         }
