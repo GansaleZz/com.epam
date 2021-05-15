@@ -9,7 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Rooms</title>
 </head>
 <body>
   <a href="http://localhost:8080/controller?command=LOGOUT">Log Out</a>
