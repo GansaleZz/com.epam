@@ -31,9 +31,12 @@ public enum UserRole {
                 .findAny();
     }
 
+    public String getPermissions() {
+        return permissions;
+    }
+
     public static String getPermissionsByUserRole(UserRole userRole){
         return valueOf(userRole.name()).permissions;
     }
-
 
 }

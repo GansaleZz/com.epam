@@ -9,37 +9,13 @@
 <html>
 <head>
     <title>Home page</title>
-    <style>
-        ul {
-            background: #0083ca; /* Цвет фона */
-            list-style: none; /* Убираем маркеры */
-            margin: 0; padding: 0; /* Обнуляем все отступы */
-            overflow: hidden; /* Отменяем обтекание */
-        }
-        li {
-            float: left; /* Выстраиваем по горизонтали */
-        }
-        a {
-            display: block; /* Блочный элемент */
-            padding: 7px 15px; /* Поля вокруг текста */
-            color: #fff; /* Цвет текста */
-        }
-    </style>
 </head>
 <body>
-    <ul>
-    <li><a href="http://localhost:8080/controller?command=LOGOUT">Log Out</a></li>
-
-    <li><a href="http://localhost:8080/usersView/admin/home/home.jsp">Home</a></li>
-
-    <li><a href="http://localhost:8080/controller?command=ACTSHOWROOMS">Rooms</a></li>
-
-    <li><a href="http://localhost:8080/controller?command=ACTSHOWPROFILE">Profile</a></li>
-
-    <li><a href="http://localhost:8080/controller?command=ACTCREATEREQUEST">Create request</a></li>
-
-    <li><a href="http://localhost:8080/controller?command=ACTSHOWUSERS">Users</a></li>
-    </ul>
-
+    <a href="http://localhost:8080/controller?command=LOGOUT">Log Out</a>
+    <a href="http://localhost:8080/usersView/admin/home/home.jsp">Home</a>
+    <a href="http://localhost:8080/controller?command=ACTSHOWROOMS">Rooms</a>
+    <a href="http://localhost:8080/controller?command=ACTSHOWPROFILE">Profile</a>
+    <a href="http://localhost:8080/controller?command=ACTCREATEREQUEST">Create request</a>
+    <a href="http://localhost:8080/controller?command=ACTSHOWUSERS">Users</a>
 </body>
 </html>
