@@ -27,5 +27,7 @@
       <b>Price: </b><c:out value="${room.price}"/><br></p>
   </c:forEach>
 
+  <a href="http://localhost:8080/controller?command=ACTNEWROOM">Add new room</a>
+
 </body>
 </html>

@@ -12,28 +12,32 @@ import java.io.IOException;
 public class SignUp implements Command{
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String password = request.getParameter("password");
-        String login = request.getParameter("login");
-        String name = request.getParameter("name");
-        if (login.trim().length() != 0 && password.trim().length() != 0 && name.trim().length() != 0) {
-            UserDaoImpl userDao = new UserDaoImpl();
-            User user = new UserCriteria.Builder().newBuilder()
-                    .withLogin(login)
-                    .withPassword(password)
-                    .withName(name)
-                    .build();
+        if(request.getParameter("password") != null && request.getParameter("login") != null) {
+            String password = request.getParameter("password");
+            String login = request.getParameter("login");
+            String name = request.getParameter("name");
+            if (login.trim().length() != 0 && password.trim().length() != 0 && name.trim().length() != 0) {
+                UserDaoImpl userDao = new UserDaoImpl();
+                User user = new UserCriteria.Builder().newBuilder()
+                        .withLogin(login)
+                        .withPassword(password)
+                        .withName(name)
+                        .build();
 
-            try {
-                if (userDao.create(user)) {
-                    response.sendRedirect(ServletDestination.SIGNUPSUCC.getPath());
-                } else {
-                    response.sendRedirect(ServletDestination.SIGNUPERROR.getPath());
+                try {
+                    if (userDao.create(user)) {
+                        response.sendRedirect(ServletDestination.SIGNUPSUCC.getPath());
+                    } else {
+                        response.sendRedirect(ServletDestination.SIGNUPERROR.getPath());
+                    }
+                } catch (DaoException | IOException e) {
+                    e.printStackTrace();
                 }
-            } catch (DaoException | IOException e) {
-                e.printStackTrace();
+            } else {
+                response.sendRedirect(ServletDestination.SIGNUPERROR.getPath());
             }
-        } else {
-            response.sendRedirect(ServletDestination.SIGNUPERROR.getPath());
+        }else {
+            response.sendRedirect(ServletDestination.AUTHPAGE.getPath());
         }
     }
 }

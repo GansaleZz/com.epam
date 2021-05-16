@@ -9,7 +9,9 @@ public enum CommandInstance {
     ACTSHOWROOMS(new ShowRooms()),
     ACTSHOWPROFILE(new ShowProfile()),
     ACTSHOWUSERS(new ShowUsers()),
-    ACTCHANGEUSERSRS(new ChangeUsersRS());
+    ACTCHANGEUSERSRS(new ChangeUsersRS()),
+    ACTNEWROOM(new NewRoom()),
+    ACTADDNEWROOM(new AddNewRoom());
 
     private final Command command;
 

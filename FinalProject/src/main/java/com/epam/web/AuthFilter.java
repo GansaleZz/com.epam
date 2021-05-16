@@ -43,6 +43,9 @@ public class AuthFilter implements Filter {
                         (httpServletRequest.getQueryString().contains("SIGNUP") ||
                                 httpServletRequest.getQueryString().contains("LOGIN")));
         if (loggedIn) {
+            if(!httpServletRequest.getRequestURI().contains("home") && !httpServletRequest.getRequestURI().contains("controller")){
+                httpServletResponse.sendRedirect(ServletDestination.ADMINHOMEPAGE.getPath());
+            }
             UserDaoImpl userDao = new UserDaoImpl();
             UserCriteria userCriteria = new UserCriteria();
             userCriteria.setLogin((String) session.getAttribute("login"));
