@@ -18,7 +18,7 @@
 <a href="http://localhost:8080/controller?command=ACTCREATEREQUEST">Create request</a>
 <a href="http://localhost:8080/controller?command=ACTSHOWUSERS">Users</a>
 
-<form action="controller?command=ACTADDNEWROOM" method = "post">
+<p><form action="controller?command=ACTADDNEWROOM" method = "post">
     <b>Number of seats: </b><select name="numberOfSeats">
      <option selected = "selected">1</option>
      <option>2</option>
@@ -34,6 +34,6 @@
     </select><br>
     <b>Price: </b><input type="text" name="price"><br>
     <input type = "submit" value="Submit" />
-</form>
+</form></p>
 </body>
 </html>
