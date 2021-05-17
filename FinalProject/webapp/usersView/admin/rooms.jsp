@@ -19,15 +19,111 @@
   <a href="http://localhost:8080/controller?command=ACTCREATEREQUEST">Create request</a>
   <a href="http://localhost:8080/controller?command=ACTSHOWUSERS">Users</a>
 
-  <c:forEach var="room" items="${list}">
-    <p><b> Id: </b><c:out value="${room.id}"/><br>
-      <b>Room status: </b><c:out value="${room.roomStatus}"/> <br>
-      <b>Room class:  </b><c:out value="${room.roomClass}"/><br>
-      <b>Number of seats: </b><c:out value="${room.numberOfSeats}"/><br>
-      <b>Price: </b><c:out value="${room.price}"/><br></p>
-  </c:forEach>
 
-  <a href="http://localhost:8080/controller?command=ACTNEWROOM">Add new room</a>
+<c:forEach var="room" items="${list}">
+  <form action="controller?command=ACTUPDATEROOM" method = "post">
+    <b>Id: </b><input type = "text" size ="5" name = "id" value="${room.id}" readonly><br>
+    <b>Class: </b> <c:choose>
+    <c:when test="${room.roomClass == 'BUSINESS'}">
+      <select name="class">
+        <option selected = "selected">BUSINESS</option>
+        <option>ECONOM</option>
+        <option>LUXE</option>
+        <option>PREMIUM</option>
+      </select><br>
+    </c:when>
+    <c:when test="${room.roomClass == 'ECONOM'}">
+      <select name="class">
+        <option>BUSINESS</option>
+        <option selected = "selected">ECONOM</option>
+        <option>LUXE</option>
+        <option>PREMIUM</option>
+      </select><br>
+    </c:when>
+    <c:when test="${room.roomClass == 'LUXE'}">
+      <select name="class">
+        <option>BUSINESS</option>
+        <option>ECONOM</option>
+        <option selected = "selected">LUXE</option>
+        <option>PREMIUM</option>
+      </select><br>
+    </c:when>
+    <c:when test="${room.roomClass == 'PREMIUM'}">
+      <select name="class">
+        <option>BUSINESS</option>
+        <option>ECONOM</option>
+        <option>LUXE</option>
+        <option selected = "selected">PREMIUM</option>
+      </select><br>
+    </c:when>
+  </c:choose>
+    <b>Price: </b><input type="text" name="price" value="${room.price}"><br>
+    <b>Number of seats: </b><c:choose>
+    <c:when test="${room.numberOfSeats == 1}">
+      <select name="numberOfSeats">
+        <option selected = "selected">1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+      </select><br>
+    </c:when>
+    <c:when test="${room.numberOfSeats == 2}">
+      <select name="numberOfSeats">
+        <option>1</option>
+        <option selected = "selected">2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+      </select><br>
+    </c:when>
+    <c:when test="${room.numberOfSeats == 3}">
+      <select name="numberOfSeats">
+        <option>1</option>
+        <option>2</option>
+        <option selected = "selected">3</option>
+        <option>4</option>
+        <option>5</option>
+      </select><br>
+    </c:when>
+    <c:when test="${room.numberOfSeats == 4}">
+      <select name="numberOfSeats">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option selected = "selected">4</option>
+        <option>5</option>
+      </select><br>
+    </c:when>
+    <c:when test="${room.numberOfSeats == 5}">
+      <select name="numberOfSeats">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option selected = "selected">5</option>
+      </select><br>
+    </c:when>
+  </c:choose>
+    <b>Status: </b><c:choose>
+    <c:when test="${room.roomStatus == 'AVAILABLE'}">
+      <select name="status">
+        <option selected = "selected">AVAILABLE</option>
+        <option>ENGAGED</option>
+      </select><br>
+    </c:when>
+    <c:when test="${room.roomStatus == 'ENGAGED'}">
+      <select name="status">
+        <option>AVAILABLE</option>
+        <option selected = "selected">ENGAGED</option>
+      </select><br>
+    </c:when>
+  </c:choose>
+    <input type = "submit" value="Submit" name="Submit"/>
+    <input type = "submit" value="Delete" name ="Submit"/>
+  </form>
+</c:forEach>
+  <a href="http://localhost:8080/controller?command=ACTNEWROOMPAGE">Add new room</a>
 
 </body>
 </html>

@@ -31,13 +31,15 @@
                                 </c:when>
                                 <c:when test="${user.userRole == 'MODERATOR'}">
                                     <select name="role">
-                                    <option selected = "selected">MODERATOR</option>
-                                    <option>CLIENT</option></select><br>
+                                        <option selected = "selected">MODERATOR</option>
+                                        <option>CLIENT</option>
+                                    </select><br>
                                 </c:when>
                                 <c:when test="${user.userRole == 'CLIENT'}">
                                     <select name="role">
-                                    <option>MODERATOR</option>
-                                    <option selected = "selected">CLIENT</option></select><br>
+                                        <option>MODERATOR</option>
+                                        <option selected = "selected">CLIENT</option>
+                                    </select><br>
                                 </c:when>
                             </c:choose>
             <b>Status: </b> <c:choose>
@@ -45,14 +47,16 @@
                  <c:out value="${user.status}" /><br>
              </c:when>
              <c:when test="${user.status == 'AVAILABLE' && user.userRole != 'ADMIN'}">
-                 </b><select name="status">
-                 <option selected = "selected">AVAILABLE</option>
-                 <option>BANNED</option></select><br>
+                 <select name="status">
+                     <option selected = "selected">AVAILABLE</option>
+                     <option>BANNED</option>
+                 </select><br>
              </c:when>
              <c:when test="${user.status == 'BANNED' && user.userRole != 'ADMIN'}">
                  <select name="status">
                      <option>AVAILABLE</option>
-                     <option selected = "selected">BANNED</option></select><br>
+                     <option selected = "selected">BANNED</option>
+                 </select><br>
              </c:when>
          </c:choose>
              <c:if test="${user.userRole != 'ADMIN'}">
