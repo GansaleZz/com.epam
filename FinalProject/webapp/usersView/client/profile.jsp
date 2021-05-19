@@ -12,18 +12,18 @@
     <title>Profile</title>
 </head>
 <body>
-    <a href="http://localhost:8080/controller?command=LOGOUT">Log Out</a>
-    <a href="http://localhost:8080/usersView/client/home/home.jsp">Home</a>
-    <a href="http://localhost:8080/controller?command=ACTSHOWROOMS">Rooms</a>
-    <a href="http://localhost:8080/controller?command=ACTSHOWPROFILE">Profile</a>
-    <a href="http://localhost:8080/controller?command=ACTCREATEREQUEST">Create request</a>
+<a href="http://localhost:8080/controller?command=LOGOUT">Log Out</a>
+<a href="http://localhost:8080/usersView/client/home/home.jsp">Home</a>
+<a href="http://localhost:8080/controller?command=ACTSHOWROOMS">Rooms</a>
+<a href="http://localhost:8080/controller?command=ACTSHOWPROFILE">Profile</a>
+<a href="http://localhost:8080/controller?command=ACTCREATEREQUEST">Create request</a>
 
     <c:set var="user" value="${user}" />
     <form action="controller?command=ACTUPDATEPROFILE" method = "post">
         <b>Id: </b><input type = "text" size ="5" name = "id" value="${user.id}" readonly><br>
         <b>Login: </b><c:out value="${user.login}"/><br>
         <b>Name: </b><input type="text" name="name" value="${user.name}"><br>
-        <b>Email: </b><input type="text" name="email" value="${user.email}"><br>
+        <b>Email: </b><input type="email" name="email" value="${user.email}"><br>
         <b>Role: </b><c:out value="${user.userRole}"/><br>
         <input type="submit" value="Submit">
     </form>

@@ -13,12 +13,12 @@
     <title>Users</title>
 </head>
 <body>
-    <a href="http://localhost:8080/controller?command=LOGOUT">Log Out</a>
-    <a href="http://localhost:8080/usersView/admin/home/home.jsp">Home</a>
-    <a href="http://localhost:8080/controller?command=ACTSHOWROOMS">Rooms</a>
-    <a href="http://localhost:8080/controller?command=ACTSHOWPROFILE">Profile</a>
-    <a href="http://localhost:8080/controller?command=ACTCREATEREQUEST">Create request</a>
-    <a href="http://localhost:8080/controller?command=ACTSHOWUSERS">Users</a><br>
+<a href="http://localhost:8080/controller?command=LOGOUT">Log Out</a>
+<a href="http://localhost:8080/usersView/admin/home/home.jsp">Home</a>
+<a href="http://localhost:8080/controller?command=ACTSHOWROOMS">Rooms</a>
+<a href="http://localhost:8080/controller?command=ACTSHOWPROFILE">Profile</a>
+<a href="http://localhost:8080/controller?command=ACTSSHOWREQUESTS">Requests</a>
+<a href="http://localhost:8080/controller?command=ACTSHOWUSERS">Users</a>
 
         <c:forEach var="user" items="${list}">
          <form action="controller?command=ACTCHANGEUSERSRS" method = "post">

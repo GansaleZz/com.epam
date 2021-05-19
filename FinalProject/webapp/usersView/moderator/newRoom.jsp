@@ -15,25 +15,20 @@
 <a href="http://localhost:8080/usersView/moderator/home/home.jsp">Home</a>
 <a href="http://localhost:8080/controller?command=ACTSHOWROOMS">Rooms</a>
 <a href="http://localhost:8080/controller?command=ACTSHOWPROFILE">Profile</a>
-<a href="http://localhost:8080/controller?command=ACTCREATEREQUEST">Create request</a>
+<a href="http://localhost:8080/controller?command=ACTSSHOWREQUESTS">Requests</a>
 <a href="http://localhost:8080/controller?command=ACTSHOWUSERS">Users</a>
 
-<p><form action="controller?command=ACTADDNEWROOM" method = "post">
-    <b>Number of seats: </b><select name="numberOfSeats">
-     <option selected = "selected">1</option>
-     <option>2</option>
-     <option>3</option>
-     <option>4</option>
-     <option>5</option>
-    </select><br>
+<form action="controller?command=ACTADDNEWROOM" method = "post">
+    <b>Number of seats: </b><input type="number" name="numberOfSeats" min="1" max="5" value="1">
     <b>Room class: </b><select name="roomClass">
         <option selected = "selected">BUSINESS</option>
         <option>ECONOM</option>
         <option>LUXE</option>
         <option>PREMIUM</option>
     </select><br>
-    <b>Price: </b><input type="text" name="price"><br>
+    <b>Price: </b><input type="text" name="price" min="1" max="10000" value="100"><br>
     <input type = "submit" value="Submit" />
-</form></p>
+</form>
+
 </body>
 </html>

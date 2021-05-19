@@ -15,7 +15,7 @@
         <b>Login: </b><input type = "text" name="login"/><br/>
         <b>Password: </b><input type = "password" name="password"/><br/>
         <b>Name: </b><input type = "text" name="name"/><br/>
-        <b>Email: </b><input type = "text" name="email"/><br/>
+        <b>Email: </b><input type = "email" name="email"/><br/>
         <input type = "submit" value="Sign Up" />
     </form>
     <a href="http://localhost:8080/auth/authPage.jsp">Back</a>

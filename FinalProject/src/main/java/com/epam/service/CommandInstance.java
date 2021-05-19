@@ -13,7 +13,9 @@ public enum CommandInstance {
     ACTNEWROOMPAGE(new NewRoomPage()),
     ACTADDNEWROOM(new AddNewRoom()),
     ACTUPDATEROOM(new UpdateRoom()),
-    ACTUPDATEPROFILE(new UpdateProfile());
+    ACTUPDATEPROFILE(new UpdateProfile()),
+    ACTCREATEREQUEST(new CreateRequestPage());
+
     private final Command command;
 
     CommandInstance(Command command){

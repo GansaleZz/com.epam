@@ -12,12 +12,12 @@
     <title>Rooms</title>
 </head>
 <body>
-  <a href="http://localhost:8080/controller?command=LOGOUT">Log Out</a>
-  <a href="http://localhost:8080/usersView/admin/home/home.jsp">Home</a>
-  <a href="http://localhost:8080/controller?command=ACTSHOWROOMS">Rooms</a>
-  <a href="http://localhost:8080/controller?command=ACTSHOWPROFILE">Profile</a>
-  <a href="http://localhost:8080/controller?command=ACTCREATEREQUEST">Create request</a>
-  <a href="http://localhost:8080/controller?command=ACTSHOWUSERS">Users</a>
+<a href="http://localhost:8080/controller?command=LOGOUT">Log Out</a>
+<a href="http://localhost:8080/usersView/admin/home/home.jsp">Home</a>
+<a href="http://localhost:8080/controller?command=ACTSHOWROOMS">Rooms</a>
+<a href="http://localhost:8080/controller?command=ACTSHOWPROFILE">Profile</a>
+<a href="http://localhost:8080/controller?command=ACTSSHOWREQUESTS">Requests</a>
+<a href="http://localhost:8080/controller?command=ACTSHOWUSERS">Users</a>
 
 
 <c:forEach var="room" items="${list}">
@@ -57,7 +57,7 @@
       </select><br>
     </c:when>
   </c:choose>
-    <b>Price: </b><input type="text" name="price" value="${room.price}"><br>
+    <b>Price: </b><input type="number" name="price" value="${room.price}"> BYN for day.<br>
     <b>Number of seats: </b><c:choose>
     <c:when test="${room.numberOfSeats == 1}">
       <select name="numberOfSeats">
