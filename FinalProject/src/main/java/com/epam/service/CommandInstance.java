@@ -12,8 +12,8 @@ public enum CommandInstance {
     ACTCHANGEUSERSRS(new ChangeUsersRS()),
     ACTNEWROOMPAGE(new NewRoomPage()),
     ACTADDNEWROOM(new AddNewRoom()),
-    ACTUPDATEROOM(new UpdateRoom());
-
+    ACTUPDATEROOM(new UpdateRoom()),
+    ACTUPDATEPROFILE(new UpdateProfile());
     private final Command command;
 
     CommandInstance(Command command){

@@ -14,6 +14,9 @@ import java.io.IOException;
 public class AddNewRoom implements Command{
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        if(request.getSession().getAttribute("userRole").equals("CLIENT")){
+            response.sendRedirect(ServletDestination.CLIENTHOMEPAGE.getPath());
+        }
         if(request.getParameter("price").trim().length()!=0 || request.getSession().getAttribute("userRole").equals("CLIENT")){
             RoomDaoImpl roomDao = new RoomDaoImpl();
             Room room = new RoomCriteria.Builder()

@@ -19,11 +19,15 @@
   <a href="http://localhost:8080/controller?command=ACTCREATEREQUEST">Create request</a>
   <a href="http://localhost:8080/controller?command=ACTSHOWUSERS">Users</a>
 
+
   <c:set var="user" value="${user}" />
-  <p><b>Id: </b><c:out value="${user.id}"/> </br>
+  <form action="controller?command=ACTUPDATEPROFILE" method = "post">
+    <b>Id: </b><input type = "text" size ="5" name = "id" value="${user.id}" readonly><br>
     <b>Login: </b><c:out value="${user.login}"/><br>
-    <b>Name: </b><c:out value="${user.name}"/><br>
-    <b>Email: </b><c:out value="${user.email}"/><br>
-    <b>Role: </b><c:out value="${user.userRole}"/></p>
+    <b>Name: </b><input type="text" name="name" value="${user.name}"><br>
+    <b>Email: </b><input type="text" name="email" value="${user.email}"><br>
+    <b>Role: </b><c:out value="${user.userRole}"/><br>
+    <input type="submit" value="Submit">
+  </form>
 </body>
 </html>

@@ -12,8 +12,8 @@
 </head>
 <body>
     <form action="/controller?command=LOGIN" method = "post">
-        Login:<input type = "text" name="login"/><br/>
-        Password:<input type = "password" name="password"/><br/>
+        <b>Login: </b><input type = "text" name="login"/><br/>
+        <b>Password: </b><input type = "password" name="password"/><br/>
         <input type = "submit" value="Log In" />
     </form>
 <a href="http://localhost:8080/auth/authPage.jsp">Back</a>

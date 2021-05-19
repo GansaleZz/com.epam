@@ -14,6 +14,9 @@ import java.io.IOException;
 public class ChangeUsersRS implements Command{
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        if(request.getSession().getAttribute("userRole").equals("CLIENT")){
+            response.sendRedirect(ServletDestination.CLIENTHOMEPAGE.getPath());
+        }
         UserDaoImpl userDao = new UserDaoImpl();
         try {
             User user = userDao.findEntityById(Integer.valueOf(request.getParameter("id"))).get();

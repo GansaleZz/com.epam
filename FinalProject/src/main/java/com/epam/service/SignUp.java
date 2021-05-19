@@ -12,16 +12,18 @@ import java.io.IOException;
 public class SignUp implements Command{
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        if(request.getParameter("password") != null && request.getParameter("login") != null) {
+        if(request.getParameter("password") != null && request.getParameter("login") != null && request.getParameter("email") != null) {
             String password = request.getParameter("password");
             String login = request.getParameter("login");
             String name = request.getParameter("name");
-            if (login.trim().length() != 0 && password.trim().length() != 0 && name.trim().length() != 0) {
+            String email = request.getParameter("email");
+            if (login.trim().length() != 0 && password.trim().length() != 0 && name.trim().length() != 0 && email.trim().length() != 0) {
                 UserDaoImpl userDao = new UserDaoImpl();
                 User user = new UserCriteria.Builder().newBuilder()
                         .withLogin(login)
                         .withPassword(password)
                         .withName(name)
+                        .withEmail(email)
                         .build();
 
                 try {
