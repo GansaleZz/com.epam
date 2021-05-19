@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Home page</title>
+    <title>Home</title>
 </head>
 <body>
     <a href="http://localhost:8080/controller?command=LOGOUT">Log Out</a>
