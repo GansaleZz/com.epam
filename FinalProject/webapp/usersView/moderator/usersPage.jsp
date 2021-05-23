@@ -10,6 +10,27 @@
 <html>
 <head>
     <title>Users</title>
+    <style>
+        table {
+            border: 1px solid grey;
+            border-collapse: collapse;
+            margin: 20px;
+        }
+        th {
+            border: 1px solid grey;
+        }
+        td {
+            border: 1px solid grey;
+        }
+        caption{
+            font-family: annabelle, cursive;
+            font-weight: bold;
+            font-size: 2em;
+            padding: 10px;
+            color: #F3CD26;
+            text-shadow: 1px 1px 0 rgba(0,0,0,.3);
+        }
+    </style>
 </head>
 <body>
 <a href="http://localhost:8080/controller?command=LOGOUT">Log Out</a>
@@ -19,12 +40,27 @@
 <a href="http://localhost:8080/controller?command=ACTSSHOWREQUESTS">Requests</a>
 <a href="http://localhost:8080/controller?command=ACTSHOWUSERS">Users</a>
 
+<p>
+<table>
+    <colgroup>
+        <col span="5" style="background: Khaki">
+    </colgroup>
+    <caption>List of users</caption>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Status</th>
+    </tr>
     <c:forEach var="user" items="${list}">
-        <b>Id:</b><c:out value="${user.id}"></c:out><br>
-        <b>Name: </b><c:out value="${user.name}"></c:out> <br>
-        <b>Email: </b><c:out value="${user.email}"></c:out><br>
-        <b>Role: </b><c:out value ="${user.userRole}"></c:out><br>
-        <b>Status: </b><c:out value ="${user.status}"></c:out><br><br>
+    <tr>
+        <td><c:out value="${user.id}"></c:out></td>
+        <td><c:out value="${user.name}"></c:out></td>
+        <td><c:out value="${user.email}"></c:out></td>
+        <td><c:out value ="${user.userRole}"></c:out></td>
+        <td><c:out value ="${user.status}"></c:out></td>
+    </tr>
     </c:forEach>
 
 </body>

@@ -41,7 +41,7 @@
 <p>
   <table>
   <colgroup>
-    <col span="6" style="background: Khaki">
+    <col span="5" style="background: Khaki">
   </colgroup>
   <caption>List of rooms</caption>
   <tr>
