@@ -11,6 +11,27 @@
 <html>
 <head>
     <title>Users</title>
+    <style>
+        table {
+            border: 1px solid grey;
+            border-collapse: collapse;
+            margin: 20px;
+        }
+        th {
+            border: 1px solid grey;
+        }
+        td {
+            border: 1px solid grey;
+        }
+        caption{
+            font-family: annabelle, cursive;
+            font-weight: bold;
+            font-size: 2em;
+            padding: 10px;
+            color: #F3CD26;
+            text-shadow: 1px 1px 0 rgba(0,0,0,.3);
+        }
+    </style>
 </head>
 <body>
 <a href="http://localhost:8080/controller?command=LOGOUT">Log Out</a>
@@ -20,52 +41,71 @@
 <a href="http://localhost:8080/controller?command=ACTSSHOWREQUESTS">Requests</a>
 <a href="http://localhost:8080/controller?command=ACTSHOWUSERS">Users</a>
 
+<p>
+<table>
+    <colgroup>
+        <col span="6" style="background: Khaki">
+    </colgroup>
+    <caption>List of users</caption>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
         <c:forEach var="user" items="${list}">
-         <form action="controller?command=ACTCHANGEUSERSRS" method = "post">
-            <b>Id: </b><input type = "text" size ="5" name = "id" value="${user.id}" readonly><br>
-            <b>Name: </b> <c:out value="${user.name}" /><br>
-            <b>Email: </b> <c:out value="${user.email}" /><br>
-            <b>Role: </b> <c:choose>
-                                <c:when test="${user.userRole == 'ADMIN'}">
-                                    <c:out value="${user.userRole}" /><br>
-                                </c:when>
-                                <c:when test="${user.userRole == 'MODERATOR'}">
-                                    <select name="role">
-                                        <option selected = "selected">MODERATOR</option>
-                                        <option>CLIENT</option>
-                                    </select><br>
-                                </c:when>
-                                <c:when test="${user.userRole == 'CLIENT'}">
-                                    <select name="role">
-                                        <option>MODERATOR</option>
-                                        <option selected = "selected">CLIENT</option>
-                                    </select><br>
-                                </c:when>
-                            </c:choose>
-            <b>Status: </b> <c:choose>
-             <c:when test="${user.userRole == 'ADMIN'}">
-                 <c:out value="${user.status}" /><br>
-             </c:when>
-             <c:when test="${user.status == 'AVAILABLE' && user.userRole != 'ADMIN'}">
-                 <select name="status">
-                     <option selected = "selected">AVAILABLE</option>
-                     <option>BANNED</option>
-                 </select><br>
-             </c:when>
-             <c:when test="${user.status == 'BANNED' && user.userRole != 'ADMIN'}">
-                 <select name="status">
-                     <option>AVAILABLE</option>
-                     <option selected = "selected">BANNED</option>
-                 </select><br>
-             </c:when>
-         </c:choose>
-             <c:if test="${user.userRole != 'ADMIN'}">
-                 <input type = "submit" value="Submit" />
-             </c:if>
-         </form>
+            <tr>
+             <form action="controller?command=ACTCHANGEUSERSRS" method = "post">
+                <td><input type = "text" size ="5" name = "id" value="${user.id}" readonly></td>
+                 <td> <c:out value="${user.name}" /></td>
+                 <td><c:out value="${user.email}" /></td>
+                <td><c:choose>
+                                    <c:when test="${user.userRole == 'ADMIN'}">
+                                        <c:out value="${user.userRole}" />
+                                    </c:when>
+                                    <c:when test="${user.userRole == 'MODERATOR'}">
+                                        <select name="role">
+                                            <option selected = "selected">MODERATOR</option>
+                                            <option>CLIENT</option>
+                                        </select>
+                                    </c:when>
+                                    <c:when test="${user.userRole == 'CLIENT'}">
+                                        <select name="role">
+                                            <option>MODERATOR</option>
+                                            <option selected = "selected">CLIENT</option>
+                                        </select>
+                                    </c:when>
+                                </c:choose>
+                </td>
+                <td> <c:choose>
+                 <c:when test="${user.userRole == 'ADMIN'}">
+                     <c:out value="${user.status}" />
+                 </c:when>
+                 <c:when test="${user.status == 'AVAILABLE' && user.userRole != 'ADMIN'}">
+                     <select name="status">
+                         <option selected = "selected">AVAILABLE</option>
+                         <option>BANNED</option>
+                     </select>
+                 </c:when>
+                 <c:when test="${user.status == 'BANNED' && user.userRole != 'ADMIN'}">
+                     <select name="status">
+                         <option>AVAILABLE</option>
+                         <option selected = "selected">BANNED</option>
+                     </select>
+                 </c:when>
+             </c:choose>
+                </td>
+                 <td><c:if test="${user.userRole != 'ADMIN'}">
+                     <input type = "submit" value="Submit" />
+                 </c:if>
+                 </td>
+             </form>
+            </tr>
         </c:forEach>
-
-
+</table>
+</p>
 
 </body>
 </html>
