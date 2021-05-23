@@ -10,6 +10,27 @@
 <html>
 <head>
     <title>Rooms</title>
+  <style>
+    table {
+      border: 1px solid grey;
+      border-collapse: collapse;
+      margin: 20px;
+    }
+    th {
+      border: 1px solid grey;
+    }
+    td {
+      border: 1px solid grey;
+    }
+    caption{
+      font-family: annabelle, cursive;
+      font-weight: bold;
+      font-size: 2em;
+      padding: 10px;
+      color: #F3CD26;
+      text-shadow: 1px 1px 0 rgba(0,0,0,.3);
+    }
+  </style>
 </head>
 <body>
 <a href="http://localhost:8080/controller?command=LOGOUT">Log Out</a>
@@ -17,13 +38,30 @@
 <a href="http://localhost:8080/controller?command=ACTSHOWROOMS">Rooms</a>
 <a href="http://localhost:8080/controller?command=ACTSHOWPROFILE">Profile</a>
 <a href="http://localhost:8080/controller?command=ACTCREATEREQUEST">Create request</a>
-
+<p>
+  <table>
+  <colgroup>
+    <col span="6" style="background: Khaki">
+  </colgroup>
+  <caption>List of rooms</caption>
+  <tr>
+    <th>Id</th>
+    <th>Class</th>
+    <th>Price (for day)</th>
+    <th>Number of seats</th>
+    <th>Status</th>
+  </tr>
   <c:forEach var="room" items="${list}">
-    <p><b> Id: </b><c:out value="${room.id}"/><br>
-      <b>Room status: </b><c:out value="${room.roomStatus}"/> <br>
-      <b>Room class:  </b><c:out value="${room.roomClass}"/><br>
-      <b>Number of seats: </b><c:out value="${room.numberOfSeats}"/><br>
-      <b>Price: </b><c:out value="${room.price}"/> BYN for day.<br></p>
+    <tr>
+      <td><c:out value="${room.id}"/></td>
+      <td><c:out value="${room.roomStatus}"/> </td>
+      <td><c:out value="${room.roomClass}"/></td>
+      <td><c:out value="${room.numberOfSeats}"/></td>
+      <td><c:out value="${room.price}"/> BYN</td>
+    </tr>
   </c:forEach>
+</table>
+</p>
+
 </body>
 </html>
