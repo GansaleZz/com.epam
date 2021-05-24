@@ -2,6 +2,7 @@ package com.epam.service;
 
 import com.epam.criteria.UserCriteria;
 import com.epam.db.dao.impl.UserDaoImpl;
+import com.epam.entity.User;
 import com.epam.entity.UserStatus;
 import com.epam.exceptions.DaoException;
 
@@ -17,20 +18,23 @@ public class LogIn implements Command{
         if(request.getParameter("password") != null && request.getParameter("login") != null) {
             String pass = request.getParameter("password");
             UserDaoImpl userDao = new UserDaoImpl();
-            UserCriteria login = new UserCriteria();
-            login.setLogin(request.getParameter("login"));
+            UserCriteria criteria = new UserCriteria();
+            criteria.setLogin(request.getParameter("login"));
             try {
-                if (userDao.findUserByCriteria(login).isPresent() && userDao.findUserByCriteria(login).get().getPassword().equals(pass)) {
-                    if(userDao.findUserByCriteria(login).get().getStatus().equals(UserStatus.BANNED)){
+
+                if (userDao.findUserByCriteria(criteria).isPresent() && userDao.findUserByCriteria(criteria).get().getPassword().equals(pass)) {
+                    User user = userDao.findUserByCriteria(criteria).get();
+                    if(user.getStatus().equals(UserStatus.BANNED)){
                         response.sendRedirect(ServletDestination.BANPAGE.getPath());
                     }else {
                         HttpSession session = request.getSession();
-                        String userRole = String.valueOf(userDao.findUserByCriteria(login).get().getUserRole());
-                        String userStatus = String.valueOf(userDao.findUserByCriteria(login).get().getStatus());
-                        session.setAttribute("login", login.getLogin());
+                        String userRole = String.valueOf(user.getUserRole());
+                        String userStatus = String.valueOf(user.getStatus());
+                        session.setAttribute("login", user.getLogin());
                         session.setAttribute("password", pass);
                         session.setAttribute("userRole", userRole);
                         session.setAttribute("userStatus",userStatus);
+                        session.setAttribute("id",user.getId());
                         response.sendRedirect(ServletDestination.ADMINHOMEPAGE.getPath());
                     }
                 } else {

@@ -33,7 +33,7 @@ public class AddNewRoom implements Command{
             }
                 response.sendRedirect("/controller?command=ACTSHOWROOMS");
         }else{
-            response.sendRedirect("/usersView/admin/rooms.jsp");
+            response.sendRedirect("/controller?command=ACTSHOWROOMS");
         }
     }
 }
