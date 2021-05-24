@@ -9,6 +9,7 @@ import com.epam.entity.UserStatus;
 import com.epam.exceptions.DaoException;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -19,9 +20,9 @@ import java.util.function.Predicate;
 public class UserDaoImpl implements UserDao {
     private final String SQL_SELECT_ALL = "SELECT * FROM USER";
     private final String SQL_SELECT_BY_CRITERIA = "SELECT * FROM USER WHERE ";
-    private final String SQL_INSERT = "INSERT INTO User (login,password,name,email,role_fk,status_fk) VALUES(";
+    private final String SQL_INSERT = "INSERT INTO User (login,password, name, email, role_fk, status_fk) VALUES (?,?,?,?,?,?)";
     private final String SQL_DELETE = "DELETE FROM User WHERE id = ";
-    private final String SQL_UPDATE = "UPDATE User SET ";
+    private final String SQL_UPDATE = "UPDATE User SET name = ?, email = ?, password = ?, status_fk = ?, role_fk = ? WHERE id = ? AND login = ?";
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(UserDaoImpl.class);
 
 
@@ -72,10 +73,18 @@ public class UserDaoImpl implements UserDao {
         boolean result = false;
         if(user!=null) {
             Connection connection = ConnectionPool.getInstance().getConnection();
+            PreparedStatement preparedStatement = null;
             try {
                 if (!connection.createStatement().executeQuery(SQL_SELECT_BY_CRITERIA + "login = '" + user.getLogin() + "'").next()) {
-                    connection.createStatement().executeUpdate(SQL_INSERT + "'" + user.getLogin() + "','" + user.getPassword() + "','" + user.getName()
-                            + "','" + user.getEmail() + "'," + UserRole.getIdByUserRole(UserRole.CLIENT) + "," + UserStatus.getIdByUserStatus(UserStatus.AVAILABLE) + ")");
+                    preparedStatement = connection.prepareStatement(SQL_INSERT);
+                    preparedStatement.setString(1,user.getLogin());
+                    preparedStatement.setString(2,user.getPassword());
+                    preparedStatement.setString(3,user.getName());
+                    preparedStatement.setString(4,user.getEmail());
+                    preparedStatement.setInt(5,UserRole.getIdByUserRole(UserRole.CLIENT));
+                    preparedStatement.setInt(6,UserStatus.getIdByUserStatus(UserStatus.AVAILABLE));
+                    preparedStatement.execute();
+                    preparedStatement.close();
                     result = true;
                     logger.info(user+" successfully created!");
                 }
@@ -116,8 +125,16 @@ public class UserDaoImpl implements UserDao {
         Connection connection = ConnectionPool.getInstance().getConnection();
         if(user != null) {
             try {
-                connection.createStatement().executeUpdate(SQL_UPDATE + "name = '" + user.getName()
-                        + "', email = '" + user.getEmail() + "', password = '" + user.getPassword() + "',status_fk = '"+UserStatus.getIdByUserStatus(user.getStatus())+"',role_fk = '"+UserRole.getIdByUserRole(user.getUserRole())+"' WHERE id = " + user.getId() + " AND login = '" + user.getLogin() + "'");
+                PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE);
+                preparedStatement.setString(1,user.getName());
+                preparedStatement.setString(2,user.getEmail());
+                preparedStatement.setString(3,user.getPassword());
+                preparedStatement.setInt(4,UserStatus.getIdByUserStatus(user.getStatus()));
+                preparedStatement.setInt(5,UserRole.getIdByUserRole(user.getUserRole()));
+                preparedStatement.setInt(6,user.getId());
+                preparedStatement.setString(7,user.getLogin());
+                preparedStatement.execute();
+                preparedStatement.close();
                 userOptional = findEntityById(user.getId());
                 logger.info(user + " successfully updated!");
             } catch (SQLException e) {

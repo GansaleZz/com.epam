@@ -7,10 +7,7 @@ import com.epam.entity.Payment;
 import com.epam.entity.PaymentStatus;
 import com.epam.exceptions.DaoException;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,9 +16,9 @@ import java.util.function.Predicate;
 public class PaymentDaoImpl implements PaymentDao {
     private final String SQL_SELECT_ALL = "SELECT * FROM Payment";
     private final String SQL_SELECT_BY_CRITERIA = "SELECT * FROM Payment WHERE ";
-    private final String SQL_INSERT = "INSERT INTO Payment (amount,date,payment_status) VALUES(";
+    private final String SQL_INSERT = "INSERT INTO Payment (amount,date,payment_status) VALUES(?,?,?)";
     private final String SQL_DELETE = "DELETE FROM Payment WHERE id = ";
-    private final String SQL_UPDATE = "UPDATE Payment SET ";
+    private final String SQL_UPDATE = "UPDATE Payment SET amount = ?, date = ?, payment_status = ? WHERE id = ?";
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(PaymentDaoImpl.class);
 
     @Override
@@ -72,9 +69,15 @@ public class PaymentDaoImpl implements PaymentDao {
         if(payment != null) {
             Connection connection = ConnectionPool.getInstance().getConnection();
             try{
-                logger.info(payment + "successfully created!");
-                connection.createStatement().executeUpdate(SQL_INSERT +payment.getAmount()+",'"+payment.getDate()+"',"+PaymentStatus.getIdByPaymentStatus(payment.getPaymentStatus())+")");
+
+                PreparedStatement preparedStatement = connection.prepareStatement(SQL_INSERT);
+                preparedStatement.setInt(1,payment.getAmount());
+                preparedStatement.setDate(2,new Date(payment.getDate().getTime()));
+                preparedStatement.setInt(3,PaymentStatus.getIdByPaymentStatus(payment.getPaymentStatus()));
+                preparedStatement.execute();
+                preparedStatement.close();
                 result = true;
+                logger.info(payment + "successfully created!");
             } catch (SQLException e) {
                 logger.error(e.getMessage());
                 throw new DaoException(e);
@@ -112,8 +115,13 @@ public class PaymentDaoImpl implements PaymentDao {
         if(payment != null) {
             Connection connection = ConnectionPool.getInstance().getConnection();
             try {
-                connection.createStatement().executeUpdate(SQL_UPDATE + "amount = " + payment.getAmount()
-                        + ", date = '" + payment.getDate() + "', payment_status = " + PaymentStatus.getIdByPaymentStatus(payment.getPaymentStatus()) + " WHERE id = " + payment.getId());
+                PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE);
+                preparedStatement.setInt(1,payment.getAmount());
+                preparedStatement.setDate(2,new Date(payment.getDate().getTime()));
+                preparedStatement.setInt(3,PaymentStatus.getIdByPaymentStatus(payment.getPaymentStatus()));
+                preparedStatement.setInt(4,payment.getId());
+                preparedStatement.execute();
+                preparedStatement.close();
                 paymentOptional = findEntityById(payment.getId());
                 logger.info(payment + " successfully updated!");
             } catch (SQLException e) {

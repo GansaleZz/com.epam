@@ -5,12 +5,11 @@ import com.epam.db.ConnectionPool;
 import com.epam.db.dao.RequestDao;
 import com.epam.entity.Request;
 import com.epam.entity.RequestStatus;
+import com.epam.entity.RoomClass;
 import com.epam.exceptions.DaoException;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,9 +18,10 @@ import java.util.function.Predicate;
 public class RequestDaoImpl implements RequestDao {
     private final String SQL_SELECT_ALL = "SELECT * FROM Request";
     private final String SQL_SELECT_BY_CRITERIA = "SELECT * FROM Request WHERE ";
-    private final String SQL_INSERT = "INSERT INTO Request (number_of_seats,start_date,end_date,user_id,request_status,room) VALUES(";
+    private final String SQL_INSERT = "INSERT INTO Request (number_of_seats,start_date,end_date,user_id,request_status,room) VALUES(?,?,?,?,?,?)";
+    private final String SQL_INSERT_WITHOUT_ROOM = "INSERT INTO Request (number_of_seats,start_date,end_date,user_id,request_status,room_class) VALUES(?,?,?,?,?,?)";
     private final String SQL_DELETE = "DELETE FROM Request WHERE id = ";
-    private final String SQL_UPDATE = "UPDATE Request SET ";
+    private final String SQL_UPDATE = "UPDATE Request SET number_of_seats = ?, start_date = ?, end_date = ?, user_id = ?, request_status = ?, room = ? WHERE id = ?";
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(RequestDaoImpl.class);
 
 
@@ -73,7 +73,21 @@ public class RequestDaoImpl implements RequestDao {
         if(request != null) {
             Connection connection = ConnectionPool.getInstance().getConnection();
             try {
-                connection.createStatement().executeUpdate(SQL_INSERT + request.getNumberOfSeats() + ",'" + request.getStart() + "','" + request.getEnd() + "'," + request.getUser().getId() + "," + RequestStatus.getIdByRequestStatus(request.getRequestStatus()) + "," + request.getRoom().getId() + ")");
+                PreparedStatement preparedStatement;
+                if(request.getRoom().getId() == 0) {
+                    preparedStatement = connection.prepareStatement(SQL_INSERT_WITHOUT_ROOM);
+                    preparedStatement.setInt(6, RoomClass.getIdByRoomClass(request.getRoom().getRoomClass()));
+                }else{
+                    preparedStatement = connection.prepareStatement(SQL_INSERT);
+                    preparedStatement.setInt(6, request.getRoom().getId());
+                }
+                preparedStatement.setInt(1, request.getNumberOfSeats());
+                preparedStatement.setDate(2, new Date(request.getStart().getTime()));
+                preparedStatement.setDate(3, new Date(request.getEnd().getTime()));
+                preparedStatement.setInt(4, request.getUser().getId());
+                preparedStatement.setInt(5, RequestStatus.getIdByRequestStatus(request.getRequestStatus()));
+                preparedStatement.execute();
+                preparedStatement.close();
                 result = true;
                 logger.info(request + " successfully created!");
             } catch (SQLException e) {
@@ -113,8 +127,16 @@ public class RequestDaoImpl implements RequestDao {
         if(request != null) {
             Connection connection = ConnectionPool.getInstance().getConnection();
             try {
-                connection.createStatement().executeUpdate(SQL_UPDATE + "number_of_seats = " + request.getNumberOfSeats()
-                        + ", start_date = '" + request.getStart() + "', end_date = '" + request.getEnd() + "', user_id = " + request.getUser().getId() + ", request_status = " + RequestStatus.getIdByRequestStatus(request.getRequestStatus()) + ", room = " + request.getRoom().getId() + " WHERE id = " + request.getId());
+                PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE);
+                preparedStatement.setInt(1,request.getNumberOfSeats());
+                preparedStatement.setDate(2,new Date(request.getStart().getTime()));
+                preparedStatement.setDate(3,new Date(request.getEnd().getTime()));
+                preparedStatement.setInt(4,request.getUser().getId());
+                preparedStatement.setInt(5,RequestStatus.getIdByRequestStatus(request.getRequestStatus()));
+                preparedStatement.setInt(6,request.getRoom().getId());
+                preparedStatement.setInt(7,request.getId());
+                preparedStatement.execute();
+                preparedStatement.close();
                 requestOptional = findEntityById(request.getId());
                 logger.info(request + " successfully updated!");
             } catch (SQLException e) {
@@ -184,4 +206,5 @@ public class RequestDaoImpl implements RequestDao {
         }
         return request;
     }
+
 }

@@ -9,6 +9,7 @@ import com.epam.entity.RoomStatus;
 import com.epam.exceptions.DaoException;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -19,9 +20,9 @@ import java.util.function.Predicate;
 public class RoomDaoImpl implements RoomDao {
     private final String SQL_SELECT_ALL = "SELECT * FROM Room";
     private final String SQL_SELECT_BY_CRITERIA = "SELECT * FROM Room WHERE ";
-    private final String SQL_INSERT = "INSERT INTO Room (number_of_seats,price,room_status_fk,room_class_fk) VALUES(";
+    private final String SQL_INSERT = "INSERT INTO Room (number_of_seats,price,room_status_fk,room_class_fk) VALUES(?,?,?,?)";
     private final String SQL_DELETE = "DELETE FROM Room WHERE id = ";
-    private final String SQL_UPDATE = "UPDATE Room SET ";
+    private final String SQL_UPDATE = "UPDATE Room SET number_of_seats = ?, price = ?, room_status_fk = ?, room_class_fk = ? WHERE id = ?";
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(RoomDaoImpl.class);
 
 
@@ -73,7 +74,13 @@ public class RoomDaoImpl implements RoomDao {
         if(room != null) {
             Connection connection = ConnectionPool.getInstance().getConnection();
             try {
-                connection.createStatement().executeUpdate(SQL_INSERT + room.getNumberOfSeats() + ", " + room.getPrice() + ", " + RoomStatus.getIdByRoomStatus(RoomStatus.AVAILABLE) + "," + RoomClass.getIdByRoomClass(room.getRoomClass()) + ")");
+                PreparedStatement preparedStatement = connection.prepareStatement(SQL_INSERT);
+                preparedStatement.setInt(1,room.getNumberOfSeats());
+                preparedStatement.setInt(2,room.getPrice());
+                preparedStatement.setInt(3,RoomStatus.getIdByRoomStatus(RoomStatus.AVAILABLE));
+                preparedStatement.setInt(4,RoomClass.getIdByRoomClass(room.getRoomClass()));
+                preparedStatement.execute();
+                preparedStatement.close();
                 result = true;
                 logger.info(room + " successfully created!");
             } catch (SQLException e) {
@@ -113,8 +120,14 @@ public class RoomDaoImpl implements RoomDao {
         if(room != null) {
             Connection connection = ConnectionPool.getInstance().getConnection();
             try {
-                connection.createStatement().executeUpdate(SQL_UPDATE + "number_of_seats = " + room.getNumberOfSeats()
-                        + ", price = " + room.getPrice() + ", room_status_fk = " + RoomStatus.getIdByRoomStatus(room.getRoomStatus()) + ", room_class_fk = " + RoomClass.getIdByRoomClass(room.getRoomClass()) + " WHERE id = " + room.getId());
+                PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE);
+                preparedStatement.setInt(1,room.getNumberOfSeats());
+                preparedStatement.setInt(2,room.getPrice());
+                preparedStatement.setInt(3,RoomStatus.getIdByRoomStatus(room.getRoomStatus()));
+                preparedStatement.setInt(4,RoomClass.getIdByRoomClass(room.getRoomClass()));
+                preparedStatement.setInt(5,room.getId());
+                preparedStatement.execute();
+                preparedStatement.close();
                 roomOptional = findEntityById(room.getId());
                 logger.info(room + " successfully updated!");
             } catch (SQLException e) {
