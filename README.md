@@ -6,4 +6,4 @@
 
 ### Database : 
 
-![markdown logo](https://sun9-42.userapi.com/impg/O_mvZpT7b2LnylDxt9sYyXj4Ol1-xichJmoLBA/mQcg22U_cZs.jpg?size=1266x908&quality=96&sign=5c0d65ff6d76a521bc32f22dc399f8df&type=album)
+![markdown logo](https://sun9-6.userapi.com/impg/pYEMTMkLDcBg0UpiV9OmyxdhQJ4auVTuS9YM7g/UUCFPFwPIeA.jpg?size=1654x982&quality=96&sign=74475586b187cb084c227bb2ae21764a&type=album)
