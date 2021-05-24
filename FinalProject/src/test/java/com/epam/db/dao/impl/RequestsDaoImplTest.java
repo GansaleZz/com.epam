@@ -20,7 +20,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RequestsDaoImplTest {
-    private final int id = 1;
+    private final int id = 2;
 
 
     @Test
@@ -38,9 +38,9 @@ class RequestsDaoImplTest {
 
     @Test
     void findEntityById() throws DaoException {
-        int numberOfSeats = 2;
+        int numberOfSeats = 1;
         UserDaoImpl userDao = new UserDaoImpl();
-        User user = userDao.findEntityById(this.id).get();
+        User user = userDao.findEntityById(1).get();
         RequestDaoImpl requestDao = new RequestDaoImpl();
         assertEquals(numberOfSeats,requestDao.findEntityById(this.id).get().getNumberOfSeats());
         assertEquals(user,requestDao.findEntityById(this.id).get().getUser());
@@ -80,7 +80,7 @@ class RequestsDaoImplTest {
         RequestDaoImpl requestDao = new RequestDaoImpl();
         Request request = requestDao.findEntityById(this.id).get();
         final int numberOfSeats = 6;
-        final int defaultNumberOfSeats = requestDao.findEntityById(1).get().getNumberOfSeats();
+        final int defaultNumberOfSeats = requestDao.findEntityById(id).get().getNumberOfSeats();
         request.setNumberOfSeats(numberOfSeats);
         assertEquals(request,requestDao.update(request).get());
         request.setNumberOfSeats(defaultNumberOfSeats);
@@ -90,7 +90,7 @@ class RequestsDaoImplTest {
     @Test
     void findAllRequestByCriteria() throws DaoException {
         RequestCriteria requestCriteria = new RequestCriteria();
-        requestCriteria.setNumberOfSeats(2);
+        requestCriteria.setNumberOfSeats(1);
         RequestDaoImpl requestDao = new RequestDaoImpl();
         List<Request> list = requestDao.findAllEntities();
         int i = 0;

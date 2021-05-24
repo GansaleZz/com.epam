@@ -22,6 +22,7 @@ public class RequestDaoImpl implements RequestDao {
     private final String SQL_INSERT_WITHOUT_ROOM = "INSERT INTO Request (number_of_seats,start_date,end_date,user_id,request_status,room_class) VALUES(?,?,?,?,?,?)";
     private final String SQL_DELETE = "DELETE FROM Request WHERE id = ";
     private final String SQL_UPDATE = "UPDATE Request SET number_of_seats = ?, start_date = ?, end_date = ?, user_id = ?, request_status = ?, room = ? WHERE id = ?";
+    private final String SQL_UPDATE_WITHOUT_ROOM = "UPDATE Request SET number_of_seats = ?, start_date = ?, end_date = ?, user_id = ?, request_status = ?, room_class = ? WHERE id = ?";
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(RequestDaoImpl.class);
 
 
@@ -74,9 +75,9 @@ public class RequestDaoImpl implements RequestDao {
             Connection connection = ConnectionPool.getInstance().getConnection();
             try {
                 PreparedStatement preparedStatement;
-                if(request.getRoom().getId() == 0) {
+                if(request.getRoom() == null) {
                     preparedStatement = connection.prepareStatement(SQL_INSERT_WITHOUT_ROOM);
-                    preparedStatement.setInt(6, RoomClass.getIdByRoomClass(request.getRoom().getRoomClass()));
+                    preparedStatement.setInt(6, RoomClass.getIdByRoomClass(request.getRoomClass()));
                 }else{
                     preparedStatement = connection.prepareStatement(SQL_INSERT);
                     preparedStatement.setInt(6, request.getRoom().getId());
@@ -127,13 +128,20 @@ public class RequestDaoImpl implements RequestDao {
         if(request != null) {
             Connection connection = ConnectionPool.getInstance().getConnection();
             try {
-                PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE);
+                PreparedStatement preparedStatement = null;
+                if(request.getRoom() != null) {
+                    preparedStatement = connection.prepareStatement(SQL_UPDATE);
+                    preparedStatement.setInt(6,request.getRoom().getId());
+                }else{
+                    preparedStatement = connection.prepareStatement(SQL_UPDATE_WITHOUT_ROOM);
+                    preparedStatement.setInt(6,RoomClass.getIdByRoomClass(request.getRoomClass()));
+                }
                 preparedStatement.setInt(1,request.getNumberOfSeats());
                 preparedStatement.setDate(2,new Date(request.getStart().getTime()));
                 preparedStatement.setDate(3,new Date(request.getEnd().getTime()));
                 preparedStatement.setInt(4,request.getUser().getId());
                 preparedStatement.setInt(5,RequestStatus.getIdByRequestStatus(request.getRequestStatus()));
-                preparedStatement.setInt(6,request.getRoom().getId());
+
                 preparedStatement.setInt(7,request.getId());
                 preparedStatement.execute();
                 preparedStatement.close();
@@ -186,9 +194,13 @@ public class RequestDaoImpl implements RequestDao {
                 requestStatus = RequestStatus.extractRequestStatusById(resultSet.getInt(6)).get();
             }
             int roomId = resultSet.getInt(7);
+            int roomClass = 0;
+            if (roomId == 0 ){
+                roomClass = resultSet.getInt(8);
+            }
             UserDaoImpl userDao = new UserDaoImpl();
             RoomDaoImpl roomDao = new RoomDaoImpl();
-            if(userDao.findEntityById(userId).isPresent() && roomDao.findEntityById(roomId).isPresent()) {
+            if(userDao.findEntityById(userId).isPresent()) {
                 request = Optional.of(new RequestCriteria.Builder()
                 .newBuilder()
                 .withNumberOfSeats(numberOfSeats)
@@ -197,8 +209,12 @@ public class RequestDaoImpl implements RequestDao {
                 .withUser(userDao.findEntityById(userId).get())
                 .withId(id)
                 .withRequestStatus(requestStatus)
-                .withRoom(roomDao.findEntityById(roomId).get())
                 .build());
+                if(roomId == 0){
+                    request.get().setRoomClass(RoomClass.extractRoomClassById(roomClass).get());
+                }else{
+                    request.get().setRoom(roomDao.findEntityById(roomId).get());
+                }
             }
         }catch(SQLException e){
             logger.error(e.getMessage());
