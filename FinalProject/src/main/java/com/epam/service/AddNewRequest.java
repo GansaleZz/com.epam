@@ -21,11 +21,6 @@ public class AddNewRequest implements Command{
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
             RequestDaoImpl requestDao = new RequestDaoImpl();
             UserDaoImpl userDao = new UserDaoImpl();
-            Room room = new RoomCriteria.Builder()
-                    .newBuilder()
-                    .withId(0)
-                    .withRoomClass(RoomClass.valueOf(request.getParameter("class")))
-                    .build();
         try {
             User user = userDao.findEntityById((Integer) request.getSession().getAttribute("id")).get();
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -36,7 +31,7 @@ public class AddNewRequest implements Command{
             Request newRequest = new RequestCriteria.Builder()
                     .newBuilder()
                     .withRequestStatus(RequestStatus.INPROGRESS)
-                    .withRoom(room)
+                    .withRoomClass(RoomClass.valueOf(request.getParameter("class")))
                     .withStart(start)
                     .withEnd(end)
                     .withUser(user)

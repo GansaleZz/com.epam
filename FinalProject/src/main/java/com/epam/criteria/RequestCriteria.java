@@ -55,6 +55,11 @@ public class RequestCriteria extends BaseCriteria<Request>{
             return this;
         }
 
+        public Builder withRoomClass(RoomClass roomClass){
+            actualClass.setRoomClass(roomClass);
+            return this;
+        }
+
         @Override
         protected Request getActual() {
             return actualClass;

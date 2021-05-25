@@ -75,7 +75,7 @@ public class RequestDaoImpl implements RequestDao {
             Connection connection = ConnectionPool.getInstance().getConnection();
             try {
                 PreparedStatement preparedStatement;
-                if(request.getRoom() == null) {
+                if(request.getRoom() == null ) {
                     preparedStatement = connection.prepareStatement(SQL_INSERT_WITHOUT_ROOM);
                     preparedStatement.setInt(6, RoomClass.getIdByRoomClass(request.getRoomClass()));
                 }else{
