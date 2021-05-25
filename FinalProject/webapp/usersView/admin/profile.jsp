@@ -49,9 +49,7 @@
     </colgroup>
   <caption>Profile</caption>
     <form action="controller?command=ACTUPDATEPROFILE" method = "post">
-      <tr>
-        <th>Id</th><td><input type = "text" size ="5" name = "id" value="${user.id}" readonly></td>
-      </tr>
+      <input type = "hidden" name = "id" value="${user.id}" >
       <tr>
         <th>Login</th><td><c:out value="${user.login}"/></td>
       </tr>

@@ -42,19 +42,17 @@
 <p>
   <table>
   <colgroup>
-    <col span="5" style="background: Khaki">
+    <col span="4" style="background: Khaki">
   </colgroup>
   <caption>List of rooms</caption>
   <tr>
-    <th>Id</th>
     <th>Class</th>
-    <th>Price (for day)</th>
-    <th>Number of seats</th>
     <th>Status</th>
+    <th>Number of seats</th>
+    <th>Price (for day)</th>
   </tr>
   <c:forEach var="room" items="${list}">
     <tr>
-      <td><c:out value="${room.id}"/></td>
       <td><c:out value="${room.roomStatus}"/> </td>
       <td><c:out value="${room.roomClass}"/></td>
       <td><c:out value="${room.numberOfSeats}"/></td>

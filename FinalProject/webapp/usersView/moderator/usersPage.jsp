@@ -43,11 +43,10 @@
 <p>
 <table>
     <colgroup>
-        <col span="5" style="background: Khaki">
+        <col span="4" style="background: Khaki">
     </colgroup>
     <caption>List of users</caption>
     <tr>
-        <th>Id</th>
         <th>Name</th>
         <th>Email</th>
         <th>Role</th>
@@ -55,7 +54,6 @@
     </tr>
     <c:forEach var="user" items="${list}">
     <tr>
-        <td><c:out value="${user.id}"></c:out></td>
         <td><c:out value="${user.name}"></c:out></td>
         <td><c:out value="${user.email}"></c:out></td>
         <td><c:out value ="${user.userRole}"></c:out></td>

@@ -44,11 +44,10 @@
 <p>
 <table>
     <colgroup>
-        <col span="6" style="background: Khaki">
+        <col span="5" style="background: Khaki">
     </colgroup>
     <caption>List of users</caption>
     <tr>
-        <th>Id</th>
         <th>Name</th>
         <th>Email</th>
         <th>Role</th>
@@ -58,7 +57,7 @@
         <c:forEach var="user" items="${list}">
             <tr>
              <form action="controller?command=ACTCHANGEUSERSRS" method = "post">
-                <td><input type = "text" size ="5" name = "id" value="${user.id}" readonly></td>
+                 <input type = "hidden" name = "id" value="${user.id}" >
                  <td> <c:out value="${user.name}" /></td>
                  <td><c:out value="${user.email}" /></td>
                 <td><c:choose>
