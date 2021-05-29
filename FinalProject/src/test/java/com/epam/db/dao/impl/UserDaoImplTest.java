@@ -60,6 +60,7 @@ class UserDaoImplTest {
                 .withPassword(password)
                 .withEmail(email)
                 .withName(name)
+                .withBalance(100)
                 .build();
         UserDaoImpl userDao = new UserDaoImpl();
         UserCriteria userCriteria = new UserCriteria();

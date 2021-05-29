@@ -20,9 +20,13 @@ import java.util.function.Predicate;
 public class UserDaoImpl implements UserDao {
     private final String SQL_SELECT_ALL = "SELECT * FROM USER";
     private final String SQL_SELECT_BY_CRITERIA = "SELECT * FROM USER WHERE ";
+    private final String SQL_INSERT_BALANCE = "INSERT INTO user_balance (id,balance) VALUES (?,?)";
+    private final String SQL_UPDATE_BALANCE = "UPDATE user_balance SET balance = ? WHERE id = ?";
     private final String SQL_INSERT = "INSERT INTO User (login,password, name, email, role_fk, status_fk) VALUES (?,?,?,?,?,?)";
     private final String SQL_DELETE = "DELETE FROM User WHERE id = ";
     private final String SQL_UPDATE = "UPDATE User SET name = ?, email = ?, password = ?, status_fk = ?, role_fk = ? WHERE id = ? AND login = ?";
+    private final String SQL_UPDATE_USERS_BALANCE = "UPDATE User SET balance_fk = ? WHERE id = ?";
+    private final String SQL_DELETE_BALANCE = "DELETE FROM user_balance WHERE id = ";
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(UserDaoImpl.class);
 
 
@@ -73,7 +77,7 @@ public class UserDaoImpl implements UserDao {
         boolean result = false;
         if(user!=null) {
             Connection connection = ConnectionPool.getInstance().getConnection();
-            PreparedStatement preparedStatement = null;
+            PreparedStatement preparedStatement ;
             try {
                 if (!connection.createStatement().executeQuery(SQL_SELECT_BY_CRITERIA + "login = '" + user.getLogin() + "'").next()) {
                     preparedStatement = connection.prepareStatement(SQL_INSERT);
@@ -83,6 +87,19 @@ public class UserDaoImpl implements UserDao {
                     preparedStatement.setString(4,user.getEmail());
                     preparedStatement.setInt(5,UserRole.getIdByUserRole(UserRole.CLIENT));
                     preparedStatement.setInt(6,UserStatus.getIdByUserStatus(UserStatus.AVAILABLE));
+                    preparedStatement.execute();
+                    preparedStatement.close();
+                    UserCriteria userCriteria = new UserCriteria();
+                    userCriteria.setLogin(user.getLogin());
+                    User userTemp = findUserByCriteria(userCriteria).get();
+                    preparedStatement = connection.prepareStatement(SQL_INSERT_BALANCE);
+                    preparedStatement.setInt(1, userTemp.getId());
+                    preparedStatement.setDouble(2, user.getBalance());
+                    preparedStatement.execute();
+                    preparedStatement.close();
+                    preparedStatement = connection.prepareStatement(SQL_UPDATE_USERS_BALANCE);
+                    preparedStatement.setInt(1,userTemp.getId());
+                    preparedStatement.setInt(2,userTemp.getId());
                     preparedStatement.execute();
                     preparedStatement.close();
                     result = true;
@@ -107,6 +124,7 @@ public class UserDaoImpl implements UserDao {
             if (findEntityById(id).isPresent()) {
                 logger.info(findEntityById(id).get()+" successfully deleted!");
                 connection.createStatement().executeUpdate(SQL_DELETE + id);
+                connection.createStatement().executeUpdate(SQL_DELETE_BALANCE+id);
                 result = true;
             }
         } catch (SQLException e) {
@@ -135,6 +153,13 @@ public class UserDaoImpl implements UserDao {
                 preparedStatement.setString(7,user.getLogin());
                 preparedStatement.execute();
                 preparedStatement.close();
+                if(user.getUserRole() != UserRole.CLIENT){
+                    connection.createStatement().executeUpdate(SQL_DELETE_BALANCE+user.getId());
+                }else{
+                    preparedStatement = connection.prepareStatement(SQL_UPDATE_BALANCE);
+                    preparedStatement.setDouble(1,user.getBalance());
+                    preparedStatement.setInt(2,user.getId());
+                }
                 userOptional = findEntityById(user.getId());
                 logger.info(user + " successfully updated!");
             } catch (SQLException e) {

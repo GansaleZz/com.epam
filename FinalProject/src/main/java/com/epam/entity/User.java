@@ -9,6 +9,7 @@ public class User extends BaseEntity {
     private UserStatus status;
     private UserRole userRole;
     private String name;
+    private double balance;
 
     public User(){}
 
@@ -60,6 +61,14 @@ public class User extends BaseEntity {
         this.userRole = userRole;
     }
 
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -67,9 +76,9 @@ public class User extends BaseEntity {
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", status=" + status +
-                ", user_role=" + userRole +
+                ", userRole=" + userRole +
                 ", name='" + name + '\'' +
-                ", id=" + super.getId() +
+                ", balance=" + balance +
                 '}';
     }
 
@@ -78,11 +87,11 @@ public class User extends BaseEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return login.equals(user.login) && password.equals(user.password) && email.equals(user.email) && status == user.status && userRole == user.userRole && name.equals(user.name);
+        return Double.compare(user.balance, balance) == 0 && Objects.equals(login, user.login) && Objects.equals(password, user.password) && Objects.equals(email, user.email) && status == user.status && userRole == user.userRole && Objects.equals(name, user.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(login, password, email, status, userRole, name);
+        return Objects.hash(login, password, email, status, userRole, name, balance);
     }
 }

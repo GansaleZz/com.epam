@@ -20,9 +20,9 @@ import java.util.function.Predicate;
 public class RoomDaoImpl implements RoomDao {
     private final String SQL_SELECT_ALL = "SELECT * FROM Room";
     private final String SQL_SELECT_BY_CRITERIA = "SELECT * FROM Room WHERE ";
-    private final String SQL_INSERT = "INSERT INTO Room (number_of_seats,price,room_status_fk,room_class_fk) VALUES(?,?,?,?)";
+    private final String SQL_INSERT = "INSERT INTO Room (number_of_seats,price,room_status_fk,room_class_fk,room_number) VALUES(?,?,?,?,?)";
     private final String SQL_DELETE = "DELETE FROM Room WHERE id = ";
-    private final String SQL_UPDATE = "UPDATE Room SET number_of_seats = ?, price = ?, room_status_fk = ?, room_class_fk = ? WHERE id = ?";
+    private final String SQL_UPDATE = "UPDATE Room SET number_of_seats = ?, price = ?, room_status_fk = ?, room_class_fk = ?, room_number = ? WHERE id = ?";
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(RoomDaoImpl.class);
 
 
@@ -79,6 +79,7 @@ public class RoomDaoImpl implements RoomDao {
                 preparedStatement.setInt(2,room.getPrice());
                 preparedStatement.setInt(3,RoomStatus.getIdByRoomStatus(RoomStatus.AVAILABLE));
                 preparedStatement.setInt(4,RoomClass.getIdByRoomClass(room.getRoomClass()));
+                preparedStatement.setInt(5,room.getRoomNumber());
                 preparedStatement.execute();
                 preparedStatement.close();
                 result = true;
@@ -125,7 +126,8 @@ public class RoomDaoImpl implements RoomDao {
                 preparedStatement.setInt(2,room.getPrice());
                 preparedStatement.setInt(3,RoomStatus.getIdByRoomStatus(room.getRoomStatus()));
                 preparedStatement.setInt(4,RoomClass.getIdByRoomClass(room.getRoomClass()));
-                preparedStatement.setInt(5,room.getId());
+                preparedStatement.setInt(5,room.getRoomNumber());
+                preparedStatement.setInt(6,room.getId());
                 preparedStatement.execute();
                 preparedStatement.close();
                 roomOptional = findEntityById(room.getId());
@@ -185,6 +187,7 @@ public class RoomDaoImpl implements RoomDao {
             if(RoomClass.extractRoomClassById(resultSet.getInt(5)).isPresent()){
                 roomClass = RoomClass.extractRoomClassById(resultSet.getInt(5)).get();
             }
+            int roomNumber = resultSet.getInt(6);
             if(roomStatus != null && roomClass != null){
                 room = Optional.of(new RoomCriteria.Builder()
                 .newBuilder()
@@ -193,7 +196,7 @@ public class RoomDaoImpl implements RoomDao {
                 .withRoomClass(roomClass)
                 .withPrice(price)
                 .withNumberOfSeats(numberOfSeats)
-                .withNumberOfSeats(numberOfSeats)
+                .withRoomNumber(roomNumber)
                 .build());
             }
         }catch(SQLException e){

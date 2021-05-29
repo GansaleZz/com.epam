@@ -7,6 +7,7 @@ public class Room extends BaseEntity {
     private RoomStatus roomStatus;
     private int price;
     private int numberOfSeats;
+    private int roomNumber;
 
     public Room(){}
 
@@ -42,6 +43,14 @@ public class Room extends BaseEntity {
         this.numberOfSeats = numberOfSeats;
     }
 
+    public int getRoomNumber() {
+        return roomNumber;
+    }
+
+    public void setRoomNumber(int roomNumber) {
+        this.roomNumber = roomNumber;
+    }
+
     @Override
     public String toString() {
         return "Room{" +
@@ -49,7 +58,7 @@ public class Room extends BaseEntity {
                 ", roomStatus=" + roomStatus +
                 ", price=" + price +
                 ", numberOfSeats=" + numberOfSeats +
-                ", id=" + super.getId() +
+                ", roomNumber=" + roomNumber +
                 '}';
     }
 
@@ -58,11 +67,11 @@ public class Room extends BaseEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Room room = (Room) o;
-        return price == room.price && numberOfSeats == room.numberOfSeats && roomClass == room.roomClass && roomStatus == room.roomStatus;
+        return price == room.price && numberOfSeats == room.numberOfSeats && roomNumber == room.roomNumber && roomClass == room.roomClass && roomStatus == room.roomStatus;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(roomClass, roomStatus, price, numberOfSeats);
+        return Objects.hash(roomClass, roomStatus, price, numberOfSeats, roomNumber);
     }
 }

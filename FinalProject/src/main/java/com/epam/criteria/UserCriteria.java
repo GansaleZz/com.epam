@@ -11,6 +11,7 @@ public class UserCriteria extends BaseCriteria<User> {
     private String password = null;
     private UserRole role = null;
     private UserStatus status = null;
+    private double balance = 0;
 
     public static class Builder extends BaseBuilder<User>{
 
@@ -51,6 +52,11 @@ public class UserCriteria extends BaseCriteria<User> {
 
         public Builder withName(String name){
             actualClass.setName(name);
+            return this;
+        }
+
+        public Builder withBalance(double balance){
+            actualClass.setBalance(balance);
             return this;
         }
 

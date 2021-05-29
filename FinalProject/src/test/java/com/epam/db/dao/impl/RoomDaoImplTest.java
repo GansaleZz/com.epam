@@ -43,6 +43,7 @@ class RoomDaoImplTest {
             assertEquals(numberOfSeats,roomDao.findEntityById(this.id).get().getNumberOfSeats());
             assertEquals(price,roomDao.findEntityById(this.id).get().getPrice());
             assertEquals(roomStatus,roomDao.findEntityById(this.id).get().getRoomStatus());
+            assertEquals(104,roomDao.findEntityById(this.id).get().getRoomNumber());
         }
         assertEquals(Optional.empty(),roomDao.findEntityById(1240));
     }
@@ -51,12 +52,14 @@ class RoomDaoImplTest {
     void create() throws DaoException {
         int numberOfSeats = 5;
         int price = 530;
+        int roomNumber = 104;
         RoomClass roomClass = RoomClass.LUXE;
         Room room = new RoomCriteria.Builder()
                 .newBuilder()
                 .withRoomClass(roomClass)
                 .withPrice(price)
-                .withPrice(numberOfSeats)
+                .withNumberOfSeats(numberOfSeats)
+                .withRoomNumber(roomNumber)
                 .build();
         RoomDaoImpl roomDao = new RoomDaoImpl();
         assertEquals(true,roomDao.create(room));

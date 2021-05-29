@@ -9,6 +9,7 @@ public class RoomCriteria extends BaseCriteria<Room>{
     private RoomStatus roomStatus = null;
     private int price = 0;
     private int numberOfSeats = 0;
+    private int roomNumber = 0;
 
     public static class Builder extends BaseBuilder<Room>{
 
@@ -34,6 +35,11 @@ public class RoomCriteria extends BaseCriteria<Room>{
 
         public Builder withPrice(int price){
             actualClass.setPrice(price);
+            return this;
+        }
+
+        public Builder withRoomNumber(int roomNumber){
+            actualClass.setRoomNumber(roomNumber);
             return this;
         }
 
