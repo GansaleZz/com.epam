@@ -16,7 +16,7 @@ public class UpdateRoom implements Command{
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(UserRole.getRole((String) request.getSession().getAttribute("userRole")).equals(UserRole.CLIENT)){
-            response.sendRedirect(ServletDestination.CLIENTHOMEPAGE.getPath());
+            response.sendRedirect("http://localhost:8080/controller?command=ACTSHOWHOME");
         }else{
             RoomDaoImpl roomDao = new RoomDaoImpl();
             if(request.getParameter("Submit").equals("Delete")){

@@ -20,6 +20,7 @@ import java.util.function.Predicate;
 public class UserDaoImpl implements UserDao {
     private final String SQL_SELECT_ALL = "SELECT * FROM USER";
     private final String SQL_SELECT_BY_CRITERIA = "SELECT * FROM USER WHERE ";
+    private final String SQL_SELECT_BALANCE = "SELECT * FROM user_balance WHERE id = ";
     private final String SQL_INSERT_BALANCE = "INSERT INTO user_balance (id,balance) VALUES (?,?)";
     private final String SQL_UPDATE_BALANCE = "UPDATE user_balance SET balance = ? WHERE id = ?";
     private final String SQL_INSERT = "INSERT INTO User (login,password, name, email, role_fk, status_fk) VALUES (?,?,?,?,?,?)";
@@ -159,6 +160,8 @@ public class UserDaoImpl implements UserDao {
                     preparedStatement = connection.prepareStatement(SQL_UPDATE_BALANCE);
                     preparedStatement.setDouble(1,user.getBalance());
                     preparedStatement.setInt(2,user.getId());
+                    preparedStatement.execute();
+                    preparedStatement.close();
                 }
                 userOptional = findEntityById(user.getId());
                 logger.info(user + " successfully updated!");
@@ -207,6 +210,26 @@ public class UserDaoImpl implements UserDao {
         return user;
     }
 
+    @Override
+    public double findBalanceById(int id) throws DaoException {
+        Connection connection = ConnectionPool.getInstance().getConnection();
+        double balance = 0;
+        try {
+            ResultSet resultSet = connection.createStatement().executeQuery(SQL_SELECT_BALANCE + id);
+            if (resultSet.next()) {
+                balance = resultSet.getDouble("balance");
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+            throw new DaoException(e);
+        } finally {
+            ConnectionPool connectionPool = ConnectionPool.getInstance();
+            connectionPool.close(connection);
+        }
+        return balance;
+    }
+
     private Optional<User> chooseByPredicate(Predicate predicate) throws DaoException {
         Optional<User> user = findAllEntities()
                 .stream()
@@ -251,6 +274,9 @@ public class UserDaoImpl implements UserDao {
                         .withUserRole(userRole)
                         .withUserStatus(userStatus)
                         .build());
+                if(userRole == UserRole.CLIENT){
+                    user.get().setBalance(findBalanceById(user.get().getId()));
+                }
             }
         }catch(SQLException e){
             logger.error(e.getMessage());
@@ -258,4 +284,6 @@ public class UserDaoImpl implements UserDao {
         }
         return user;
     }
+
+
 }

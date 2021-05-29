@@ -40,31 +40,46 @@
 <a href="http://localhost:8080/controller?command=ACTCREATEREQUESTPAGE">Create request</a>
 
     <c:set var="user" value="${user}" />
-<form action="controller?command=ACTUPDATEPROFILE" method = "post">
+
     <p>
     <table>
         <colgroup>
             <col span="2" style="background: Khaki">
         </colgroup>
         <caption>Profile</caption>
+    <form action="controller?command=ACTUPDATEPROFILE" method = "post">
     <input type = "hidden" name = "id" value="${user.id}" >
     <tr>
-        <th>Login</th><td><c:out value="${user.login}"/></td>
+        <th>Login</th>
+        <td><c:out value="${user.login}"/></td>
     </tr>
     <tr>
-        <th>Name</th><td><input type="text" name="name" value="${user.name}"></td>
+        <th>Name</th>
+        <td><input type="text" name="name" value="${user.name}"></td>
     </tr>
     <tr>
-        <th>Email</th><td><input type="email" name="email" value="${user.email}"></td>
+        <th>Email</th>
+        <td><input type="email" name="email" value="${user.email}"></td>
     </tr>
     <tr>
-        <th>Role</th><td><c:out value="${user.userRole}"/></td>
+        <th>Balance</th>
+        <td><c:out value="${user.balance}"/></td>
     </tr>
     <tr>
-        <th>Action</th><td><input type="submit" value="Submit"></td>
+        <th>Role</th>
+        <td><c:out value="${user.userRole}"/></td>
+    </tr>
+    <tr>
+        <th>Action</th>
+        <td>
+            <input type="submit" value="Submit"></form>
+            <form action="controller?command=ACTNEWDEPOSITPAGE" method = "post">
+                <input type="submit" value="Deposit">
+            </form>
+        </td>
     </tr>
 </table>
 </p>
-</form>
+
 </body>
 </html>

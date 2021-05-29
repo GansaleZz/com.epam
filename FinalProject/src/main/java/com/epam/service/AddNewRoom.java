@@ -15,7 +15,7 @@ public class AddNewRoom implements Command{
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(request.getSession().getAttribute("userRole").equals("CLIENT")){
-            response.sendRedirect(ServletDestination.CLIENTHOMEPAGE.getPath());
+            response.sendRedirect("http://localhost:8080/controller?command=ACTSHOWHOME");
         }
         if(request.getParameter("price").trim().length()!=0 || request.getSession().getAttribute("userRole").equals("CLIENT")){
             RoomDaoImpl roomDao = new RoomDaoImpl();

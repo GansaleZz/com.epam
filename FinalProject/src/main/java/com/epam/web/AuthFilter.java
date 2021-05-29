@@ -45,6 +45,7 @@ public class AuthFilter implements Filter {
         if (loggedIn) {
             if(!httpServletRequest.getRequestURI().contains("home") && !httpServletRequest.getRequestURI().contains("controller")){
                 httpServletResponse.sendRedirect(ServletDestination.ADMINHOMEPAGE.getPath());
+                System.out.println("asdasd2");
             }
             UserDaoImpl userDao = new UserDaoImpl();
             UserCriteria userCriteria = new UserCriteria();
@@ -60,6 +61,7 @@ public class AuthFilter implements Filter {
             }
         }
         if (loggedIn && badRequestLogged) {
+            System.out.println("asdasd1");
             switch ((String) session.getAttribute("userRole")) {
                 case "ADMIN" -> httpServletResponse.sendRedirect(ADMINHOMEPAGE);
                 case "CLIENT" -> httpServletResponse.sendRedirect(CLIENTHOMEPAGE);

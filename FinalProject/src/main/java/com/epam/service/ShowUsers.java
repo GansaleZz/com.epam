@@ -15,7 +15,7 @@ public class ShowUsers implements Command{
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(request.getSession().getAttribute("userRole").equals("CLIENT")){
-            response.sendRedirect(ServletDestination.CLIENTHOMEPAGE.getPath());
+            response.sendRedirect("http://localhost:8080/controller?command=ACTSHOWHOME");
         }else {
             UserDaoImpl userDao = new UserDaoImpl();
             List<User> list = new ArrayList<>();

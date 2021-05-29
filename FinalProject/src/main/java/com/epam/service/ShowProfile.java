@@ -1,7 +1,6 @@
 package com.epam.service;
 
 import com.epam.criteria.UserCriteria;
-import com.epam.db.dao.UserDao;
 import com.epam.db.dao.impl.UserDaoImpl;
 import com.epam.entity.User;
 import com.epam.entity.UserRole;
@@ -11,7 +10,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 public class ShowProfile implements Command{
     @Override
@@ -21,6 +19,7 @@ public class ShowProfile implements Command{
             UserCriteria userCriteria = new UserCriteria();
             userCriteria.setLogin((String) request.getSession().getAttribute("login"));
             User user = userDao.findUserByCriteria(userCriteria).get();
+            user.setBalance(userDao.findBalanceById(user.getId()));
             UserRole userRole = UserRole.getRole((String) request.getSession().getAttribute("userRole"));
             request.setAttribute("user", user);
             switch(userRole){

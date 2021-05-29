@@ -15,7 +15,10 @@ public enum CommandInstance {
     ACTUPDATEROOM(new UpdateRoom()),
     ACTUPDATEPROFILE(new UpdateProfile()),
     ACTCREATEREQUESTPAGE(new CreateRequestPage()),
-    ACTNEWREQUEST(new AddNewRequest());
+    ACTNEWREQUEST(new AddNewRequest()),
+    ACTNEWDEPOSITPAGE(new NewDepositPage()),
+    ACTSHOWHOME(new ShowHome()),
+    ACTREALISEDEPOSITE(new RealiseDeposite());
 
     private final Command command;
 

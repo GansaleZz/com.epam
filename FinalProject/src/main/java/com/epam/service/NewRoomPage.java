@@ -11,14 +11,14 @@ public class NewRoomPage implements Command{
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(request.getSession().getAttribute("userRole").equals("CLIENT")){
-            response.sendRedirect(ServletDestination.CLIENTHOMEPAGE.getPath());
+            response.sendRedirect("http://localhost:8080/controller?command=ACTSHOWHOME");
         }else{
             try {
                 switch (UserRole.getRole((String) request.getSession().getAttribute("userRole"))) {
                     case ADMIN -> request.getServletContext().getRequestDispatcher("/usersView/admin/newRoom.jsp").forward(request, response);
                     case MODERATOR -> request.getServletContext().getRequestDispatcher("/usersView/moderator/newRoom.jsp").forward(request, response);
                 }
-            } catch (ServletException e) {
+            }catch (ServletException e) {
                 e.printStackTrace();
             }
         }
