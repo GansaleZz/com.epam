@@ -18,7 +18,8 @@
 <a href="http://localhost:8080/controller?command=ACTSSHOWREQUESTS">Requests</a>
 <a href="http://localhost:8080/controller?command=ACTSHOWUSERS">Users</a>
 
-<form action="controller?command=ACTADDNEWROOM" method = "post">
+<p><form action="controller?command=ACTADDNEWROOM" method = "post">
+    <b>Room number: </b><input type="number" name ="roomNumber" min="1" value="100"><br>
     <b>Number of seats: </b><input type="number" name="numberOfSeats" min="1" max="5" value="1">
     <b>Room class: </b><select name="roomClass">
         <option selected = "selected">BUSINESS</option>
@@ -28,7 +29,7 @@
     </select><br>
     <b>Price: </b><input type="text" name="price" min="1" max="10000" value="100"><br>
     <input type = "submit" value="Submit" />
-</form>
+</form></p>
 
 </body>
 </html>

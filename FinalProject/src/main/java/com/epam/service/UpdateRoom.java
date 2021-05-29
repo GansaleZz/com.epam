@@ -32,6 +32,7 @@ public class UpdateRoom implements Command{
                     room.setNumberOfSeats(Integer.valueOf(request.getParameter("numberOfSeats")));
                     room.setRoomStatus(RoomStatus.valueOf(request.getParameter("status")));
                     room.setRoomClass(RoomClass.valueOf(request.getParameter("class")));
+                    room.setRoomNumber(Integer.valueOf(request.getParameter("roomNumber")));
                     roomDao.update(room);
                 } catch (DaoException e) {
                     e.printStackTrace();

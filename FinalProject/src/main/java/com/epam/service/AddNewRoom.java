@@ -25,6 +25,7 @@ public class AddNewRoom implements Command{
                     .withRoomClass(RoomClass.valueOf(request.getParameter("roomClass")))
                     .withRoomStatus(RoomStatus.AVAILABLE)
                     .withNumberOfSeats(Integer.valueOf(request.getParameter("numberOfSeats")))
+                    .withRoomNumber(Integer.valueOf(request.getParameter("roomNumber")))
                     .build();
             try {
                 roomDao.create(room);

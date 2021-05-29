@@ -43,10 +43,11 @@
 <p>
 <table>
     <colgroup>
-        <col span="5" style="background: Khaki">
+        <col span="6" style="background: Khaki">
     </colgroup>
     <caption>List of rooms</caption>
     <tr>
+        <th>Room numeber</th>
         <th>Class</th>
         <th>Price (for day)</th>
         <th>Number of seats</th>
@@ -57,6 +58,9 @@
         <tr>
             <form action="controller?command=ACTUPDATEROOM" method = "post">
                 <input type = "hidden" name = "id" value="${room.id}" >
+                <td>
+                    <input type = "number" name = "roomNumber" value="${room.roomNumber}" min="1">
+                </td>
                 <td><c:choose>
                     <c:when test="${room.roomClass == 'BUSINESS'}">
                         <select name="class">
