@@ -16,5 +16,6 @@
     <a href="http://localhost:8080/controller?command=ACTSHOWROOMS">Rooms</a>
     <a href="http://localhost:8080/controller?command=ACTSHOWPROFILE">Profile</a>
     <a href="http://localhost:8080/controller?command=ACTCREATEREQUESTPAGE">Create request</a>
+    <a href="http://localhost:8080/controller?command=ACTSHOWREQUESTS">Requests</a>
 </body>
 </html>

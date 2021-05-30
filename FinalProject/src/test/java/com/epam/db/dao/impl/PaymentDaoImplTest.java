@@ -83,7 +83,7 @@ class PaymentDaoImplTest {
     @Test
     void findAllPaymentByCriteria() throws DaoException {
         PaymentCriteria paymentCriteria = new PaymentCriteria();
-        paymentCriteria.setPaymentStatus(PaymentStatus.INPROGRESS);
+        paymentCriteria.setPaymentStatus(PaymentStatus.PENDINGPAYMENT);
         PaymentDaoImpl paymentDao = new PaymentDaoImpl();
         List<Payment> list = paymentDao.findAllEntities();
         int i = 0;

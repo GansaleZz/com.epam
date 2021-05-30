@@ -6,7 +6,8 @@ import java.util.Optional;
 public enum RequestStatus {
     ACCEPTED(1),
     INPROGRESS(2),
-    DENIED(3);
+    DENIED(3),
+    PAID(4);
 
     private final int id;
 

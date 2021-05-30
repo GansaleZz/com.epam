@@ -6,7 +6,7 @@ import java.util.Optional;
 public enum PaymentStatus {
     PAID(1),
     CANCELLED(2),
-    INPROGRESS(3);
+    PENDINGPAYMENT(3);
 
     private final int id;
 

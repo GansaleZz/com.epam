@@ -17,9 +17,11 @@
 <a href="http://localhost:8080/controller?command=ACTSHOWROOMS">Rooms</a>
 <a href="http://localhost:8080/controller?command=ACTSHOWPROFILE">Profile</a>
 <a href="http://localhost:8080/controller?command=ACTCREATEREQUESTPAGE">Create request</a>
+<a href="http://localhost:8080/controller?command=ACTSSHOWREQUESTS">Requests</a>
 
 <c:set var="today" value="${today}" />
 <c:set var="maxDay" value="${maxDay}" />
+<p>
 <form action="controller?command=ACTNEWREQUEST" method = "post">
       <b>Start date of arrive: </b><input type="date" name="start" min="${today}" max="${maxDay}" value ="${today}"><br>
       <b>Arrival time (days): </b><input type="number" name="end" min="1" max="30" value="1"><br>
@@ -32,5 +34,6 @@
       </select><br>
       <input type="submit" name="submit" value="Submit">
 </form>
+</p>
 </body>
 </html>

@@ -12,7 +12,6 @@ public class ShowHome implements Command{
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         UserRole userRole = UserRole.getRole((String) request.getSession().getAttribute("userRole"));
-        System.out.println("hooom");
         try {
             switch(userRole){
                 case ADMIN -> request.getServletContext().getRequestDispatcher("/usersView/admin/home/home.jsp").forward(request, response);

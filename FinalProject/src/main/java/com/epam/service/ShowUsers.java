@@ -27,9 +27,9 @@ public class ShowUsers implements Command{
             request.setAttribute("list", list);
             try {
                 if (request.getSession().getAttribute("userRole").equals("ADMIN")) {
-                    request.getServletContext().getRequestDispatcher("/usersView/admin/usersPage.jsp").forward(request, response);
+                    request.getServletContext().getRequestDispatcher("/usersView/admin/users.jsp").forward(request, response);
                 } else {
-                    request.getServletContext().getRequestDispatcher("/usersView/moderator/usersPage.jsp").forward(request, response);
+                    request.getServletContext().getRequestDispatcher("/usersView/moderator/users.jsp").forward(request, response);
                 }
             } catch (ServletException e) {
                 e.printStackTrace();

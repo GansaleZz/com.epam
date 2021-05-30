@@ -18,7 +18,8 @@ public enum CommandInstance {
     ACTNEWREQUEST(new AddNewRequest()),
     ACTNEWDEPOSITPAGE(new NewDepositPage()),
     ACTSHOWHOME(new ShowHome()),
-    ACTREALISEDEPOSITE(new RealiseDeposite());
+    ACTREALISEDEPOSITE(new RealiseDeposite()),
+    ACTSHOWREQUESTS(new ShowRequests());
 
     private final Command command;
 
