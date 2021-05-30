@@ -59,6 +59,7 @@ public class Room extends BaseEntity {
                 ", price=" + price +
                 ", numberOfSeats=" + numberOfSeats +
                 ", roomNumber=" + roomNumber +
+                ", id=" + super.getId()+
                 '}';
     }
 

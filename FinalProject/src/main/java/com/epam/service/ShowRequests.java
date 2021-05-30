@@ -4,6 +4,7 @@ import com.epam.db.dao.impl.RequestDaoImpl;
 import com.epam.db.dao.impl.RoomDaoImpl;
 import com.epam.db.dao.impl.UserDaoImpl;
 import com.epam.entity.Request;
+import com.epam.entity.RequestStatus;
 import com.epam.entity.Room;
 import com.epam.entity.UserRole;
 import com.epam.exceptions.DaoException;
@@ -20,15 +21,22 @@ public class ShowRequests implements Command{
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         RequestDaoImpl requestDao = new RequestDaoImpl();
         try {
-            List<Request> finalList = new ArrayList<>();
-            requestDao.findAllEntities().stream()
-                    .filter(i -> i.getUser().getId() == (Integer) request.getSession().getAttribute("id"))
-                    .forEach(i -> finalList.add(i));
-            request.setAttribute("list", finalList);
-            switch(UserRole.getRole((String) request.getSession().getAttribute("userRole"))){
-                case CLIENT -> request.getServletContext().getRequestDispatcher("/usersView/client/requests.jsp").forward(request, response);
-                case MODERATOR -> request.getServletContext().getRequestDispatcher("/usersView/moderator/requests.jsp").forward(request, response);
-                case ADMIN -> request.getServletContext().getRequestDispatcher("/usersView/admin/requests.jsp").forward(request, response);
+            List<Request> list = new ArrayList<>();
+            if(UserRole.getRole((String) request.getSession().getAttribute("userRole")) == UserRole.CLIENT) {
+                requestDao.findAllEntities().stream()
+                        .filter(i -> i.getUser().getId() == (Integer) request.getSession().getAttribute("id"))
+                        .forEach(i -> list.add(i));
+                request.setAttribute("list", list);
+                request.getServletContext().getRequestDispatcher("/usersView/client/requests.jsp").forward(request, response);
+            }else {
+                requestDao.findAllEntities().stream()
+                        .filter(i -> i.getRequestStatus() == RequestStatus.INPROGRESS)
+                        .forEach(i -> list.add(i));
+                request.setAttribute("list", list);
+                switch (UserRole.getRole((String) request.getSession().getAttribute("userRole"))) {
+                    case MODERATOR -> request.getServletContext().getRequestDispatcher("/usersView/moderator/requests.jsp").forward(request, response);
+                    case ADMIN -> request.getServletContext().getRequestDispatcher("/usersView/admin/requests.jsp").forward(request, response);
+                }
             }
         } catch (ServletException e) {
             e.printStackTrace();

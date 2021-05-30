@@ -79,6 +79,7 @@ public class User extends BaseEntity {
                 ", userRole=" + userRole +
                 ", name='" + name + '\'' +
                 ", balance=" + balance +
+                ", id=" + super.getId()+
                 '}';
     }
 

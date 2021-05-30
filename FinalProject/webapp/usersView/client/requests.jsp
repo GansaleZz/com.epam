@@ -69,7 +69,14 @@
                     </c:otherwise>
                 </c:choose>
             </td>
-            <td><c:out value="${request.roomClass}"/> </td>
+            <td><c:choose>
+                <c:when test="${request.requestStatus == 'INPROGRESS' || request.requestStatus == 'DENIED'}">
+                    <c:out value="${request.roomClass}"/>
+                </c:when>
+                <c:otherwise>
+                    <c:out value="${request.room.roomClass}"/>
+                </c:otherwise>
+            </c:choose></td>
             <td><c:out value="${request.numberOfSeats}"/> </td>
             <td><c:choose>
                 <c:when test="${request.requestStatus == 'INPROGRESS'}">
@@ -79,7 +86,7 @@
                     <c:out value="DENIED"/>
                 </c:when>
                 <c:otherwise>
-                    <c:out value="${(request.end.time-request.start.time)*request.room.price/ (1000*60*60*24)}"/>BYN</td>
+                    <c:out value="${(request.end.time-request.start.time)*request.room.price/ (1000*60*60*24)}"/> BYN</td>
                 </c:otherwise>
             </c:choose>
             <td><c:choose>
