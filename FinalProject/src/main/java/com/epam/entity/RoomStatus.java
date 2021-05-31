@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Optional;
 
 public enum RoomStatus {
-    ENGAGED(1),
+    CLOSED(1),
     AVAILABLE(2);
 
     private final int id;

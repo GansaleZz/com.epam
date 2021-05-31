@@ -45,7 +45,7 @@ public class UpdateRequest implements Command{
                                 .filter(i -> cache.isRoomEngaged(start, end, i) &&
                                         i.getRoomClass().equals(req.getRoomClass()) &&
                                         i.getNumberOfSeats() == req.getNumberOfSeats() &&
-                                        i.getRoomStatus() != RoomStatus.ENGAGED)
+                                        i.getRoomStatus() != RoomStatus.CLOSED)
                                 .forEach(i -> list.add(i));
                         request.setAttribute("id",req.getId());
                         request.setAttribute("rooms", list);

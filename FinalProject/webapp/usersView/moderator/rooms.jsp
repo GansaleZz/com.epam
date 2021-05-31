@@ -147,13 +147,13 @@
                     <c:when test="${room.roomStatus == 'AVAILABLE'}">
                         <select name="status">
                             <option selected = "selected">AVAILABLE</option>
-                            <option>ENGAGED</option>
+                            <option>CLOSED</option>
                         </select>
                     </c:when>
-                    <c:when test="${room.roomStatus == 'ENGAGED'}">
+                    <c:when test="${room.roomStatus == 'CLOSED'}">
                         <select name="status">
                             <option>AVAILABLE</option>
-                            <option selected = "selected">ENGAGED</option>
+                            <option selected = "selected">CLOSED</option>
                         </select>
                     </c:when>
                 </c:choose></td>
