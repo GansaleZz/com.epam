@@ -29,7 +29,8 @@ public class AddNewRequest implements Command{
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 Date start = format.parse(request.getParameter("start"));
                 Calendar calendar = Calendar.getInstance();
-                calendar.add(Calendar.DATE, Integer.valueOf(request.getParameter("end")));
+                calendar.setTime(start);
+                calendar.add(Calendar.DATE, Integer.parseInt(request.getParameter("end")));
                 Date end = calendar.getTime();
                 Request newRequest = new RequestCriteria.Builder()
                         .newBuilder()
@@ -38,7 +39,7 @@ public class AddNewRequest implements Command{
                         .withStart(start)
                         .withEnd(end)
                         .withUser(user)
-                        .withNumberOfSeats(Integer.valueOf(request.getParameter("numberOfSeats")))
+                        .withNumberOfSeats(Integer.parseInt(request.getParameter("numberOfSeats")))
                         .build();
                 requestDao.create(newRequest);
             } catch (ParseException e) {

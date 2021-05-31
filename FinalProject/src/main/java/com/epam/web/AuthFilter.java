@@ -37,7 +37,8 @@ public class AuthFilter implements Filter {
                 (httpServletRequest.getRequestURI().contains("/controller") &&
                         httpServletRequest.getQueryString() != null &&
                         (httpServletRequest.getQueryString().contains("SIGNUP") ||
-                                httpServletRequest.getQueryString().contains("LOGIN")));
+                                httpServletRequest.getQueryString().contains("LOGIN"))) ||
+                httpServletRequest.getRequestURI().contains("/css");
         if (loggedIn) {
             if(!httpServletRequest.getRequestURI().contains("controller")){
                 httpServletResponse.sendRedirect("http://localhost:8080/controller?command=ACTSHOWHOME");
@@ -58,7 +59,7 @@ public class AuthFilter implements Filter {
         if (loggedIn && badRequestLogged) {
             httpServletResponse.sendRedirect("http://localhost:8080/controller?command=ACTSHOWHOME");
         } else {
-            if (!loggedIn && !badRequestLogged) {
+            if (!loggedIn && !badRequestLogged ) {
                 httpServletResponse.sendRedirect(ServletDestination.AUTHPAGE.getPath());
             } else {
                 chain.doFilter(request, response);

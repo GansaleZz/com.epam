@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: andrew_wannasesh
@@ -8,14 +9,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link rel="stylesheet" href="<c:url value="../resources/css/auth.css"/> ">
     <title>Log in</title>
 </head>
 <body>
-    <form action="/controller?command=LOGIN" method = "post">
-        <b>Login: </b><input type = "text" name="login"/><br/>
-        <b>Password: </b><input type = "password" name="password"/><br/>
-        <input type = "submit" value="Log In" />
+<h1>Sign In Form</h1>
+<div id ="wrapper">
+    <form id="signin" action="/controller?command=LOGIN" method = "post">
+        <input type = "text" name="login" placeholder="Login"/><br/>
+        <input type = "password" name="password" placeholder="Password"/><br/>
+        <button type="submit">&#xf0da;</button>
     </form>
+</div>
 <a href="http://localhost:8080/auth/authPage.jsp">Back</a>
 </body>
 </html>
