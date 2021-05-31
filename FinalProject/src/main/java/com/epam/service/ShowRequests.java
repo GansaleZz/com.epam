@@ -23,6 +23,7 @@ public class ShowRequests implements Command{
             List<Request> list = new ArrayList<>();
             if(UserRole.getRole((String) request.getSession().getAttribute("userRole")) == UserRole.CLIENT) {
                 PaymentDaoImpl paymentDao = new PaymentDaoImpl();
+                List<Request> finalList = list;
                 requestDao.findAllEntities().stream()
                         .filter(i -> i.getUser().getId() == (Integer) request.getSession().getAttribute("id"))
                         .forEach(i -> {
@@ -33,7 +34,7 @@ public class ShowRequests implements Command{
                                 if(payment.isPresent()){
                                     i.setPayment(payment.get());
                                 }
-                                list.add(i);
+                                finalList.add(i);
                             } catch (DaoException e) {
                                 e.printStackTrace();
                             }
@@ -41,9 +42,7 @@ public class ShowRequests implements Command{
                 request.setAttribute("list", list);
                 request.getServletContext().getRequestDispatcher(ServletDestination.CLIENTREQEUSTSPAGE.getPath()).forward(request, response);
             }else {
-                requestDao.findAllEntities().stream()
-                        .filter(i -> i.getRequestStatus() == RequestStatus.INPROGRESS)
-                        .forEach(i -> list.add(i));
+                list = requestDao.findAllEntities();
                 request.setAttribute("list", list);
                 switch (UserRole.getRole((String) request.getSession().getAttribute("userRole"))) {
                     case MODERATOR -> request.getServletContext().getRequestDispatcher(ServletDestination.MODERATORREQUESTSPAGE.getPath()).forward(request, response);

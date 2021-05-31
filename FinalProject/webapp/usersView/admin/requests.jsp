@@ -44,29 +44,49 @@
 <p>
 <table>
     <colgroup>
-        <col span="5" style="background: Khaki">
+        <col span="7" style="background: Khaki">
     </colgroup>
     <caption>List of users requests</caption>
     <tr>
         <th>User's name</th>
         <th>Room class</th>
         <th>Number of seats</th>
+        <th>Start date</th>
+        <th>End date</th>
         <th>Period (days)</th>
-        <th>Action</th>
+        <th>Status</th>
     </tr>
     <c:forEach var="request" items="${list}">
     <tr>
         <td><c:out value="${request.user.name}"/></td>
-        <td><c:out value="${request.roomClass}" /></td>
+        <td>
+            <c:choose>
+                <c:when test="${request.roomClass == null}">
+                    <c:out value="${request.room.roomClass}"/>
+                </c:when>
+                <c:otherwise>
+                    <c:out value="${request.roomClass}"/>
+                </c:otherwise>
+            </c:choose>
+        </td>
         <td><c:out value="${request.numberOfSeats}"/> </td>
+        <td><c:out value="${request.start}"/></td>
+        <td><c:out value="${request.end}"/> </td>
         <fmt:parseNumber var="per" integerOnly="true"
                          type="number" value="${(request.end.time-request.start.time)/ (1000*60*60*24)}" />
         <td><c:out value="${per}" /> </td>
-        <td><form action="controller?command=ACTUPDATEREQUEST" method = "post">
-            <input type="hidden" name="id" value="${request.id}">
-            <input type="submit" name="submit" value="Approve">
-            <input type="submit" name="submit" value="Deny">
-        </form></td>
+        <td><c:choose>
+            <c:when test="${request.requestStatus == 'INPROGRESS'}">
+                <form action="controller?command=ACTUPDATEREQUEST" method = "post">
+                    <input type="hidden" name="id" value="${request.id}">
+                    <input type="submit" name="submit" value="Approve">
+                    <input type="submit" name="submit" value="Deny">
+                </form>
+            </c:when>
+            <c:otherwise>
+                <c:out value="${request.requestStatus}"/>
+            </c:otherwise>
+        </c:choose></td>
     </tr>
     </c:forEach>
 </table>

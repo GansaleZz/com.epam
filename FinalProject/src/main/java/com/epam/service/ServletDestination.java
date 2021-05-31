@@ -21,6 +21,7 @@ public enum ServletDestination implements Destination{
     CLIENTROOMSPAGE("/usersView/client/rooms.jsp"),
     CLIENTNEWDEPOSITPAGE("/usersView/client/newDeposit.jsp"),
     CLIENTNEWREQUESTPAGE("/usersView/client/newRequest.jsp"),
+    CLIENTBADBALANCEPAGE("/usersView/client/badBalance.jsp"),
     SIGNUPERROR("/auth/signUpError.jsp"),
     SIGNUPSUCC("/auth/signUpSucc.jsp"),
     SIGNUPPAGE("/auth/signUpPage.jsp"),

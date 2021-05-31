@@ -11,6 +11,7 @@ import com.epam.entity.RequestStatus;
 import com.epam.exceptions.DaoException;
 import com.epam.util.Cache;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -42,6 +43,7 @@ public class PayForRequest implements Command{
                     req.setPayment(payment);
                     requestDao.update(req);
                     cache.removeRequest(req.getId());
+                response.sendRedirect("http://localhost:8080/controller?command=ACTSHOWREQUESTS");
             }else{
                 if(req.getUser().getBalance() >= payment.getAmount()) {
                     UserDaoImpl userDao = new UserDaoImpl();
@@ -53,14 +55,15 @@ public class PayForRequest implements Command{
                     req.setPayment(payment);
                     userDao.update(req.getUser());
                     requestDao.update(req);
-                    cache.removeRequest(req.getId());
+                    cache.addRequest(req);
+                    response.sendRedirect("http://localhost:8080/controller?command=ACTSHOWREQUESTS");
+                }else{
+                    request.getServletContext().getRequestDispatcher(ServletDestination.CLIENTBADBALANCEPAGE.getPath()).forward(request,response);
                 }
             }
-        } catch (DaoException e) {
+        } catch (DaoException | ServletException e) {
             e.printStackTrace();
-        } finally {
-                response.sendRedirect("http://localhost:8080/controller?command=ACTSHOWREQUESTS");
-            }
+        }
         }
     }
 }

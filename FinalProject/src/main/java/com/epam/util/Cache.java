@@ -19,9 +19,11 @@ public class Cache {
 
     private Cache(){
         RequestDaoImpl requestDao = new RequestDaoImpl();
+        Calendar calendar = Calendar.getInstance();
         try {
             requestDao.findAllEntities().stream()
-                    .filter(i -> i.getRequestStatus().equals(RequestStatus.ACCEPTED))
+                    .filter(i -> i.getRequestStatus().equals(RequestStatus.ACCEPTED) ||
+                            (i.getRequestStatus().equals(RequestStatus.PAID) && i.getEnd().after(calendar.getTime())))
                     .forEach(i -> addRequest(i));
         } catch (DaoException e) {
             e.printStackTrace();
@@ -69,7 +71,7 @@ public class Cache {
             }
         }
         if(!bool) {
-            activeRequests.size();
+            i = activeRequests.entrySet().iterator();
             while (i.hasNext()) {
                 HashMap.Entry pair = (HashMap.Entry) i.next();
                 if (((Request) pair.getValue()).getRoom().getId() == room.getId()) {
