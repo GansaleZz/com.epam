@@ -33,7 +33,11 @@ public class ClientFilter implements Filter {
         boolean loggedIn = session != null && session.getAttribute("login") != null;
 
         if (loggedIn ) {
-            chain.doFilter(httpServletRequest, httpServletResponse);
+            if(session.getAttribute("userRole").equals("CLIENT")) {
+                chain.doFilter(httpServletRequest, httpServletResponse);
+            }else{
+                httpServletResponse.sendRedirect("http://localhost:8080/controller?command=ACTSHOWHOME");
+            }
         } else {
             httpServletResponse.sendRedirect(LOGINPAGEURL);
         }

@@ -34,9 +34,10 @@ public class ModeratorFilter implements Filter {
         boolean loggedIn = session != null && session.getAttribute("login") != null;
 
         if(loggedIn){
-            switch((String)session.getAttribute("userRole")){
-                case "CLIENT" -> httpServletResponse.sendRedirect(CLIENTHOMEPAGE);
-                default -> chain.doFilter(request,response);
+            if(session.getAttribute("userRole").equals("MODERATOR")) {
+                chain.doFilter(httpServletRequest, httpServletResponse);
+            }else{
+                httpServletResponse.sendRedirect("http://localhost:8080/controller?command=ACTSHOWHOME");
             }
         }else {
                 httpServletResponse.sendRedirect(LOGINPAGE);

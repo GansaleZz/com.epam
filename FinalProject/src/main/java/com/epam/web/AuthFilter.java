@@ -32,10 +32,6 @@ public class AuthFilter implements Filter {
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         HttpSession session = httpServletRequest.getSession(false);
 
-        final String ADMINHOMEPAGE = ServletDestination.ADMINHOMEPAGE.getPath();
-        final String CLIENTHOMEPAGE = ServletDestination.CLIENTHOMEPAGE.getPath();
-        final String MODERATORHOMEPAGE = ServletDestination.MODERATORHOMEPAGE.getPath();
-
         boolean loggedIn = session != null && session.getAttribute("login") != null;
         boolean badRequestLogged = httpServletRequest.getRequestURI().contains("/auth/") ||
                 (httpServletRequest.getRequestURI().contains("/controller") &&
@@ -43,8 +39,8 @@ public class AuthFilter implements Filter {
                         (httpServletRequest.getQueryString().contains("SIGNUP") ||
                                 httpServletRequest.getQueryString().contains("LOGIN")));
         if (loggedIn) {
-            if(!httpServletRequest.getRequestURI().contains("home") && !httpServletRequest.getRequestURI().contains("controller")){
-                httpServletResponse.sendRedirect(ServletDestination.ADMINHOMEPAGE.getPath());
+            if(!httpServletRequest.getRequestURI().contains("controller")){
+                httpServletResponse.sendRedirect("http://localhost:8080/controller?command=ACTSHOWHOME");
             }
             UserDaoImpl userDao = new UserDaoImpl();
             UserCriteria userCriteria = new UserCriteria();
@@ -60,11 +56,7 @@ public class AuthFilter implements Filter {
             }
         }
         if (loggedIn && badRequestLogged) {
-            switch ((String) session.getAttribute("userRole")) {
-                case "ADMIN" -> httpServletResponse.sendRedirect(ADMINHOMEPAGE);
-                case "CLIENT" -> httpServletResponse.sendRedirect(CLIENTHOMEPAGE);
-                case "MODERATOR" -> httpServletResponse.sendRedirect(MODERATORHOMEPAGE);
-            }
+            httpServletResponse.sendRedirect("http://localhost:8080/controller?command=ACTSHOWHOME");
         } else {
             if (!loggedIn && !badRequestLogged) {
                 httpServletResponse.sendRedirect(ServletDestination.AUTHPAGE.getPath());

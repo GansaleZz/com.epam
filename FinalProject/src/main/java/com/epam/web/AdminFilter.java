@@ -29,15 +29,13 @@ public class AdminFilter implements Filter {
         HttpSession session = httpServletRequest.getSession(false);
 
         final String LOGINPAGE = ServletDestination.LOGINPAGE.getPath();
-        final String CLIENTHOMEPAGE = ServletDestination.CLIENTHOMEPAGE.getPath();
-        final String MODERATORHOMEPAGE = ServletDestination.MODERATORHOMEPAGE.getPath();
 
         boolean loggedIn = session != null && session.getAttribute("login") != null;
         if(loggedIn){
-            switch((String)session.getAttribute("userRole")){
-                case "MODERATOR" -> httpServletResponse.sendRedirect(MODERATORHOMEPAGE);
-                case "CLIENT" -> httpServletResponse.sendRedirect(CLIENTHOMEPAGE);
-                default -> chain.doFilter(request,response);
+            if(session.getAttribute("userRole").equals("ADMIN")){
+                chain.doFilter(request,response);
+            }else{
+                httpServletResponse.sendRedirect("http://localhost:8080/controller?command=ACTSHOWHOME");
             }
         }else {
                 httpServletResponse.sendRedirect(LOGINPAGE);
