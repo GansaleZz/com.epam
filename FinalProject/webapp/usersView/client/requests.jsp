@@ -96,9 +96,19 @@
                 <c:when test="${request.requestStatus == 'DENIED'}">
                     <c:out value="DENIED"/>
                 </c:when>
-                <c:otherwise>
+                <c:when test="${request.requestStatus == 'PAID'}">
                     <c:out value="${request.payment.status}"/>
-                </c:otherwise>
+                </c:when>
+                <c:when test="${request.payment == null}">
+                    <form action="controller?command=ACTPAYFORREQUEST" method = "post">
+                        <input type="submit" name="submit" value="Pay">
+                        <input type="submit" name="submit" value="Cancel">
+                        <input type="hidden" name="id" value="${request.id}">
+                    </form>
+                </c:when>
+                <c:when test="${request.payment != null}">
+                    <c:out value="${request.payment.status}"/>
+                </c:when>
             </c:choose></td>
             <td><c:out value="${request.requestStatus}"/></td>
         </tr>

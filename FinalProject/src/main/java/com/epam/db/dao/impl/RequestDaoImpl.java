@@ -3,6 +3,7 @@ package com.epam.db.dao.impl;
 import com.epam.criteria.RequestCriteria;
 import com.epam.db.ConnectionPool;
 import com.epam.db.dao.RequestDao;
+import com.epam.entity.Payment;
 import com.epam.entity.Request;
 import com.epam.entity.RequestStatus;
 import com.epam.entity.RoomClass;
@@ -23,6 +24,7 @@ public class RequestDaoImpl implements RequestDao {
     private final String SQL_DELETE = "DELETE FROM Request WHERE id = ";
     private final String SQL_UPDATE = "UPDATE Request SET number_of_seats = ?, start_date = ?, end_date = ?, user_id = ?, request_status = ?, room = ? WHERE id = ?";
     private final String SQL_UPDATE_WITHOUT_ROOM = "UPDATE Request SET number_of_seats = ?, start_date = ?, end_date = ?, user_id = ?, request_status = ?, room_class = ? WHERE id = ?";
+    private final String SQL_INSERT_REQUEST_PAYMENT = "INSERT INTO request_payment (payment_id,request_id) VALUES(?,?)";
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(RequestDaoImpl.class);
 
 
@@ -170,6 +172,27 @@ public class RequestDaoImpl implements RequestDao {
             }
         }
         return list;
+    }
+
+    @Override
+    public boolean createRequestPayment(Request request, Payment payment) throws DaoException {
+        boolean result;
+        Connection connection = ConnectionPool.getInstance().getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL_INSERT_REQUEST_PAYMENT);
+            preparedStatement.setInt(1,request.getId());
+            preparedStatement.setInt(2,payment.getId());
+            preparedStatement.execute();
+            preparedStatement.close();
+            result = true;
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+            throw new DaoException(e);
+        } finally {
+            ConnectionPool connectionPool = ConnectionPool.getInstance();
+            connectionPool.close(connection);
+        }
+        return result;
     }
 
     private List<Request> chooseAllByPredicate(Predicate predicate) throws DaoException {

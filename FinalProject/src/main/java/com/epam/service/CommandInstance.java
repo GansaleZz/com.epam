@@ -20,7 +20,8 @@ public enum CommandInstance {
     ACTSHOWHOME(new ShowHome()),
     ACTREALISEDEPOSITE(new RealiseDeposite()),
     ACTSHOWREQUESTS(new ShowRequests()),
-    ACTUPDATEREQUEST(new UpdateRequest());
+    ACTUPDATEREQUEST(new UpdateRequest()),
+    ACTPAYFORREQUEST(new PayForRequest());
 
     private final Command command;
 

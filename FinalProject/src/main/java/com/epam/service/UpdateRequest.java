@@ -35,14 +35,12 @@ public class UpdateRequest implements Command{
                     try {
                         List<Room> list = new ArrayList<>();
                         Cache cache = Cache.getInstance();
+                        cache.updateRequests();
                         RoomDaoImpl roomDao = new RoomDaoImpl();
                         RequestDaoImpl requestDao = new RequestDaoImpl();
                         Request req = requestDao.findEntityById(Integer.valueOf(request.getParameter("id"))).get();
                         Date start = req.getStart();
                         Date end = req.getEnd();
-                        requestDao.findAllEntities().stream()
-                                .filter(i -> i.getRequestStatus().equals(RequestStatus.ACCEPTED))
-                                .forEach(i -> cache.addRequest(i));
                         roomDao.findAllEntities().stream()
                                 .filter(i -> cache.isRoomEngaged(start, end, i) &&
                                         i.getRoomClass().equals(req.getRoomClass()) &&

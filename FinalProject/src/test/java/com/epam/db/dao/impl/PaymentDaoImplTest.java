@@ -1,11 +1,9 @@
 package com.epam.db.dao.impl;
 
 import com.epam.criteria.PaymentCriteria;
-import com.epam.criteria.RequestCriteria;
 import com.epam.db.ConnectionPool;
 import com.epam.entity.*;
 import com.epam.exceptions.DaoException;
-import com.epam.exceptions.FileException;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
@@ -88,7 +86,7 @@ class PaymentDaoImplTest {
         List<Payment> list = paymentDao.findAllEntities();
         int i = 0;
         while(i<list.size()){
-            if(!(list.get(i).getPaymentStatus().equals(paymentCriteria.getPaymentStatus()))){
+            if(!(list.get(i).getStatus().equals(paymentCriteria.getPaymentStatus()))){
                 list.remove(i);
             }
             i++;

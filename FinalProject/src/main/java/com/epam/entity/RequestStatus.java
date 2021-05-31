@@ -7,7 +7,8 @@ public enum RequestStatus {
     ACCEPTED(1),
     INPROGRESS(2),
     DENIED(3),
-    PAID(4);
+    PAID(4),
+    CANCELLED(5);
 
     private final int id;
 

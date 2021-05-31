@@ -26,11 +26,11 @@ public class Payment extends BaseEntity {
         this.date = date;
     }
 
-    public PaymentStatus getPaymentStatus() {
+    public PaymentStatus getStatus() {
         return status;
     }
 
-    public void setPaymentstatus(PaymentStatus status) {
+    public void setStatus(PaymentStatus status) {
         this.status = status;
     }
 
@@ -39,7 +39,7 @@ public class Payment extends BaseEntity {
         return "Payment{" +
                 "amount=" + amount +
                 ", date=" + date +
-                ", payment_status=" + status +
+                ", paymentStatus=" + status +
                 ", id=" + super.getId() +
                 '}';
     }

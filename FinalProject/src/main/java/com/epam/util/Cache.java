@@ -1,7 +1,10 @@
 package com.epam.util;
 
+import com.epam.db.dao.impl.RequestDaoImpl;
 import com.epam.entity.Request;
+import com.epam.entity.RequestStatus;
 import com.epam.entity.Room;
+import com.epam.exceptions.DaoException;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -14,7 +17,16 @@ public class Cache {
     private Map<Integer, Request> activeRequests = new HashMap<>();
 
 
-    private Cache(){}
+    private Cache(){
+        RequestDaoImpl requestDao = new RequestDaoImpl();
+        try {
+            requestDao.findAllEntities().stream()
+                    .filter(i -> i.getRequestStatus().equals(RequestStatus.ACCEPTED))
+                    .forEach(i -> addRequest(i));
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static Cache getInstance(){
         if(instance == null){
@@ -40,6 +52,10 @@ public class Cache {
                 activeRequests.remove(pair.getValue());
             }
         }
+    }
+
+    public void removeRequest(int id){
+        activeRequests.remove(id);
     }
 
     public boolean isRoomEngaged(Date start, Date end, Room room){

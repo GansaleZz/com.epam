@@ -16,7 +16,7 @@ import java.util.function.Predicate;
 public class PaymentDaoImpl implements PaymentDao {
     private final String SQL_SELECT_ALL = "SELECT * FROM Payment";
     private final String SQL_SELECT_BY_CRITERIA = "SELECT * FROM Payment WHERE ";
-    private final String SQL_INSERT = "INSERT INTO Payment (amount,date,payment_status) VALUES(?,?,?)";
+    private final String SQL_INSERT = "INSERT INTO Payment (id,amount,date,payment_status) VALUES(?,?,?,?)";
     private final String SQL_DELETE = "DELETE FROM Payment WHERE id = ";
     private final String SQL_UPDATE = "UPDATE Payment SET amount = ?, date = ?, payment_status = ? WHERE id = ?";
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(PaymentDaoImpl.class);
@@ -69,11 +69,11 @@ public class PaymentDaoImpl implements PaymentDao {
         if(payment != null) {
             Connection connection = ConnectionPool.getInstance().getConnection();
             try{
-
                 PreparedStatement preparedStatement = connection.prepareStatement(SQL_INSERT);
-                preparedStatement.setInt(1,payment.getAmount());
-                preparedStatement.setDate(2,new Date(payment.getDate().getTime()));
-                preparedStatement.setInt(3,PaymentStatus.getIdByPaymentStatus(payment.getPaymentStatus()));
+                preparedStatement.setInt(1,payment.getId());
+                preparedStatement.setInt(2,payment.getAmount());
+                preparedStatement.setDate(3,new Date(payment.getDate().getTime()));
+                preparedStatement.setInt(4,PaymentStatus.getIdByPaymentStatus(payment.getStatus()));
                 preparedStatement.execute();
                 preparedStatement.close();
                 result = true;
@@ -118,7 +118,7 @@ public class PaymentDaoImpl implements PaymentDao {
                 PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE);
                 preparedStatement.setInt(1,payment.getAmount());
                 preparedStatement.setDate(2,new Date(payment.getDate().getTime()));
-                preparedStatement.setInt(3,PaymentStatus.getIdByPaymentStatus(payment.getPaymentStatus()));
+                preparedStatement.setInt(3,PaymentStatus.getIdByPaymentStatus(payment.getStatus()));
                 preparedStatement.setInt(4,payment.getId());
                 preparedStatement.execute();
                 preparedStatement.close();
@@ -140,7 +140,7 @@ public class PaymentDaoImpl implements PaymentDao {
     public List<Payment> findAllPaymentByCriteria(PaymentCriteria paymentCriteria) throws DaoException{
         List<Payment> list = new ArrayList<>();
         if(paymentCriteria.getPaymentStatus() != null) {
-            list = chooseAllByPredicate(i -> ((Payment)i).getPaymentStatus() == paymentCriteria.getPaymentStatus());
+            list = chooseAllByPredicate(i -> ((Payment)i).getStatus() == paymentCriteria.getPaymentStatus());
         }else{
             if(paymentCriteria.getAmount()!=0) {
                 list = chooseAllByPredicate(i -> ((Payment)i).getAmount() == paymentCriteria.getAmount());
@@ -159,7 +159,7 @@ public class PaymentDaoImpl implements PaymentDao {
     }
 
     private Optional<Payment> getPayment(ResultSet resultSet) throws DaoException {
-        Optional<Payment> payment = Optional.empty();
+        Optional<Payment> payment;
         try {
             int id = resultSet.getInt(1);
             int amount = resultSet.getInt(2);

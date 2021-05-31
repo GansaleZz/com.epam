@@ -22,7 +22,7 @@ public class PaymentCriteria extends BaseCriteria<Payment>{
         }
 
         public Builder withPaymentStatus(PaymentStatus paymentStatus){
-            actualClass.setPaymentstatus(paymentStatus);
+            actualClass.setStatus(paymentStatus);
             return this;
         }
 
