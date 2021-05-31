@@ -28,9 +28,9 @@ public class ShowRooms implements Command{
         request.setAttribute("list", list);
         try {
             switch(UserRole.getRole((String) request.getSession().getAttribute("userRole"))){
-                case CLIENT -> request.getServletContext().getRequestDispatcher("/usersView/client/rooms.jsp").forward(request, response);
-                case MODERATOR -> request.getServletContext().getRequestDispatcher("/usersView/moderator/rooms.jsp").forward(request, response);
-                case ADMIN -> request.getServletContext().getRequestDispatcher("/usersView/admin/rooms.jsp").forward(request, response);
+                case CLIENT -> request.getServletContext().getRequestDispatcher(ServletDestination.CLIENTROOMSPAGE.getPath()).forward(request, response);
+                case MODERATOR -> request.getServletContext().getRequestDispatcher(ServletDestination.MODERATORROOMSPAGE.getPath()).forward(request, response);
+                case ADMIN -> request.getServletContext().getRequestDispatcher(ServletDestination.ADMINROOMSPAGE.getPath()).forward(request, response);
             }
         } catch (ServletException e) {
             e.printStackTrace();

@@ -14,7 +14,7 @@ public class NewDepositPage implements Command{
             response.sendRedirect("http://localhost:8080/controller?command=ACTSHOWHOME");
         }else{
             try {
-                request.getServletContext().getRequestDispatcher("/usersView/client/newDeposit.jsp").forward(request, response);
+                request.getServletContext().getRequestDispatcher(ServletDestination.CLIENTNEWDEPOSITPAGE.getPath()).forward(request, response);
             } catch (ServletException e) {
                 e.printStackTrace();
             }

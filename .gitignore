@@ -186,3 +186,17 @@ FinalProject/out/artifacts/FinalProject_Web_exploded/usersView/moderator/profile
 FinalProject/out/artifacts/FinalProject_Web_exploded/usersView/moderator/rooms.jsp
 FinalProject/out/artifacts/FinalProject_Web_exploded/usersView/client/rooms.jsp
 FinalProject/out/artifacts/FinalProject_Web_exploded/usersView/admin/rooms.jsp
+FinalProject/out/artifacts/FinalProject_Web_exploded/usersView/moderator/users.jsp
+FinalProject/out/artifacts/FinalProject_Web_exploded/usersView/moderator/requests.jsp
+FinalProject/out/artifacts/FinalProject_Web_exploded/usersView/moderator/newRoom.jsp
+FinalProject/out/artifacts/FinalProject_Web_exploded/usersView/moderator/home.jsp
+FinalProject/out/artifacts/FinalProject_Web_exploded/usersView/client/requests.jsp
+FinalProject/out/artifacts/FinalProject_Web_exploded/usersView/client/newRequest.jsp
+FinalProject/out/artifacts/FinalProject_Web_exploded/usersView/client/newDeposit.jsp
+FinalProject/out/artifacts/FinalProject_Web_exploded/usersView/client/home.jsp
+FinalProject/out/artifacts/FinalProject_Web_exploded/usersView/client/badBalance.jsp
+FinalProject/out/artifacts/FinalProject_Web_exploded/usersView/admin/users.jsp
+FinalProject/out/artifacts/FinalProject_Web_exploded/usersView/admin/requests.jsp
+FinalProject/out/artifacts/FinalProject_Web_exploded/usersView/admin/newRoom.jsp
+FinalProject/out/artifacts/FinalProject_Web_exploded/usersView/admin/home.jsp
+FinalProject/out/artifacts/FinalProject_Web_exploded/usersView/admin/approveRequest.jsp

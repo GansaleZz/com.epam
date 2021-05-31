@@ -46,7 +46,7 @@ public class AddNewRequest implements Command{
             } catch (DaoException e) {
                 e.printStackTrace();
             }
-            response.sendRedirect("/usersView/client/home/home.jsp");
+            response.sendRedirect("http://localhost:8080/controller?command=ACTSHOWREQUESTS");
         }
     }
 }

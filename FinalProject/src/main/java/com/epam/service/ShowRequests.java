@@ -39,15 +39,15 @@ public class ShowRequests implements Command{
                             }
                         });
                 request.setAttribute("list", list);
-                request.getServletContext().getRequestDispatcher("/usersView/client/requests.jsp").forward(request, response);
+                request.getServletContext().getRequestDispatcher(ServletDestination.CLIENTREQEUSTSPAGE.getPath()).forward(request, response);
             }else {
                 requestDao.findAllEntities().stream()
                         .filter(i -> i.getRequestStatus() == RequestStatus.INPROGRESS)
                         .forEach(i -> list.add(i));
                 request.setAttribute("list", list);
                 switch (UserRole.getRole((String) request.getSession().getAttribute("userRole"))) {
-                    case MODERATOR -> request.getServletContext().getRequestDispatcher("/usersView/moderator/requests.jsp").forward(request, response);
-                    case ADMIN -> request.getServletContext().getRequestDispatcher("/usersView/admin/requests.jsp").forward(request, response);
+                    case MODERATOR -> request.getServletContext().getRequestDispatcher(ServletDestination.MODERATORREQUESTSPAGE.getPath()).forward(request, response);
+                    case ADMIN -> request.getServletContext().getRequestDispatcher(ServletDestination.ADMINREQUESTSPAGE.getPath()).forward(request, response);
                 }
             }
         } catch (ServletException e) {

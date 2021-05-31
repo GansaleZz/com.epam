@@ -14,17 +14,20 @@ public class RealiseDeposite implements Command{
         if(!request.getSession().getAttribute("userRole").equals("CLIENT")){
             response.sendRedirect("http://localhost:8080/controller?command=ACTSHOWHOME");
         }else{
-            if(request.getParameter("card").length()!=0) {
-                UserDaoImpl userDao = new UserDaoImpl();
-                try {
-                    User user = userDao.findEntityById((Integer) request.getSession().getAttribute("id")).get();
-                    user.setBalance(Double.valueOf(user.getBalance() + Integer.valueOf(request.getParameter("balance"))));
-                    userDao.update(user);
-                } catch (DaoException e) {
-                    e.printStackTrace();
+            try {
+                if(request.getParameter("card").length()!=0) {
+                    UserDaoImpl userDao = new UserDaoImpl();
+
+                        User user = userDao.findEntityById((Integer) request.getSession().getAttribute("id")).get();
+                        user.setBalance(Double.valueOf(user.getBalance() + Integer.valueOf(request.getParameter("balance"))));
+                        userDao.update(user);
+
                 }
+            } catch (DaoException e) {
+                e.printStackTrace();
+            }finally {
+                response.sendRedirect("http://localhost:8080/controller?command=ACTSHOWPROFILE");
             }
-            response.sendRedirect("http://localhost:8080/controller?command=ACTSHOWPROFILE");
         }
     }
 }

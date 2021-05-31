@@ -43,13 +43,15 @@
 <p>
 <table>
     <colgroup>
-        <col span="6" style="background: Khaki">
+        <col span="8" style="background: Khaki">
     </colgroup>
     <caption>List of your requests</caption>
     <tr>
         <th>Room number</th>
         <th>Room class</th>
         <th>Number of seats</th>
+        <th>Start date</th>
+        <th>End date</th>
         <th>Price for the whole period</th>
         <th>Payment</th>
         <th>Request status</th>
@@ -78,6 +80,8 @@
                 </c:otherwise>
             </c:choose></td>
             <td><c:out value="${request.numberOfSeats}"/> </td>
+            <td><c:out value="${request.start}"/> </td>
+            <td><c:out value="${request.end}"/></td>
             <td><c:choose>
                 <c:when test="${request.requestStatus == 'INPROGRESS'}">
                     <c:out value="INPROGRESS"/>

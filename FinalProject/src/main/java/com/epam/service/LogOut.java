@@ -8,6 +8,6 @@ public class LogOut implements Command{
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.getSession().invalidate();
-        response.sendRedirect("/auth/authPage.jsp");
+        response.sendRedirect(ServletDestination.AUTHPAGE.getPath());
     }
 }

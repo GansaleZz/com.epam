@@ -24,7 +24,7 @@ public class CreateRequestPage implements Command {
             request.setAttribute("maxDay", format.format(maxDay));
             request.setAttribute("today", format.format(today));
             try {
-                request.getServletContext().getRequestDispatcher("/usersView/client/newRequest.jsp").forward(request, response);
+                request.getServletContext().getRequestDispatcher(ServletDestination.CLIENTNEWREQUESTPAGE.getPath()).forward(request, response);
             } catch (ServletException e) {
                 e.printStackTrace();
             }

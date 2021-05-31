@@ -23,9 +23,9 @@ public class ShowProfile implements Command{
             UserRole userRole = UserRole.getRole((String) request.getSession().getAttribute("userRole"));
             request.setAttribute("user", user);
             switch(userRole){
-                case ADMIN -> request.getServletContext().getRequestDispatcher("/usersView/admin/profile.jsp").forward(request, response);
-                case MODERATOR -> request.getServletContext().getRequestDispatcher("/usersView/moderator/profile.jsp").forward(request, response);
-                case CLIENT -> request.getServletContext().getRequestDispatcher("/usersView/client/profile.jsp").forward(request, response);
+                case ADMIN -> request.getServletContext().getRequestDispatcher(ServletDestination.ADMINPROFILEPAGE.getPath()).forward(request, response);
+                case MODERATOR -> request.getServletContext().getRequestDispatcher(ServletDestination.MODERATORPROFILEPAGE.getPath()).forward(request, response);
+                case CLIENT -> request.getServletContext().getRequestDispatcher(ServletDestination.CLIENTPROFILEPAGE.getPath()).forward(request, response);
             }
         } catch (DaoException | ServletException e) {
             e.printStackTrace();

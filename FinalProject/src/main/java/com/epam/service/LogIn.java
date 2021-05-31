@@ -35,7 +35,7 @@ public class LogIn implements Command{
                         session.setAttribute("userRole", userRole);
                         session.setAttribute("userStatus",userStatus);
                         session.setAttribute("id",user.getId());
-                        response.sendRedirect(ServletDestination.ADMINHOMEPAGE.getPath());
+                        response.sendRedirect("http://localhost:8080/controller?command=ACTSHOWHOME");
                     }
                 } else {
                     response.sendRedirect(ServletDestination.LOGINERROR.getPath());
