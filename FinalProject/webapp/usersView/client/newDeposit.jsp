@@ -12,7 +12,7 @@
 </head>
 <body>
 <a href="http://localhost:8080/controller?command=LOGOUT">Log Out</a>
-<a href="http://localhost:8080/usersView/client/home/home.jsp">Home</a>
+<a href="http://localhost:8080/controller?command=ACTSHOWHOME">Home</a>
 <a href="http://localhost:8080/controller?command=ACTSHOWROOMS">Rooms</a>
 <a href="http://localhost:8080/controller?command=ACTSHOWPROFILE">Profile</a>
 <a href="http://localhost:8080/controller?command=ACTCREATEREQUESTPAGE">Create request</a>

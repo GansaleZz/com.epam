@@ -22,53 +22,45 @@ public class PayForRequest implements Command{
         if(!request.getSession().getAttribute("userRole").equals("CLIENT")){
             response.sendRedirect("http://localhost:8080/controller?command=ACTSHOWHOME");
         }else {
-            if(request.getParameter("submit").equals("Cancel")){
+            try {
                 RequestDaoImpl requestDao = new RequestDaoImpl();
-                try {
-                    Request req = requestDao.findEntityById(Integer.valueOf(request.getParameter("id"))).get();
-                    Calendar calendar = Calendar.getInstance();
-                    Payment payment = new PaymentCriteria.Builder()
-                            .newBuilder()
-                            .withId(req.getId())
-                            .withPaymentStatus(PaymentStatus.CANCELLED)
-                            .withAmount((int)(req.getEnd().getTime()-req.getStart().getTime())*req.getRoom().getPrice()/ (1000*60*60*24))
-                            .withDate(calendar.getTime())
-                            .build();
+                Calendar calendar = Calendar.getInstance();
+                Cache cache = Cache.getInstance();
+                Request req = requestDao.findEntityById(Integer.valueOf(request.getParameter("id"))).get();
+                int price = (int)(req.getEnd().getTime()-req.getStart().getTime())/ (1000*60*60*24);
+                Payment payment = new PaymentCriteria.Builder()
+                        .newBuilder()
+                        .withId(req.getId())
+                        .withAmount(price*req.getRoom().getPrice())
+                        .withDate(calendar.getTime())
+                        .build();
+            if(request.getParameter("submit").equals("Cancel")){
                     PaymentDaoImpl paymentDao = new PaymentDaoImpl();
+                    payment.setStatus(PaymentStatus.CANCELLED);
                     paymentDao.create(payment);
                     req.setRequestStatus(RequestStatus.CANCELLED);
                     req.setPayment(payment);
                     requestDao.update(req);
-                    Cache cache = Cache.getInstance();
                     cache.removeRequest(req.getId());
-                } catch (DaoException e) {
-                    e.printStackTrace();
-                }
             }else{
-                RequestDaoImpl requestDao = new RequestDaoImpl();
-                try {
-                    Request req = requestDao.findEntityById(Integer.valueOf(request.getParameter("id"))).get();
-                    int price = (int)(req.getEnd().getTime()-req.getStart().getTime())/ (1000*60*60*24);
-                    if(req.getUser().getBalance() >= price*req.getRoom().getPrice()) {
-                        Calendar calendar =Calendar.getInstance();
-                        UserDaoImpl userDao = new UserDaoImpl();
-                        Payment payment = new PaymentCriteria.Builder()
-                                .newBuilder()
-                                .withId(req.getId())
-                                .withPaymentStatus(PaymentStatus.PAID)
-                                .withAmount(price)
-                                .withDate(calendar.getTime())
-                                .build();
-                        req.getUser().setBalance(req.getUser().getBalance()-price*req.getRoom().getPrice());
-                        req.setPayment(payment);
-                        userDao.update(req.getUser());
-                        requestDao.update(req);
-                    }
-                } catch (DaoException e) {
-                    e.printStackTrace();
+                if(req.getUser().getBalance() >= payment.getAmount()) {
+                    UserDaoImpl userDao = new UserDaoImpl();
+                    PaymentDaoImpl paymentDao = new PaymentDaoImpl();
+                    payment.setStatus(PaymentStatus.PAID);
+                    paymentDao.create(payment);
+                    req.setRequestStatus(RequestStatus.PAID);
+                    req.getUser().setBalance(req.getUser().getBalance()-price*req.getRoom().getPrice());
+                    req.setPayment(payment);
+                    userDao.update(req.getUser());
+                    requestDao.update(req);
+                    cache.removeRequest(req.getId());
                 }
             }
-            response.sendRedirect("http://localhost:8080/controller?command=ACTSHOWREQUESTS");
+        } catch (DaoException e) {
+            e.printStackTrace();
+        } finally {
+                response.sendRedirect("http://localhost:8080/controller?command=ACTSHOWREQUESTS");
+            }
         }
     }
 }

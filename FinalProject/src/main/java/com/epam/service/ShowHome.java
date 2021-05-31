@@ -14,9 +14,9 @@ public class ShowHome implements Command{
         UserRole userRole = UserRole.getRole((String) request.getSession().getAttribute("userRole"));
         try {
             switch(userRole){
-                case ADMIN -> request.getServletContext().getRequestDispatcher("/usersView/admin/home/home.jsp").forward(request, response);
-                case MODERATOR -> request.getServletContext().getRequestDispatcher("/usersView/moderator/home/home.jsp").forward(request, response);
-                case CLIENT -> request.getServletContext().getRequestDispatcher("/usersView/client/home/home.jsp").forward(request, response);
+                case ADMIN -> request.getServletContext().getRequestDispatcher("/usersView/admin/home.jsp").forward(request, response);
+                case MODERATOR -> request.getServletContext().getRequestDispatcher("/usersView/moderator/home.jsp").forward(request, response);
+                case CLIENT -> request.getServletContext().getRequestDispatcher("/usersView/client/home.jsp").forward(request, response);
             }
         } catch (ServletException e) {
             e.printStackTrace();
