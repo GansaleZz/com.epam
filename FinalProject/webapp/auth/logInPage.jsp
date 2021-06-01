@@ -13,7 +13,8 @@
     <title>Log in</title>
 </head>
 <body>
-<h1>Sign In Form</h1>
+<a href="http://localhost:8080/auth/authPage.jsp" class="s1">Back</a>
+<h1>Sign In</h1>
 <div id ="wrapper">
     <form id="signin" action="/controller?command=LOGIN" method = "post">
         <input type = "text" name="login" placeholder="Login"/><br/>
@@ -21,6 +22,6 @@
         <button type="submit">&#xf0da;</button>
     </form>
 </div>
-<a href="http://localhost:8080/auth/authPage.jsp">Back</a>
+
 </body>
 </html>

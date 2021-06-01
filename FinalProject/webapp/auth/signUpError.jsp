@@ -6,13 +6,14 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Sign Up Error</title>
+    <title>Error</title>
+    <link rel="stylesheet" href="<c:url value="../resources/css/auth.css"/> ">
 </head>
 <body>
-  <h1>User with this login already exists or input data incorrect.</h1>
-  <a href="http://localhost:8080/auth/signUpPage.jsp">Try again</a>
-  <a href="http://localhost:8080/auth/authPage.jsp">Back</a>
+  <h1>User with this login already exists or input data incorrect</h1>
+  <a href="http://localhost:8080/auth/signUpPage.jsp" class="s2">Try again</a>
 </body>
 </html>
