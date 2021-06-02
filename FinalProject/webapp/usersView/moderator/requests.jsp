@@ -30,11 +30,12 @@
 <p>
 <table>
     <colgroup>
-        <col span="7" style="background: Khaki">
+        <col span="8" style="background: Khaki">
     </colgroup>
     <caption><c:out value="${bundle.getString('usersRequestsList')}"/></caption>
     <tr>
         <th><c:out value="${bundle.getString('userName')}"/></th>
+        <th><c:out value="${bundle.getString('roomNumber')}"/></th>
         <th><c:out value="${bundle.getString('roomClass')}"/></th>
         <th><c:out value="${bundle.getString('numberOfSeats')}"/></th>
         <th><c:out value="${bundle.getString('startDate')}"/></th>
@@ -45,6 +46,19 @@
     <c:forEach var="request" items="${list}">
         <tr>
             <td><c:out value="${request.user.name}"/></td>
+            <td>
+                <c:choose>
+                    <c:when test="${request.requestStatus == 'INPROGRESS'}">
+                        <c:out value="${bundle.getString('requestStatus.progress')}"/>
+                    </c:when>
+                    <c:when test="${request.requestStatus == 'DENIED'}">
+                        <c:out value="${bundle.getString('requestStatus.denied')}"/>
+                    </c:when>
+                    <c:otherwise>
+                        <c:out value="${request.room.roomNumber}"/>
+                    </c:otherwise>
+                </c:choose>
+            </td>
             <td>
                 <c:choose>
                     <c:when test="${not empty request.room}">
@@ -104,6 +118,9 @@
                 <c:when test="${request.requestStatus == 'DENIED'}">
                     <c:out value="${bundle.getString('requestStatus.denied')}"/>
                 </c:when>
+                <c:otherwise>
+                    <c:out value="${bundle.getString('requestStatus.accepted')}"/>
+                </c:otherwise>
             </c:choose></td>
         </tr>
     </c:forEach>

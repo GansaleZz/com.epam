@@ -31,7 +31,7 @@
   <colgroup>
     <col span="5" style="background: Khaki">
   </colgroup>
-  <caption>List of rooms</caption>
+  <caption><c:out value="${bundle.getString('roomsList')}" /></caption>
   <tr>
     <th><c:out value="${bundle.getString('roomNumber')}"/></th>
     <th><c:out value="${bundle.getString('roomClass')}"/></th>

@@ -26,32 +26,29 @@
     </ul>
 </nav>
 
-<p>
-<table>
-    <colgroup>
-        <col span="1" style="background: Khaki">
-    </colgroup>
-    <caption>Choose room number</caption>
-    <tr>
-        <th>Room number for client</th>
-    </tr>
-        <tr>
-            <form action="controller?command=ACTUPDATEREQUEST" method = "post">
-            <td>
-               <select name = "room">
-                   <c:forEach var="i" items="${rooms}">
-                       <option>${i.roomNumber}</option>
-                       <c:set var="rmId" value="${i.id}"/>
-                   </c:forEach>
-               </select>
+<form action="controller?command=ACTUPDATEREQUEST" method = "post">
+    <div class="form-row">
+        <b><c:out value="${bundle.getString('roomNumber')}"/> </b>
+        <c:choose>
+            <c:when test="${not empty rooms}">
+                <select name = "room">
+                    <c:forEach var="i" items="${rooms}">
+                        <option>${i.roomNumber}</option>
+                        <c:set var="rmId" value="${i.id}"/>
+                    </c:forEach>
+                </select>
                 <input type="hidden" value="${rmId}" name="roomId"/>
                 <input type="hidden" value="${id}" name="reqId"/>
-                <input type="submit" name="submit" value="Accept">
-            </td>
-            </form>
-        </tr>
-</table>
-</p>
+                <input type="submit" name="submit" value="<c:out value="${bundle.getString('approve')}"/> ">
+            </c:when>
+            <c:otherwise>
+                <c:out value="There is no suitable rooms"/>
+                <input type="hidden" value="${id}" name="reqId"/>
+                <input type="submit" name="submit" value="<c:out value="${bundle.getString('deny')}"/>">
+            </c:otherwise>
+        </c:choose>
+    </div>
+</form>
 
 </body>
 </html>

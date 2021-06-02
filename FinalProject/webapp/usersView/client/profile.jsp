@@ -83,9 +83,20 @@
         </td>
         </tr>
         <tr>
-            <th><c:out value="${bundle.getString('action')}"/></th><td><input type="submit" value="<c:out value="${bundle.getString('submit')}"/>"></td>
+            <th><c:out value="${bundle.getString('balance')}"/> </th>
+            <td>
+                <c:out value="${user.balance}"/>
+           </td>
         </tr>
-    </form>
+        <tr>
+            <th><c:out value="${bundle.getString('action')}"/></th>
+            <td>
+                <input type="submit" value="<c:out value="${bundle.getString('submit')}"/>"></form>
+                <form action="controller?command=ACTNEWDEPOSITPAGE" method = "post">
+                    <input type="submit" value="<c:out value="${bundle.getString('deposit')}"/>">
+                </form>
+            </td>
+        </tr>
 </table>
 </p>
 
