@@ -26,7 +26,5 @@
         <li><a href="http://localhost:8080/controller?command=LOGOUT"><c:out value="${bundle.getString('logOut')}"/></a></li>
     </ul>
 </nav>
-
-
 </body>
 </html>

@@ -31,19 +31,40 @@
     <colgroup>
         <col span="4" style="background: Khaki">
     </colgroup>
-    <caption>List of users</caption>
+    <caption><c:out value="${bundle.getString('usersList')}"/></caption>
     <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Role</th>
-        <th>Status</th>
+        <th><c:out value="${bundle.getString('name')}"/></th>
+        <th><c:out value="${bundle.getString('email')}"/></th>
+        <th><c:out value="${bundle.getString('role')}"/></th>
+        <th><c:out value="${bundle.getString('status')}"/></th>
     </tr>
     <c:forEach var="user" items="${list}">
     <tr>
         <td><c:out value="${user.name}"></c:out></td>
         <td><c:out value="${user.email}"></c:out></td>
-        <td><c:out value ="${user.userRole}"></c:out></td>
-        <td><c:out value ="${user.status}"></c:out></td>
+        <td>
+            <c:choose>
+                <c:when test="${user.userRole == 'ADMIN'}">
+                    <c:out value="${bundle.getString('admin')}"/>
+                </c:when>
+                <c:when test="${user.userRole == 'MODERATOR'}">
+                    <c:out value="${bundle.getString('moderator')}"/>
+                </c:when>
+                <c:otherwise>
+                    <c:out value="${bundle.getString('client')}"/>
+                </c:otherwise>
+            </c:choose>
+        </td>
+        <td>
+            <c:choose>
+                <c:when test="${user.status == 'BANNED'}">
+                    <c:out value="${bundle.getString('user.banned')}"/>
+                </c:when>
+                <c:otherwise>
+                    <c:out value="${bundle.getString('user.available')}"/>
+                </c:otherwise>
+            </c:choose>
+        </td>
     </tr>
     </c:forEach>
 

@@ -31,7 +31,7 @@
     <colgroup>
         <col span="6" style="background: Khaki">
     </colgroup>
-    <caption>List of rooms</caption>
+    <caption><c:out value="${bundle.getString('roomsList')}" /></caption>
     <tr>
         <th><c:out value="${bundle.getString('roomNumber')}"/></th>
         <th><c:out value="${bundle.getString('roomClass')}"/></th>
@@ -50,34 +50,34 @@
                 <td><c:choose>
                     <c:when test="${room.roomClass == 'BUSINESS'}">
                         <select name="class">
-                            <option selected = "selected">BUSINESS</option>
-                            <option>ECONOM</option>
-                            <option>LUXE</option>
-                            <option>PREMIUM</option>
+                            <option selected = "selected" value="BUSINESS"><c:out value="${bundle.getString('business')}"/> </option>
+                            <option value="ECONOM"><c:out value="${bundle.getString('econom')}"/></option>
+                            <option value="LUXE"><c:out value="${bundle.getString('luxe')}"/></option>
+                            <option value="PREMIUM"><c:out value="${bundle.getString('premium')}"/></option>
                         </select><br>
                     </c:when>
                     <c:when test="${room.roomClass == 'ECONOM'}">
                         <select name="class">
-                            <option>BUSINESS</option>
-                            <option selected = "selected">ECONOM</option>
-                            <option>LUXE</option>
-                            <option>PREMIUM</option>
+                            <option value="BUSINESS"><c:out value="${bundle.getString('business')}"/></option>
+                            <option selected = "selected" value="ECONOM"><c:out value="${bundle.getString('econom')}"/></option>
+                            <option value="LUXE"><c:out value="${bundle.getString('luxe')}"/></option>
+                            <option value="PREMIUM"><c:out value="${bundle.getString('premium')}"/></option>
                         </select>
                     </c:when>
                     <c:when test="${room.roomClass == 'LUXE'}">
                         <select name="class">
-                            <option>BUSINESS</option>
-                            <option>ECONOM</option>
-                            <option selected = "selected">LUXE</option>
-                            <option>PREMIUM</option>
+                            <option value="BUSINESS"><c:out value="${bundle.getString('business')}"/></option>
+                            <option value="ECONOM"><c:out value="${bundle.getString('econom')}"/></option>
+                            <option selected = "selected" value="LUXE"><c:out value="${bundle.getString('luxe')}"/></option>
+                            <option value="PREMIUM"><c:out value="${bundle.getString('premium')}"/></option>
                         </select>
                     </c:when>
                     <c:when test="${room.roomClass == 'PREMIUM'}">
                         <select name="class">
-                            <option>BUSINESS</option>
-                            <option>ECONOM</option>
-                            <option>LUXE</option>
-                            <option selected = "selected">PREMIUM</option>
+                            <option value="BUSINESS"><c:out value="${bundle.getString('business')}"/></option>
+                            <option value="ECONOM"><c:out value="${bundle.getString('econom')}"/></option>
+                            <option value="LUXE"><c:out value="${bundle.getString('luxe')}"/></option>
+                            <option selected = "selected" value="PREMIUM"><c:out value="${bundle.getString('premium')}"/></option>
                         </select>
                     </c:when>
                 </c:choose></td>
@@ -132,25 +132,25 @@
                 <td><c:choose>
                     <c:when test="${room.roomStatus == 'AVAILABLE'}">
                         <select name="status">
-                            <option selected = "selected">AVAILABLE</option>
-                            <option>CLOSED</option>
+                            <option selected = "selected" value="AVAILABLE"><c:out value="${bundle.getString('roomStatus.available')}"/></option>
+                            <option value="CLOSED"><c:out value="${bundle.getString('roomStatus.closed')}"/></option>
                         </select>
                     </c:when>
                     <c:when test="${room.roomStatus == 'CLOSED'}">
                         <select name="status">
-                            <option>AVAILABLE</option>
-                            <option selected = "selected">CLOSED</option>
+                            <option value="AVAILABLE"><c:out value="${bundle.getString('roomStatus.available')}"/></option>
+                            <option selected = "selected" value="CLOSED"><c:out value="${bundle.getString('roomStatus.closed')}"/></option>
                         </select>
                     </c:when>
                 </c:choose></td>
-                <td><input type = "submit" value="Submit" name="Submit"/>
-                    <input type = "submit" value="Delete" name ="Submit"/></td>
+                <td><input type = "submit" value="${bundle.getString('submit')}" name="submit"/>
+                    <input type = "submit" value="${bundle.getString('delete')}" name ="submit"/></td>
             </form>
         </tr>
     </c:forEach>
 </table>
 </p>
-    <a href="http://localhost:8080/controller?command=ACTNEWROOMPAGE">Add new room</a>
+<a href="http://localhost:8080/controller?command=ACTNEWROOMPAGE" class = "s2"><c:out value="${bundle.getString('addNewRoom')}"/></a>
 
 </body>
 </html>
