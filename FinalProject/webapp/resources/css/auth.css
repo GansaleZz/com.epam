@@ -21,11 +21,10 @@ h1{
 	width: 320px;
 	left: 50%;
 	margin-left: -150px;
-	/*top: 50%;*/
 	margin-top: -75px;
 }
 
-/* === Sign in === */
+/* === Sign in,up === */
 #signin {
 	height: 90px;
 	width: 300px;
@@ -52,7 +51,7 @@ h1{
 }
 #signin  input[type="text"], #signin  input[type="password"], #signin button[type="submit"],#signin input[type="email"]{
 	background: rgb(28, 30, 33);
-	box-shadow: inset -100px -100px 0 rgb(28, 30, 33); /*Prevent yellow autofill color*/
+	box-shadow: inset -100px -100px 0 rgb(28, 30, 33);
 	color: rgb(52, 56, 61);
 }
 #signin  input[type="text"], #signin  input[type="password"], input[type="email"]{
@@ -92,6 +91,7 @@ h1{
 	text-shadow: 0 0 10px rgb(0, 126, 165);
 	cursor: pointer;
 }
+
 #signin p {
 	color: rgb(79, 85, 97);
 	padding: 0 20px;
@@ -107,7 +107,7 @@ h1{
 	border-bottom: 1px solid;
 }
 
-
+/*=== links1 === */
 .s1 {
 	color: antiquewhite;
 	line-height: 1.2;
@@ -134,6 +134,7 @@ h1{
 	opacity: 0.35;
 }
 
+/*=== links2 ===*/
 .s2 {
 	color: antiquewhite;
 	line-height: 1.2;
@@ -141,7 +142,7 @@ h1{
 	padding: 0 14px;
 	text-transform: uppercase;
 	text-decoration: none;
-	left: 44%;
+	left: 460px;
 }
 
 .s2:after {
@@ -195,7 +196,6 @@ nav {
 	display: inline;
 }
 
-
 /* === Table === */
 table {
 	border: 1px solid grey;
@@ -216,3 +216,67 @@ caption{
 	color: #F3CD26;
 	text-shadow: 1px 1px 0 rgba(0,0,0,.3);
 }
+
+/* === Input === */
+
+.form-row {
+	position: relative;
+	margin:10px 40%;
+}
+
+.form-row input[type="submit"] {
+	width: 100%;
+	padding: 0;
+	line-height: 42px;
+	background: #5555aa;
+	border-width: 0;
+	color: antiquewhite;
+	font-size: 20px;
+	margin: 10px;
+}
+
+.form-row input[type="number"] {
+	margin: 10px;
+	background-color: #eee;
+	vertical-align: top;
+	outline: none;
+	padding: 0;
+	height: 40px;
+	line-height: 40px;
+	text-indent: 10px;
+	display: inline-block;
+	width: 100%;
+	box-sizing: border-box;
+	border: 1px solid #ddd;
+	font-size: 14px;
+	border-radius: 3px;
+}
+.form-row select{
+	margin: 10px;
+	background-color: #eee;
+	vertical-align: top;
+	outline: none;
+	padding: 0;
+	height: 40px;
+	line-height: 40px;
+	text-indent: 10px;
+	display: inline-block;
+	width: 100%;
+	box-sizing: border-box;
+	border: 1px solid #ddd;
+	font-size: 14px;
+	border-radius: 3px;
+}
+
+.form-row input[type="number"]:focus {
+	outline: 2px antiquewhite;
+}
+
+
+.form-row b{
+	color: antiquewhite;
+	font-weight: bold;
+	font-size: 17px;
+	margin: 5px 0 0 13px;
+}
+

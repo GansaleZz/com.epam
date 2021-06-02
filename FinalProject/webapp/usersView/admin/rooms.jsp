@@ -150,7 +150,7 @@
   </c:forEach>
   </table>
 </p>
-  <a href="http://localhost:8080/controller?command=ACTNEWROOMPAGE">Add new room</a>
+  <a href="http://localhost:8080/controller?command=ACTNEWROOMPAGE" class = "s2"><c:out value="${bundle.getString('addNewRoom')}"/></a>
 
 </body>
 </html>
