@@ -200,3 +200,13 @@ FinalProject/out/artifacts/FinalProject_Web_exploded/usersView/admin/requests.js
 FinalProject/out/artifacts/FinalProject_Web_exploded/usersView/admin/newRoom.jsp
 FinalProject/out/artifacts/FinalProject_Web_exploded/usersView/admin/home.jsp
 FinalProject/out/artifacts/FinalProject_Web_exploded/usersView/admin/approveRequest.jsp
+FinalProject/target/classes/language_ru.properties
+FinalProject/target/classes/language_en.properties
+FinalProject/target/classes/language_by.properties
+FinalProject/out/artifacts/FinalProject_Web_exploded/WEB-INF/classes/language_ru.properties
+FinalProject/out/artifacts/FinalProject_Web_exploded/WEB-INF/classes/language_en.properties
+FinalProject/out/artifacts/FinalProject_Web_exploded/WEB-INF/classes/language_by.properties
+FinalProject/out/artifacts/FinalProject_Web_exploded/usersView/moderator/approveRequest.jsp
+FinalProject/out/artifacts/FinalProject_Web_exploded/resources/css/auth.css
+FinalProject/.idea/webContexts.xml
+FinalProject/.idea/resourceBundles.xml
