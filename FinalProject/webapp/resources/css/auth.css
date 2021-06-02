@@ -1,5 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css');
+@import url(http://fonts.googleapis.com/css?family=Lato:400,700italic);
+@import url(https://fonts.googleapis.com/css?family=Lora);
 
 *{
 	font-family: 'Open Sans', 'sans-serif', 'FontAwesome';
@@ -8,7 +10,7 @@ body{
     background: rgb(52, 56, 61);
 }
 h1{
-	color: rgb(255, 255, 255);
+	color: antiquewhite;
 	width: 100%;
 	text-align: center;
 	margin: 90px auto;
@@ -22,14 +24,13 @@ h1{
 	/*top: 50%;*/
 	margin-top: -75px;
 }
-/* === Sign up */
+
 /* === Sign in === */
 #signin {
 	height: 90px;
 	width: 300px;
 	border-radius: 8px;
 	position: relative;
-	position: static;
 }
 #signin::before {
 	display: block;
@@ -66,7 +67,7 @@ h1{
 	font-weight: 700;
 }
 #signin  input[type="text"]:focus, #signin  input[type="password"]:focus, #signin input[type="email"]:focus{
-	color: rgb(255, 255, 255);
+	color:antiquewhite;
 }
 #signin button[type="submit"]{
 	display: block;
@@ -81,7 +82,7 @@ h1{
 	right: 1px;
 	border: 6px solid rgb(52, 56, 61);
 	font-size: 25px;
-	text-indent: 0px;
+	text-indent: 0;
 	padding-left: 9px;
 	padding-bottom: 3px;
 	text-align: center;
@@ -108,11 +109,12 @@ h1{
 
 
 .s1 {
-	color: cornflowerblue;
+	color: antiquewhite;
 	line-height: 1.2;
 	position: relative;
 	padding: 0 14px;
 	text-transform: uppercase;
+	text-decoration: none;
 }
 
 .s1:after {
@@ -133,11 +135,12 @@ h1{
 }
 
 .s2 {
-	color: cornflowerblue;
+	color: antiquewhite;
 	line-height: 1.2;
 	position: relative;
 	padding: 0 14px;
 	text-transform: uppercase;
+	text-decoration: none;
 	left: 44%;
 }
 
@@ -156,4 +159,38 @@ h1{
 	min-width: 100%;
 	background: #95a5a6;
 	opacity: 0.35;
+}
+
+
+/* === Header === */
+ul {
+	list-style: none;
+	margin: 0 auto;
+}
+a {
+	text-decoration: none;
+	font-family: 'Lora', serif;
+	transition: .5s linear;
+}
+i {
+	margin-right: 10px;
+}
+nav {
+	display: block;
+	width: 100%;
+	margin: 0 auto 30px;
+}
+.one ul {
+	padding: 1em 0;
+	background: #5555aa;
+}
+.one a {
+	padding: 1em;
+	background: #5555aa;
+	border-right: #5555aa;
+	color: antiquewhite;
+}
+.one a:hover {background: #b19891;}
+.one li {
+	display: inline;
 }

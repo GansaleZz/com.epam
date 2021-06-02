@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 public class LogIn implements Command{
 
@@ -21,7 +22,6 @@ public class LogIn implements Command{
             UserCriteria criteria = new UserCriteria();
             criteria.setLogin(request.getParameter("login"));
             try {
-
                 if (userDao.findUserByCriteria(criteria).isPresent() && userDao.findUserByCriteria(criteria).get().getPassword().equals(pass)) {
                     User user = userDao.findUserByCriteria(criteria).get();
                     if(user.getStatus().equals(UserStatus.BANNED)){
@@ -30,11 +30,14 @@ public class LogIn implements Command{
                         HttpSession session = request.getSession();
                         String userRole = String.valueOf(user.getUserRole());
                         String userStatus = String.valueOf(user.getStatus());
+                        ResourceBundle bundle = ResourceBundle.getBundle("language_en");
                         session.setAttribute("login", user.getLogin());
                         session.setAttribute("password", pass);
                         session.setAttribute("userRole", userRole);
                         session.setAttribute("userStatus",userStatus);
                         session.setAttribute("id",user.getId());
+                        session.setAttribute("locale","en");
+                        session.setAttribute("bundle",bundle);
                         response.sendRedirect("http://localhost:8080/controller?command=ACTSHOWHOME");
                     }
                 } else {

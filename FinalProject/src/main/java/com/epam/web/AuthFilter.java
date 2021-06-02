@@ -40,14 +40,11 @@ public class AuthFilter implements Filter {
                                 httpServletRequest.getQueryString().contains("LOGIN"))) ||
                 httpServletRequest.getRequestURI().contains("/css");
         if (loggedIn) {
-            if(!httpServletRequest.getRequestURI().contains("controller")){
-                httpServletResponse.sendRedirect("http://localhost:8080/controller?command=ACTSHOWHOME");
-            }
             UserDaoImpl userDao = new UserDaoImpl();
             UserCriteria userCriteria = new UserCriteria();
             userCriteria.setLogin((String) session.getAttribute("login"));
             try {
-                if(userDao.findUserByCriteria(userCriteria).get().getStatus().equals(UserStatus.BANNED)) {
+                if (userDao.findUserByCriteria(userCriteria).get().getStatus().equals(UserStatus.BANNED)) {
                     httpServletResponse.sendRedirect(ServletDestination.BANPAGE.getPath());
                     session.invalidate();
                     return;
@@ -59,7 +56,7 @@ public class AuthFilter implements Filter {
         if (loggedIn && badRequestLogged) {
             httpServletResponse.sendRedirect("http://localhost:8080/controller?command=ACTSHOWHOME");
         } else {
-            if (!loggedIn && !badRequestLogged ) {
+            if (!loggedIn && !badRequestLogged) {
                 httpServletResponse.sendRedirect(ServletDestination.AUTHPAGE.getPath());
             } else {
                 chain.doFilter(request, response);

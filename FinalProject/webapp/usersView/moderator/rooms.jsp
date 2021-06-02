@@ -31,14 +31,19 @@
             text-shadow: 1px 1px 0 rgba(0,0,0,.3);
         }
     </style>
+    <link rel="stylesheet" href="<c:url value="/resources/css/auth.css"/> ">
 </head>
 <body>
-<a href="http://localhost:8080/controller?command=LOGOUT">Log Out</a>
-<a href="http://localhost:8080/controller?command=ACTSHOWHOME">Home</a>
-<a href="http://localhost:8080/controller?command=ACTSHOWROOMS">Rooms</a>
-<a href="http://localhost:8080/controller?command=ACTSHOWPROFILE">Profile</a>
-<a href="http://localhost:8080/controller?command=ACTSHOWREQUESTS">Requests</a>
-<a href="http://localhost:8080/controller?command=ACTSHOWUSERS">Users</a>
+<nav class="one">
+    <ul>
+        <li><a href="http://localhost:8080/controller?command=ACTSHOWHOME"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li><a href="http://localhost:8080/controller?command=ACTSHOWROOMS">Rooms</a></li>
+        <li><a href="http://localhost:8080/controller?command=ACTSHOWPROFILE">Profile</a></li>
+        <li><a href="http://localhost:8080/controller?command=ACTSHOWREQUESTS">Requests</a></li>
+        <li><a href="http://localhost:8080/controller?command=ACTSHOWUSERS">Users</a></li>
+        <li><a href="http://localhost:8080/controller?command=LOGOUT">Log Out</a></li>
+    </ul>
+</nav>
 
 <p>
 <table>

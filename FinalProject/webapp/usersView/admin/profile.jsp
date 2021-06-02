@@ -10,6 +10,7 @@
 <html>
 <head>
     <title>Profile</title>
+  <link rel="stylesheet" href="<c:url value="/resources/css/auth.css"/> ">
   <style>
     table {
       border: 1px solid grey;
@@ -33,12 +34,18 @@
   </style>
 </head>
 <body>
-<a href="http://localhost:8080/controller?command=LOGOUT">Log Out</a>
-<a href="http://localhost:8080/controller?command=ACTSHOWHOME">Home</a>
-<a href="http://localhost:8080/controller?command=ACTSHOWROOMS">Rooms</a>
-<a href="http://localhost:8080/controller?command=ACTSHOWPROFILE">Profile</a>
-<a href="http://localhost:8080/controller?command=ACTSHOWREQUESTS">Requests</a>
-<a href="http://localhost:8080/controller?command=ACTSHOWUSERS">Users</a>
+<c:set var="bundle" value="${sessionScope.bundle}"/>
+
+<nav class="one">
+  <ul>
+    <li><a href="http://localhost:8080/controller?command=ACTSHOWHOME"><i class="fa fa-home fa-fw"></i><c:out value="${bundle.getString('home')}"/></a></li>
+    <li><a href="http://localhost:8080/controller?command=ACTSHOWROOMS"><c:out value="${bundle.getString('rooms')}"/></a></li>
+    <li><a href="http://localhost:8080/controller?command=ACTSHOWPROFILE"><c:out value="${bundle.getString('profile')}"/></a></li>
+    <li><a href="http://localhost:8080/controller?command=ACTSHOWREQUESTS"><c:out value="${bundle.getString('requests')}"/></a></li>
+    <li><a href="http://localhost:8080/controller?command=ACTSHOWUSERS"><c:out value="${bundle.getString('users')}"/></a></li>
+    <li><a href="http://localhost:8080/controller?command=LOGOUT"><c:out value="${bundle.getString('LogOut')}"/></a></li>
+  </ul>
+</nav>
 
 
   <c:set var="user" value="${user}" />
@@ -61,6 +68,29 @@
       </tr>
       <tr>
         <th>Role</th><td><c:out value="${user.userRole}"/></td>
+      </tr>
+      <tr>
+        <th>Language</th><td>
+          <select name ="locale">
+            <c:choose>
+              <c:when test="${locale == 'en'}">
+                  <option selected ="selected" value="en"> English</option>
+                  <option value="ru">Russian</option>
+                  <option value="by">Belarusian</option>
+              </c:when>
+              <c:when test="${locale == 'ru'}">
+                <option value="en"> English</option>
+                <option selected ="selected" value="ru">Russian</option>
+                <option value="by">Belarusian</option>
+              </c:when>
+              <c:otherwise>
+                <option value="en"> English</option>
+                <option value="ru" >Russian</option>
+                <option selected ="selected" value="by">Belarusian</option>
+              </c:otherwise>
+            </c:choose>
+            </select>
+      </td>
       </tr>
       <tr>
         <th>Action</th><td><input type="submit" value="Submit"></td>

@@ -7,11 +7,15 @@ import com.epam.exceptions.DaoException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 public class UpdateProfile implements Command{
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try{
+            request.getSession().setAttribute("locale",request.getParameter("locale"));
+            ResourceBundle bundle = ResourceBundle.getBundle("language_"+request.getParameter("locale"));
+            request.getSession().setAttribute("bundle",bundle);
             UserDaoImpl userDao = new UserDaoImpl();
             User user = userDao.findEntityById(Integer.valueOf(request.getParameter("id"))).get();
             user.setName(request.getParameter("name"));

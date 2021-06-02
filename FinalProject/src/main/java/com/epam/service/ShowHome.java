@@ -13,12 +13,12 @@ public class ShowHome implements Command{
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         UserRole userRole = UserRole.getRole((String) request.getSession().getAttribute("userRole"));
         try {
-            switch(userRole){
+            switch (userRole) {
                 case ADMIN -> request.getServletContext().getRequestDispatcher(ServletDestination.ADMINHOMEPAGE.getPath()).forward(request, response);
                 case MODERATOR -> request.getServletContext().getRequestDispatcher(ServletDestination.MODERATORHOMEPAGE.getPath()).forward(request, response);
                 case CLIENT -> request.getServletContext().getRequestDispatcher(ServletDestination.CLIENTHOMEPAGE.getPath()).forward(request, response);
             }
-        } catch (ServletException e) {
+        }catch (ServletException e) {
             e.printStackTrace();
         }
     }

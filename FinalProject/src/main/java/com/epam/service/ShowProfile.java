@@ -22,6 +22,7 @@ public class ShowProfile implements Command{
             user.setBalance(userDao.findBalanceById(user.getId()));
             UserRole userRole = UserRole.getRole((String) request.getSession().getAttribute("userRole"));
             request.setAttribute("user", user);
+            request.setAttribute("locale",request.getSession().getAttribute("locale"));
             switch(userRole){
                 case ADMIN -> request.getServletContext().getRequestDispatcher(ServletDestination.ADMINPROFILEPAGE.getPath()).forward(request, response);
                 case MODERATOR -> request.getServletContext().getRequestDispatcher(ServletDestination.MODERATORPROFILEPAGE.getPath()).forward(request, response);
