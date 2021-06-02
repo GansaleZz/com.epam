@@ -10,6 +10,8 @@ import com.epam.exceptions.DaoException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.ResourceBundle;
 
 public class UpdateRoom implements Command{
     @Override
@@ -18,7 +20,8 @@ public class UpdateRoom implements Command{
             response.sendRedirect("http://localhost:8080/controller?command=ACTSHOWHOME");
         }else{
             RoomDaoImpl roomDao = new RoomDaoImpl();
-            if(request.getParameter("Submit").equals("Delete")){
+            ResourceBundle bundle = ResourceBundle.getBundle("language_"+request.getSession().getAttribute("locale"));
+            if(new String(request.getParameter("submit").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8).equals(bundle.getString("delete"))){
                 try {
                     roomDao.delete(Integer.valueOf(request.getParameter("id")));
                 } catch (DaoException e) {

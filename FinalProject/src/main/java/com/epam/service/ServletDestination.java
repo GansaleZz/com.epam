@@ -28,7 +28,8 @@ public enum ServletDestination implements Destination{
     LOGINERROR("/auth/logInError.jsp"),
     LOGINPAGE("/auth/logInPage.jsp"),
     AUTHPAGE("/auth/authPage.jsp"),
-    BANPAGE("/auth/banPage.jsp");
+    BANPAGE("/auth/banPage.jsp"),
+    ERROPAGE("/usersView/errorPage.jsp");
 
     private final String PATH;
 

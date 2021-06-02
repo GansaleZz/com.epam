@@ -33,12 +33,12 @@
     </colgroup>
     <caption>List of rooms</caption>
     <tr>
-        <th>Room numeber</th>
-        <th>Class</th>
-        <th>Price (for day)</th>
-        <th>Number of seats</th>
-        <th>Status</th>
-        <th>Action</th>
+        <th><c:out value="${bundle.getString('roomNumber')}"/></th>
+        <th><c:out value="${bundle.getString('roomClass')}"/></th>
+        <th><c:out value="${bundle.getString('priceDay')}"/></th>
+        <th><c:out value="${bundle.getString('numberOfSeats')}"/></th>
+        <th><c:out value="${bundle.getString('roomStatus')}"/></th>
+        <th><c:out value="${bundle.getString('action')}"/></th>
     </tr>
     <c:forEach var="room" items="${list}">
         <tr>

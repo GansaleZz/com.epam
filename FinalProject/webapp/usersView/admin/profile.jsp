@@ -33,46 +33,58 @@
     <colgroup>
       <col span="2" style="background: Khaki">
     </colgroup>
-  <caption>Profile</caption>
+  <caption><c:out value="${bundle.getString('profile')}"/></caption>
     <form action="controller?command=ACTUPDATEPROFILE" method = "post">
       <input type = "hidden" name = "id" value="${user.id}" >
       <tr>
-        <th>Login</th><td><c:out value="${user.login}"/></td>
+        <th><c:out value="${bundle.getString('login')}"/> </th><td><c:out value="${user.login}"/></td>
       </tr>
       <tr>
-        <th>Name</th><td><input type="text" name="name" value="${user.name}"></td>
+        <th><c:out value="${bundle.getString('name')}"/></th><td><input type="text" name="name" value="${user.name}"></td>
       </tr>
       <tr>
-        <th>Email</th><td><input type="email" name="email" value="${user.email}"></td>
+        <th><c:out value="${bundle.getString('email')}"/></th><td><input type="email" name="email" value="${user.email}"></td>
       </tr>
       <tr>
-        <th>Role</th><td><c:out value="${user.userRole}"/></td>
+        <th><c:out value="${bundle.getString('role')}"/></th><td>
+        <c:choose>
+          <c:when test="${user.userRole == 'ADMIN'}">
+            <c:out value="${bundle.getString('admin')}"/>
+          </c:when>
+          <c:when test="${user.userRole == 'MODERATOR'}">
+            <c:out value="${bundle.getString('moderator')}"/>
+          </c:when>
+          <c:otherwise>
+            <c:out value="${bundle.getString('client')}"/>
+          </c:otherwise>
+        </c:choose>
+      </td>
       </tr>
       <tr>
-        <th>Language</th><td>
+        <th><c:out value="${bundle.getString('language')}"/></th><td>
           <select name ="locale">
             <c:choose>
               <c:when test="${locale == 'en'}">
-                  <option selected ="selected" value="en"> English</option>
-                  <option value="ru">Russian</option>
-                  <option value="by">Belarusian</option>
+                  <option selected ="selected" value="en"> <c:out value="${bundle.getString('english')}"/></option>
+                  <option value="ru"><c:out value="${bundle.getString('russian')}"/></option>
+                  <option value="by"><c:out value="${bundle.getString('belarusian')}"/></option>
               </c:when>
               <c:when test="${locale == 'ru'}">
-                <option value="en"> English</option>
-                <option selected ="selected" value="ru">Russian</option>
-                <option value="by">Belarusian</option>
+                <option value="en"> <c:out value="${bundle.getString('english')}"/></option>
+                <option selected ="selected" value="ru"><c:out value="${bundle.getString('russian')}"/></option>
+                <option value="by"><c:out value="${bundle.getString('belarusian')}"/></option>
               </c:when>
               <c:otherwise>
-                <option value="en"> English</option>
-                <option value="ru" >Russian</option>
-                <option selected ="selected" value="by">Belarusian</option>
+                <option value="en"> <c:out value="${bundle.getString('english')}"/></option>
+                <option value="ru" ><c:out value="${bundle.getString('russian')}"/></option>
+                <option selected ="selected" value="by"><c:out value="${bundle.getString('belarusian')}"/></option>
               </c:otherwise>
             </c:choose>
             </select>
       </td>
       </tr>
       <tr>
-        <th>Action</th><td><input type="submit" value="Submit"></td>
+        <th><c:out value="${bundle.getString('action')}"/></th><td><input type="submit" value="<c:out value="${bundle.getString('submit')}"/>"></td>
       </tr>
     </form>
   </table>

@@ -31,7 +31,7 @@ public class AuthFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         HttpSession session = httpServletRequest.getSession(false);
-
+        try{
         boolean loggedIn = session != null && session.getAttribute("login") != null;
         boolean badRequestLogged = httpServletRequest.getRequestURI().contains("/auth/") ||
                 (httpServletRequest.getRequestURI().contains("/controller") &&
@@ -65,6 +65,9 @@ public class AuthFilter implements Filter {
                     chain.doFilter(request, response);
                 }
             }
+        }
+        }catch(Exception e){
+            httpServletResponse.sendRedirect("http://localhost:8080/controller?command=ACTSHOWERRORPAGE");
         }
     }
 }

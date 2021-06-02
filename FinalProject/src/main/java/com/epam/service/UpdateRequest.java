@@ -10,9 +10,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class UpdateRequest implements Command{
     @Override
@@ -20,7 +22,8 @@ public class UpdateRequest implements Command{
         if(UserRole.getRole((String) request.getSession().getAttribute("userRole")).equals(UserRole.CLIENT)){
             response.sendRedirect("http://localhost:8080/controller?command=ACTSHOWHOME");
         }else {
-            if (request.getParameter("submit").equals("Deny")) {
+            ResourceBundle bundle = ResourceBundle.getBundle("language_"+request.getSession().getAttribute("locale"));
+            if (new String(request.getParameter("submit").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8).equals(bundle.getString("deny"))) {
                 RequestDaoImpl requestDao = new RequestDaoImpl();
                 try {
                     Request req = requestDao.findEntityById(Integer.valueOf(request.getParameter("id"))).get();
@@ -31,7 +34,7 @@ public class UpdateRequest implements Command{
                     e.printStackTrace();
                 }
             }else{
-                if(request.getParameter("submit").equals("Approve")) {
+                if(new String(request.getParameter("submit").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8).equals(bundle.getString("approve"))) {
                     try {
                         List<Room> list = new ArrayList<>();
                         Cache cache = Cache.getInstance();

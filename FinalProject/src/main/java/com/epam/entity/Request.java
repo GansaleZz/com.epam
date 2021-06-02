@@ -104,9 +104,9 @@ public class Request extends BaseEntity {
                 ", end=" + end +
                 ", user=" + user +
                 ", room=" + room +
+                ", roomClass=" + roomClass +
                 ", requestStatus=" + requestStatus +
                 ", payment=" + payment +
-                ", id=" + super.getId()+
                 '}';
     }
 }

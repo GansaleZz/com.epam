@@ -21,7 +21,8 @@ public enum CommandInstance {
     ACTREALISEDEPOSITE(new RealiseDeposite()),
     ACTSHOWREQUESTS(new ShowRequests()),
     ACTUPDATEREQUEST(new UpdateRequest()),
-    ACTPAYFORREQUEST(new PayForRequest());
+    ACTPAYFORREQUEST(new PayForRequest()),
+    ACTSHOWERRORPAGE(new ShowErrorPage());
 
     private final Command command;
 
