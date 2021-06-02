@@ -10,75 +10,71 @@
 <html>
 <head>
     <title>Profile</title>
-    <style>
-        table {
-            border: 1px solid grey;
-            border-collapse: collapse;
-            margin: 20px;
-        }
-        th {
-            border: 1px solid grey;
-        }
-        td {
-            border: 1px solid grey;
-        }
-        caption{
-            font-family: annabelle, cursive;
-            font-weight: bold;
-            font-size: 2em;
-            padding: 10px;
-            color: #F3CD26;
-            text-shadow: 1px 1px 0 rgba(0,0,0,.3);
-        }
-    </style>
+    <link rel="stylesheet" href="<c:url value="/resources/css/auth.css"/> ">
 </head>
 <body>
-<a href="http://localhost:8080/controller?command=LOGOUT">Log Out</a>
-<a href="http://localhost:8080/controller?command=ACTSHOWHOME">Home</a>
-<a href="http://localhost:8080/controller?command=ACTSHOWROOMS">Rooms</a>
-<a href="http://localhost:8080/controller?command=ACTSHOWPROFILE">Profile</a>
-<a href="http://localhost:8080/controller?command=ACTCREATEREQUESTPAGE">Create request</a>
-<a href="http://localhost:8080/controller?command=ACTSHOWREQUESTS">Requests</a>
+<c:set var="bundle" value="${sessionScope.bundle}"/>
+
+<nav class="one">
+    <ul>
+        <li><a href="http://localhost:8080/controller?command=ACTSHOWHOME"><i class="fa fa-home fa-fw"></i><c:out value="${bundle.getString('home')}"/></a></li>
+        <li><a href="http://localhost:8080/controller?command=ACTSHOWROOMS"><c:out value="${bundle.getString('rooms')}"/></a></li>
+        <li><a href="http://localhost:8080/controller?command=ACTSHOWPROFILE"><c:out value="${bundle.getString('profile')}"/></a></li>
+        <li><a href="http://localhost:8080/controller?command=ACTCREATEREQUESTPAGE"><c:out value="${bundle.getString('createRequest')}"/></a></li>
+        <li><a href="http://localhost:8080/controller?command=ACTSHOWREQUESTS"><c:out value="${bundle.getString('requests')}"/></a></li>
+        <li><a href="http://localhost:8080/controller?command=LOGOUT"><c:out value="${bundle.getString('logOut')}"/></a></li>
+    </ul>
+</nav>
 
     <c:set var="user" value="${user}" />
 
-    <p>
-    <table>
-        <colgroup>
-            <col span="2" style="background: Khaki">
-        </colgroup>
-        <caption>Profile</caption>
+<p>
+<table>
+    <colgroup>
+        <col span="2" style="background: Khaki">
+    </colgroup>
+    <caption>Profile</caption>
     <form action="controller?command=ACTUPDATEPROFILE" method = "post">
-    <input type = "hidden" name = "id" value="${user.id}" >
-    <tr>
-        <th>Login</th>
-        <td><c:out value="${user.login}"/></td>
-    </tr>
-    <tr>
-        <th>Name</th>
-        <td><input type="text" name="name" value="${user.name}"></td>
-    </tr>
-    <tr>
-        <th>Email</th>
-        <td><input type="email" name="email" value="${user.email}"></td>
-    </tr>
-    <tr>
-        <th>Balance</th>
-        <td><c:out value="${user.balance}"/></td>
-    </tr>
-    <tr>
-        <th>Role</th>
-        <td><c:out value="${user.userRole}"/></td>
-    </tr>
-    <tr>
-        <th>Action</th>
-        <td>
-            <input type="submit" value="Submit"></form>
-            <form action="controller?command=ACTNEWDEPOSITPAGE" method = "post">
-                <input type="submit" value="Deposit">
-            </form>
+        <input type = "hidden" name = "id" value="${user.id}" >
+        <tr>
+            <th>Login</th><td><c:out value="${user.login}"/></td>
+        </tr>
+        <tr>
+            <th>Name</th><td><input type="text" name="name" value="${user.name}"></td>
+        </tr>
+        <tr>
+            <th>Email</th><td><input type="email" name="email" value="${user.email}"></td>
+        </tr>
+        <tr>
+            <th>Role</th><td><c:out value="${user.userRole}"/></td>
+        </tr>
+        <tr>
+            <th>Language</th><td>
+            <select name ="locale">
+                <c:choose>
+                    <c:when test="${locale == 'en'}">
+                        <option selected ="selected" value="en"> English</option>
+                        <option value="ru">Russian</option>
+                        <option value="by">Belarusian</option>
+                    </c:when>
+                    <c:when test="${locale == 'ru'}">
+                        <option value="en"> English</option>
+                        <option selected ="selected" value="ru">Russian</option>
+                        <option value="by">Belarusian</option>
+                    </c:when>
+                    <c:otherwise>
+                        <option value="en"> English</option>
+                        <option value="ru" >Russian</option>
+                        <option selected ="selected" value="by">Belarusian</option>
+                    </c:otherwise>
+                </c:choose>
+            </select>
         </td>
-    </tr>
+        </tr>
+        <tr>
+            <th>Action</th><td><input type="submit" value="Submit"></td>
+        </tr>
+    </form>
 </table>
 </p>
 

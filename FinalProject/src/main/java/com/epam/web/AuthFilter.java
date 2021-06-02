@@ -37,29 +37,33 @@ public class AuthFilter implements Filter {
                 (httpServletRequest.getRequestURI().contains("/controller") &&
                         httpServletRequest.getQueryString() != null &&
                         (httpServletRequest.getQueryString().contains("SIGNUP") ||
-                                httpServletRequest.getQueryString().contains("LOGIN"))) ||
-                httpServletRequest.getRequestURI().contains("/css");
-        if (loggedIn) {
-            UserDaoImpl userDao = new UserDaoImpl();
-            UserCriteria userCriteria = new UserCriteria();
-            userCriteria.setLogin((String) session.getAttribute("login"));
-            try {
-                if (userDao.findUserByCriteria(userCriteria).get().getStatus().equals(UserStatus.BANNED)) {
-                    httpServletResponse.sendRedirect(ServletDestination.BANPAGE.getPath());
-                    session.invalidate();
-                    return;
+                                httpServletRequest.getQueryString().contains("LOGIN")));
+        if(httpServletRequest.getRequestURI().matches(".*(css|jpg|png|gif|js)")){
+            chain.doFilter(httpServletRequest,httpServletResponse);
+            return;
+        }else {
+            if (loggedIn) {
+                UserDaoImpl userDao = new UserDaoImpl();
+                UserCriteria userCriteria = new UserCriteria();
+                userCriteria.setLogin((String) session.getAttribute("login"));
+                try {
+                    if (userDao.findUserByCriteria(userCriteria).get().getStatus().equals(UserStatus.BANNED)) {
+                        httpServletResponse.sendRedirect(ServletDestination.BANPAGE.getPath());
+                        session.invalidate();
+                        return;
+                    }
+                } catch (DaoException e) {
+                    e.printStackTrace();
                 }
-            } catch (DaoException e) {
-                e.printStackTrace();
             }
-        }
-        if (loggedIn && badRequestLogged) {
-            httpServletResponse.sendRedirect("http://localhost:8080/controller?command=ACTSHOWHOME");
-        } else {
-            if (!loggedIn && !badRequestLogged) {
-                httpServletResponse.sendRedirect(ServletDestination.AUTHPAGE.getPath());
+            if (loggedIn && badRequestLogged) {
+                httpServletResponse.sendRedirect("http://localhost:8080/controller?command=ACTSHOWHOME");
             } else {
-                chain.doFilter(request, response);
+                if (!loggedIn && !badRequestLogged) {
+                    httpServletResponse.sendRedirect(ServletDestination.AUTHPAGE.getPath());
+                } else {
+                    chain.doFilter(request, response);
+                }
             }
         }
     }

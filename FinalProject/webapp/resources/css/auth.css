@@ -194,3 +194,25 @@ nav {
 .one li {
 	display: inline;
 }
+
+
+/* === Table === */
+table {
+	border: 1px solid grey;
+	border-collapse: collapse;
+	margin: 20px;
+}
+th {
+	border: 1px solid grey;
+}
+td {
+	border: 1px solid grey;
+}
+caption{
+	font-family: annabelle, cursive;
+	font-weight: bold;
+	font-size: 2em;
+	padding: 10px;
+	color: #F3CD26;
+	text-shadow: 1px 1px 0 rgba(0,0,0,.3);
+}

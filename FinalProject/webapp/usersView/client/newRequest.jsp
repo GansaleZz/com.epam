@@ -10,14 +10,21 @@
 <html>
 <head>
     <title>Title</title>
+    <link rel="stylesheet" href="<c:url value="/resources/css/auth.css"/> ">
 </head>
 <body>
-<a href="http://localhost:8080/controller?command=LOGOUT">Log Out</a>
-<a href="http://localhost:8080/controller?command=ACTSHOWHOME">Home</a>
-<a href="http://localhost:8080/controller?command=ACTSHOWROOMS">Rooms</a>
-<a href="http://localhost:8080/controller?command=ACTSHOWPROFILE">Profile</a>
-<a href="http://localhost:8080/controller?command=ACTCREATEREQUESTPAGE">Create request</a>
-<a href="http://localhost:8080/controller?command=ACTSHOWREQUESTS">Requests</a>
+<c:set var="bundle" value="${sessionScope.bundle}"/>
+
+<nav class="one">
+    <ul>
+        <li><a href="http://localhost:8080/controller?command=ACTSHOWHOME"><i class="fa fa-home fa-fw"></i><c:out value="${bundle.getString('home')}"/></a></li>
+        <li><a href="http://localhost:8080/controller?command=ACTSHOWROOMS"><c:out value="${bundle.getString('rooms')}"/></a></li>
+        <li><a href="http://localhost:8080/controller?command=ACTSHOWPROFILE"><c:out value="${bundle.getString('profile')}"/></a></li>
+        <li><a href="http://localhost:8080/controller?command=ACTCREATEREQUESTPAGE"><c:out value="${bundle.getString('createRequest')}"/></a></li>
+        <li><a href="http://localhost:8080/controller?command=ACTSHOWREQUESTS"><c:out value="${bundle.getString('requests')}"/></a></li>
+        <li><a href="http://localhost:8080/controller?command=LOGOUT"><c:out value="${bundle.getString('logOut')}"/></a></li>
+    </ul>
+</nav>
 
 <c:set var="today" value="${today}" />
 <c:set var="maxDay" value="${maxDay}" />

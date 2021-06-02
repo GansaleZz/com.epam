@@ -10,38 +10,19 @@
 <html>
 <head>
     <title>Rooms</title>
-    <style>
-        table {
-            border: 1px solid grey;
-            border-collapse: collapse;
-            margin: 20px;
-        }
-        th {
-            border: 1px solid grey;
-        }
-        td {
-            border: 1px solid grey;
-        }
-        caption{
-            font-family: annabelle, cursive;
-            font-weight: bold;
-            font-size: 2em;
-            padding: 10px;
-            color: #F3CD26;
-            text-shadow: 1px 1px 0 rgba(0,0,0,.3);
-        }
-    </style>
     <link rel="stylesheet" href="<c:url value="/resources/css/auth.css"/> ">
 </head>
 <body>
+<c:set var="bundle" value="${sessionScope.bundle}"/>
+
 <nav class="one">
     <ul>
-        <li><a href="http://localhost:8080/controller?command=ACTSHOWHOME"><i class="fa fa-home fa-fw"></i>Home</a></li>
-        <li><a href="http://localhost:8080/controller?command=ACTSHOWROOMS">Rooms</a></li>
-        <li><a href="http://localhost:8080/controller?command=ACTSHOWPROFILE">Profile</a></li>
-        <li><a href="http://localhost:8080/controller?command=ACTSHOWREQUESTS">Requests</a></li>
-        <li><a href="http://localhost:8080/controller?command=ACTSHOWUSERS">Users</a></li>
-        <li><a href="http://localhost:8080/controller?command=LOGOUT">Log Out</a></li>
+        <li><a href="http://localhost:8080/controller?command=ACTSHOWHOME"><i class="fa fa-home fa-fw"></i><c:out value="${bundle.getString('home')}"/></a></li>
+        <li><a href="http://localhost:8080/controller?command=ACTSHOWROOMS"><c:out value="${bundle.getString('rooms')}"/></a></li>
+        <li><a href="http://localhost:8080/controller?command=ACTSHOWPROFILE"><c:out value="${bundle.getString('profile')}"/></a></li>
+        <li><a href="http://localhost:8080/controller?command=ACTSHOWREQUESTS"><c:out value="${bundle.getString('requests')}"/></a></li>
+        <li><a href="http://localhost:8080/controller?command=ACTSHOWUSERS"><c:out value="${bundle.getString('users')}"/></a></li>
+        <li><a href="http://localhost:8080/controller?command=LOGOUT"><c:out value="${bundle.getString('logOut')}"/></a></li>
     </ul>
 </nav>
 
