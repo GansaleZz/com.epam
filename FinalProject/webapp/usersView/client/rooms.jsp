@@ -25,31 +25,51 @@
     <li><a href="http://localhost:8080/controller?command=LOGOUT"><c:out value="${bundle.getString('logOut')}"/></a></li>
   </ul>
 </nav>
-
-<p>
+<div class="Table">
   <table>
   <colgroup>
-    <col span="5" style="background: Khaki">
+    <col span="5">
   </colgroup>
   <caption><c:out value="${bundle.getString('roomsList')}" /></caption>
   <tr>
-    <th><c:out value="${bundle.getString('roomNumber')}"/></th>
-    <th><c:out value="${bundle.getString('roomClass')}"/></th>
-    <th><c:out value="${bundle.getString('roomStatus')}"/></th>
-    <th><c:out value="${bundle.getString('numberOfSeats')}"/></th>
-    <th><c:out value="${bundle.getString('priceDay')}"/></th>
+    <th><b><c:out value="${bundle.getString('roomNumber')}"/></b></th>
+    <th><b><c:out value="${bundle.getString('roomClass')}"/></b></th>
+    <th><b><c:out value="${bundle.getString('roomStatus')}"/></b></th>
+    <th><b><c:out value="${bundle.getString('numberOfSeats')}"/></b></th>
+    <th><b><c:out value="${bundle.getString('priceDay')}"/></b></th>
   </tr>
   <c:forEach var="room" items="${list}">
     <tr>
       <td><c:out value="${room.roomNumber}"/> </td>
-      <td><c:out value="${room.roomStatus}"/> </td>
-      <td><c:out value="${room.roomClass}"/></td>
+      <td>
+        <c:choose>
+          <c:when test="roomStatus == 'AVAILABLE">
+            <c:out value="${bundle.getString('roomStatus.available')}"/>
+          </c:when>
+          <c:otherwise>
+            <c:out value="${bundle.getString('roomStatus.closed')}"/>
+          </c:otherwise>
+        </c:choose>
+      </td>
+      <td><c:choose>
+        <c:when test="${room.roomClass == 'BUSINESS'}">
+          <c:out value="${bundle.getString('business')}"/>
+        </c:when>
+        <c:when test="${room.roomClass == 'ECONOM'}">
+            <c:out value="${bundle.getString('econom')}"/>
+        </c:when>
+        <c:when test="${room.roomClass == 'LUXE'}">
+            <c:out value="${bundle.getString('luxe')}"/>
+        </c:when>
+        <c:when test="${room.roomClass == 'PREMIUM'}">
+          <c:out value="${bundle.getString('premium')}"/>
+        </c:when>
+      </c:choose></td>
       <td><c:out value="${room.numberOfSeats}"/></td>
-      <td><c:out value="${room.price}"/> BYN</td>
+      <td><c:out value="${room.price}"/></td>
     </tr>
   </c:forEach>
 </table>
-</p>
-
+</div>
 </body>
 </html>

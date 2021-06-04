@@ -26,19 +26,19 @@
   </ul>
 </nav>
 
-<p>
+<div class="Table">
   <table>
     <colgroup>
-      <col span="6" style="background: Khaki">
+      <col span="6">
     </colgroup>
   <caption><c:out value="${bundle.getString('roomsList')}" /></caption>
     <tr>
-      <th><c:out value="${bundle.getString('roomNumber')}"/></th>
-      <th><c:out value="${bundle.getString('roomClass')}"/></th>
-      <th><c:out value="${bundle.getString('priceDay')}"/></th>
-      <th><c:out value="${bundle.getString('numberOfSeats')}"/></th>
-      <th><c:out value="${bundle.getString('roomStatus')}"/></th>
-      <th><c:out value="${bundle.getString('action')}"/></th>
+      <th><b><c:out value="${bundle.getString('roomNumber')}"/></b></th>
+      <th><b><c:out value="${bundle.getString('roomClass')}"/></b></th>
+      <th><b><c:out value="${bundle.getString('priceDay')}"/></b></th>
+      <th><b><c:out value="${bundle.getString('numberOfSeats')}"/></b></th>
+      <th><b><c:out value="${bundle.getString('roomStatus')}"/></b></th>
+      <th><b><c:out value="${bundle.getString('action')}"/></b></th>
     </tr>
   <c:forEach var="room" items="${list}">
     <tr>
@@ -81,7 +81,7 @@
         </select>
       </c:when>
     </c:choose></td>
-      <td><input type="number" name="price" value="${room.price}"> BYN</td>
+      <td><input type="number" name="price" value="${room.price}"></td>
       <td><c:choose>
       <c:when test="${room.numberOfSeats == 1}">
         <select name="numberOfSeats">
@@ -149,7 +149,7 @@
     </tr>
   </c:forEach>
   </table>
-</p>
+</div>
   <a href="http://localhost:8080/controller?command=ACTNEWROOMPAGE" class = "s2"><c:out value="${bundle.getString('addNewRoom')}"/></a>
 
 </body>

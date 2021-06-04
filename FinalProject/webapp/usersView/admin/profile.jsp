@@ -28,40 +28,36 @@
 
 
   <c:set var="user" value="${user}" />
-<p>
+<div class="Table">
   <table>
     <colgroup>
-      <col span="2" style="background: Khaki">
+      <col span="2" >
     </colgroup>
   <caption><c:out value="${bundle.getString('profile')}"/></caption>
     <form action="controller?command=ACTUPDATEPROFILE" method = "post">
       <input type = "hidden" name = "id" value="${user.id}" >
       <tr>
-        <th><c:out value="${bundle.getString('login')}"/> </th><td><c:out value="${user.login}"/></td>
+        <th><b><c:out value="${bundle.getString('login')}"/></b></th>
+        <td><c:out value="${user.login}"/></td>
       </tr>
       <tr>
-        <th><c:out value="${bundle.getString('name')}"/></th><td><input type="text" name="name" value="${user.name}"></td>
+        <th><b><c:out value="${bundle.getString('name')}"/></b></th>
+        <td><input type="text" name="name" value="${user.name}"></td>
       </tr>
       <tr>
-        <th><c:out value="${bundle.getString('email')}"/></th><td><input type="email" name="email" value="${user.email}"></td>
+        <th><b><c:out value="${bundle.getString('email')}"/></b></th>
+        <td><input type="email" name="email" value="${user.email}"></td>
       </tr>
       <tr>
-        <th><c:out value="${bundle.getString('role')}"/></th><td>
-        <c:choose>
-          <c:when test="${user.userRole == 'ADMIN'}">
-            <c:out value="${bundle.getString('admin')}"/>
-          </c:when>
-          <c:when test="${user.userRole == 'MODERATOR'}">
-            <c:out value="${bundle.getString('moderator')}"/>
-          </c:when>
-          <c:otherwise>
-            <c:out value="${bundle.getString('client')}"/>
-          </c:otherwise>
-        </c:choose>
+        <th><b><c:out value="${bundle.getString('role')}"/></b></th>
+        <td>
+          <c:out value="${bundle.getString('admin')}"/>
+        </td>
       </td>
       </tr>
       <tr>
-        <th><c:out value="${bundle.getString('language')}"/></th><td>
+        <th><b><c:out value="${bundle.getString('language')}"/></b></th>
+        <td>
           <select name ="locale">
             <c:choose>
               <c:when test="${locale == 'en'}">
@@ -84,10 +80,10 @@
       </td>
       </tr>
       <tr>
-        <th><c:out value="${bundle.getString('action')}"/></th><td><input type="submit" value="<c:out value="${bundle.getString('submit')}"/>"></td>
+        <th><b><c:out value="${bundle.getString('action')}"/></b></th><td><input type="submit" value="<c:out value="${bundle.getString('submit')}"/>"></td>
       </tr>
     </form>
   </table>
-</p>
+</div>
 </body>
 </html>

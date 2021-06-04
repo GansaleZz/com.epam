@@ -27,78 +27,69 @@
 </nav>
 
 <c:set var="user" value="${user}" />
-<p>
-<table>
-    <colgroup>
-        <col span="2" style="background: Khaki">
-    </colgroup>
-    <caption><c:out value="${bundle.getString('profile')}"/></caption>
-    <form action="controller?command=ACTUPDATEPROFILE" method = "post">
-        <input type = "hidden" name = "id" value="${user.id}" >
-        <tr>
-            <th><c:out value="${bundle.getString('login')}"/> </th><td><c:out value="${user.login}"/></td>
-        </tr>
-        <tr>
-            <th><c:out value="${bundle.getString('name')}"/></th><td><input type="text" name="name" value="${user.name}"></td>
-        </tr>
-        <tr>
-            <th><c:out value="${bundle.getString('email')}"/></th><td><input type="email" name="email" value="${user.email}"></td>
-        </tr>
-        <tr>
-            <th><c:out value="${bundle.getString('role')}"/></th><td>
-            <c:choose>
-                <c:when test="${user.userRole == 'ADMIN'}">
-                    <c:out value="${bundle.getString('admin')}"/>
-                </c:when>
-                <c:when test="${user.userRole == 'MODERATOR'}">
-                    <c:out value="${bundle.getString('moderator')}"/>
-                </c:when>
-                <c:otherwise>
-                    <c:out value="${bundle.getString('client')}"/>
-                </c:otherwise>
-            </c:choose>
-        </td>
-        </tr>
-        <tr>
-            <th><c:out value="${bundle.getString('language')}"/></th><td>
-            <select name ="locale">
-                <c:choose>
-                    <c:when test="${locale == 'en'}">
-                        <option selected ="selected" value="en"> <c:out value="${bundle.getString('english')}"/></option>
-                        <option value="ru"><c:out value="${bundle.getString('russian')}"/></option>
-                        <option value="by"><c:out value="${bundle.getString('belarusian')}"/></option>
-                    </c:when>
-                    <c:when test="${locale == 'ru'}">
-                        <option value="en"> <c:out value="${bundle.getString('english')}"/></option>
-                        <option selected ="selected" value="ru"><c:out value="${bundle.getString('russian')}"/></option>
-                        <option value="by"><c:out value="${bundle.getString('belarusian')}"/></option>
-                    </c:when>
-                    <c:otherwise>
-                        <option value="en"> <c:out value="${bundle.getString('english')}"/></option>
-                        <option value="ru" ><c:out value="${bundle.getString('russian')}"/></option>
-                        <option selected ="selected" value="by"><c:out value="${bundle.getString('belarusian')}"/></option>
-                    </c:otherwise>
-                </c:choose>
-            </select>
-        </td>
-        </tr>
-        <tr>
-            <th><c:out value="${bundle.getString('balance')}"/> </th>
-            <td>
-                <c:out value="${user.balance}"/>
-           </td>
-        </tr>
-        <tr>
-            <th><c:out value="${bundle.getString('action')}"/></th>
-            <td>
-                <input type="submit" value="<c:out value="${bundle.getString('submit')}"/>"></form>
-                <form action="controller?command=ACTNEWDEPOSITPAGE" method = "post">
-                    <input type="submit" value="<c:out value="${bundle.getString('deposit')}"/>">
-                </form>
-            </td>
-        </tr>
-</table>
-</p>
 
+<div class="Table">
+    <table>
+        <colgroup>
+            <col span="2">
+        </colgroup>
+        <caption><c:out value="${bundle.getString('profile')}"/></caption>
+        <form action="controller?command=ACTUPDATEPROFILE" method = "post">
+            <input type = "hidden" name = "id" value="${user.id}" >
+            <tr>
+                <th><b><c:out value="${bundle.getString('login')}"/></b></th><td><c:out value="${user.login}"/></td>
+            </tr>
+            <tr>
+                <th><b><c:out value="${bundle.getString('name')}"/></b></th><td><input type="text" name="name" value="${user.name}"></td>
+            </tr>
+            <tr>
+                <th><b><c:out value="${bundle.getString('email')}"/></b></th><td><input type="email" name="email" value="${user.email}"></td>
+            </tr>
+            <tr>
+                <th><b><c:out value="${bundle.getString('role')}"/></b></th>
+                <td>
+                 <c:out value="${bundle.getString('client')}"/>
+                </td>
+            </tr>
+            <tr>
+                <th><b><c:out value="${bundle.getString('language')}"/></b></th><td>
+                <select name ="locale">
+                    <c:choose>
+                        <c:when test="${locale == 'en'}">
+                            <option selected ="selected" value="en"> <c:out value="${bundle.getString('english')}"/></option>
+                            <option value="ru"><c:out value="${bundle.getString('russian')}"/></option>
+                            <option value="by"><c:out value="${bundle.getString('belarusian')}"/></option>
+                        </c:when>
+                        <c:when test="${locale == 'ru'}">
+                            <option value="en"> <c:out value="${bundle.getString('english')}"/></option>
+                            <option selected ="selected" value="ru"><c:out value="${bundle.getString('russian')}"/></option>
+                            <option value="by"><c:out value="${bundle.getString('belarusian')}"/></option>
+                        </c:when>
+                        <c:otherwise>
+                            <option value="en"> <c:out value="${bundle.getString('english')}"/></option>
+                            <option value="ru" ><c:out value="${bundle.getString('russian')}"/></option>
+                            <option selected ="selected" value="by"><c:out value="${bundle.getString('belarusian')}"/></option>
+                        </c:otherwise>
+                    </c:choose>
+                </select>
+            </td>
+            </tr>
+            <tr>
+                <th><b><c:out value="${bundle.getString('balance')}"/></b></th>
+                <td>
+                    <c:out value="${user.balance}"/>
+               </td>
+            </tr>
+            <tr>
+                <th><b><c:out value="${bundle.getString('action')}"/></b></th>
+                <td>
+                    <input type="submit" value="<c:out value="${bundle.getString('submit')}"/>"></form>
+                    <form action="controller?command=ACTNEWDEPOSITPAGE" method = "post">
+                        <input type="submit" value="<c:out value="${bundle.getString('deposit')}"/>">
+                    </form>
+                </td>
+            </tr>
+    </table>
+</div>
 </body>
 </html>

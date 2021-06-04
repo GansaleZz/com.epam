@@ -16,7 +16,7 @@
 <h1>Welcome!</h1>
 
 <a href="http://localhost:8080/auth/logInPage.jsp" class="s2">Log In</a><br>
-<a href="http://localhost:8080/auth/signUpPage.jsp"class="s2">Sign Up</a>
+<a href="http://localhost:8080/auth/signUpPage.jsp" class="s2">Sign Up</a>
 
 </body>
 </html>

@@ -14,7 +14,6 @@
 </head>
 <body>
 <c:set var="bundle" value="${sessionScope.bundle}"/>
-
     <nav class="one">
         <ul>
             <li><a href="http://localhost:8080/controller?command=ACTSHOWHOME"><i class="fa fa-home fa-fw"></i><c:out value="${bundle.getString('home')}"/></a></li>

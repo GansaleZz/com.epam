@@ -54,7 +54,7 @@ h1{
 	box-shadow: inset -100px -100px 0 rgb(28, 30, 33);
 	color: rgb(52, 56, 61);
 }
-#signin  input[type="text"], #signin  input[type="password"], input[type="email"]{
+#signin  input[type="text"], #signin  input[type="password"],#signin input[type="email"]{
 	position: relative;
 	display: block;
 	width: 280px;
@@ -197,28 +197,81 @@ nav {
 }
 
 /* === Table === */
-table {
+.Table table {
 	border: 1px solid grey;
 	border-collapse: collapse;
-	margin: 20px;
+	margin: 20px 129px;
+	width:-webkit-max-content;
 }
-th {
+
+.Table form{
+	margin-block-end: 0;
+}
+
+.Table th {
 	border: 1px solid grey;
 }
-td {
+.Table td {
 	border: 1px solid grey;
+	text-align: center;
+	font-size:17px;
+	color: aliceblue;
 }
-caption{
+
+.Table tr{
+	background:#1570a1;
+}
+
+.Table caption{
 	font-family: annabelle, cursive;
 	font-weight: bold;
 	font-size: 2em;
 	padding: 10px;
-	color: #F3CD26;
+	color: #4ba5d6;
 	text-shadow: 1px 1px 0 rgba(0,0,0,.3);
 }
 
-/* === Input === */
+.Table b {
+	font-weight: bold;
+	font-size: 17px;
+}
 
+.Table input[type="submit"] {
+	width: 100px;
+	padding: 0;
+	line-height: 25px;
+	background: #bd738d;
+	border-width: 0;
+	color: aliceblue;
+	font-size: 17px;
+	margin: 1px auto;
+}
+
+.Table input[type="email"], .Table input[type="text"], .Table select, .Table input[type="number"] {
+	margin: 10px;
+	background-color: #eee;
+	vertical-align: top;
+	outline: none;
+	padding: 0;
+	height: 40px;
+	line-height: 40px;
+	display: inline-block;
+	width: -webkit-max-content;
+	box-sizing: border-box;
+	border: 1px solid #ddd;
+	font-size: 14px;
+	border-radius: 3px;
+}
+
+.Table input[type ="number"],input[type="email"], .Table input[type="text"]{
+	text-indent: 10px;
+}
+
+.Table select{
+	text-indent: 1px;
+}
+
+/* === Input === */
 .form-row {
 	position: relative;
 	margin:10px 40%;
@@ -235,7 +288,7 @@ caption{
 	margin: 10px;
 }
 
-.form-row select, input[type="number"], input[type="date"]{
+.form-row select,.form-row input[type="number"],.form-row input[type="date"]{
 	margin: 10px;
 	background-color: #eee;
 	vertical-align: top;
