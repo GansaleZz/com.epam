@@ -28,17 +28,17 @@
 
 <form action="controller?command=ACTADDNEWROOM" method = "post" >
     <div class="form-row">
-    <b><c:out value="${bundle.getString('roomNumber')}"/> </b><input type="number" name ="roomNumber" min="1" value="100" ><br>
-    <b><c:out value="${bundle.getString('numberOfSeats')}"/> </b><input type="number" name="numberOfSeats" min="1" max="5" value="1"><br>
-    <b><c:out value="${bundle.getString('roomClass')}"/></b>
-    <select name="roomClass">
-        <option selected = "selected" value="BUSINESS"><c:out value="${bundle.getString('business')}"/> </option>
-        <option value="ECONOM"><c:out value="${bundle.getString('econom')}"/></option>
-        <option value="LUXE"><c:out value="${bundle.getString('luxe')}"/> </option>
-        <option value="PREMIUM"><c:out value="${bundle.getString('premium')}"/> </option>
-    </select><br>
-    <b><c:out value="${bundle.getString('price')}"/> </b><input type="number" name="price" min="1" max="10000" value="100" /><br>
-        <input type = "submit" value="${bundle.getString('submit')}" />
+        <b><c:out value="${bundle.getString('roomNumber')}"/> </b><input type="number" name ="roomNumber" min="1" value="100" ><br>
+        <b><c:out value="${bundle.getString('numberOfSeats')}"/> </b><input type="number" name="numberOfSeats" min="1" max="5" value="1"><br>
+        <b><c:out value="${bundle.getString('roomClass')}"/></b>
+        <select name="roomClass">
+            <option selected = "selected" value="BUSINESS"><c:out value="${bundle.getString('business')}"/> </option>
+            <option value="ECONOM"><c:out value="${bundle.getString('econom')}"/></option>
+            <option value="LUXE"><c:out value="${bundle.getString('luxe')}"/> </option>
+            <option value="PREMIUM"><c:out value="${bundle.getString('premium')}"/> </option>
+        </select><br>
+        <b><c:out value="${bundle.getString('price')}"/> </b><input type="number" name="price" min="1" max="10000" value="100" /><br>
+            <input type = "submit" value="${bundle.getString('submit')}" />
     </div>
 </form>
 </body>

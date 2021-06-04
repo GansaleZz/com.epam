@@ -25,11 +25,11 @@
         <li><a href="http://localhost:8080/controller?command=LOGOUT"><c:out value="${bundle.getString('logOut')}"/></a></li>
     </ul>
 </nav>
-<p>
-    Your account has insufficient funds.
+<h1><c:out value="${bundle.getString('badBalance')}"/></h1>
     <form action="controller?command=ACTNEWDEPOSITPAGE" method = "post">
-        <input type="submit" value="Deposit">
+        <div class="form-row">
+            <input type="submit" value="${bundle.getString('deposit')}">
+        </div>
     </form>
-</p>
 </body>
 </html>

@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>New request</title>
     <link rel="stylesheet" href="<c:url value="/resources/css/auth.css"/> ">
 </head>
 <body>
@@ -28,19 +28,19 @@
 
 <c:set var="today" value="${today}" />
 <c:set var="maxDay" value="${maxDay}" />
-<p>
 <form action="controller?command=ACTNEWREQUEST" method = "post">
-      <b>Start date of arrive: </b><input type="date" name="start" min="${today}" max="${maxDay}" value ="${today}"><br>
-      <b>Arrival time (days): </b><input type="number" name="end" min="1" max="30" value="1"><br>
-      <b>Number of seats: </b><input type="number" name="numberOfSeats" min="1" max="5" value="1"><br>
-      <b>Choose class: </b><select name="class">
-          <option selected = "selected">BUSINESS</option>
-          <option>ECONOM</option>
-          <option>LUXE</option>
-          <option>PREMIUM</option>
+    <div class="form-row">
+      <b><c:out value="${bundle.getString('startArriveDate')}"/> </b><input type="date" name="start" min="${today}" max="${maxDay}" value ="${today}"><br>
+      <b><c:out value="${bundle.getString('arrivalTime')}"/></b><input type="number" name="end" min="1" max="30" value="1"><br>
+      <b><c:out value="${bundle.getString('numberOfSeats')}"/> </b><input type="number" name="numberOfSeats" min="1" max="5" value="1"><br>
+      <b><c:out value="${bundle.getString('roomClass')}"/> </b><select name="class">
+          <option selected = "selected" value="BUSINESS"><c:out value="${bundle.getString('business')}"/> </option>
+          <option value="ECONOM"><c:out value="${bundle.getString('econom')}"/> </option>
+          <option value="LUXE"><c:out value="${bundle.getString('luxe')}"/> </option>
+          <option value="PREMIUM"><c:out value="${bundle.getString('premium')}"/> </option>
       </select><br>
-      <input type="submit" name="submit" value="Submit">
+      <input type="submit" name="submit" value="${bundle.getString('submit')}">
+    </div>
 </form>
-</p>
 </body>
 </html>
