@@ -21,6 +21,7 @@ class ConnectionPoolTest {
     @Test
     void getConnection() {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
+        connectionPool.closeAllConnections();
         for(int i = 0;i<65;i++){
             if(i == 30 || i == 60 ){
                 connectionPool.closeAllConnections();

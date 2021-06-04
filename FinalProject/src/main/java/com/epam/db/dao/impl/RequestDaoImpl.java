@@ -84,13 +84,7 @@ public class RequestDaoImpl implements RequestDao {
                     preparedStatement = connection.prepareStatement(SQL_INSERT);
                     preparedStatement.setInt(6, request.getRoom().getId());
                 }
-                preparedStatement.setInt(1, request.getNumberOfSeats());
-                preparedStatement.setDate(2, new Date(request.getStart().getTime()));
-                preparedStatement.setDate(3, new Date(request.getEnd().getTime()));
-                preparedStatement.setInt(4, request.getUser().getId());
-                preparedStatement.setInt(5, RequestStatus.getIdByRequestStatus(request.getRequestStatus()));
-                preparedStatement.execute();
-                preparedStatement.close();
+                prepStmnt(request, preparedStatement);
                 result = true;
                 logger.info(request + " successfully created!");
             } catch (SQLException e) {
@@ -147,13 +141,7 @@ public class RequestDaoImpl implements RequestDao {
                     preparedStatement.setInt(6, RoomClass.getIdByRoomClass(request.getRoomClass()));
                     preparedStatement.setInt(7,request.getId());
                 }
-                preparedStatement.setInt(1,request.getNumberOfSeats());
-                preparedStatement.setDate(2,new Date(request.getStart().getTime()));
-                preparedStatement.setDate(3,new Date(request.getEnd().getTime()));
-                preparedStatement.setInt(4,request.getUser().getId());
-                preparedStatement.setInt(5,RequestStatus.getIdByRequestStatus(request.getRequestStatus()));
-                preparedStatement.execute();
-                preparedStatement.close();
+                prepStmnt(request, preparedStatement);
                 requestOptional = findEntityById(request.getId());
                 logger.info(request + " successfully updated!");
             } catch (SQLException e) {
@@ -189,6 +177,16 @@ public class RequestDaoImpl implements RequestDao {
                 .filter(predicate)
                 .forEach(i -> list.add((Request) i));
         return list;
+    }
+
+    private void prepStmnt(Request request, PreparedStatement preparedStatement) throws SQLException {
+        preparedStatement.setInt(1, request.getNumberOfSeats());
+        preparedStatement.setDate(2, new Date(request.getStart().getTime()));
+        preparedStatement.setDate(3, new Date(request.getEnd().getTime()));
+        preparedStatement.setInt(4, request.getUser().getId());
+        preparedStatement.setInt(5, RequestStatus.getIdByRequestStatus(request.getRequestStatus()));
+        preparedStatement.execute();
+        preparedStatement.close();
     }
 
     private Optional<Request> getRequest(ResultSet resultSet) throws DaoException{

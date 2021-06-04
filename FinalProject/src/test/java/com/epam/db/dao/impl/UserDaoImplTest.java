@@ -5,12 +5,10 @@ import com.epam.db.ConnectionPool;
 import com.epam.entity.User;
 import com.epam.entity.UserStatus;
 import com.epam.exceptions.DaoException;
-import com.epam.exceptions.FileException;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

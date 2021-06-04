@@ -1,28 +1,30 @@
 package com.epam.db.dao.impl;
 
 import com.epam.criteria.RequestCriteria;
-import com.epam.criteria.RoomCriteria;
 import com.epam.db.ConnectionPool;
 import com.epam.entity.Request;
-import com.epam.entity.Room;
-import com.epam.entity.RoomStatus;
+import com.epam.entity.RequestStatus;
+import com.epam.entity.RoomClass;
 import com.epam.entity.User;
 import com.epam.exceptions.DaoException;
-import com.epam.exceptions.FileException;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class RequestsDaoImplTest {
-    private final int id = 2;
 
-
+    @Order(1)
     @Test
     void findAllEntities() throws DaoException, SQLException {
         RequestDaoImpl requestDao = new RequestDaoImpl();
@@ -36,57 +38,62 @@ class RequestsDaoImplTest {
         ConnectionPool.getInstance().close(connection);
     }
 
+    @Order(3)
     @Test
     void findEntityById() throws DaoException {
         int numberOfSeats = 1;
-        UserDaoImpl userDao = new UserDaoImpl();
-        User user = userDao.findEntityById(1).get();
         RequestDaoImpl requestDao = new RequestDaoImpl();
-        assertEquals(numberOfSeats,requestDao.findEntityById(this.id).get().getNumberOfSeats());
-        assertEquals(user,requestDao.findEntityById(this.id).get().getUser());
+        List<Request> list = requestDao.findAllEntities();
+        assertEquals(numberOfSeats,requestDao.findEntityById(list.get(list.size()-1).getId()).get().getNumberOfSeats());
     }
 
+    @Order(2)
     @Test
     void create() throws DaoException {
         RequestDaoImpl requestDao = new RequestDaoImpl();
-        Request request = requestDao.findEntityById(this.id).get();
-        request.setNumberOfSeats(5);
-        UserDaoImpl userDao = new UserDaoImpl();
-        User user = userDao.findEntityById(2).get();
-        request.setUser(user);
-        assertEquals(true,requestDao.create(request));
+        User user = new UserDaoImpl().findEntityById(3).get();
+        Request request = new RequestCriteria.Builder()
+                .newBuilder()
+                .withNumberOfSeats(1)
+                .withStart(Calendar.getInstance().getTime())
+                .withEnd(Calendar.getInstance().getTime())
+                .withUser(user)
+                .withRequestStatus(RequestStatus.PAID)
+                .withRoomClass(RoomClass.BUSINESS)
+                .withId(0)
+                .build();
+        assertTrue(requestDao.create(request));
     }
 
+    @Order(6)
     @Test
     void delete() throws DaoException, SQLException {
         Connection connection = ConnectionPool.getInstance().getConnection();
-        ResultSet resultSet = connection.createStatement().executeQuery("SELECT * FROM Request");
-        int id = 0;
-        while(resultSet.next()){
-            id = resultSet.getInt("id");
-        }
         RequestDaoImpl requestDao = new RequestDaoImpl();
-        if(id != 0 ) {
-            assertEquals(true, requestDao.delete(id));
-            assertEquals(Optional.empty(), requestDao.findEntityById(id));
-        }else{
-            assertEquals(false, requestDao.delete(id));
-        }
+        List<Request> list = requestDao.findAllEntities();
+        int id = list.get(list.size()-1).getId() + 1;
+        assertTrue(requestDao.delete(list.get(list.size()-1).getId()));
+        assertEquals(Optional.empty(), requestDao.findEntityById(id));
+        assertFalse(requestDao.delete(id));
         ConnectionPool.getInstance().close(connection);
     }
 
+    @Order(5)
     @Test
     void update() throws DaoException {
         RequestDaoImpl requestDao = new RequestDaoImpl();
-        Request request = requestDao.findEntityById(this.id).get();
-        final int numberOfSeats = 6;
-        final int defaultNumberOfSeats = requestDao.findEntityById(id).get().getNumberOfSeats();
+        List<Request> list = requestDao.findAllEntities();
+        int id = list.get(list.size()-1).getId();
+        Request request = requestDao.findEntityById(id).get();
+        int numberOfSeats = 6;
+        int defaultNumberOfSeats = requestDao.findEntityById(id).get().getNumberOfSeats();
         request.setNumberOfSeats(numberOfSeats);
         assertEquals(request,requestDao.update(request).get());
         request.setNumberOfSeats(defaultNumberOfSeats);
         assertEquals(request,requestDao.update(request).get());
     }
 
+    @Order(4)
     @Test
     void findAllRequestByCriteria() throws DaoException {
         RequestCriteria requestCriteria = new RequestCriteria();

@@ -1,11 +1,11 @@
 package com.epam.db.dao.impl;
 
 import com.epam.criteria.RoomCriteria;
-import com.epam.criteria.UserCriteria;
 import com.epam.db.ConnectionPool;
-import com.epam.entity.*;
+import com.epam.entity.Room;
+import com.epam.entity.RoomClass;
+import com.epam.entity.RoomStatus;
 import com.epam.exceptions.DaoException;
-import com.epam.exceptions.FileException;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
@@ -86,15 +86,13 @@ class RoomDaoImplTest {
     @Test
     void update() throws DaoException {
         RoomDaoImpl roomDao = new RoomDaoImpl();
-        if(roomDao.findEntityById(this.id).isPresent()) {
-            Room room = roomDao.findEntityById(1).get();
+            Room room = roomDao.findEntityById(roomDao.findAllEntities().get(roomDao.findAllEntities().size()-1).getId()).get();
             final int price = 1390;
-            final int defaultPrice = roomDao.findEntityById(1).get().getPrice();
+            final int defaultPrice = roomDao.findEntityById(roomDao.findAllEntities().get(roomDao.findAllEntities().size()-1).getId()).get().getPrice();
             room.setPrice(price);
             assertEquals(room,roomDao.update(room).get());
             room.setPrice(defaultPrice);
             assertEquals(room.getPrice(),roomDao.update(room).get().getPrice());
-        }
     }
 
     @Test
