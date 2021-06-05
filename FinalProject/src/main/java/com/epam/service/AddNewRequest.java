@@ -1,11 +1,12 @@
 package com.epam.service;
 
 import com.epam.criteria.RequestCriteria;
-import com.epam.criteria.RoomCriteria;
 import com.epam.db.dao.impl.RequestDaoImpl;
-import com.epam.db.dao.impl.RoomDaoImpl;
 import com.epam.db.dao.impl.UserDaoImpl;
-import com.epam.entity.*;
+import com.epam.entity.Request;
+import com.epam.entity.RequestStatus;
+import com.epam.entity.RoomClass;
+import com.epam.entity.User;
 import com.epam.exceptions.DaoException;
 
 import javax.servlet.http.HttpServletRequest;

@@ -1,6 +1,11 @@
 package com.epam.criteria;
 
-import com.epam.entity.*;
+import com.epam.entity.Payment;
+import com.epam.entity.Request;
+import com.epam.entity.RequestStatus;
+import com.epam.entity.Room;
+import com.epam.entity.RoomClass;
+import com.epam.entity.User;
 
 import java.util.Date;
 

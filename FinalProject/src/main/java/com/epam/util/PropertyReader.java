@@ -2,7 +2,6 @@ package com.epam.util;
 
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -31,10 +30,8 @@ public class PropertyReader {
             inputStream = new FileInputStream(propertiesFileName);
             properties.load(inputStream);
             logger.info("Info from "+propertiesFileName+" were completely read");
-        }catch (FileNotFoundException e){
+        }catch (IOException e){
             logger.error(e.getMessage());
-            e.printStackTrace();
-        } catch (IOException e) {
             e.printStackTrace();
         } finally {
             try{

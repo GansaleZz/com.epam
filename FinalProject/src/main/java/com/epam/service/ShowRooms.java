@@ -1,9 +1,7 @@
 package com.epam.service;
 
 import com.epam.db.dao.impl.RoomDaoImpl;
-import com.epam.db.dao.impl.UserDaoImpl;
 import com.epam.entity.Room;
-import com.epam.entity.User;
 import com.epam.entity.UserRole;
 import com.epam.exceptions.DaoException;
 
@@ -11,7 +9,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 

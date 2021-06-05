@@ -2,7 +2,11 @@ package com.epam.service;
 
 import com.epam.db.dao.impl.RequestDaoImpl;
 import com.epam.db.dao.impl.RoomDaoImpl;
-import com.epam.entity.*;
+import com.epam.entity.Request;
+import com.epam.entity.RequestStatus;
+import com.epam.entity.Room;
+import com.epam.entity.RoomStatus;
+import com.epam.entity.UserRole;
 import com.epam.exceptions.DaoException;
 import com.epam.util.Cache;
 

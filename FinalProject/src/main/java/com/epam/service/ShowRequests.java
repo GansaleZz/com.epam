@@ -2,9 +2,9 @@ package com.epam.service;
 
 import com.epam.db.dao.impl.PaymentDaoImpl;
 import com.epam.db.dao.impl.RequestDaoImpl;
-import com.epam.db.dao.impl.RoomDaoImpl;
-import com.epam.db.dao.impl.UserDaoImpl;
-import com.epam.entity.*;
+import com.epam.entity.Payment;
+import com.epam.entity.Request;
+import com.epam.entity.UserRole;
 import com.epam.exceptions.DaoException;
 
 import javax.servlet.ServletException;

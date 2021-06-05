@@ -11,5 +11,6 @@ public interface UserDao extends BaseDao<Integer,User>{
     List<User> findAllUsersByCriteria(UserCriteria userCriteria) throws DaoException;
 
     Optional<User> findUserByCriteria(UserCriteria userCriteria) throws DaoException;
+
     double findBalanceById(int id) throws DaoException;
 }
