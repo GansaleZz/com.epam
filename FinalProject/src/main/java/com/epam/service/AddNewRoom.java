@@ -15,26 +15,26 @@ public class AddNewRoom implements Command{
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(request.getSession().getAttribute("userRole").equals("CLIENT")){
-            response.sendRedirect("http://localhost:8080/controller?command=ACTSHOWHOME");
+            response.sendRedirect(link + CommandInstance.ACTSHOWHOME);
         }
         if(request.getParameter("price").trim().length()!=0 || request.getSession().getAttribute("userRole").equals("CLIENT")){
             RoomDaoImpl roomDao = new RoomDaoImpl();
             Room room = new RoomCriteria.Builder()
                     .newBuilder()
-                    .withPrice(Integer.valueOf(request.getParameter("price")))
+                    .withPrice(Integer.parseInt(request.getParameter("price")))
                     .withRoomClass(RoomClass.valueOf(request.getParameter("roomClass")))
                     .withRoomStatus(RoomStatus.AVAILABLE)
-                    .withNumberOfSeats(Integer.valueOf(request.getParameter("numberOfSeats")))
-                    .withRoomNumber(Integer.valueOf(request.getParameter("roomNumber")))
+                    .withNumberOfSeats(Integer.parseInt(request.getParameter("numberOfSeats")))
+                    .withRoomNumber(Integer.parseInt(request.getParameter("roomNumber")))
                     .build();
             try {
                 roomDao.create(room);
             } catch (DaoException e) {
                 e.printStackTrace();
             }
-                response.sendRedirect("/controller?command=ACTSHOWROOMS");
+                response.sendRedirect(link + CommandInstance.ACTSHOWROOMS);
         }else{
-            response.sendRedirect("/controller?command=ACTSHOWROOMS");
+            response.sendRedirect(link + CommandInstance.ACTSHOWROOMS);
         }
     }
 }

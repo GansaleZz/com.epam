@@ -10,14 +10,15 @@
 <html>
 <head>
     <title>Sign Up</title>
-    <link rel="stylesheet" href="<c:url value="../resources/css/auth.css"/> ">
+    <link rel="stylesheet" href="<c:url value="../resources/css/styles.css"/> ">
+    <link rel="stylesheet" href="<c:url value="../resources/css/authStyles.css"/> ">
 </head>
 <body>
 
-<a href="http://localhost:8080/auth/authPage.jsp" class="s1">Back</a>
+<a href="http://localhost:8080/controller?command=ACTSHOWAUTH" class="s1">Back</a>
 <h1>Sign Up</h1>
 <div id="wrapper">
-    <form id="signin" action="/controller?command=SIGNUP" method = "post">
+    <form id="signin" action="/controller?command=ACTSIGNUP" method = "post">
         <input type = "text" name="login" placeholder="Login"/><br/>
         <input type = "password" name="password" placeholder="Password"/><br/>
         <input type = "text" name="name" placeholder="Name"/><br/>

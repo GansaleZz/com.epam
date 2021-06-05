@@ -21,7 +21,7 @@ public class AddNewRequest implements Command{
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(!request.getSession().getAttribute("userRole").equals("CLIENT")){
-            response.sendRedirect("http://localhost:8080/controller?command=ACTSHOWHOME");
+            response.sendRedirect(link+CommandInstance.ACTSHOWHOME);
         }else {
             RequestDaoImpl requestDao = new RequestDaoImpl();
             UserDaoImpl userDao = new UserDaoImpl();
@@ -48,7 +48,7 @@ public class AddNewRequest implements Command{
             } catch (DaoException e) {
                 e.printStackTrace();
             }
-            response.sendRedirect("http://localhost:8080/controller?command=ACTSHOWREQUESTS");
+            response.sendRedirect(link + CommandInstance.ACTSHOWREQUESTS);
         }
     }
 }

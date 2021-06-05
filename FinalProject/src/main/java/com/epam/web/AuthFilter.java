@@ -4,7 +4,6 @@ import com.epam.criteria.UserCriteria;
 import com.epam.db.dao.impl.UserDaoImpl;
 import com.epam.entity.UserStatus;
 import com.epam.exceptions.DaoException;
-import com.epam.service.ServletDestination;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -36,13 +35,18 @@ public class AuthFilter implements Filter {
                 throw new Exception();
             }
             boolean loggedIn = session != null && session.getAttribute("login") != null;
-            boolean badRequestLogged = httpServletRequest.getRequestURI().contains("/auth/") ||
-                    (httpServletRequest.getRequestURI().contains("/controller") &&
+            boolean badRequestLogged = (httpServletRequest.getRequestURI().contains("/controller") &&
                             httpServletRequest.getQueryString() != null &&
                             (httpServletRequest.getQueryString().contains("SIGNUP") ||
-                                    httpServletRequest.getQueryString().contains("LOGIN")));
+                            httpServletRequest.getQueryString().contains("LOGIN") ||
+                            httpServletRequest.getQueryString().contains("AUTH") ||
+                            httpServletRequest.getQueryString().contains("BAN")));
             if(httpServletRequest.getRequestURI().matches(".*(css|jpg|png|gif|js)")){
-                chain.doFilter(httpServletRequest,httpServletResponse);
+                try {
+                    chain.doFilter(httpServletRequest,httpServletResponse);
+                } catch (ServletException e) {
+                    e.printStackTrace();
+                }
                 return;
             }else {
                 if (loggedIn) {
@@ -51,9 +55,8 @@ public class AuthFilter implements Filter {
                     userCriteria.setLogin((String) session.getAttribute("login"));
                     try {
                         if (userDao.findUserByCriteria(userCriteria).get().getStatus().equals(UserStatus.BANNED)) {
-                            httpServletResponse.sendRedirect(ServletDestination.BANPAGE.getPath());
+                            httpServletResponse.sendRedirect("http://localhost:8080/controller?command=ACTSHOWBAN");
                             session.invalidate();
-                            return;
                         }
                     } catch (DaoException e) {
                         e.printStackTrace();
@@ -63,14 +66,18 @@ public class AuthFilter implements Filter {
                     httpServletResponse.sendRedirect("http://localhost:8080/controller?command=ACTSHOWHOME");
                 } else {
                     if (!loggedIn && !badRequestLogged) {
-                        httpServletResponse.sendRedirect(ServletDestination.AUTHPAGE.getPath());
+                        httpServletResponse.sendRedirect("http://localhost:8080/controller?command=ACTSHOWAUTH");
                     } else {
-                        chain.doFilter(request, response);
+                        try {
+                            chain.doFilter(request, response);
+                        } catch (ServletException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
         }catch(Exception e){
-            httpServletResponse.sendRedirect("http://localhost:8080/controller?command=ACTSHOWERRORPAGE");
+            httpServletResponse.sendRedirect("http://localhost:8080/controller?command=ACTSHOWERROR");
         }
     }
 }

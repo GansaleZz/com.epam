@@ -28,18 +28,18 @@ public class SignUp implements Command{
 
                 try {
                     if (userDao.create(user)) {
-                        response.sendRedirect(ServletDestination.SIGNUPSUCC.getPath());
+                        response.sendRedirect(link + CommandInstance.ACTSHOWSIGNUPSUCC);
                     } else {
-                        response.sendRedirect(ServletDestination.SIGNUPERROR.getPath());
+                        response.sendRedirect(link + CommandInstance.ACTSHOWSIGNUPERROR);
                     }
                 } catch (DaoException | IOException e) {
                     e.printStackTrace();
                 }
             } else {
-                response.sendRedirect(ServletDestination.SIGNUPERROR.getPath());
+                response.sendRedirect(link + CommandInstance.ACTSHOWSIGNUPERROR);
             }
         }else {
-            response.sendRedirect(ServletDestination.AUTHPAGE.getPath());
+            response.sendRedirect(link + CommandInstance.ACTSHOWSIGNUPERROR);
         }
     }
 }

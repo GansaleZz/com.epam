@@ -15,7 +15,7 @@ public class ChangeUsersRS implements Command{
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(request.getSession().getAttribute("userRole").equals("CLIENT")){
-            response.sendRedirect("http://localhost:8080/controller?command=ACTSHOWHOME");
+            response.sendRedirect(link + CommandInstance.ACTSHOWHOME);
         }
         UserDaoImpl userDao = new UserDaoImpl();
         try {
@@ -26,6 +26,6 @@ public class ChangeUsersRS implements Command{
         } catch (DaoException e) {
             e.printStackTrace();
         }
-        response.sendRedirect("http://localhost:8080/controller?command=ACTSHOWUSERS");
+        response.sendRedirect(link + CommandInstance.ACTSHOWUSERS);
     }
 }

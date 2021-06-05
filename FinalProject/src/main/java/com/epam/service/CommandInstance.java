@@ -3,9 +3,16 @@ package com.epam.service;
 import java.util.Arrays;
 
 public enum CommandInstance {
-    LOGIN(new LogIn()),
-    LOGOUT(new LogOut()),
-    SIGNUP(new SignUp()),
+    ACTSHOWLOGIN(new ShowLogIn()),
+    ACTSHOWSIGNUP(new ShowSignUp()),
+    ACTSHOWAUTH(new ShowAuth()),
+    ACTLOGIN(new LogIn()),
+    ACTLOGOUT(new LogOut()),
+    ACTSIGNUP(new SignUp()),
+    ACTSHOWBAN(new ShowBan()),
+    ACTSHOWLOGINERROR(new ShowLogInError()),
+    ACTSHOWSIGNUPERROR(new ShowSignUpError()),
+    ACTSHOWSIGNUPSUCC(new ShowSignUpSucc()),
     ACTSHOWROOMS(new ShowRooms()),
     ACTSHOWPROFILE(new ShowProfile()),
     ACTSHOWUSERS(new ShowUsers()),
@@ -22,7 +29,7 @@ public enum CommandInstance {
     ACTSHOWREQUESTS(new ShowRequests()),
     ACTUPDATEREQUEST(new UpdateRequest()),
     ACTPAYFORREQUEST(new PayForRequest()),
-    ACTSHOWERRORPAGE(new ShowErrorPage());
+    ACTSHOWERROR(new ShowErrorPage());
 
     private final Command command;
 

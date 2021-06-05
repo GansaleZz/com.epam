@@ -6,6 +6,8 @@ import java.io.IOException;
 
 public interface Command {
 
+    String link = "controller?command=";
+
     void execute(HttpServletRequest request, HttpServletResponse response) throws IOException;
 
     static Command of(String commandName){

@@ -25,7 +25,7 @@ public class LogIn implements Command{
                 if (userDao.findUserByCriteria(criteria).isPresent() && userDao.findUserByCriteria(criteria).get().getPassword().equals(pass)) {
                     User user = userDao.findUserByCriteria(criteria).get();
                     if(user.getStatus().equals(UserStatus.BANNED)){
-                        response.sendRedirect(ServletDestination.BANPAGE.getPath());
+                        response.sendRedirect(link + CommandInstance.ACTSHOWBAN);
                     }else {
                         HttpSession session = request.getSession();
                         String userRole = String.valueOf(user.getUserRole());
@@ -38,17 +38,17 @@ public class LogIn implements Command{
                         session.setAttribute("id",user.getId());
                         session.setAttribute("locale","en");
                         session.setAttribute("bundle",bundle);
-                        response.sendRedirect("http://localhost:8080/controller?command=ACTSHOWHOME");
+                        response.sendRedirect(link + CommandInstance.ACTSHOWHOME);
                     }
                 } else {
-                    response.sendRedirect(ServletDestination.LOGINERROR.getPath());
+                    response.sendRedirect(link + CommandInstance.ACTSHOWLOGINERROR);
                 }
             } catch (DaoException | IOException e) {
                 e.printStackTrace();
             }
         }else{
             try {
-                response.sendRedirect(ServletDestination.LOGINPAGE.getPath());
+                response.sendRedirect(link + CommandInstance.ACTSHOWLOGINERROR);
             }catch (IOException e) {
                 e.printStackTrace();
             }

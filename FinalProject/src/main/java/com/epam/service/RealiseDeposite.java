@@ -12,21 +12,21 @@ public class RealiseDeposite implements Command{
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(!request.getSession().getAttribute("userRole").equals("CLIENT")){
-            response.sendRedirect("http://localhost:8080/controller?command=ACTSHOWHOME");
+            response.sendRedirect(link + CommandInstance.ACTSHOWHOME);
         }else{
             try {
                 if(request.getParameter("card").length()!=0) {
                     UserDaoImpl userDao = new UserDaoImpl();
 
                         User user = userDao.findEntityById((Integer) request.getSession().getAttribute("id")).get();
-                        user.setBalance(Double.valueOf(user.getBalance() + Integer.valueOf(request.getParameter("balance"))));
+                        user.setBalance(user.getBalance() + Integer.parseInt(request.getParameter("balance")));
                         userDao.update(user);
 
                 }
             } catch (DaoException e) {
                 e.printStackTrace();
             }finally {
-                response.sendRedirect("http://localhost:8080/controller?command=ACTSHOWPROFILE");
+                response.sendRedirect(link + CommandInstance.ACTSHOWPROFILE);
             }
         }
     }

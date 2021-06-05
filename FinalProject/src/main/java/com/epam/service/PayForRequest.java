@@ -21,7 +21,7 @@ public class PayForRequest implements Command{
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(!request.getSession().getAttribute("userRole").equals("CLIENT")){
-            response.sendRedirect("http://localhost:8080/controller?command=ACTSHOWHOME");
+            response.sendRedirect(link + CommandInstance.ACTSHOWHOME);
         }else {
             try {
                 RequestDaoImpl requestDao = new RequestDaoImpl();
@@ -43,7 +43,7 @@ public class PayForRequest implements Command{
                     req.setPayment(payment);
                     requestDao.update(req);
                     cache.removeRequest(req.getId());
-                response.sendRedirect("http://localhost:8080/controller?command=ACTSHOWREQUESTS");
+                response.sendRedirect(link + CommandInstance.ACTSHOWREQUESTS);
             }else{
                 if(req.getUser().getBalance() >= payment.getAmount()) {
                     UserDaoImpl userDao = new UserDaoImpl();
@@ -56,7 +56,7 @@ public class PayForRequest implements Command{
                     userDao.update(req.getUser());
                     requestDao.update(req);
                     cache.addRequest(req);
-                    response.sendRedirect("http://localhost:8080/controller?command=ACTSHOWREQUESTS");
+                    response.sendRedirect(link + CommandInstance.ACTSHOWREQUESTS);
                 }else{
                     request.getServletContext().getRequestDispatcher(ServletDestination.CLIENTBADBALANCEPAGE.getPath()).forward(request,response);
                 }

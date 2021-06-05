@@ -24,7 +24,7 @@ public class UpdateRequest implements Command{
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(UserRole.getRole((String) request.getSession().getAttribute("userRole")).equals(UserRole.CLIENT)){
-            response.sendRedirect("http://localhost:8080/controller?command=ACTSHOWHOME");
+            response.sendRedirect(link + CommandInstance.ACTSHOWHOME);
         }else {
             ResourceBundle bundle = ResourceBundle.getBundle("language_"+request.getSession().getAttribute("locale"));
             if (new String(request.getParameter("submit").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8).equals(bundle.getString("deny"))) {
@@ -33,7 +33,7 @@ public class UpdateRequest implements Command{
                     Request req = requestDao.findEntityById(Integer.valueOf(request.getParameter("id"))).get();
                     req.setRequestStatus(RequestStatus.DENIED);
                     requestDao.update(req);
-                    response.sendRedirect("http://localhost:8080/controller?command=ACTSHOWREQUESTS");
+                    response.sendRedirect(link + CommandInstance.ACTSHOWREQUESTS);
                 } catch (DaoException e) {
                     e.printStackTrace();
                 }
@@ -75,7 +75,7 @@ public class UpdateRequest implements Command{
                         req.setRoom(roomDao.findEntityById(Integer.valueOf(request.getParameter("roomId"))).get());
                         cache.addRequest(req);
                         requestDao.update(req);
-                        response.sendRedirect("http://localhost:8080/controller?command=ACTSHOWREQUESTS");
+                        response.sendRedirect(link + CommandInstance.ACTSHOWREQUESTS);
                     } catch (DaoException e) {
                         e.printStackTrace();
                     }

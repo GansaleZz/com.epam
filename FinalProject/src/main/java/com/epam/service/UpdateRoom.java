@@ -17,7 +17,7 @@ public class UpdateRoom implements Command{
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(UserRole.getRole((String) request.getSession().getAttribute("userRole")).equals(UserRole.CLIENT)){
-            response.sendRedirect("http://localhost:8080/controller?command=ACTSHOWHOME");
+            response.sendRedirect(link + CommandInstance.ACTSHOWHOME);
         }else{
             RoomDaoImpl roomDao = new RoomDaoImpl();
             ResourceBundle bundle = ResourceBundle.getBundle("language_"+request.getSession().getAttribute("locale"));
@@ -30,17 +30,17 @@ public class UpdateRoom implements Command{
             }else{
                 try {
                     Room room = roomDao.findEntityById(Integer.valueOf(request.getParameter("id"))).get();
-                    room.setPrice(Integer.valueOf(request.getParameter("price")));
-                    room.setNumberOfSeats(Integer.valueOf(request.getParameter("numberOfSeats")));
+                    room.setPrice(Integer.parseInt(request.getParameter("price")));
+                    room.setNumberOfSeats(Integer.parseInt(request.getParameter("numberOfSeats")));
                     room.setRoomStatus(RoomStatus.valueOf(request.getParameter("status")));
                     room.setRoomClass(RoomClass.valueOf(request.getParameter("class")));
-                    room.setRoomNumber(Integer.valueOf(request.getParameter("roomNumber")));
+                    room.setRoomNumber(Integer.parseInt(request.getParameter("roomNumber")));
                     roomDao.update(room);
                 } catch (DaoException e) {
                     e.printStackTrace();
                 }
             }
-            response.sendRedirect("http://localhost:8080/controller?command=ACTSHOWROOMS");
+            response.sendRedirect(link + CommandInstance.ACTSHOWROOMS);
         }
     }
 }

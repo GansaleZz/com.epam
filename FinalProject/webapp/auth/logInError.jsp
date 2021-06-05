@@ -10,10 +10,10 @@
 <html>
 <head>
     <title>Error</title>
-    <link rel="stylesheet" href="<c:url value="../resources/css/auth.css"/> ">
+    <link rel="stylesheet" href="<c:url value="../resources/css/styles.css"/> ">
 </head>
 <body>
   <h1>Wrong input information</h1>
-  <a href="http://localhost:8080/auth/logInPage.jsp" class="s2">Try again</a>
+  <a href="http://localhost:8080/controller?command=ACTSHOWLOGIN" class="s2">Try again</a>
 </body>
 </html>

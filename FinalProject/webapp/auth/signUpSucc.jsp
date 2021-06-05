@@ -10,11 +10,11 @@
 <html>
 <head>
     <title>Success</title>
-    <link rel="stylesheet" href="<c:url value="../resources/css/auth.css"/> ">
+    <link rel="stylesheet" href="<c:url value="../resources/css/styles.css"/> ">
 </head>
 <body>
   <h1>You were successfully signed up! Now you can sign in</h1>
-  <a href="http://localhost:8080/auth/logInPage.jsp" class="s2">Log In</a>
-  <a href="http://localhost:8080/auth/authPage.jsp" class="s2">Back</a>
+  <a href="http://localhost:8080/controller?command=ACTSHOWLOGIN" class="s2">Log In</a>
+  <a href="http://localhost:8080/controller?command=ACTSHOWAUTH" class="s2">Back</a>
 </body>
 </html>
