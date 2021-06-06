@@ -6,11 +6,7 @@ import com.epam.entity.RequestStatus;
 import com.epam.entity.Room;
 import com.epam.exceptions.DaoException;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 public class Cache {
     private static Cache instance = null;
@@ -48,11 +44,20 @@ public class Cache {
     public void updateRequests(){
         Iterator i = activeRequests.entrySet().iterator();
         Calendar calendar = Calendar.getInstance();
-        while (i.hasNext()) {
-            HashMap.Entry pair = (HashMap.Entry) i.next();
-            if(((Request)pair.getValue()).getEnd().before(calendar.getTime())){
-                activeRequests.remove(pair.getValue());
+        RequestDaoImpl requestDao = new RequestDaoImpl();
+        try {
+            List<Request> list = requestDao.findAllEntities();
+            while (i.hasNext()) {
+                HashMap.Entry pair = (HashMap.Entry) i.next();
+                if (((Request) pair.getValue()).getEnd().before(calendar.getTime()) ||
+                        (list.stream()
+                                .filter(j -> j.getId() == ((Request) pair.getValue()).getId())
+                                .findAny().isEmpty())) {
+                    activeRequests.remove(((Request) pair.getValue()).getId());
+                }
             }
+        } catch (DaoException e) {
+            e.printStackTrace();
         }
     }
 
