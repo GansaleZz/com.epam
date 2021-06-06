@@ -40,7 +40,6 @@ public class RoomDaoImpl implements RoomDao {
             resultSet.close();
         } catch (SQLException e) {
             logger.error(e.getMessage());
-            throw new DaoException(e);
         } finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connectionPool.close(connection);
@@ -60,7 +59,6 @@ public class RoomDaoImpl implements RoomDao {
             resultSet.close();
         } catch (SQLException e) {
             logger.error(e.getMessage());
-            throw new DaoException(e);
         } finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connectionPool.close(connection);
@@ -86,7 +84,6 @@ public class RoomDaoImpl implements RoomDao {
                 logger.info(room + " successfully created!");
             } catch (SQLException e) {
                 logger.error(e.getMessage());
-                throw new DaoException(e);
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
                 connectionPool.close(connection);
@@ -107,7 +104,6 @@ public class RoomDaoImpl implements RoomDao {
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());
-            throw new DaoException(e);
         } finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connectionPool.close(connection);
@@ -134,7 +130,6 @@ public class RoomDaoImpl implements RoomDao {
                 logger.info(room + " successfully updated!");
             } catch (SQLException e) {
                 logger.error(e.getMessage());
-                throw new DaoException(e);
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
                 connectionPool.close(connection);
@@ -173,7 +168,7 @@ public class RoomDaoImpl implements RoomDao {
         return list;
     }
 
-    private Optional<Room> getRoom(ResultSet resultSet) throws DaoException {
+    private Optional<Room> getRoom(ResultSet resultSet) {
         Optional<Room> room = Optional.empty();
         try {
             int id = resultSet.getInt(1);
@@ -201,7 +196,6 @@ public class RoomDaoImpl implements RoomDao {
             }
         }catch(SQLException e){
             logger.error(e.getMessage());
-            throw new DaoException(e);
         }
         return room;
     }

@@ -44,7 +44,6 @@ public class RequestDaoImpl implements RequestDao {
             resultSet.close();
         } catch (SQLException e) {
             logger.error(e.getMessage());
-            throw new DaoException(e);
         } finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connectionPool.close(connection);
@@ -64,7 +63,6 @@ public class RequestDaoImpl implements RequestDao {
             resultSet.close();
         } catch (SQLException e) {
             logger.error(e.getMessage());
-            throw new DaoException(e);
         } finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connectionPool.close(connection);
@@ -91,7 +89,6 @@ public class RequestDaoImpl implements RequestDao {
                 logger.info(request + " successfully created!");
             } catch (SQLException e) {
                 logger.error(e.getMessage());
-                throw new DaoException(e);
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
                 connectionPool.close(connection);
@@ -112,7 +109,6 @@ public class RequestDaoImpl implements RequestDao {
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());
-            throw new DaoException(e);
         } finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connectionPool.close(connection);
@@ -148,7 +144,6 @@ public class RequestDaoImpl implements RequestDao {
                 logger.info(request + " successfully updated!");
             } catch (SQLException e) {
                 logger.error(e.getMessage());
-                throw new DaoException(e);
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
                 connectionPool.close(connection);
@@ -228,7 +223,6 @@ public class RequestDaoImpl implements RequestDao {
             }
         }catch(SQLException e){
             logger.error(e.getMessage());
-            throw new DaoException(e);
         }
         return request;
     }

@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class ShowProfile implements Command{
+    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ShowProfile.class);
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
@@ -29,7 +31,7 @@ public class ShowProfile implements Command{
                 case CLIENT -> request.getServletContext().getRequestDispatcher(ServletDestination.CLIENTPROFILEPAGE.getPath()).forward(request, response);
             }
         } catch (DaoException | ServletException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 }

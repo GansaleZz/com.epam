@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.util.ResourceBundle;
 
 public class UpdateProfile implements Command{
+    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(UpdateProfile.class);
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try{
@@ -23,7 +25,7 @@ public class UpdateProfile implements Command{
             userDao.update(user);
             response.sendRedirect(link + CommandInstance.ACTSHOWPROFILE);
         } catch (DaoException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 }

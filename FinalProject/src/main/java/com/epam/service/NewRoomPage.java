@@ -8,10 +8,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class NewRoomPage implements Command{
+    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(NewRoomPage.class);
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(request.getSession().getAttribute("userRole").equals("CLIENT")){
             response.sendRedirect(link + CommandInstance.ACTSHOWHOME);
+            logger.warn("Client with login "+request.getSession().getAttribute("login")+" tried to got access to the page 'New room'");
         }else{
             try {
                 switch (UserRole.getRole((String) request.getSession().getAttribute("userRole"))) {

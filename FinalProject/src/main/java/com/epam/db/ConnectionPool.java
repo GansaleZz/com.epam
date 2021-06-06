@@ -59,6 +59,7 @@ public final class ConnectionPool {
                         Thread.sleep(500);
                     }
                 }else{
+                    logger.info("Connection received!");
                     addConnection();
                 }
             } catch (InterruptedException e) {
@@ -71,11 +72,13 @@ public final class ConnectionPool {
     }
 
     public void close(Connection connection){
+        logger.info("Connection closed!");
         engagedConnectionList.remove(connection);
         availableConnectionList.add(connection);
     }
 
     public void closeAllConnections(){
+        logger.info("All connections closed!");
         engagedConnectionList.stream()
                 .forEach(i -> {
                     availableConnectionList.add(i);

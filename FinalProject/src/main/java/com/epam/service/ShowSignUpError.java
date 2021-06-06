@@ -6,12 +6,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class ShowSignUpError implements Command{
+    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ShowSignUpError.class);
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             request.getServletContext().getRequestDispatcher(ServletDestination.SIGNUPERROR.getPath()).forward(request,response);
         } catch (ServletException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 }

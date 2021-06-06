@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class ShowRequests implements Command{
+    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ShowRequests.class);
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         RequestDaoImpl requestDao = new RequestDaoImpl();
@@ -49,10 +51,8 @@ public class ShowRequests implements Command{
                     case ADMIN -> request.getServletContext().getRequestDispatcher(ServletDestination.ADMINREQUESTSPAGE.getPath()).forward(request, response);
                 }
             }
-        } catch (ServletException e) {
-            e.printStackTrace();
-        } catch (DaoException e) {
-            e.printStackTrace();
+        } catch (ServletException | DaoException e) {
+            logger.error(e.getMessage());
         }
     }
 }

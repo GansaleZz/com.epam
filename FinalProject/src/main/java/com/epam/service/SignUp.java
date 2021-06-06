@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class SignUp implements Command{
+    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(SignUp.class);
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(request.getParameter("password") != null && request.getParameter("login") != null && request.getParameter("email") != null) {
@@ -25,15 +27,15 @@ public class SignUp implements Command{
                         .withName(name)
                         .withEmail(email)
                         .build();
-
                 try {
                     if (userDao.create(user)) {
+                        logger.info("User with login "+user.getLogin()+" was signed up");
                         response.sendRedirect(link + CommandInstance.ACTSHOWSIGNUPSUCC);
                     } else {
                         response.sendRedirect(link + CommandInstance.ACTSHOWSIGNUPERROR);
                     }
                 } catch (DaoException | IOException e) {
-                    e.printStackTrace();
+                    logger.error(e.getMessage());
                 }
             } else {
                 response.sendRedirect(link + CommandInstance.ACTSHOWSIGNUPERROR);

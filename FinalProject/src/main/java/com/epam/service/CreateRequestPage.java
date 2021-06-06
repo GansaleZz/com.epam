@@ -9,10 +9,13 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class CreateRequestPage implements Command {
+    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(CreateRequestPage.class);
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(!request.getSession().getAttribute("userRole").equals("CLIENT")){
             response.sendRedirect(link + CommandInstance.ACTSHOWHOME);
+            logger.warn("User with login "+request.getSession().getAttribute("login")+" tried to got access to the page 'Create request'");
         }else {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             Calendar calendar = Calendar.getInstance();
@@ -24,7 +27,7 @@ public class CreateRequestPage implements Command {
             try {
                 request.getServletContext().getRequestDispatcher(ServletDestination.CLIENTNEWREQUESTPAGE.getPath()).forward(request, response);
             } catch (ServletException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage());
             }
         }
     }

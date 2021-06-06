@@ -32,13 +32,11 @@
     <b><c:out value="${bundle.getString('roomNumber')}"/> </b>
     <c:choose>
         <c:when test="${not empty rooms}">
-            <select name = "room">
+            <select name = "roomId">
                 <c:forEach var="i" items="${rooms}">
-                    <option>${i.roomNumber}</option>
-                    <c:set var="rmId" value="${i.id}"/>
+                    <option value="${i.id}">${i.roomNumber}</option>
                 </c:forEach>
             </select>
-            <input type="hidden" value="${rmId}" name="roomId"/>
             <input type="hidden" value="${id}" name="reqId"/>
             <input type="submit" name="submit" value="<c:out value="${bundle.getString('approve')}"/> ">
         </c:when>

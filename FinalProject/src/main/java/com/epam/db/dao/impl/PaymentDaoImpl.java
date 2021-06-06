@@ -39,7 +39,6 @@ public class PaymentDaoImpl implements PaymentDao {
             resultSet.close();
         } catch (SQLException e) {
             logger.error(e.getMessage());
-            throw new DaoException(e);
         } finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connectionPool.close(connection);
@@ -59,7 +58,6 @@ public class PaymentDaoImpl implements PaymentDao {
             resultSet.close();
         } catch (SQLException e) {
             logger.error(e.getMessage());
-            throw new DaoException(e);
         } finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connectionPool.close(connection);
@@ -84,7 +82,6 @@ public class PaymentDaoImpl implements PaymentDao {
                 logger.info(payment + "successfully created!");
             } catch (SQLException e) {
                 logger.error(e.getMessage());
-                throw new DaoException(e);
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
                 connectionPool.close(connection);
@@ -105,7 +102,6 @@ public class PaymentDaoImpl implements PaymentDao {
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());
-            throw new DaoException(e);
         } finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connectionPool.close(connection);
@@ -130,7 +126,6 @@ public class PaymentDaoImpl implements PaymentDao {
                 logger.info(payment + " successfully updated!");
             } catch (SQLException e) {
                 logger.error(e.getMessage());
-                throw new DaoException(e);
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
                 connectionPool.close(connection);
@@ -162,8 +157,8 @@ public class PaymentDaoImpl implements PaymentDao {
         return list;
     }
 
-    private Optional<Payment> getPayment(ResultSet resultSet) throws DaoException {
-        Optional<Payment> payment;
+    private Optional<Payment> getPayment(ResultSet resultSet){
+        Optional<Payment> payment = Optional.empty();
         try {
             int id = resultSet.getInt(1);
             int amount = resultSet.getInt(2);
@@ -190,7 +185,6 @@ public class PaymentDaoImpl implements PaymentDao {
             }
         }catch(SQLException e){
             logger.error(e.getMessage());
-            throw new DaoException(e);
         }
         return payment;
     }

@@ -12,10 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShowUsers implements Command{
+    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ShowUsers.class);
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(request.getSession().getAttribute("userRole").equals("CLIENT")){
             response.sendRedirect(link + CommandInstance.ACTSHOWHOME);
+            logger.warn("Client with login "+request.getSession().getAttribute("login")+" tried to got access to the page 'Show users'");
         }else {
             UserDaoImpl userDao = new UserDaoImpl();
             List<User> list = new ArrayList<>();
@@ -32,7 +35,7 @@ public class ShowUsers implements Command{
                     request.getServletContext().getRequestDispatcher(ServletDestination.MODERATORUSERSPAGE.getPath()).forward(request, response);
                 }
             } catch (ServletException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage());
             }
         }
     }

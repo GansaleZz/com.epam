@@ -45,7 +45,6 @@ public class UserDaoImpl implements UserDao {
             resultSet.close();
         } catch (SQLException e) {
             logger.error(e.getMessage());
-            throw new DaoException(e);
         } finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connectionPool.close(connection);
@@ -65,7 +64,6 @@ public class UserDaoImpl implements UserDao {
             resultSet.close();
         } catch (SQLException e) {
             logger.error(e.getMessage());
-            throw new DaoException(e);
         } finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connectionPool.close(connection);
@@ -108,7 +106,6 @@ public class UserDaoImpl implements UserDao {
                 }
             } catch (SQLException e) {
                 logger.error(e.getMessage());
-                throw new DaoException(e);
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
                 connectionPool.close(connection);
@@ -130,7 +127,6 @@ public class UserDaoImpl implements UserDao {
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());
-            throw new DaoException(e);
         } finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connectionPool.close(connection);
@@ -167,7 +163,6 @@ public class UserDaoImpl implements UserDao {
                 logger.info(user + " successfully updated!");
             } catch (SQLException e) {
                 logger.error(e.getMessage());
-                throw new DaoException(e);
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
                 connectionPool.close(connection);
@@ -222,7 +217,6 @@ public class UserDaoImpl implements UserDao {
             resultSet.close();
         } catch (SQLException e) {
             logger.error(e.getMessage());
-            throw new DaoException(e);
         } finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connectionPool.close(connection);
@@ -280,7 +274,6 @@ public class UserDaoImpl implements UserDao {
             }
         }catch(SQLException e){
             logger.error(e.getMessage());
-            throw new DaoException(e);
         }
         return user;
     }

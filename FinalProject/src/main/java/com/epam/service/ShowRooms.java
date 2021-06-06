@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShowRooms implements Command{
+    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ShowRooms.class);
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         RoomDaoImpl roomDao = new RoomDaoImpl();
@@ -30,7 +32,7 @@ public class ShowRooms implements Command{
                 case ADMIN -> request.getServletContext().getRequestDispatcher(ServletDestination.ADMINROOMSPAGE.getPath()).forward(request, response);
             }
         } catch (ServletException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 }

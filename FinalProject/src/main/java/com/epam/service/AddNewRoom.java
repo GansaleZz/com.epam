@@ -12,28 +12,31 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class AddNewRoom implements Command{
+    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(AddNewRoom.class);
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(request.getSession().getAttribute("userRole").equals("CLIENT")){
             response.sendRedirect(link + CommandInstance.ACTSHOWHOME);
-        }
-        if(request.getParameter("price").trim().length()!=0 || request.getSession().getAttribute("userRole").equals("CLIENT")){
-            RoomDaoImpl roomDao = new RoomDaoImpl();
-            Room room = new RoomCriteria.Builder()
-                    .newBuilder()
-                    .withPrice(Integer.parseInt(request.getParameter("price")))
-                    .withRoomClass(RoomClass.valueOf(request.getParameter("roomClass")))
-                    .withRoomStatus(RoomStatus.AVAILABLE)
-                    .withNumberOfSeats(Integer.parseInt(request.getParameter("numberOfSeats")))
-                    .withRoomNumber(Integer.parseInt(request.getParameter("roomNumber")))
-                    .build();
-            try {
-                roomDao.create(room);
-            } catch (DaoException e) {
-                e.printStackTrace();
+            logger.warn("Client with login "+request.getSession().getAttribute("login")+" tried to got access to the page 'Add new room'");
+        }else {
+            if (request.getParameter("price").trim().length() != 0 || request.getSession().getAttribute("userRole").equals("CLIENT")) {
+                RoomDaoImpl roomDao = new RoomDaoImpl();
+                Room room = new RoomCriteria.Builder()
+                        .newBuilder()
+                        .withPrice(Integer.parseInt(request.getParameter("price")))
+                        .withRoomClass(RoomClass.valueOf(request.getParameter("roomClass")))
+                        .withRoomStatus(RoomStatus.AVAILABLE)
+                        .withNumberOfSeats(Integer.parseInt(request.getParameter("numberOfSeats")))
+                        .withRoomNumber(Integer.parseInt(request.getParameter("roomNumber")))
+                        .build();
+                logger.info(room + " was created by user with login "+request.getSession().getAttribute("login"));
+                try {
+                    roomDao.create(room);
+                } catch (DaoException e) {
+                    logger.error(e.getMessage());
+                }
             }
-                response.sendRedirect(link + CommandInstance.ACTSHOWROOMS);
-        }else{
             response.sendRedirect(link + CommandInstance.ACTSHOWROOMS);
         }
     }

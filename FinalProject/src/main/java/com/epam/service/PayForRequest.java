@@ -18,10 +18,13 @@ import java.io.IOException;
 import java.util.Calendar;
 
 public class PayForRequest implements Command{
+    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(PayForRequest.class);
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(!request.getSession().getAttribute("userRole").equals("CLIENT")){
             response.sendRedirect(link + CommandInstance.ACTSHOWHOME);
+            logger.warn("User with login "+request.getSession().getAttribute("login")+" tried to got access to the page 'Pay for request'");
         }else {
             try {
                 RequestDaoImpl requestDao = new RequestDaoImpl();
@@ -43,7 +46,8 @@ public class PayForRequest implements Command{
                     req.setPayment(payment);
                     requestDao.update(req);
                     cache.removeRequest(req.getId());
-                response.sendRedirect(link + CommandInstance.ACTSHOWREQUESTS);
+                    response.sendRedirect(link + CommandInstance.ACTSHOWREQUESTS);
+                    logger.info("Client with login " + request.getSession().getAttribute("login") + " cancelled request with room number "+req.getRoom().getRoomNumber());
             }else{
                 if(req.getUser().getBalance() >= payment.getAmount()) {
                     UserDaoImpl userDao = new UserDaoImpl();
@@ -56,13 +60,14 @@ public class PayForRequest implements Command{
                     userDao.update(req.getUser());
                     requestDao.update(req);
                     cache.addRequest(req);
+                    logger.info("Client with login " + request.getSession().getAttribute("login") + " paid for request with room number "+req.getRoom().getRoomNumber());
                     response.sendRedirect(link + CommandInstance.ACTSHOWREQUESTS);
                 }else{
                     request.getServletContext().getRequestDispatcher(ServletDestination.CLIENTBADBALANCEPAGE.getPath()).forward(request,response);
                 }
             }
         } catch (DaoException | ServletException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         }
     }
