@@ -39,8 +39,20 @@
           <option value="LUXE"><c:out value="${bundle.getString('luxe')}"/> </option>
           <option value="PREMIUM"><c:out value="${bundle.getString('premium')}"/> </option>
       </select><br>
-      <input type="submit" name="submit" value="${bundle.getString('submit')}">
+      <input type="submit" name="submit" value="${bundle.getString('submit')}" onclick='return btnClick();'>
     </div>
 </form>
+
+<script>
+    function btnClick() {
+        var requestsCount = ${requestsCount};
+        if (requestsCount == 5){
+            alert("${bundle.getString('maxRequests')}");
+            return false;
+        }else{
+            return true;
+        }
+    }
+</script>
 </body>
 </html>
