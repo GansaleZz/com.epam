@@ -43,9 +43,7 @@ public class AddNewRequest implements Command{
                         .withNumberOfSeats(Integer.parseInt(request.getParameter("numberOfSeats")))
                         .build();
                 requestDao.create(newRequest);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            } catch (DaoException e) {
+            } catch (ParseException | DaoException e) {
                 e.printStackTrace();
             }
             response.sendRedirect(link + CommandInstance.ACTSHOWREQUESTS);
