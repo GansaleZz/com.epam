@@ -6,6 +6,7 @@ import com.epam.entity.Payment;
 import com.epam.entity.Request;
 import com.epam.entity.UserRole;
 import com.epam.exceptions.DaoException;
+import com.epam.util.Cache;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,19 +19,27 @@ import java.util.Optional;
 public class ShowRequests implements Command{
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ShowRequests.class);
 
+    /**
+     * Forwarding user on 'requests' page. For clients setting only their own requests, for moderators/admins -
+     * all requests, with opportunity to answer them
+     *
+     * @see UpdateRequest
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         RequestDaoImpl requestDao = new RequestDaoImpl();
         try {
             List<Request> list = new ArrayList<>();
-            if(UserRole.getRole((String) request.getSession().getAttribute("userRole")) == UserRole.CLIENT) {
+            Cache cache = Cache.getInstance();
+            cache.updateRequests();
+            if(UserRole.getRole((String) request.getSession().getAttribute("userRole")).equals(UserRole.CLIENT)) {
                 PaymentDaoImpl paymentDao = new PaymentDaoImpl();
                 List<Request> finalList = list;
                 requestDao.findAllEntities().stream()
                         .filter(i -> i.getUser().getId() == (Integer) request.getSession().getAttribute("id"))
                         .forEach(i -> {
                             try {
-                                Optional<Payment> payment =paymentDao.findAllEntities().stream()
+                                Optional<Payment> payment = paymentDao.findAllEntities().stream()
                                         .filter(j -> j.getId() == i.getId())
                                         .findAny();
                                 if(payment.isPresent()){
@@ -41,7 +50,7 @@ public class ShowRequests implements Command{
                                 e.printStackTrace();
                             }
                         });
-                request.setAttribute("list", list);
+                request.setAttribute("list", finalList);
                 request.getServletContext().getRequestDispatcher(ServletDestination.CLIENTREQEUSTSPAGE.getPath()).forward(request, response);
             }else {
                 list = requestDao.findAllEntities();

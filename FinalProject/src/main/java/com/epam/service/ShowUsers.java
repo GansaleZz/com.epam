@@ -14,6 +14,10 @@ import java.util.List;
 public class ShowUsers implements Command{
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ShowUsers.class);
 
+    /**
+     * Forwarding admin/moderator on 'users' page. Admin has opportunity to change user's role/status,
+     * moderator can only see list of users
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(request.getSession().getAttribute("userRole").equals("CLIENT")){

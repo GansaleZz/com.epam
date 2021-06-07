@@ -3,6 +3,7 @@ package com.epam.db.dao.impl;
 import com.epam.criteria.RoomCriteria;
 import com.epam.db.ConnectionPool;
 import com.epam.db.dao.RoomDao;
+import com.epam.entity.Payment;
 import com.epam.entity.Room;
 import com.epam.entity.RoomClass;
 import com.epam.entity.RoomStatus;
@@ -17,15 +18,27 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
+
+/**
+ * Realisation of dao pattern for {@link Room}
+ *
+ * @author Andrey Rubin
+ */
 public class RoomDaoImpl implements RoomDao {
+    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(RoomDaoImpl.class);
+    /**
+     * Set of SQL queries
+     */
     private final String SQL_SELECT_ALL = "SELECT * FROM Room";
     private final String SQL_SELECT_BY_CRITERIA = "SELECT * FROM Room WHERE ";
     private final String SQL_INSERT = "INSERT INTO Room (number_of_seats,price,room_status_fk,room_class_fk,room_number) VALUES(?,?,?,?,?)";
     private final String SQL_DELETE = "DELETE FROM Room WHERE id = ";
     private final String SQL_UPDATE = "UPDATE Room SET number_of_seats = ?, price = ?, room_status_fk = ?, room_class_fk = ?, room_number = ? WHERE id = ?";
-    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(RoomDaoImpl.class);
 
-
+    /**
+     * Method, which finds all rooms on db
+     * @return list of rooms from db
+     */
     @Override
     public List<Room> findAllEntities() throws DaoException{
         List<Room> list = new ArrayList<>();
@@ -47,6 +60,11 @@ public class RoomDaoImpl implements RoomDao {
         return list;
     }
 
+    /**
+     * Method, which use to find room on db by id, if its exists
+     * @param id unique parameter, need to find room on db
+     * @return room from db, if its exists
+     */
     @Override
     public Optional<Room> findEntityById(Integer id) throws DaoException{
         Connection connection = ConnectionPool.getInstance().getConnection();
@@ -66,6 +84,12 @@ public class RoomDaoImpl implements RoomDao {
         return room;
     }
 
+    /**
+     * Method which creates room on db
+     * @param room - it is argument, which information will be taken
+     * for creating
+     * @return boolean, that indicates success of creating of room
+     */
     @Override
     public boolean create(Room room) throws DaoException{
         boolean result = false;
@@ -92,6 +116,12 @@ public class RoomDaoImpl implements RoomDao {
         return result;
     }
 
+    /**
+     * Method, which use to deleting room from db by id
+     * @param id - parameter that need to search room on db
+     * @return boolean, that indicates success of deleting  (true - if room
+     * with id exists, not - false)
+     */
     @Override
     public boolean delete(Integer id) throws DaoException{
         Connection connection = ConnectionPool.getInstance().getConnection();
@@ -111,6 +141,11 @@ public class RoomDaoImpl implements RoomDao {
         return result;
     }
 
+    /**
+     * Method, which use to update information of room on db
+     * @param room its argument with new information
+     * @return updated room
+     */
     @Override
     public Optional<Room> update(Room room) throws DaoException{
         Optional<Room> roomOptional = Optional.empty();
@@ -138,6 +173,11 @@ public class RoomDaoImpl implements RoomDao {
         return roomOptional;
     }
 
+    /**
+     * Method that use to find all rooms on db by special criteria
+     * @param roomCriteria - parameter by which rooms are searching on db
+     * @return list of rooms with a specific criteria
+     */
     @Override
     public List<Room> findAllRoomsByCriteria(RoomCriteria roomCriteria) throws DaoException{
         List<Room> list = new ArrayList<>();
@@ -159,6 +199,12 @@ public class RoomDaoImpl implements RoomDao {
         return list;
     }
 
+    /**
+     * Method that saving code from duplicates on method findAllRoomsByCriteria,
+     * using for find rooms on db by criteria
+     * @param predicate - it's criteria by which we are searching rooms on db
+     * @return list of rooms with a specific criteria
+     */
     private List<Room> chooseAllByPredicate(Predicate predicate) throws DaoException {
         List<Room> list = new ArrayList<>();
         findAllEntities()
@@ -168,6 +214,11 @@ public class RoomDaoImpl implements RoomDao {
         return list;
     }
 
+    /**
+     * Method which saving code from duplicates
+     * @param resultSet - argument, which keeps result of executing of SQL query
+     * @return inited room by information from db
+     */
     private Optional<Room> getRoom(ResultSet resultSet) {
         Optional<Room> room = Optional.empty();
         try {

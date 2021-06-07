@@ -11,6 +11,10 @@ import java.io.IOException;
 public class RealiseDeposite implements Command{
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(RealiseDeposite.class);
 
+
+    /**
+     * Method which need to realise deposit of client
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(!request.getSession().getAttribute("userRole").equals("CLIENT")){

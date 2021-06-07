@@ -1,5 +1,6 @@
 package com.epam.criteria;
 
+import com.epam.entity.Request;
 import com.epam.entity.Room;
 import com.epam.entity.RoomClass;
 import com.epam.entity.RoomStatus;
@@ -9,8 +10,10 @@ public class RoomCriteria extends BaseCriteria<Room>{
     private RoomStatus roomStatus = null;
     private int price = 0;
     private int numberOfSeats = 0;
-    private int roomNumber = 0;
 
+    /**
+     * Realisation of builder pattern for {@link Room}
+     */
     public static class Builder extends BaseBuilder<Room>{
 
         public Builder newBuilder(){

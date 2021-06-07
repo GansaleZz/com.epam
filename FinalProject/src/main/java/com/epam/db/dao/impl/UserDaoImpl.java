@@ -17,7 +17,16 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
+/**
+ * Realisation of dao pattern for {@link User}
+ *
+ * @author Andrey Rubin
+ */
 public class UserDaoImpl implements UserDao {
+    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(UserDaoImpl.class);
+    /**
+     * Set of SQL queries
+     */
     private final String SQL_SELECT_ALL = "SELECT * FROM USER";
     private final String SQL_SELECT_BY_CRITERIA = "SELECT * FROM USER WHERE ";
     private final String SQL_SELECT_BALANCE = "SELECT * FROM user_balance WHERE id = ";
@@ -28,9 +37,11 @@ public class UserDaoImpl implements UserDao {
     private final String SQL_UPDATE = "UPDATE User SET name = ?, email = ?, password = ?, status_fk = ?, role_fk = ? WHERE id = ? AND login = ?";
     private final String SQL_UPDATE_USERS_BALANCE = "UPDATE User SET balance_fk = ? WHERE id = ?";
     private final String SQL_DELETE_BALANCE = "DELETE FROM user_balance WHERE id = ";
-    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(UserDaoImpl.class);
 
-
+    /**
+     * Method, which finds all users on db
+     * @return list of users from db
+     */
     @Override
     public List<User> findAllEntities() throws DaoException{
         List<User> list = new ArrayList<>();
@@ -52,6 +63,11 @@ public class UserDaoImpl implements UserDao {
         return list;
     }
 
+    /**
+     * Method, which use to find user on db by id, if its exists
+     * @param id unique parameter, need to find user on db
+     * @return user from db, if its exists
+     */
     @Override
     public Optional<User> findEntityById(Integer id) throws DaoException{
         Connection connection = ConnectionPool.getInstance().getConnection();
@@ -71,6 +87,12 @@ public class UserDaoImpl implements UserDao {
         return user;
     }
 
+    /**
+     * Method which creates user on db
+     * @param user - it is argument, which information will be taken
+     * for creating
+     * @return boolean, that indicates success of creating of user
+     */
     @Override
     public boolean create(User user) throws DaoException{
         boolean result = false;
@@ -114,6 +136,12 @@ public class UserDaoImpl implements UserDao {
         return result;
     }
 
+    /**
+     * Method, which use to deleting user from db by id
+     * @param id - parameter that need to search user on db
+     * @return boolean, that indicates success of deleting  (true - if user
+     * with id exists, not - false)
+     */
     @Override
     public boolean delete(Integer id) throws DaoException{
         Connection connection = ConnectionPool.getInstance().getConnection();
@@ -134,6 +162,11 @@ public class UserDaoImpl implements UserDao {
         return result;
     }
 
+    /**
+     * Method, which use to update information of user on db
+     * @param user its argument with new information
+     * @return updated user
+     */
     @Override
     public Optional<User> update(User user) throws DaoException {
         Optional<User> userOptional = Optional.empty();
@@ -171,6 +204,11 @@ public class UserDaoImpl implements UserDao {
         return userOptional;
     }
 
+    /**
+     * Method that use to find all users on db by special criteria
+     * @param userCriteria - parameter by which users are searching on db
+     * @return list of users with a specific criteria
+     */
     @Override
     public List<User> findAllUsersByCriteria(UserCriteria userCriteria) throws DaoException{
         List<User> list = new ArrayList<>();
@@ -188,6 +226,11 @@ public class UserDaoImpl implements UserDao {
         return list;
     }
 
+    /**
+     * Method that use to find user on db by special criteria
+     * @param userCriteria - parameter by which user is searching on db
+     * @return user with a specific criteria
+     */
     @Override
     public Optional<User> findUserByCriteria(UserCriteria userCriteria) throws DaoException{
         Optional<User> user = Optional.empty();
@@ -205,8 +248,13 @@ public class UserDaoImpl implements UserDao {
         return user;
     }
 
+    /**
+     * Method, which use to find value of user's balance on db by id
+     * @param id unique parameter, need to find balance on db
+     * @return value of user's balance
+     */
     @Override
-    public double findBalanceById(int id) throws DaoException {
+    public Double findBalanceById(Integer id) throws DaoException {
         Connection connection = ConnectionPool.getInstance().getConnection();
         double balance = 0;
         try {
@@ -224,6 +272,12 @@ public class UserDaoImpl implements UserDao {
         return balance;
     }
 
+    /**
+     * Method that saving code from duplicates on method findUserByCriteria,
+     * using for find user on db by criteria
+     * @param predicate - it's criteria by which we are searching user on db
+     * @return user with a specific criteria
+     */
     private Optional<User> chooseByPredicate(Predicate predicate) throws DaoException {
         Optional<User> user = findAllEntities()
                 .stream()
@@ -232,6 +286,12 @@ public class UserDaoImpl implements UserDao {
         return user;
     }
 
+    /**
+     * Method that saving code from duplicates on method findAllUsersByCriteria,
+     * using for find users on db by criteria
+     * @param predicate - it's criteria by which we are searching users on db
+     * @return list of users with a specific criteria
+     */
     private List<User> chooseAllByPredicate(Predicate predicate) throws DaoException {
         List<User> list = new ArrayList<>();
         findAllEntities()
@@ -241,6 +301,11 @@ public class UserDaoImpl implements UserDao {
         return list;
     }
 
+    /**
+     * Method which saving code from duplicates
+     * @param resultSet - argument, which keeps result of executing of SQL query
+     * @return inited user by information from db
+     */
     private Optional<User> getUser(ResultSet resultSet) throws DaoException {
         Optional<User> user = Optional.empty();
         try {

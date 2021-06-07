@@ -1,5 +1,9 @@
 package com.epam.service;
 
+
+/**
+ * Enum of all names of pages and their destinations
+ */
 public enum ServletDestination implements Destination{
     ADMINHOMEPAGE("/usersView/admin/home.jsp"),
     ADMINPROFILEPAGE("/usersView/admin/profile.jsp"),

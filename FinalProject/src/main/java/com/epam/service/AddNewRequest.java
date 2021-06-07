@@ -1,7 +1,6 @@
 package com.epam.service;
 
 import com.epam.criteria.RequestCriteria;
-import com.epam.db.dao.impl.PaymentDaoImpl;
 import com.epam.db.dao.impl.RequestDaoImpl;
 import com.epam.db.dao.impl.UserDaoImpl;
 import com.epam.entity.Request;
@@ -18,13 +17,19 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+
 public class AddNewRequest implements Command{
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(AddNewRequest.class);
 
+    /**
+     * Realisation of adding new request on db through taking
+     * information from request
+     * @param request parameter from which information is taken
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(!request.getSession().getAttribute("userRole").equals("CLIENT")){
-            logger.warn("Client with login "+request.getSession().getAttribute("login")+" tried to got access to the page 'Add new request'");
+            logger.warn("Client with login " + request.getSession().getAttribute("login")+" tried to got access to the page 'Add new request'");
             response.sendRedirect(link+CommandInstance.ACTSHOWHOME);
         }else {
             RequestDaoImpl requestDao = new RequestDaoImpl();

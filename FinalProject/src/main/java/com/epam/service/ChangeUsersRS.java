@@ -10,10 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-//Changing users 'Role' and 'Status'
 public class ChangeUsersRS implements Command{
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ChangeUsersRS.class);
 
+    /**
+     * Realisation of changing users role and status by admin
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(request.getSession().getAttribute("userRole").equals("CLIENT")){

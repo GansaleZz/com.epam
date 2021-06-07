@@ -10,6 +10,9 @@ import java.io.IOException;
 public class ShowHome implements Command{
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ShowHome.class);
 
+    /**
+     * Forwarding user on 'home' page
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         UserRole userRole = UserRole.getRole((String) request.getSession().getAttribute("userRole"));

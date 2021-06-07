@@ -2,6 +2,10 @@ package com.epam.service;
 
 import java.util.Arrays;
 
+/**
+ * Enum of available commands
+ *
+ */
 public enum CommandInstance {
     ACTSHOWLOGIN(new ShowLogIn()),
     ACTSHOWSIGNUP(new ShowSignUp()),

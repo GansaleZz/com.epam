@@ -30,13 +30,4 @@ public enum UserRole {
                 .filter(i -> i.id == id)
                 .findAny();
     }
-
-    public String getPermissions() {
-        return permissions;
-    }
-
-    public static String getPermissionsByUserRole(UserRole userRole){
-        return valueOf(userRole.name()).permissions;
-    }
-
 }

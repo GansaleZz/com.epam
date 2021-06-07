@@ -8,6 +8,9 @@ import java.io.IOException;
 public class ShowSignUp implements Command{
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ShowSignUp.class);
 
+    /**
+     * Forwarding user on 'sign up' page
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {

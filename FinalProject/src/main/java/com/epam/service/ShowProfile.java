@@ -14,6 +14,9 @@ import java.io.IOException;
 public class ShowProfile implements Command{
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ShowProfile.class);
 
+    /**
+     * Forwarding user on 'profile' page
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {

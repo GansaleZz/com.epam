@@ -23,6 +23,12 @@ import java.util.ResourceBundle;
 public class UpdateRequest implements Command{
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(UpdateRequest.class);
 
+    /**
+     * Realisation of updating request's information depending on button which user clicked.
+     * Admin or moderator can deny request of client, otherwise they can approve request
+     * if suitable room exists. If admin/moderator clicked 'approve', they will be forwarded on page,
+     * where they need to choose suitable room, if its exists
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(UserRole.getRole((String) request.getSession().getAttribute("userRole")).equals(UserRole.CLIENT)){
@@ -80,7 +86,7 @@ public class UpdateRequest implements Command{
                         requestDao.update(req);
                         response.sendRedirect(link + CommandInstance.ACTSHOWREQUESTS);
                     } catch (DaoException e) {
-                        e.printStackTrace();
+                        logger.error(e.getMessage());
                     }
                 }
             }

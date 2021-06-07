@@ -15,6 +15,11 @@ import java.util.Date;
 public class CreateRequestPage implements Command {
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(CreateRequestPage.class);
 
+    /**
+     * Method which use to show page of creating request.
+     * In method sets in attributes 'maxDay', which need for limit max date of reserving room, and 'today',
+     * which need to set in current date
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(!request.getSession().getAttribute("userRole").equals("CLIENT")){

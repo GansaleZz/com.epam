@@ -26,6 +26,4 @@ public enum UserStatus {
                 .filter(i -> i.id == id)
                 .findAny();
     }
-
-
 }

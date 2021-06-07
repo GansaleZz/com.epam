@@ -19,6 +19,7 @@ public enum RequestStatus {
     public static int getIdByRequestStatus(RequestStatus requestStatus){
         return valueOf(requestStatus.name()).id;
     }
+
     public static Optional<RequestStatus> extractRequestStatusById(int id){
         return Arrays.stream(values())
                 .filter(i -> i.id == id)

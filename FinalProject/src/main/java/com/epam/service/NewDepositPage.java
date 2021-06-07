@@ -9,6 +9,9 @@ import java.io.IOException;
 public class NewDepositPage implements Command{
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(NewDepositPage.class);
 
+    /**
+     * Forwarding client on 'New deposit' page
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(!request.getSession().getAttribute("userRole").equals("CLIENT")){

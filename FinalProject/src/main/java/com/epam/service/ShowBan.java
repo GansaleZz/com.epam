@@ -8,6 +8,9 @@ import java.io.IOException;
 public class ShowBan implements Command{
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ShowBan.class);
 
+    /**
+     * Forwarding user that was banned on 'ban' page
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {

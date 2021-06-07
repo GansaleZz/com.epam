@@ -20,6 +20,12 @@ import java.util.Calendar;
 public class PayForRequest implements Command{
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(PayForRequest.class);
 
+    /**
+     * Method that use to do act with request by client.
+     * If client clicked 'Cancel', then status of request will be changed on 'Cancelled', else
+     * if client has enough money to pay for request, then money will be debited from his balance, otherwise
+     * client will be forwarded on the page 'bad balance'
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(!request.getSession().getAttribute("userRole").equals("CLIENT")){

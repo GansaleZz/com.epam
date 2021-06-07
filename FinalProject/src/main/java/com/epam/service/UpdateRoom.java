@@ -13,9 +13,13 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ResourceBundle;
 
+
 public class UpdateRoom implements Command{
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(UpdateRoom.class);
 
+    /**
+     * Realisation of updating information of room or deleting this one
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if (UserRole.getRole((String) request.getSession().getAttribute("userRole")).equals(UserRole.CLIENT)) {

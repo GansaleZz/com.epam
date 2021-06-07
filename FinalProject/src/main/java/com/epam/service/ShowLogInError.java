@@ -8,6 +8,9 @@ import java.io.IOException;
 public class ShowLogInError implements Command{
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ShowLogInError.class);
 
+    /**
+     * Forwarding user on 'log in error' page, if he entered wrong information
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {

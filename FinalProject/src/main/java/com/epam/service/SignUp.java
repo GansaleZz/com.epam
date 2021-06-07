@@ -12,6 +12,9 @@ import java.io.IOException;
 public class SignUp implements Command{
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(SignUp.class);
 
+    /**
+     * User's signing up the website
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(request.getParameter("password") != null && request.getParameter("login") != null && request.getParameter("email") != null) {

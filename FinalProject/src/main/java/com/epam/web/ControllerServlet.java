@@ -9,8 +9,12 @@ import java.io.IOException;
 
 import static com.epam.service.CommandInstance.commandOf;
 
+/**
+ * This servlet controlling every transition of user by searching necessary command on {@link com.epam.service.CommandInstance}
+ */
 @WebServlet("/controller")
 public class ControllerServlet extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doPost(request,response);

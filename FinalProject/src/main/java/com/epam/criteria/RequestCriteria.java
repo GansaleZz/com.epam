@@ -13,6 +13,9 @@ public class RequestCriteria extends BaseCriteria<Request>{
     private int numberOfSeats = 0;
     private RequestStatus requestStatus = null;
 
+    /**
+     * Realisation of builder pattern for {@link Request}
+     */
     public static class Builder extends BaseBuilder<Request>{
 
         public Builder newBuilder() {

@@ -10,6 +10,9 @@ import java.io.IOException;
 public class NewRoomPage implements Command{
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(NewRoomPage.class);
 
+    /**
+     * Forwarding admin/client on 'New room' page
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(request.getSession().getAttribute("userRole").equals("CLIENT")){

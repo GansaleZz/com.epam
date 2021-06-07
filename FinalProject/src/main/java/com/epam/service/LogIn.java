@@ -15,6 +15,9 @@ import java.util.ResourceBundle;
 public class LogIn implements Command{
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(LogIn.class);
 
+    /**
+     * User's logging in the website
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
         if(request.getParameter("password") != null && request.getParameter("login") != null) {

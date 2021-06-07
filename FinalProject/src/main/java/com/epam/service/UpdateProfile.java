@@ -12,6 +12,9 @@ import java.util.ResourceBundle;
 public class UpdateProfile implements Command{
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(UpdateProfile.class);
 
+    /**
+     * Realisation of changing information of user by changing it on profile
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try{

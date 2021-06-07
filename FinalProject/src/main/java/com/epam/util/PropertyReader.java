@@ -8,12 +8,8 @@ import java.util.Properties;
 
 public class PropertyReader {
     private static final Properties properties = new Properties();
-    private static PropertyReader instance = null;
     private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(PropertyReader.class);
-
-
-    private PropertyReader() {
-    }
+    private static PropertyReader instance = null;
 
     public static Properties getProperties() {
         if(instance == null){
@@ -23,6 +19,9 @@ public class PropertyReader {
         return properties;
     }
 
+    /**
+     * Reading db properties from application.properties
+     */
     public static void loadProperties(){
         final String propertiesFileName = "/Users/andrew_wannasesh/Folders/EpamJAva/FinalProject/src/main/resources/application.properties";
         InputStream inputStream = null;
@@ -32,7 +31,6 @@ public class PropertyReader {
             logger.info("Info from "+propertiesFileName+" were completely read");
         }catch (IOException e){
             logger.error(e.getMessage());
-            e.printStackTrace();
         } finally {
             try{
                 if(inputStream != null){
@@ -40,8 +38,10 @@ public class PropertyReader {
                 }
             }catch(IOException e){
                 logger.error(e.getMessage());
-                e.printStackTrace();
             }
         }
+    }
+
+    private PropertyReader() {
     }
 }

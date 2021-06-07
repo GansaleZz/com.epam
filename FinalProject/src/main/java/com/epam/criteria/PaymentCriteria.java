@@ -9,6 +9,9 @@ public class PaymentCriteria extends BaseCriteria<Payment>{
     private  int amount = 0;
     private PaymentStatus paymentStatus = null;
 
+    /**
+     * Realisation of builder pattern for {@link Payment}
+     */
     public static class Builder extends BaseBuilder<Payment>{
 
         public Builder newBuilder(){

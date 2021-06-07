@@ -15,6 +15,9 @@ import java.util.List;
 public class ShowRooms implements Command{
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ShowRooms.class);
 
+    /**
+     * Forwarding user on 'rooms' page
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         RoomDaoImpl roomDao = new RoomDaoImpl();

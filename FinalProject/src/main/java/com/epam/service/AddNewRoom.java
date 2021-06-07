@@ -11,9 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+
 public class AddNewRoom implements Command{
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(AddNewRoom.class);
 
+    /**
+     * Realisation of adding new room on db through taking
+     * information from request
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(request.getSession().getAttribute("userRole").equals("CLIENT")){

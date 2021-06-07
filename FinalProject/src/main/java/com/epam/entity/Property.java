@@ -4,6 +4,13 @@ import com.epam.util.PropertyReader;
 
 import java.util.Properties;
 
+
+/**
+ * Class which keeps information for working with db from application.properties
+ *
+ * @see PropertyReader
+ * @author Andrey Rubin
+ */
 public final class Property {
     private final String URL;
     private final String SCHEME;

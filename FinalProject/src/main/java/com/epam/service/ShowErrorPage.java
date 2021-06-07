@@ -8,6 +8,10 @@ import java.io.IOException;
 public class ShowErrorPage implements Command{
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ShowErrorPage.class);
 
+    /**
+     * Forwarding user on 'error page', which need when entered bad URL or something
+     * went wrong
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try{
