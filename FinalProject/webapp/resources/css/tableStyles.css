@@ -48,6 +48,11 @@
     margin: 1px auto;
 }
 
+.Table input[type="submit"]:hover{
+    color: antiquewhite;
+    text-shadow: 0 0 10px rgb(0, 126, 165);
+}
+
 .Table input[type="email"], .Table input[type="text"], .Table select, .Table input[type="number"] {
     margin: 10px;
     background-color: #eee;
