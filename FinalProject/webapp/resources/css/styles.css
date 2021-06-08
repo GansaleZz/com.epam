@@ -123,6 +123,12 @@ nav {
 	margin: 10px;
 }
 
+.form-row input[type = "submit"]:hover{
+	-webkit-transform: scale(0.9);
+	-ms-transform: scale(0.9);
+	transform: scale(0.9);
+}
+
 .form-row select,.form-row input[type="number"],.form-row input[type="date"]{
 	margin: 10px;
 	background-color: #eee;
