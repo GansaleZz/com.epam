@@ -11,7 +11,6 @@
 <head>
     <title>Sign Up</title>
     <link rel="stylesheet" href="<c:url value="../resources/css/styles.css"/> ">
-    <link rel="stylesheet" href="<c:url value="../resources/css/authStyles.css"/> ">
 </head>
 <body>
 

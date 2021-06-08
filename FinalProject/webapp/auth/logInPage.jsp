@@ -10,7 +10,6 @@
 <html>
 <head>
     <link rel="stylesheet" href="<c:url value="../resources/css/styles.css"/> ">
-    <link rel="stylesheet" href="<c:url value="../resources/css/authStyles.css"/> ">
     <title>Log in</title>
 </head>
 <body>
