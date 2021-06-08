@@ -10,12 +10,16 @@
 <html>
 <head>
     <title>Sign Up</title>
-    <link rel="stylesheet" href="<c:url value="../resources/css/styles.css"/> ">
+    <link rel="stylesheet" href="<c:url value="../resources/css/Main.css"/> ">
+    <link rel="stylesheet" href="<c:url value="../resources/css/Link.css"/> ">
+    <link rel="stylesheet" href="<c:url value="../resources/css/SignIn.css"/> ">
 </head>
 <body>
 
 <a href="http://localhost:8080/controller?command=ACTSHOWAUTH" class="s1">Back</a>
+
 <h1>Sign Up</h1>
+
 <div id="wrapper">
     <form id="signin" action="/controller?command=ACTSIGNUP" method = "post">
         <input type = "text" name="login" placeholder="Login"/><br/>

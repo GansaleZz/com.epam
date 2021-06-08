@@ -10,7 +10,8 @@
 <html>
 <head>
     <title>Success</title>
-    <link rel="stylesheet" href="<c:url value="../resources/css/styles.css"/> ">
+    <link rel="stylesheet" href="<c:url value="../resources/css/Main.css"/> ">
+    <link rel="stylesheet" href="<c:url value="../resources/css/Link.css"/> ">
 </head>
 <body>
   <h1>You were successfully signed up! Now you can sign in</h1>

@@ -10,7 +10,10 @@
 <html>
 <head>
     <title>Rooms</title>
-    <link rel="stylesheet" href="<c:url value="/resources/css/styles.css"/> ">
+    <link rel="stylesheet" href="<c:url value="/resources/css/Link.css"/> ">
+    <link rel="stylesheet" href="<c:url value="/resources/css/Main.css"/> ">
+    <link rel="stylesheet" href="<c:url value="/resources/css/Header.css"/> ">
+    <link rel="stylesheet" href="<c:url value="/resources/css/Table.css"/> ">
 </head>
 <body>
 <c:set var="bundle" value="${sessionScope.bundle}"/>

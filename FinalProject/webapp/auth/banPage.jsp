@@ -10,10 +10,13 @@
 <html>
 <head>
     <title>Banned</title>
-    <link rel="stylesheet" href="<c:url value="../resources/css/styles.css"/> ">
+    <link rel="stylesheet" href="<c:url value="../resources/css/Main.css"/> ">
+    <link rel="stylesheet" href="<c:url value="../resources/css/Link.css"/> ">
 </head>
 <body>
+
   <h1>You were banned</h1>
+
   <a href="http://localhost:8080/controller?command=ACTSHOWSIGNUP" class="s2">Sign Up</a>
 </body>
 </html>
