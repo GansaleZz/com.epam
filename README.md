@@ -7,7 +7,7 @@
 
 
 ### 𝐶𝑜𝑛𝑑𝑖𝑡𝑖𝑜𝑛 : 
-![markdown logo](https://psv4.userapi.com/c536436/u159611556/docs/d41/99b4793714ed/Screenshot_2021-05-06_at_15_43_25.png?extra=GivWdQUWTOqLG-97xYUw1XLEWC7TD0kQN7BQ3PXz69iZh9kpjO-39zIOEEidrU-H5Lj5fNbV_-pRLEy9IDm9CbIfn3EIkUewj1KMObyHoeAfv3D5TwEVeCL6TVfE111_sJ9tAvFdDu3-U0MUN9LSN10)
+![markdown logo](https://sun9-44.userapi.com/impg/dx1j1gZrSXx6Vj6QfuQ4PiJN64c8uHrdrYjRkQ/yaE1AurPwDY.jpg?size=876x128&quality=96&sign=60dc8a05d842642f6c646b7c908341cb&type=album)
 
 ### 𝐷𝑎𝑡𝑎𝑏𝑎𝑠𝑒 :
 
