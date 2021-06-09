@@ -10,8 +10,8 @@
 <html>
 <head>
     <title>Welcome</title>
-    <link rel="stylesheet" href="<c:url value="../resources/css/Main.css"/> ">
-    <link rel="stylesheet" href="<c:url value="../resources/css/Link.css"/> ">
+    <link rel="stylesheet" href="<c:url value="../../../resources/css/Main.css"/> ">
+    <link rel="stylesheet" href="<c:url value="../../../resources/css/Link.css"/> ">
 </head>
 <body>
 <h1>

@@ -10,9 +10,9 @@
 <html>
 <head>
     <title>Sign Up</title>
-    <link rel="stylesheet" href="<c:url value="../resources/css/Main.css"/> ">
-    <link rel="stylesheet" href="<c:url value="../resources/css/Link.css"/> ">
-    <link rel="stylesheet" href="<c:url value="../resources/css/SignIn.css"/> ">
+    <link rel="stylesheet" href="<c:url value="../../../resources/css/Main.css"/> ">
+    <link rel="stylesheet" href="<c:url value="../../../resources/css/Link.css"/> ">
+    <link rel="stylesheet" href="<c:url value="../../../resources/css/SignIn.css"/> ">
 </head>
 <body>
 

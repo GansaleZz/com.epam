@@ -9,9 +9,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <link rel="stylesheet" href="<c:url value="../resources/css/Main.css"/> ">
-    <link rel="stylesheet" href="<c:url value="../resources/css/Link.css"/> ">
-    <link rel="stylesheet" href="<c:url value="../resources/css/SignIn.css"/> ">
+    <link rel="stylesheet" href="<c:url value="../../../resources/css/Main.css"/> ">
+    <link rel="stylesheet" href="<c:url value="../../../resources/css/Link.css"/> ">
+    <link rel="stylesheet" href="<c:url value="../../../resources/css/SignIn.css"/> ">
     <title>Log in</title>
 </head>
 <body>
