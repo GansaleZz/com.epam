@@ -18,6 +18,7 @@ import java.util.Map;
  */
 public class Cache {
     private static Cache instance = null;
+
     /**
      * Map 'activeRequests' need to store requests which was accepted/paid for checking their relevance
      */
