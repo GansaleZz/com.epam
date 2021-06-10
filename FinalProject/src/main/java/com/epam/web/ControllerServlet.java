@@ -7,10 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.epam.service.CommandInstance.commandOf;
+import static com.epam.controller.CommandInstance.commandOf;
 
 /**
- * This servlet controlling every transition of user by searching necessary command on {@link com.epam.service.CommandInstance}
+ * This servlet controlling every transition of user by searching necessary command on {@link com.epam.controller.CommandInstance}
  */
 @WebServlet("/controller")
 public class ControllerServlet extends HttpServlet {

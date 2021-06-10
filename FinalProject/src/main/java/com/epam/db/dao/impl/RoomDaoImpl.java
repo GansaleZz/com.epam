@@ -1,9 +1,8 @@
 package com.epam.db.dao.impl;
 
-import com.epam.criteria.RoomCriteria;
+import com.epam.criteria.Impl.RoomCriteria;
 import com.epam.db.ConnectionPool;
 import com.epam.db.dao.RoomDao;
-import com.epam.entity.Payment;
 import com.epam.entity.Room;
 import com.epam.entity.RoomClass;
 import com.epam.entity.RoomStatus;

@@ -1,13 +1,12 @@
 package com.epam.web;
 
-import com.epam.criteria.UserCriteria;
+import com.epam.criteria.Impl.UserCriteria;
 import com.epam.db.dao.impl.UserDaoImpl;
 import com.epam.entity.UserStatus;
+import com.epam.exceptions.DaoException;
+import com.epam.exceptions.PageException;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,7 +28,7 @@ public class LogedInFilter implements Filter {
         HttpSession session = httpServletRequest.getSession(false);
         try{
             if(httpServletRequest.getRequestURI().equals("/")){
-                throw new Exception();
+                throw new PageException();
             }
             boolean loggedIn = session != null && session.getAttribute("login") != null;
             boolean badRequestLogged = (httpServletRequest.getRequestURI().contains("/controller") &&
@@ -57,7 +56,7 @@ public class LogedInFilter implements Filter {
                     chain.doFilter(request, response);
                 }
             }
-        }catch(Exception e){
+        }catch(PageException | ServletException | DaoException e){
             httpServletResponse.sendRedirect("http://localhost:8080/controller?command=ACTSHOWERROR");
             logger.error(e.getMessage());
         }

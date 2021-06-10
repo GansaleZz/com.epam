@@ -1,5 +1,9 @@
 package com.epam.criteria;
 
+import com.epam.criteria.Impl.PaymentCriteria;
+import com.epam.criteria.Impl.RequestCriteria;
+import com.epam.criteria.Impl.RoomCriteria;
+import com.epam.criteria.Impl.UserCriteria;
 import com.epam.entity.*;
 import org.junit.jupiter.api.Test;
 

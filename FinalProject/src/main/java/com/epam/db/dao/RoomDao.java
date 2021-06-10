@@ -1,6 +1,6 @@
 package com.epam.db.dao;
 
-import com.epam.criteria.RoomCriteria;
+import com.epam.criteria.Impl.RoomCriteria;
 import com.epam.entity.Room;
 import com.epam.exceptions.DaoException;
 import java.util.List;

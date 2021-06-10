@@ -1,6 +1,6 @@
 package com.epam.db.dao.impl;
 
-import com.epam.criteria.UserCriteria;
+import com.epam.criteria.Impl.UserCriteria;
 import com.epam.db.ConnectionPool;
 import com.epam.entity.User;
 import com.epam.entity.UserStatus;
