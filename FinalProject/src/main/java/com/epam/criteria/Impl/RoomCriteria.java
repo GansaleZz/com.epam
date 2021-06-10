@@ -1,7 +1,6 @@
 package com.epam.criteria.Impl;
 
 import com.epam.criteria.BaseCriteria;
-import com.epam.entity.Request;
 import com.epam.entity.Room;
 import com.epam.entity.RoomClass;
 import com.epam.entity.RoomStatus;
