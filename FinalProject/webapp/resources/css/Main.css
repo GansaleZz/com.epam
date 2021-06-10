@@ -3,6 +3,7 @@
 }
 body{
     background: rgb(52, 56, 61);
+	margin:0px;
 }
 
 h1{
@@ -10,4 +11,17 @@ h1{
 	width: 100%;
 	text-align: center;
 	margin: 90px auto;
+}
+
+.page{
+	overflow:hidden;
+	display:flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+.content {
+	box-sizing: border-box;
+	min-height: 100%;
+	padding-bottom: 90px;
 }

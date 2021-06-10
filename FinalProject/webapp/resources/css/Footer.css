@@ -1,0 +1,19 @@
+.footer {
+    margin-top: auto;
+    display: inline;
+    background: #5555aa;
+}
+
+.footer img{
+    width:60px;
+    position:relative;
+    margin: auto 15px;
+    padding-left:30%;
+    float:left;
+}
+
+.footer p{
+    color:antiquewhite;
+    font-size:20px;
+    font-family: monospace;
+}
