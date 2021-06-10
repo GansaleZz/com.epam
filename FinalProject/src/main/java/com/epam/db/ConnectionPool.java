@@ -76,7 +76,6 @@ public final class ConnectionPool {
      @param connection - connection, which will be removed from the list of engaged connections and added to queue
      */
     public void close(Connection connection){
-        logger.info("Connection closed!");
         engagedConnectionList.remove(connection);
         availableConnectionList.add(connection);
     }
