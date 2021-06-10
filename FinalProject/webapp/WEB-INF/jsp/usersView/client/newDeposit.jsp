@@ -13,27 +13,79 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/Main.css"/> ">
     <link rel="stylesheet" href="<c:url value="/resources/css/Header.css"/> ">
     <link rel="stylesheet" href="<c:url value="/resources/css/Form.css"/> ">
+    <link rel="stylesheet" href="<c:url value="/resources/fontawesome/css/all.min.css"/>">
 </head>
 <body>
 <c:set var="bundle" value="${sessionScope.bundle}"/>
 
 <nav class="one">
     <ul>
-        <li><a href="http://localhost:8080/controller?command=ACTSHOWHOME"><i class="fa fa-home fa-fw"></i><c:out value="${bundle.getString('home')}"/></a></li>
-        <li><a href="http://localhost:8080/controller?command=ACTSHOWROOMS"><c:out value="${bundle.getString('rooms')}"/></a></li>
-        <li><a href="http://localhost:8080/controller?command=ACTSHOWPROFILE"><c:out value="${bundle.getString('profile')}"/></a></li>
-        <li><a href="http://localhost:8080/controller?command=ACTCREATEREQUESTPAGE"><c:out value="${bundle.getString('createRequest')}"/></a></li>
-        <li><a href="http://localhost:8080/controller?command=ACTSHOWREQUESTS"><c:out value="${bundle.getString('requests')}"/></a></li>
-        <li><a href="http://localhost:8080/controller?command=ACTLOGOUT"><c:out value="${bundle.getString('logOut')}"/></a></li>
+        <li>
+            <a href="http://localhost:8080/controller?command=ACTSHOWHOME">
+                <i class="fa fa-home fa-fw" aria-hidden="true"></i>
+                <c:out value="${bundle.getString('home')}"/></a>
+        </li>
+        <li>
+            <a href="http://localhost:8080/controller?command=ACTSHOWROOMS">
+                <i class="fa fa-shower" aria-hidden="true"></i>
+                <c:out value="${bundle.getString('rooms')}"/></a>
+        </li>
+        <li>
+            <a href="http://localhost:8080/controller?command=ACTSHOWPROFILE">
+                <i class="fa fa-user-circle" aria-hidden="true"></i>
+                <c:out value="${bundle.getString('profile')}"/></a>
+        </li>
+        <li>
+            <a href="http://localhost:8080/controller?command=ACTCREATEREQUESTPAGE">
+                <i class="fa fa-pencil-alt" aria-hidden="true"></i>
+                <c:out value="${bundle.getString('createRequest')}"/></a>
+        </li>
+        <li>
+            <a href="http://localhost:8080/controller?command=ACTSHOWREQUESTS">
+                <i class="fa fa-book" aria-hidden="true"></i>
+                <c:out value="${bundle.getString('requests')}"/></a>
+        </li>
+        <li>
+            <a href="http://localhost:8080/controller?command=ACTLOGOUT">
+                <i class="fa fa-sign-out-alt" aria-hidden="true"></i>
+                <c:out value="${bundle.getString('logOut')}"/></a>
+        </li>
     </ul>
 </nav>
+
+<script>
+    function is_num(m)
+    {
+        for (let i = 0; i < m.length; i++)
+        {
+            if (isNaN(m[i] - 1))
+            {
+                return 0;
+            }
+        }
+        return 1;
+    }
+
+    function inputnum()
+    {
+        let num = field.value;
+        if (num.length == 16 && is_num(num))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+</script>
 
 
 <form action="controller?command=ACTREALISEDEPOSITE" method = "post">
     <div class="form-row">
-        <b><c:out value="${bundle.getString('bankCard')}"/></b><input type="number" name="card" min="1111111111111111" max="9999999999999999" maxlength="16" minlength="16"><br>
+        <b><c:out value="${bundle.getString('bankCard')}"/></b><input type="text" name="card" id="field" minlength="16" maxlength="16"><br>
         <b><c:out value="${bundle.getString('amount')}"/> (BYN)</b><input type="number" name="balance" min="50" max="10000"value="50" ><br>
-        <input type="submit" name="submit" value="Submit">
+        <input type="submit" name="submit" value="${bundle.getString('submit')}" onclick="return inputnum()">
     </div>
 </form>
 </body>

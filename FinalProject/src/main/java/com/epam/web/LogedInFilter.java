@@ -56,7 +56,7 @@ public class LogedInFilter implements Filter {
                     chain.doFilter(request, response);
                 }
             }
-        }catch(PageException | ServletException | DaoException e){
+        }catch(Exception e){
             httpServletResponse.sendRedirect("http://localhost:8080/controller?command=ACTSHOWERROR");
             logger.error(e.getMessage());
         }

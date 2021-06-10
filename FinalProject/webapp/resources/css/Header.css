@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Lato:400,700italic);
+@import url(https://fonts.googleapis.com/css?family=Lato:400,700italic);
 @import url(https://fonts.googleapis.com/css?family=Lora);
 
 ul {
@@ -12,9 +12,9 @@ a {
     transition: .5s linear;
 }
 
-i {
-    margin-right: 10px;
-}
+/*i {*/
+/*    margin-right: 10px;*/
+/*}*/
 
 nav {
     display: block;
