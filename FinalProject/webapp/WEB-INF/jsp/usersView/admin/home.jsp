@@ -63,7 +63,7 @@
 
     <footer class="footer">
         <img src="/resources/images/image1.png" alt="image">
-        <p>Designer and developer: Rubin Andrey</p>
+        <p><c:out value="${bundle.getString('author')}"/></p>
     </footer>
 </div>
 </body>

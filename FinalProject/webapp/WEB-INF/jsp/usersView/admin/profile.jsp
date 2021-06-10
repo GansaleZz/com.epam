@@ -13,110 +13,116 @@
   <link rel="stylesheet" href="<c:url value="/resources/css/Main.css"/> ">
   <link rel="stylesheet" href="<c:url value="/resources/css/Header.css"/> ">
   <link rel="stylesheet" href="<c:url value="/resources/css/Table.css"/> ">
+  <link rel="stylesheet" href="<c:url value="/resources/css/Footer.css"/> ">
   <link rel="stylesheet" href="<c:url value="/resources/fontawesome/css/all.min.css"/>">
 </head>
 <body>
 <c:set var="bundle" value="${sessionScope.bundle}"/>
+<c:set var="user" value="${user}" />
 
-<nav class="one">
-  <ul>
-    <li>
-      <a href="http://localhost:8080/controller?command=ACTSHOWHOME">
-        <i class="fa fa-home fa-fw" aria-hidden="true"></i>
-        <c:out value="${bundle.getString('home')}"/>
-      </a>
-    </li>
-    <li>
-      <a href="http://localhost:8080/controller?command=ACTSHOWROOMS">
-        <i class="fa fa-shower" aria-hidden="true"></i>
-        <c:out value="${bundle.getString('rooms')}"/></a>
-    </li>
-    <li>
-      <a href="http://localhost:8080/controller?command=ACTSHOWPROFILE" >
-        <i class="fa fa-user-circle" aria-hidden="true"></i>
-        <c:out value="${bundle.getString('profile')}"/>
-      </a>
-    </li>
-    <li>
-      <a href="http://localhost:8080/controller?command=ACTSHOWREQUESTS">
-        <i class="fa fa-book" aria-hidden="true"></i>
-        <c:out value="${bundle.getString('requests')}"/>
-      </a>
-    </li>
-    <li>
-      <a href="http://localhost:8080/controller?command=ACTSHOWUSERS">
-        <i class="fa fa-users" aria-hidden="true"></i>
-        <c:out value="${bundle.getString('users')}"/>
-      </a>
-    </li>
-    <li>
-      <a href="http://localhost:8080/controller?command=ACTLOGOUT">
-        <i class="fa fa-sign-out-alt" aria-hidden="true"></i>
-        <c:out value="${bundle.getString('logOut')}"/>
-      </a>
-    </li>
+<div class ="page">
+  <nav class="one">
+    <ul>
+      <li>
+        <a href="http://localhost:8080/controller?command=ACTSHOWHOME">
+          <i class="fa fa-home fa-fw" aria-hidden="true"></i>
+          <c:out value="${bundle.getString('home')}"/>
+        </a>
+      </li>
+      <li>
+        <a href="http://localhost:8080/controller?command=ACTSHOWROOMS">
+          <i class="fa fa-shower" aria-hidden="true"></i>
+          <c:out value="${bundle.getString('rooms')}"/></a>
+      </li>
+      <li>
+        <a href="http://localhost:8080/controller?command=ACTSHOWPROFILE" >
+          <i class="fa fa-user-circle" aria-hidden="true"></i>
+          <c:out value="${bundle.getString('profile')}"/>
+        </a>
+      </li>
+      <li>
+        <a href="http://localhost:8080/controller?command=ACTSHOWREQUESTS">
+          <i class="fa fa-book" aria-hidden="true"></i>
+          <c:out value="${bundle.getString('requests')}"/>
+        </a>
+      </li>
+      <li>
+        <a href="http://localhost:8080/controller?command=ACTSHOWUSERS">
+          <i class="fa fa-users" aria-hidden="true"></i>
+          <c:out value="${bundle.getString('users')}"/>
+        </a>
+      </li>
+      <li>
+        <a href="http://localhost:8080/controller?command=ACTLOGOUT">
+          <i class="fa fa-sign-out-alt" aria-hidden="true"></i>
+          <c:out value="${bundle.getString('logOut')}"/>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <div class ="content">
+    <div class="Table">
+      <table>
+        <colgroup>
+          <col span="2" >
+        </colgroup>
+      <caption><c:out value="${bundle.getString('profile')}"/></caption>
+        <form action="controller?command=ACTUPDATEPROFILE" method = "post">
+          <input type = "hidden" name = "id" value="${user.id}" >
+          <tr>
+            <th><b><c:out value="${bundle.getString('login')}"/></b></th>
+            <td><c:out value="${user.login}"/></td>
+          </tr>
+          <tr>
+            <th><b><c:out value="${bundle.getString('name')}"/></b></th>
+            <td><input type="text" name="name" value="${user.name}"></td>
+          </tr>
+          <tr>
+            <th><b><c:out value="${bundle.getString('email')}"/></b></th>
+            <td><input type="email" name="email" value="${user.email}"></td>
+          </tr>
+          <tr>
+            <th><b><c:out value="${bundle.getString('role')}"/></b></th>
+            <td>
+              <c:out value="${bundle.getString('admin')}"/>
+            </td>
+          </td>
+          </tr>
+          <tr>
+            <th><b><c:out value="${bundle.getString('language')}"/></b></th>
+            <td>
+              <select name ="locale">
+                <c:choose>
+                  <c:when test="${locale == 'en'}">
+                      <option selected ="selected" value="en"> <c:out value="${bundle.getString('english')}"/></option>
+                      <option value="ru"><c:out value="${bundle.getString('russian')}"/></option>
+                      <option value="by"><c:out value="${bundle.getString('belarusian')}"/></option>
+                  </c:when>
+                  <c:when test="${locale == 'ru'}">
+                    <option value="en"> <c:out value="${bundle.getString('english')}"/></option>
+                    <option selected ="selected" value="ru"><c:out value="${bundle.getString('russian')}"/></option>
+                    <option value="by"><c:out value="${bundle.getString('belarusian')}"/></option>
+                  </c:when>
+                  <c:otherwise>
+                    <option value="en"> <c:out value="${bundle.getString('english')}"/></option>
+                    <option value="ru" ><c:out value="${bundle.getString('russian')}"/></option>
+                    <option selected ="selected" value="by"><c:out value="${bundle.getString('belarusian')}"/></option>
+                  </c:otherwise>
+                </c:choose>
+                </select>
+          </td>
+          </tr>
+          <tr>
+            <th><b><c:out value="${bundle.getString('action')}"/></b></th><td><input type="submit" value="<c:out value="${bundle.getString('submit')}"/>"></td>
+          </tr>
+        </form>
+      </table>
     </div>
-  </ul>
-</nav>
-
-
-  <c:set var="user" value="${user}" />
-<div class="Table">
-  <table>
-    <colgroup>
-      <col span="2" >
-    </colgroup>
-  <caption><c:out value="${bundle.getString('profile')}"/></caption>
-    <form action="controller?command=ACTUPDATEPROFILE" method = "post">
-      <input type = "hidden" name = "id" value="${user.id}" >
-      <tr>
-        <th><b><c:out value="${bundle.getString('login')}"/></b></th>
-        <td><c:out value="${user.login}"/></td>
-      </tr>
-      <tr>
-        <th><b><c:out value="${bundle.getString('name')}"/></b></th>
-        <td><input type="text" name="name" value="${user.name}"></td>
-      </tr>
-      <tr>
-        <th><b><c:out value="${bundle.getString('email')}"/></b></th>
-        <td><input type="email" name="email" value="${user.email}"></td>
-      </tr>
-      <tr>
-        <th><b><c:out value="${bundle.getString('role')}"/></b></th>
-        <td>
-          <c:out value="${bundle.getString('admin')}"/>
-        </td>
-      </td>
-      </tr>
-      <tr>
-        <th><b><c:out value="${bundle.getString('language')}"/></b></th>
-        <td>
-          <select name ="locale">
-            <c:choose>
-              <c:when test="${locale == 'en'}">
-                  <option selected ="selected" value="en"> <c:out value="${bundle.getString('english')}"/></option>
-                  <option value="ru"><c:out value="${bundle.getString('russian')}"/></option>
-                  <option value="by"><c:out value="${bundle.getString('belarusian')}"/></option>
-              </c:when>
-              <c:when test="${locale == 'ru'}">
-                <option value="en"> <c:out value="${bundle.getString('english')}"/></option>
-                <option selected ="selected" value="ru"><c:out value="${bundle.getString('russian')}"/></option>
-                <option value="by"><c:out value="${bundle.getString('belarusian')}"/></option>
-              </c:when>
-              <c:otherwise>
-                <option value="en"> <c:out value="${bundle.getString('english')}"/></option>
-                <option value="ru" ><c:out value="${bundle.getString('russian')}"/></option>
-                <option selected ="selected" value="by"><c:out value="${bundle.getString('belarusian')}"/></option>
-              </c:otherwise>
-            </c:choose>
-            </select>
-      </td>
-      </tr>
-      <tr>
-        <th><b><c:out value="${bundle.getString('action')}"/></b></th><td><input type="submit" value="<c:out value="${bundle.getString('submit')}"/>"></td>
-      </tr>
-    </form>
-  </table>
+  </div>
+  <footer class="footer">
+    <img src="/resources/images/image1.png" alt="image">
+    <p><c:out value="${bundle.getString('author')}"/></p>
+  </footer>
 </div>
 </body>
 </html>
