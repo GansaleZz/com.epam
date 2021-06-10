@@ -28,7 +28,7 @@
     </ul>
 </nav>
 <h1><c:out value="${bundle.getString('badBalance')}"/></h1>
-    <form action="controller?command=ACTNEWDEPOSITPAGE" method = "post">
+    <form action="/controller?command=ACTNEWDEPOSITPAGE" method = "post">
         <div class="form-row">
             <input type="submit" value="${bundle.getString('deposit')}">
         </div>
