@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/Header.css"/> ">
     <link rel="stylesheet" href="<c:url value="/resources/css/Footer.css"/> ">
     <link rel="stylesheet" href="<c:url value="/resources/fontawesome/css/all.min.css"/>">
+    <link rel='stylesheet' href="<c:url value="/resources/css/immersive-slider.css"/>" type='text/css'>
+    <script type="text/javascript" src=<c:url value="http://code.jquery.com/jquery-1.9.1.js"/>></script>
+    <script type="text/javascript" src=<c:url value="/resources/js/jquery.immersive-slider.js"/>></script>
 </head>
 <body>
 
@@ -53,10 +56,52 @@
             </li>
         </ul>
     </nav>
+    <div class="main">
+        <div class="page_container">
+            <div id="immersive_slider">
+                <div class="slide" data-blurred="<c:url value="/resources/images/slide_1_blurred.jpg"/>">
+                    <div class="content">
+                        <h2><c:out value="${bundle.getString('info1Tittle')}"/></h2>
+                        <p><c:out value="${bundle.getString('info1Text')}"/></p>
+                    </div>
+                    <div class="image">
+                        <img src="<c:url value="/resources/images/slide_1.jpg"/>" alt="Slider 1">
+                    </div>
+                </div>
+                <div class="slide" data-blurred="<c:url value="/resources/images/slide_2_blurred.jpg"/>">
+                    <div class="content">
+                        <h2><c:out value="${bundle.getString('info2Tittle')}"/></h2>
+                        <p><c:out value="${bundle.getString('info2Text')}"/></p>
+                    </div>
+                    <div class="image">
+                        <img src="<c:url value="/resources/images/slide_2.jpg"/>" alt="Slider 1">
+                    </div>
+                </div>
+                <div class="slide" data-blurred="<c:url value="/resources/images/slide_3_blurred.jpg"/>">
+                    <div class="content">
+                        <h2><c:out value="${bundle.getString('info3Tittle')}"/></h2>
+                        <p><c:out value="${bundle.getString('info3Text')}"/></p>
+                    </div>
+                    <div class="image">
+                        <img src="<c:url value="/resources/images/slide_3.jpg"/>" alt="Slider 1">
+                    </div>
+                </div>
+                <a href="#" class="is-prev">&laquo;</a>
+                <a href="#" class="is-next">&raquo;</a>
+            </div>
+        </div>
+    </div>
     <footer class="footer">
         <img src="/resources/images/image1.png" alt="image">
         <p><c:out value="${bundle.getString('author')}"/></p>
     </footer>
 </div>
+<script type="text/javascript">
+    $(document).ready( function() {
+        $("#immersive_slider").immersive_slider({
+            container: ".main"
+        });
+    });
+</script>
 </body>
 </html>

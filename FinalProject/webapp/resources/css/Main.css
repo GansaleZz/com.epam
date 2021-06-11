@@ -25,3 +25,18 @@ h1{
 	min-height: 100%;
 	padding-bottom: 90px;
 }
+
+.content p{
+	float: left;
+	font-weight: 100;
+	width: 100%;
+	font-size: 17px;
+	margin-top: 5px;
+}
+
+.content h2{
+	line-height: 140%;
+	font-weight: 100;
+	color: white;
+	font-weight: 100;
+}
