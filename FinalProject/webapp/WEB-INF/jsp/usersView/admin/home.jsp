@@ -120,7 +120,7 @@
     </div>
 
     <footer class="footer">
-        <img src="/resources/images/image1.png" alt="image">
+        <img src="<c:url value="/resources/images/image1.png"/>" alt="image">
         <p><c:out value="${bundle.getString('author')}"/></p>
     </footer>
 </div>

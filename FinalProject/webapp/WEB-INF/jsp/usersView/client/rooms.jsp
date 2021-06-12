@@ -12,7 +12,7 @@
     <title>Rooms</title>
   <link rel="stylesheet" href="<c:url value="/resources/css/Main.css"/> ">
   <link rel="stylesheet" href="<c:url value="/resources/css/Header.css"/> ">
-  <link rel="stylesheet" href="<c:url value="/resources/css/Table.css"/> ">
+  <link rel="stylesheet" href="<c:url value="/resources/css/Rooms.css"/> ">
   <link rel="stylesheet" href="<c:url value="/resources/css/Footer.css"/> ">
   <link rel="stylesheet" href="<c:url value="/resources/fontawesome/css/all.min.css"/>">
 </head>
@@ -55,51 +55,33 @@
     </ul>
   </nav>
   <div class="content">
-    <div class="Table">
-      <table>
-        <colgroup>
-          <col span="5">
-        </colgroup>
-        <caption><c:out value="${bundle.getString('roomsList')}" /></caption>
-        <tr>
-          <th><b><c:out value="${bundle.getString('roomNumber')}"/></b></th>
-          <th><b><c:out value="${bundle.getString('roomStatus')}"/></b></th>
-          <th><b><c:out value="${bundle.getString('roomClass')}"/></b></th>
-          <th><b><c:out value="${bundle.getString('numberOfSeats')}"/></b></th>
-          <th><b><c:out value="${bundle.getString('priceDay')}"/></b></th>
-        </tr>
-        <c:forEach var="room" items="${list}">
-          <tr>
-            <td><c:out value="${room.roomNumber}"/> </td>
-            <td>
-              <c:choose>
-                <c:when test="roomStatus == 'AVAILABLE">
-                  <c:out value="${bundle.getString('roomStatus.available')}"/>
-                </c:when>
-                <c:otherwise>
-                  <c:out value="${bundle.getString('roomStatus.closed')}"/>
-                </c:otherwise>
-              </c:choose>
-            </td>
-            <td><c:choose>
-              <c:when test="${room.roomClass == 'BUSINESS'}">
-                <c:out value="${bundle.getString('business')}"/>
-              </c:when>
-              <c:when test="${room.roomClass == 'ECONOM'}">
-                  <c:out value="${bundle.getString('econom')}"/>
-              </c:when>
-              <c:when test="${room.roomClass == 'LUXE'}">
-                  <c:out value="${bundle.getString('luxe')}"/>
-              </c:when>
-              <c:when test="${room.roomClass == 'PREMIUM'}">
-                <c:out value="${bundle.getString('premium')}"/>
-              </c:when>
-            </c:choose></td>
-            <td><c:out value="${room.numberOfSeats}"/></td>
-            <td><c:out value="${room.price}"/></td>
-          </tr>
-        </c:forEach>
-      </table>
+    <div class="view view-first">
+  <img src="<c:url value="/resources/images/econom.jpg"/>" />
+      <div class="mask">
+        <h2><c:out value="${bundle.getString('infoEconomTittle')}"/></h2>
+        <p><c:out value="${bundle.getString('infoEconomText')}"/></p>
+      </div>
+    </div>
+    <div class="view view-first">
+  <img src="<c:url value="/resources/images/business.jpg"/>" />
+      <div class="mask">
+        <h2><c:out value="${bundle.getString('infoBusinessTittle')}"/></h2>
+        <p><c:out value="${bundle.getString('infoBusinessText')}"/></p>
+      </div>
+    </div>
+    <div class="view view-first">
+      <img src="<c:url value="/resources/images/luxe.jpg"/>" />
+      <div class="mask">
+        <h2><c:out value="${bundle.getString('infoLuxeTittle')}"/></h2>
+        <p><c:out value="${bundle.getString('infoLuxeText')}"/></p>
+      </div>
+    </div>
+    <div class="view view-first">
+      <img src="<c:url value="/resources/images/premium.jpg"/>" />
+      <div class="mask">
+        <h2><c:out value="${bundle.getString('infoPremiumTittle')}"/></h2>
+        <p><c:out value="${bundle.getString('infoPremiumText')}"/></p>
+      </div>
     </div>
   </div>
   <footer class="footer">
