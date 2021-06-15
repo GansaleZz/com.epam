@@ -138,8 +138,8 @@
                             <c:when test="${request.requestStatus == 'INPROGRESS'}">
                                 <form action="controller?command=ACTUPDATEREQUEST" method = "post">
                                     <input type="hidden" name="id" value="${request.id}">
-                                    <input type="submit" name="submit" value="<c:out value="${bundle.getString('approve')}"/>">
-                                    <input type="submit" name="submit" value="<c:out value="${bundle.getString('deny')}"/>">
+                                    <input class="button" type="submit" name="submit" value="<c:out value="${bundle.getString('approve')}"/>">
+                                    <input class="button" type="submit" name="submit" value="<c:out value="${bundle.getString('deny')}"/>">
                                 </form>
                             </c:when>
                             <c:when test="${request.requestStatus == 'PAID'}">

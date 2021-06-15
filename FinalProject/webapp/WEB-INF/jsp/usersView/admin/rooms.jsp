@@ -177,8 +177,8 @@
             </select>
           </c:when>
         </c:choose></td>
-          <td><input type = "submit" value="${bundle.getString('submit')}" name="submit"/>
-          <input type = "submit" value="${bundle.getString('delete')}" name ="submit"/></td>
+          <td><input class="button" type="submit" value="${bundle.getString('submit')}" name="submit"/>
+          <input class="button" type="submit" value="${bundle.getString('delete')}" name ="submit"/></td>
         </form>
         </tr>
       </c:forEach>

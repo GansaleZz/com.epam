@@ -120,8 +120,8 @@
                             </c:when>
                             <c:when test="${request.payment == null}">
                                 <form action="controller?command=ACTPAYFORREQUEST" method = "post">
-                                    <input type="submit" name="submit" value="${bundle.getString('pay')}">
-                                    <input type="submit" name="submit" value="${bundle.getString('cancel')}">
+                                    <input class="button" type="submit" name="submit" value="${bundle.getString('pay')}">
+                                    <input class="button" type="submit" name="submit" value="${bundle.getString('cancel')}">
                                     <input type="hidden" name="id" value="${request.id}">
                                 </form>
                             </c:when>

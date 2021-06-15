@@ -123,7 +123,7 @@
                          </c:choose>
                             </td>
                              <td><c:if test="${user.userRole != 'ADMIN'}">
-                                 <input type = "submit" value="${bundle.getString('submit')}" />
+                                 <input class="button" type="submit" value="${bundle.getString('submit')}" />
                              </c:if>
                              </td>
                          </form>

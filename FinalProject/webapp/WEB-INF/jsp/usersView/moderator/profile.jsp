@@ -113,7 +113,14 @@
                         </td>
                     </tr>
                     <tr>
-                        <th><b><c:out value="${bundle.getString('action')}"/></b></th><td><input type="submit" value="<c:out value="${bundle.getString('submit')}"/>"></td>
+                        <th>
+                            <b>
+                                <c:out value="${bundle.getString('action')}"/>
+                            </b>
+                        </th>
+                        <td>
+                            <input class="button" type="submit" value="<c:out value="${bundle.getString('submit')}"/>">
+                        </td>
                     </tr>
                 </form>
             </table>
