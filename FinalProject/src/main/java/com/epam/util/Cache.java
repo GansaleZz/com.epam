@@ -9,6 +9,7 @@ import com.epam.exceptions.DaoException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +23,7 @@ public class Cache {
     /**
      * Map 'activeRequests' need to store requests which was accepted/paid for checking their relevance
      */
-    private Map<Integer, Request> activeRequests = new HashMap<>();
+    private Map<Integer, Request> activeRequests = new Hashtable<>();
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(Cache.class);
 
     /**

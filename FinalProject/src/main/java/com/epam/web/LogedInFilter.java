@@ -3,10 +3,12 @@ package com.epam.web;
 import com.epam.criteria.Impl.UserCriteria;
 import com.epam.db.dao.impl.UserDaoImpl;
 import com.epam.entity.UserStatus;
-import com.epam.exceptions.DaoException;
 import com.epam.exceptions.PageException;
 
-import javax.servlet.*;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
