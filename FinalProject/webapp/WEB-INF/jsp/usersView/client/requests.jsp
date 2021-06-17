@@ -86,14 +86,42 @@
                                 </c:otherwise>
                             </c:choose>
                         </td>
-                        <td><c:choose>
-                            <c:when test="${request.requestStatus == 'INPROGRESS' || request.requestStatus == 'DENIED'}">
-                                <c:out value="${request.roomClass}"/>
-                            </c:when>
-                            <c:otherwise>
-                                <c:out value="${request.room.roomClass}"/>
-                            </c:otherwise>
-                        </c:choose></td>
+                        <td>
+                            <c:choose>
+                                <c:when test="${request.requestStatus == 'INPROGRESS' || request.requestStatus == 'DENIED'}">
+                                    <c:choose>
+                                        <c:when test="${request.roomClass == 'BUSINESS'}">
+                                            <c:out value="${bundle.getString('business')}"/>
+                                        </c:when>
+                                        <c:when test="${request.roomClass == 'ECONOM'}">
+                                            <c:out value="${bundle.getString('econom')}"/>
+                                        </c:when>
+                                        <c:when test="${request.roomClass == 'LUXE'}">
+                                            <c:out value="${bundle.getString('luxe')}"/>
+                                        </c:when>
+                                        <c:when test="${request.roomClass == 'PREMIUM'}">
+                                            <c:out value="${bundle.getString('premium')}"/>
+                                        </c:when>
+                                    </c:choose>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:choose>
+                                        <c:when test="${request.room.roomClass == 'BUSINESS'}">
+                                            <c:out value="${bundle.getString('business')}"/>
+                                        </c:when>
+                                        <c:when test="${request.room.roomClass == 'ECONOM'}">
+                                            <c:out value="${bundle.getString('econom')}"/>
+                                        </c:when>
+                                        <c:when test="${request.room.roomClass == 'LUXE'}">
+                                            <c:out value="${bundle.getString('luxe')}"/>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <c:out value="${bundle.getString('premium')}"/>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
                         <td><c:out value="${request.numberOfSeats}"/> </td>
                         <td><c:out value="${request.start}"/> </td>
                         <td><c:out value="${request.end}"/></td>
