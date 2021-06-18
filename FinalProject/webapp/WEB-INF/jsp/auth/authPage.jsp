@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="<c:url value="../../../resources/css/Link.css"/> ">
 </head>
 <body>
-<h1>
+<h1 style="font-size: 100px;">
     Welcome!
 </h1>
 
