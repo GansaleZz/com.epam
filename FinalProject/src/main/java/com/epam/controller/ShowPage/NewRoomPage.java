@@ -28,7 +28,7 @@ public class NewRoomPage implements Command {
                     case MODERATOR -> request.getServletContext().getRequestDispatcher(ServletDestination.MODERATORNEWROOMPAGE.getPath()).forward(request, response);
                 }
             }catch (ServletException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage());
             }
         }
     }
