@@ -1,4 +1,4 @@
-package com.epam.controller.Acts;
+package com.epam.controller.acts;
 
 import com.epam.db.dao.impl.RoomDaoImpl;
 import com.epam.entity.Room;

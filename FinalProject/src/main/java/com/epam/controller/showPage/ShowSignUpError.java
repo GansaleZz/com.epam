@@ -1,4 +1,4 @@
-package com.epam.controller.ShowPage;
+package com.epam.controller.showPage;
 
 import com.epam.controller.Command;
 import com.epam.controller.ServletDestination;
@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class ShowSignUp implements Command {
-    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ShowSignUp.class);
+public class ShowSignUpError implements Command {
+    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ShowSignUpError.class);
 
     /**
-     * Forwarding user on 'sign up' page
+     * Forwarding user on 'sign up error' page, if he entered wrong information
      */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
-            request.getServletContext().getRequestDispatcher(ServletDestination.SIGNUPPAGE.getPath()).forward(request,response);
+            request.getServletContext().getRequestDispatcher(ServletDestination.SIGNUPERROR.getPath()).forward(request,response);
         } catch (ServletException e) {
             logger.error(e.getMessage());
         }

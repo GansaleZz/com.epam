@@ -1,4 +1,4 @@
-package com.epam.controller.Acts;
+package com.epam.controller.acts;
 
 import com.epam.criteria.Impl.RequestCriteria;
 import com.epam.db.dao.impl.RequestDaoImpl;

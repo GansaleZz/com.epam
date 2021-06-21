@@ -1,4 +1,4 @@
-package com.epam.controller.ShowPage;
+package com.epam.controller.showPage;
 
 import com.epam.db.dao.impl.RoomDaoImpl;
 import com.epam.entity.Room;

@@ -1,4 +1,4 @@
-package com.epam.controller.ShowPage;
+package com.epam.controller.showPage;
 
 import com.epam.db.dao.impl.UserDaoImpl;
 import com.epam.entity.User;

@@ -1,4 +1,4 @@
-package com.epam.controller.ShowPage;
+package com.epam.controller.showPage;
 
 import com.epam.db.dao.impl.PaymentDaoImpl;
 import com.epam.db.dao.impl.RequestDaoImpl;
@@ -8,7 +8,7 @@ import com.epam.entity.UserRole;
 import com.epam.exceptions.DaoException;
 import com.epam.controller.Command;
 import com.epam.controller.ServletDestination;
-import com.epam.controller.Acts.UpdateRequest;
+import com.epam.controller.acts.UpdateRequest;
 import com.epam.util.Cache;
 
 import javax.servlet.ServletException;

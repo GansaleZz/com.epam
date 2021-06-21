@@ -1,4 +1,4 @@
-package com.epam.controller.Acts;
+package com.epam.controller.acts;
 
 import com.epam.controller.Command;
 import com.epam.controller.CommandInstance;
