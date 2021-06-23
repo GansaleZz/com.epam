@@ -1,6 +1,6 @@
 package com.epam.db.dao.impl;
 
-import com.epam.criteria.Impl.RoomCriteria;
+import com.epam.criteria.impl.RoomCriteria;
 import com.epam.db.ConnectionPool;
 import com.epam.entity.Room;
 import com.epam.entity.RoomClass;

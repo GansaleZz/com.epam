@@ -1,6 +1,6 @@
 package com.epam.controller.acts;
 
-import com.epam.criteria.Impl.UserCriteria;
+import com.epam.criteria.impl.UserCriteria;
 import com.epam.db.dao.impl.UserDaoImpl;
 import com.epam.entity.User;
 import com.epam.exceptions.DaoException;

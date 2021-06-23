@@ -1,6 +1,6 @@
 package com.epam.criteria;
 
-import com.epam.criteria.Impl.PaymentCriteria;
+import com.epam.criteria.impl.PaymentCriteria;
 import com.epam.entity.Payment;
 import com.epam.entity.PaymentStatus;
 import org.junit.jupiter.api.Test;

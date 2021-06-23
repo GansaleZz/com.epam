@@ -1,6 +1,6 @@
 package com.epam.web;
 
-import com.epam.criteria.Impl.UserCriteria;
+import com.epam.criteria.impl.UserCriteria;
 import com.epam.db.dao.impl.UserDaoImpl;
 import com.epam.entity.UserStatus;
 import com.epam.exceptions.PageException;
@@ -40,7 +40,7 @@ public class LogedInFilter implements Filter {
                             httpServletRequest.getQueryString().contains("AUTH") ||
                             httpServletRequest.getQueryString().contains("BAN")));
             if(httpServletRequest.getRequestURI().matches(".*(css|jpg|png|gif|js)")){
-                chain.doFilter(httpServletRequest,httpServletResponse);
+                chain.doFilter(request,response);
                 return;
             }else {
                 if (loggedIn) {

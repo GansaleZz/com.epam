@@ -33,7 +33,7 @@ public class AuthFilter implements Filter {
                         httpServletRequest.getQueryString().contains("BAN")));
         try {
             if (httpServletRequest.getRequestURI().matches(".*(css|jpg|png|gif|js)")) {
-                chain.doFilter(httpServletRequest, httpServletResponse);
+                chain.doFilter(request,response);
                 return;
             } else {
                 if (!loggedIn && !badRequestLogged) {

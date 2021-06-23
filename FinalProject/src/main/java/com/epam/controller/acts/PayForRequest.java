@@ -1,6 +1,6 @@
 package com.epam.controller.acts;
 
-import com.epam.criteria.Impl.PaymentCriteria;
+import com.epam.criteria.impl.PaymentCriteria;
 import com.epam.db.dao.impl.PaymentDaoImpl;
 import com.epam.db.dao.impl.RequestDaoImpl;
 import com.epam.db.dao.impl.UserDaoImpl;

@@ -1,6 +1,6 @@
 package com.epam.db.dao.impl;
 
-import com.epam.criteria.Impl.RequestCriteria;
+import com.epam.criteria.impl.RequestCriteria;
 import com.epam.db.ConnectionPool;
 import com.epam.entity.Request;
 import com.epam.entity.RequestStatus;

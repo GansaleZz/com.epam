@@ -1,6 +1,6 @@
 package com.epam.controller.acts;
 
-import com.epam.criteria.Impl.RoomCriteria;
+import com.epam.criteria.impl.RoomCriteria;
 import com.epam.db.dao.impl.RoomDaoImpl;
 import com.epam.entity.Room;
 import com.epam.entity.RoomClass;

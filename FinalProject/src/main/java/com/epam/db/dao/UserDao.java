@@ -1,6 +1,6 @@
 package com.epam.db.dao;
 
-import com.epam.criteria.Impl.UserCriteria;
+import com.epam.criteria.impl.UserCriteria;
 import com.epam.entity.User;
 import com.epam.exceptions.DaoException;
 import java.util.List;

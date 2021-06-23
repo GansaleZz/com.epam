@@ -1,6 +1,6 @@
 package com.epam.db.dao.impl;
 
-import com.epam.criteria.Impl.PaymentCriteria;
+import com.epam.criteria.impl.PaymentCriteria;
 import com.epam.db.ConnectionPool;
 import com.epam.entity.Payment;
 import com.epam.entity.PaymentStatus;

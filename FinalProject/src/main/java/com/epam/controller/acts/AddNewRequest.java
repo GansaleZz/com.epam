@@ -1,6 +1,6 @@
 package com.epam.controller.acts;
 
-import com.epam.criteria.Impl.RequestCriteria;
+import com.epam.criteria.impl.RequestCriteria;
 import com.epam.db.dao.impl.RequestDaoImpl;
 import com.epam.db.dao.impl.UserDaoImpl;
 import com.epam.entity.Request;

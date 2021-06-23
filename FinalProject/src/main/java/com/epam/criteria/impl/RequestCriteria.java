@@ -1,4 +1,4 @@
-package com.epam.criteria.Impl;
+package com.epam.criteria.impl;
 
 import com.epam.criteria.BaseCriteria;
 import com.epam.entity.Payment;
