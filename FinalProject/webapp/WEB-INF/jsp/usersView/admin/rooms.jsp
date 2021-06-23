@@ -187,7 +187,7 @@
       <a href="http://localhost:8080/controller?command=ACTNEWROOMPAGE" class = "s2"><c:out value="${bundle.getString('addNewRoom')}"/></a>
   </div>
   <footer class="footer">
-    <img src="/resources/images/image1.png" alt="image">
+    <img src="<c:url value="/resources/images/image1.png"/>" alt="image">
     <p><c:out value="${bundle.getString('author')}"/></p>
   </footer>
 </div>

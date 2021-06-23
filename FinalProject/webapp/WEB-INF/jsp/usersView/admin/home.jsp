@@ -17,29 +17,6 @@
     <link rel='stylesheet' href="<c:url value="/resources/css/immersive-slider.css"/>" type='text/css'>
     <script type="text/javascript" src=<c:url value="http://code.jquery.com/jquery-1.9.1.js"/>></script>
     <script type="text/javascript" src=<c:url value="/resources/js/jquery.immersive-slider.js"/>></script>
-    <style>
-
-
-
-        .main {
-            float: left;
-            width: 100%;
-            margin-bottom: 30px;
-            background: #161923;
-            position: relative;
-        }
-
-        .page_container {
-            max-width: 960px;
-            margin: 50px auto;
-        }
-
-
-        .benefits .page_container{
-            margin-bottom: 50px;
-            margin-top: 0;
-        }
-    </style>
 </head>
 <body>
 <div class="page">
@@ -118,7 +95,6 @@
             </div>
         </div>
     </div>
-
     <footer class="footer">
         <img src="<c:url value="/resources/images/image1.png"/>" alt="image">
         <p><c:out value="${bundle.getString('author')}"/></p>
