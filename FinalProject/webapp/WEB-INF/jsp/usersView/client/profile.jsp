@@ -104,7 +104,7 @@
                     </td>
                     </tr>
                     <tr>
-                        <th><b><c:out value="${bundle.getString('balance')}"/></b></th>
+                        <th><b><c:out value="${bundle.getString('balance')}"/> (BYN)</b></th>
                         <td>
                             <c:out value="${user.balance}"/>
                        </td>
