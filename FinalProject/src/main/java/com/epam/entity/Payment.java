@@ -56,5 +56,4 @@ public class Payment extends BaseEntity {
     public int hashCode() {
         return Objects.hash(amount, date, status);
     }
-
 }

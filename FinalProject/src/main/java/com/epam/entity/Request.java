@@ -80,23 +80,6 @@ public class Request extends BaseEntity {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Request request = (Request) o;
-        if(payment != null && ((Request) o).getPayment()!=null) {
-            return numberOfSeats == request.numberOfSeats && start.equals(request.start) && end.equals(request.end) && user.equals(request.user)  && requestStatus == request.requestStatus && payment.equals(request.payment);
-        }else{
-            return numberOfSeats == request.numberOfSeats && start.equals(request.start) && end.equals(request.end) && user.equals(request.user)  && requestStatus == request.requestStatus ;
-        }
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(numberOfSeats, start, end, user, requestStatus, payment);
-    }
-
-    @Override
     public String toString() {
         return "Request{" +
                 "numberOfSeats=" + numberOfSeats +
@@ -108,5 +91,18 @@ public class Request extends BaseEntity {
                 ", requestStatus=" + requestStatus +
                 ", payment=" + payment +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Request request = (Request) o;
+        return numberOfSeats == request.numberOfSeats && Objects.equals(start, request.start) && Objects.equals(end, request.end) && Objects.equals(user, request.user) && Objects.equals(room, request.room) && roomClass == request.roomClass && requestStatus == request.requestStatus && Objects.equals(payment, request.payment);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(numberOfSeats, start, end, user, room, roomClass, requestStatus, payment);
     }
 }
