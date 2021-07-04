@@ -25,32 +25,38 @@
             <li>
                 <a href="http://localhost:8080/controller?command=ACTSHOWHOME">
                     <i class="fa fa-home fa-fw" aria-hidden="true"></i>
-                    <c:out value="${bundle.getString('home')}"/></a>
+                    <c:out value="${bundle.getString('home')}"/>
+                </a>
             </li>
             <li>
                 <a href="http://localhost:8080/controller?command=ACTSHOWROOMS">
                     <i class="fa fa-shower" aria-hidden="true"></i>
-                    <c:out value="${bundle.getString('rooms')}"/></a>
+                    <c:out value="${bundle.getString('rooms')}"/>
+                </a>
             </li>
             <li>
                 <a href="http://localhost:8080/controller?command=ACTSHOWPROFILE">
                     <i class="fa fa-user-circle" aria-hidden="true"></i>
-                    <c:out value="${bundle.getString('profile')}"/></a>
+                    <c:out value="${bundle.getString('profile')}"/>
+                </a>
             </li>
             <li>
                 <a href="http://localhost:8080/controller?command=ACTCREATEREQUESTPAGE">
                     <i class="fa fa-pencil-alt" aria-hidden="true"></i>
-                    <c:out value="${bundle.getString('createRequest')}"/></a>
+                    <c:out value="${bundle.getString('createRequest')}"/>
+                </a>
             </li>
             <li>
                 <a href="http://localhost:8080/controller?command=ACTSHOWREQUESTS">
                     <i class="fa fa-book" aria-hidden="true"></i>
-                    <c:out value="${bundle.getString('requests')}"/></a>
+                    <c:out value="${bundle.getString('requests')}"/>
+                </a>
             </li>
             <li>
                 <a href="http://localhost:8080/controller?command=ACTLOGOUT">
                     <i class="fa fa-sign-out-alt" aria-hidden="true"></i>
-                    <c:out value="${bundle.getString('logOut')}"/></a>
+                    <c:out value="${bundle.getString('logOut')}"/>
+                </a>
             </li>
         </ul>
     </nav>
@@ -62,57 +68,116 @@
                 <colgroup>
                     <col span="2">
                 </colgroup>
-                <caption><c:out value="${bundle.getString('profile')}"/></caption>
+                <caption>
+                    <c:out value="${bundle.getString('profile')}"/>
+                </caption>
                 <form action="controller?command=ACTUPDATEPROFILE" method = "post">
                     <input type = "hidden" name = "id" value="${user.id}" >
                     <tr>
-                        <th><b><c:out value="${bundle.getString('login')}"/></b></th><td><c:out value="${user.login}"/></td>
-                    </tr>
-                    <tr>
-                        <th><b><c:out value="${bundle.getString('name')}"/></b></th><td><input type="text" name="name" value="${user.name}"></td>
-                    </tr>
-                    <tr>
-                        <th><b><c:out value="${bundle.getString('email')}"/></b></th><td><input type="email" name="email" value="${user.email}"></td>
-                    </tr>
-                    <tr>
-                        <th><b><c:out value="${bundle.getString('role')}"/></b></th>
+                        <th>
+                            <b>
+                                <c:out value="${bundle.getString('login')}"/>
+                            </b>
+                        </th>
                         <td>
-                         <c:out value="${bundle.getString('client')}"/>
+                            <c:out value="${user.login}"/>
                         </td>
                     </tr>
                     <tr>
-                        <th><b><c:out value="${bundle.getString('language')}"/></b></th><td>
-                        <select name ="locale">
-                            <c:choose>
-                                <c:when test="${locale == 'en'}">
-                                    <option selected ="selected" value="en"> <c:out value="${bundle.getString('english')}"/></option>
-                                    <option value="ru"><c:out value="${bundle.getString('russian')}"/></option>
-                                    <option value="by"><c:out value="${bundle.getString('belarusian')}"/></option>
-                                </c:when>
-                                <c:when test="${locale == 'ru'}">
-                                    <option value="en"> <c:out value="${bundle.getString('english')}"/></option>
-                                    <option selected ="selected" value="ru"><c:out value="${bundle.getString('russian')}"/></option>
-                                    <option value="by"><c:out value="${bundle.getString('belarusian')}"/></option>
-                                </c:when>
-                                <c:otherwise>
-                                    <option value="en"> <c:out value="${bundle.getString('english')}"/></option>
-                                    <option value="ru" ><c:out value="${bundle.getString('russian')}"/></option>
-                                    <option selected ="selected" value="by"><c:out value="${bundle.getString('belarusian')}"/></option>
-                                </c:otherwise>
-                            </c:choose>
-                        </select>
-                    </td>
+                        <th>
+                            <b>
+                                <c:out value="${bundle.getString('name')}"/>
+                            </b>
+                        </th>
+                        <td>
+                            <input type="text" name="name" value="${user.name}">
+                        </td>
                     </tr>
                     <tr>
-                        <th><b><c:out value="${bundle.getString('balance')}"/> (BYN)</b></th>
+                        <th>
+                            <b>
+                                <c:out value="${bundle.getString('email')}"/>
+                            </b>
+                        </th>
+                        <td>
+                            <input type="email" name="email" value="${user.email}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <b>
+                                <c:out value="${bundle.getString('role')}"/>
+                            </b>
+                        </th>
+                        <td>
+                            <c:out value="${bundle.getString('client')}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <b>
+                                <c:out value="${bundle.getString('language')}"/>
+                            </b>
+                        </th>
+                        <td>
+                            <select name ="locale">
+                                <c:choose>
+                                    <c:when test="${locale == 'en'}">
+                                        <option selected ="selected" value="en">
+                                            <c:out value="${bundle.getString('english')}"/>
+                                        </option>
+                                        <option value="ru">
+                                            <c:out value="${bundle.getString('russian')}"/>
+                                        </option>
+                                        <option value="by">
+                                            <c:out value="${bundle.getString('belarusian')}"/>
+                                        </option>
+                                    </c:when>
+                                    <c:when test="${locale == 'ru'}">
+                                        <option value="en">
+                                            <c:out value="${bundle.getString('english')}"/>
+                                        </option>
+                                        <option selected ="selected" value="ru">
+                                            <c:out value="${bundle.getString('russian')}"/>
+                                        </option>
+                                        <option value="by">
+                                            <c:out value="${bundle.getString('belarusian')}"/>
+                                        </option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <option value="en">
+                                            <c:out value="${bundle.getString('english')}"/>
+                                        </option>
+                                        <option value="ru">
+                                            <c:out value="${bundle.getString('russian')}"/>
+                                        </option>
+                                        <option selected ="selected" value="by">
+                                            <c:out value="${bundle.getString('belarusian')}"/>
+                                        </option>
+                                    </c:otherwise>
+                                </c:choose>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <b>
+                                <c:out value="${bundle.getString('balance')}"/> (BYN)
+                            </b>
+                        </th>
                         <td>
                             <c:out value="${user.balance}"/>
                        </td>
                     </tr>
                     <tr>
-                        <th><b><c:out value="${bundle.getString('action')}"/></b></th>
+                        <th>
+                            <b>
+                                <c:out value="${bundle.getString('action')}"/>
+                            </b>
+                        </th>
                         <td>
-                            <input class="button" type="submit" value="<c:out value="${bundle.getString('submit')}"/>"></form>
+                            <input class="button" type="submit" value="<c:out value="${bundle.getString('submit')}"/>">
+                </form>
                             <form action="controller?command=ACTNEWDEPOSITPAGE" method = "post">
                                 <input class="button" type="submit" value="<c:out value="${bundle.getString('deposit')}"/>">
                             </form>
@@ -123,7 +188,9 @@
     </div>
     <footer class="footer">
         <img src="<c:url value="/resources/images/image1.png"/>" alt="image">
-        <p><c:out value="${bundle.getString('author')}"/></p>
+        <p>
+            <c:out value="${bundle.getString('author')}"/>
+        </p>
     </footer>
 </div>
 </body>
