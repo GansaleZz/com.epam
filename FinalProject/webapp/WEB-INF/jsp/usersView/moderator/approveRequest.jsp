@@ -31,7 +31,8 @@
             <li>
                 <a href="http://localhost:8080/controller?command=ACTSHOWROOMS">
                     <i class="fa fa-shower" aria-hidden="true"></i>
-                    <c:out value="${bundle.getString('rooms')}"/></a>
+                    <c:out value="${bundle.getString('rooms')}"/>
+                </a>
             </li>
             <li>
                 <a href="http://localhost:8080/controller?command=ACTSHOWPROFILE" >
@@ -62,12 +63,16 @@
     <div class="content">
         <form action="controller?command=ACTUPDATEREQUEST" method = "post">
             <div class="form-row">
-                <b><c:out value="${bundle.getString('roomNumber')}"/> </b>
+                <b>
+                    <c:out value="${bundle.getString('roomNumber')}"/>
+                </b>
                 <c:choose>
                     <c:when test="${not empty rooms}">
                         <select name = "room">
                             <c:forEach var="i" items="${rooms}">
-                                <option>${i.roomNumber}</option>
+                                <option>
+                                        ${i.roomNumber}
+                                </option>
                                 <c:set var="rmId" value="${i.id}"/>
                             </c:forEach>
                         </select>
@@ -86,7 +91,9 @@
     </div>
     <footer class="footer">
         <img src="<c:url value="/resources/images/image1.png"/>" alt="image">
-        <p><c:out value="${bundle.getString('author')}"/></p>
+        <p>
+            <c:out value="${bundle.getString('author')}"/>
+        </p>
     </footer>
 </div>
 </body>

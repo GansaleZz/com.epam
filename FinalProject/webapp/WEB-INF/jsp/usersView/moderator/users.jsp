@@ -30,7 +30,8 @@
             <li>
                 <a href="http://localhost:8080/controller?command=ACTSHOWROOMS">
                     <i class="fa fa-shower" aria-hidden="true"></i>
-                    <c:out value="${bundle.getString('rooms')}"/></a>
+                    <c:out value="${bundle.getString('rooms')}"/>
+                </a>
             </li>
             <li>
                 <a href="http://localhost:8080/controller?command=ACTSHOWPROFILE" >
@@ -64,48 +65,72 @@
                 <colgroup>
                     <col span="4">
                 </colgroup>
-                <caption><c:out value="${bundle.getString('usersList')}"/></caption>
+                <caption>
+                    <c:out value="${bundle.getString('usersList')}"/>
+                </caption>
                 <tr>
-                    <th><b><c:out value="${bundle.getString('name')}"/></b></th>
-                    <th><b><c:out value="${bundle.getString('email')}"/></b></th>
-                    <th><b><c:out value="${bundle.getString('role')}"/></b></th>
-                    <th><b><c:out value="${bundle.getString('status')}"/></b></th>
+                    <th>
+                        <b>
+                            <c:out value="${bundle.getString('name')}"/>
+                        </b>
+                    </th>
+                    <th>
+                        <b>
+                            <c:out value="${bundle.getString('email')}"/>
+                        </b>
+                    </th>
+                    <th>
+                        <b>
+                            <c:out value="${bundle.getString('role')}"/>
+                        </b>
+                    </th>
+                    <th>
+                        <b>
+                            <c:out value="${bundle.getString('status')}"/>
+                        </b>
+                    </th>
                 </tr>
                 <c:forEach var="user" items="${list}">
-                <tr>
-                    <td><c:out value="${user.name}"></c:out></td>
-                    <td><c:out value="${user.email}"></c:out></td>
-                    <td>
-                        <c:choose>
-                            <c:when test="${user.userRole == 'ADMIN'}">
-                                <c:out value="${bundle.getString('admin')}"/>
-                            </c:when>
-                            <c:when test="${user.userRole == 'MODERATOR'}">
-                                <c:out value="${bundle.getString('moderator')}"/>
-                            </c:when>
-                            <c:otherwise>
-                                <c:out value="${bundle.getString('client')}"/>
-                            </c:otherwise>
-                        </c:choose>
-                    </td>
-                    <td>
-                        <c:choose>
-                            <c:when test="${user.status == 'BANNED'}">
-                                <c:out value="${bundle.getString('user.banned')}"/>
-                            </c:when>
-                            <c:otherwise>
-                                <c:out value="${bundle.getString('user.available')}"/>
-                            </c:otherwise>
-                        </c:choose>
-                    </td>
-                </tr>
+                    <tr>
+                        <td>
+                            <c:out value="${user.name}"></c:out>
+                        </td>
+                        <td>
+                            <c:out value="${user.email}"></c:out>
+                        </td>
+                        <td>
+                            <c:choose>
+                                <c:when test="${user.userRole == 'ADMIN'}">
+                                    <c:out value="${bundle.getString('admin')}"/>
+                                </c:when>
+                                <c:when test="${user.userRole == 'MODERATOR'}">
+                                    <c:out value="${bundle.getString('moderator')}"/>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:out value="${bundle.getString('client')}"/>
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
+                        <td>
+                            <c:choose>
+                                <c:when test="${user.status == 'BANNED'}">
+                                    <c:out value="${bundle.getString('user.banned')}"/>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:out value="${bundle.getString('user.available')}"/>
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
+                    </tr>
                 </c:forEach>
             </table>
         </div>
     </div>
     <footer class="footer">
         <img src="<c:url value="/resources/images/image1.png"/>" alt="image">
-        <p><c:out value="${bundle.getString('author')}"/></p>
+        <p>
+            <c:out value="${bundle.getString('author')}"/>
+        </p>
     </footer>
 </div>
 </body>
