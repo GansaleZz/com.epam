@@ -40,7 +40,7 @@ public class PayForRequest implements Command {
                 Calendar calendar = Calendar.getInstance();
                 Cache cache = Cache.getInstance();
                 Request req = requestDao.findEntityById(Integer.valueOf(request.getParameter("id"))).get();
-                int price = (int)(req.getEnd().getTime()-req.getStart().getTime())/ (1000*60*60*24);
+                int price = (int)((req.getEnd().getTime()-req.getStart().getTime())/ (1000*60*60*24));
                 Payment payment = new PaymentCriteria.Builder()
                         .newBuilder()
                         .withId(req.getId())
