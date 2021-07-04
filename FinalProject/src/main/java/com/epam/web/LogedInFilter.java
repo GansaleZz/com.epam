@@ -1,5 +1,6 @@
 package com.epam.web;
 
+import com.epam.controller.ServletDestination;
 import com.epam.criteria.impl.UserCriteria;
 import com.epam.db.dao.impl.UserDaoImpl;
 import com.epam.entity.UserStatus;
@@ -48,7 +49,7 @@ public class LogedInFilter implements Filter {
                     UserCriteria userCriteria = new UserCriteria();
                     userCriteria.setLogin((String) session.getAttribute("login"));
                     if (userDao.findUserByCriteria(userCriteria).get().getStatus().equals(UserStatus.BANNED)) {
-                        httpServletResponse.sendRedirect("http://localhost:8080/controller?command=ACTSHOWBAN");
+                        httpServletRequest.getServletContext().getRequestDispatcher(ServletDestination.BANPAGE.getPath()).forward(request,response);
                         session.invalidate();
                     }
                 }

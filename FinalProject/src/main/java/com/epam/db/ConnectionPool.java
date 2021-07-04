@@ -6,7 +6,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
+import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
 
 /**
@@ -14,7 +14,7 @@ import java.util.concurrent.LinkedBlockingDeque;
  */
 public final class ConnectionPool {
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ConnectionPool.class);
-    private Queue<Connection> availableConnectionList = new LinkedBlockingDeque<>();
+    private BlockingDeque<Connection> availableConnectionList = new LinkedBlockingDeque<>();
     private List<Connection> engagedConnectionList = new LinkedList<>();
     /**
      * @see Property
@@ -36,8 +36,8 @@ public final class ConnectionPool {
         if(availableConnectionList.size()+ engagedConnectionList.size()<property.getMAXPOOLSIZE()) {
             try {
                 Connection connection = DriverManager.getConnection(property.getURL()+property.getSCHEME(), property.getUSER(), property.getPASSWORD());
-                availableConnectionList.add(connection);
-            } catch (SQLException e) {
+                availableConnectionList.put(connection);
+            } catch (SQLException | InterruptedException e) {
                 logger.error(e.getMessage());
             }
         }
