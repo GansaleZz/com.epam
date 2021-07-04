@@ -31,7 +31,8 @@
             <li>
                 <a href="http://localhost:8080/controller?command=ACTSHOWROOMS">
                     <i class="fa fa-shower" aria-hidden="true"></i>
-                    <c:out value="${bundle.getString('rooms')}"/></a>
+                    <c:out value="${bundle.getString('rooms')}"/>
+                </a>
             </li>
             <li>
                 <a href="http://localhost:8080/controller?command=ACTSHOWPROFILE" >
@@ -65,20 +66,56 @@
                 <colgroup>
                     <col span="8">
                 </colgroup>
-                <caption><c:out value="${bundle.getString('usersRequestsList')}"/></caption>
+                <caption>
+                    <c:out value="${bundle.getString('usersRequestsList')}"/>
+                </caption>
                 <tr>
-                    <th><b><c:out value="${bundle.getString('userName')}"/></b></th>
-                    <th><b><c:out value="${bundle.getString('roomNumber')}"/></b></th>
-                    <th><b><c:out value="${bundle.getString('roomClass')}"/></b></th>
-                    <th><b><c:out value="${bundle.getString('numberOfSeats')}"/></b></th>
-                    <th><b><c:out value="${bundle.getString('startDate')}"/></b></th>
-                    <th><b><c:out value="${bundle.getString('endDate')}"/></b></th>
-                    <th><b><c:out value="${bundle.getString('arrivalTime')}"/></b></th>
-                    <th><b><c:out value="${bundle.getString('requestStatus')}"/></b></th>
+                    <th>
+                        <b>
+                            <c:out value="${bundle.getString('userName')}"/>
+                        </b>
+                    </th>
+                    <th>
+                        <b>
+                            <c:out value="${bundle.getString('roomNumber')}"/>
+                        </b>
+                    </th>
+                    <th>
+                        <b>
+                            <c:out value="${bundle.getString('roomClass')}"/>
+                        </b>
+                    </th>
+                    <th>
+                        <b>
+                            <c:out value="${bundle.getString('numberOfSeats')}"/>
+                        </b>
+                    </th>
+                    <th>
+                        <b>
+                            <c:out value="${bundle.getString('startDate')}"/>
+                        </b>
+                    </th>
+                    <th>
+                        <b>
+                            <c:out value="${bundle.getString('endDate')}"/>
+                        </b>
+                    </th>
+                    <th>
+                        <b>
+                            <c:out value="${bundle.getString('arrivalTime')}"/>
+                        </b>
+                    </th>
+                    <th>
+                        <b>
+                            <c:out value="${bundle.getString('requestStatus')}"/>
+                        </b>
+                    </th>
                 </tr>
                 <c:forEach var="request" items="${list}">
                 <tr>
-                    <td><c:out value="${request.user.name}"/></td>
+                    <td>
+                        <c:out value="${request.user.name}"/>
+                    </td>
                     <td>
                         <c:choose>
                             <c:when test="${request.requestStatus == 'INPROGRESS'}">
@@ -128,33 +165,42 @@
                             </c:otherwise>
                         </c:choose>
                     </td>
-                    <td><c:out value="${request.numberOfSeats}"/> </td>
-                    <td><c:out value="${request.start}"/></td>
-                    <td><c:out value="${request.end}"/> </td>
-                    <fmt:parseNumber var="per" integerOnly="true"
-                                     type="number" value="${(request.end.time-request.start.time)/ (1000*60*60*24)}" />
-                    <td><c:out value="${per}" /> </td>
-                    <td><c:choose>
-                        <c:when test="${request.requestStatus == 'INPROGRESS'}">
-                            <form action="controller?command=ACTUPDATEREQUEST" method = "post">
-                                <input type="hidden" name="id" value="${request.id}">
-                                <input class="button" type="submit" name="submit" value="<c:out value="${bundle.getString('approve')}"/>">
-                                <input class="button" type="submit" name="submit" value="<c:out value="${bundle.getString('deny')}"/>">
-                            </form>
-                        </c:when>
-                        <c:when test="${request.requestStatus == 'PAID'}">
-                            <c:out value="${bundle.getString('requestStatus.paid')}"/>
-                        </c:when>
-                        <c:when test="${request.requestStatus == 'CANCELLED'}">
-                            <c:out value="${bundle.getString('requestStatus.cancelled')}"/>
-                        </c:when>
-                        <c:when test="${request.requestStatus == 'DENIED'}">
-                            <c:out value="${bundle.getString('requestStatus.denied')}"/>
-                        </c:when>
-                        <c:otherwise>
-                            <c:out value="${bundle.getString('requestStatus.accepted')}"/>
-                        </c:otherwise>
-                    </c:choose></td>
+                    <td>
+                        <c:out value="${request.numberOfSeats}"/>
+                    </td>
+                    <td>
+                        <c:out value="${request.start}"/>
+                    </td>
+                    <td>
+                        <c:out value="${request.end}"/>
+                    </td>
+                    <fmt:parseNumber var="per" integerOnly="true" type="number" value="${(request.end.time-request.start.time)/ (1000*60*60*24)}" />
+                    <td>
+                        <c:out value="${per}" />
+                    </td>
+                    <td>
+                        <c:choose>
+                            <c:when test="${request.requestStatus == 'INPROGRESS'}">
+                                <form action="controller?command=ACTUPDATEREQUEST" method = "post">
+                                    <input type="hidden" name="id" value="${request.id}">
+                                    <input class="button" type="submit" name="submit" value="<c:out value="${bundle.getString('approve')}"/>">
+                                    <input class="button" type="submit" name="submit" value="<c:out value="${bundle.getString('deny')}"/>">
+                                </form>
+                            </c:when>
+                            <c:when test="${request.requestStatus == 'PAID'}">
+                                <c:out value="${bundle.getString('requestStatus.paid')}"/>
+                            </c:when>
+                            <c:when test="${request.requestStatus == 'CANCELLED'}">
+                                <c:out value="${bundle.getString('requestStatus.cancelled')}"/>
+                            </c:when>
+                            <c:when test="${request.requestStatus == 'DENIED'}">
+                                <c:out value="${bundle.getString('requestStatus.denied')}"/>
+                            </c:when>
+                            <c:otherwise>
+                                <c:out value="${bundle.getString('requestStatus.accepted')}"/>
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
                 </tr>
                 </c:forEach>
             </table>
@@ -162,7 +208,9 @@
     </div>
     <footer class="footer">
         <img src="<c:url value="/resources/images/image1.png"/>" alt="image">
-        <p><c:out value="${bundle.getString('author')}"/></p>
+        <p>
+            <c:out value="${bundle.getString('author')}"/>
+        </p>
     </footer>
 </div>
 </body>

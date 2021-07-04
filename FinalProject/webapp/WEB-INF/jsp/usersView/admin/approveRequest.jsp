@@ -58,7 +58,6 @@
             </li>
         </ul>
     </nav>
-
     <div class="content">
         <form action="controller?command=ACTUPDATEREQUEST" method = "post">
             <div class="form-row">
@@ -88,7 +87,9 @@
     </div>
     <footer class="footer">
         <img src="<c:url value="/resources/images/image1.png"/>" alt="image">
-        <p><c:out value="${bundle.getString('author')}"/></p>
+        <p>
+            <c:out value="${bundle.getString('author')}"/>
+        </p>
     </footer>
 </div>
 </body>
