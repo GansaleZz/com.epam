@@ -4,18 +4,18 @@ import com.epam.entity.Property;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.LinkedBlockingDeque;
 
 /**
  * Realization of working with connections
  */
 public final class ConnectionPool {
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ConnectionPool.class);
-    private Queue<Connection> availableConnectionList = new ConcurrentLinkedQueue<>();
-    private List<Connection> engagedConnectionList = new CopyOnWriteArrayList<>();
+    private Queue<Connection> availableConnectionList = new LinkedBlockingDeque<>();
+    private List<Connection> engagedConnectionList = new LinkedList<>();
     /**
      * @see Property
      */

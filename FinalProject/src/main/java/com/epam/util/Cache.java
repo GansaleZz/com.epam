@@ -13,6 +13,7 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Realisation of cache which controlling relevance of requests
@@ -23,7 +24,7 @@ public class Cache {
     /**
      * Map 'activeRequests' need to store requests which was accepted/paid for checking their relevance
      */
-    private Map<Integer, Request> activeRequests = new Hashtable<>();
+    private Map<Integer, Request> activeRequests = new ConcurrentHashMap<>();
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(Cache.class);
 
     /**
