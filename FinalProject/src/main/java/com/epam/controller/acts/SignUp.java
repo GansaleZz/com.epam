@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class SignUp implements Command {
-    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(SignUp.class);
+    private final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(SignUp.class);
 
     /**
      * User's signing up the website
@@ -34,13 +34,13 @@ public class SignUp implements Command {
                         .build();
                 try {
                     if (userDao.create(user)) {
-                        logger.info("User with login "+user.getLogin()+" was signed up");
+                        LOGGER.info("User with login "+user.getLogin()+" was signed up");
                         response.sendRedirect(link + CommandInstance.ACTSHOWSIGNUPSUCC);
                     } else {
                         response.sendRedirect(link + CommandInstance.ACTSHOWSIGNUPERROR);
                     }
                 } catch (DaoException | IOException e) {
-                    logger.error(e.getMessage());
+                    LOGGER.error(e.getMessage());
                 }
             } else {
                 response.sendRedirect(link + CommandInstance.ACTSHOWSIGNUPERROR);

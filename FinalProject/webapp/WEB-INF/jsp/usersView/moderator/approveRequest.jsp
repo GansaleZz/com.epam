@@ -63,25 +63,23 @@
     <div class="content">
         <form action="controller?command=ACTUPDATEREQUEST" method = "post">
             <div class="form-row">
-                <b>
-                    <c:out value="${bundle.getString('roomNumber')}"/>
-                </b>
                 <c:choose>
                     <c:when test="${not empty rooms}">
-                        <select name = "room">
+                        <b>
+                            <c:out value="${bundle.getString('roomNumber')}"/>
+                        </b>
+                        <select name = "roomId">
                             <c:forEach var="i" items="${rooms}">
-                                <option>
-                                        ${i.roomNumber}
-                                </option>
-                                <c:set var="rmId" value="${i.id}"/>
+                                <option value="${i.id}">${i.roomNumber}</option>
                             </c:forEach>
                         </select>
-                        <input type="hidden" value="${rmId}" name="roomId"/>
                         <input type="hidden" value="${id}" name="reqId"/>
                         <input type="submit" name="submit" value="<c:out value="${bundle.getString('approve')}"/> ">
                     </c:when>
                     <c:otherwise>
-                        <c:out value="There is no suitable rooms"/>
+                        <h1>
+                            <c:out value="${bundle.getString('noRooms')}"/>
+                        </h1>
                         <input type="hidden" value="${id}" name="reqId"/>
                         <input type="submit" name="submit" value="<c:out value="${bundle.getString('deny')}"/>">
                     </c:otherwise>

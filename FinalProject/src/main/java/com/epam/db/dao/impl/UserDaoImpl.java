@@ -23,7 +23,7 @@ import java.util.function.Predicate;
  * @author Andrey Rubin
  */
 public class UserDaoImpl implements UserDao {
-    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(UserDaoImpl.class);
+    private final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(UserDaoImpl.class);
     /**
      * Set of SQL queries
      */
@@ -55,7 +55,7 @@ public class UserDaoImpl implements UserDao {
             }
             resultSet.close();
         } catch (SQLException e) {
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         } finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connectionPool.close(connection);
@@ -79,7 +79,7 @@ public class UserDaoImpl implements UserDao {
             }
             resultSet.close();
         } catch (SQLException e) {
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         } finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connectionPool.close(connection);
@@ -124,10 +124,10 @@ public class UserDaoImpl implements UserDao {
                     preparedStatement.execute();
                     preparedStatement.close();
                     result = true;
-                    logger.info(user+" successfully created!");
+                    LOGGER.info(user+" successfully created!");
                 }
             } catch (SQLException e) {
-                logger.error(e.getMessage());
+                LOGGER.error(e.getMessage());
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
                 connectionPool.close(connection);
@@ -148,13 +148,13 @@ public class UserDaoImpl implements UserDao {
         boolean result = false;
         try {
             if (findEntityById(id).isPresent()) {
-                logger.info(findEntityById(id).get()+" successfully deleted!");
+                LOGGER.info(findEntityById(id).get()+" successfully deleted!");
                 connection.createStatement().executeUpdate(SQL_DELETE + id);
                 connection.createStatement().executeUpdate(SQL_DELETE_BALANCE+id);
                 result = true;
             }
         } catch (SQLException e) {
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         } finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connectionPool.close(connection);
@@ -193,9 +193,9 @@ public class UserDaoImpl implements UserDao {
                     preparedStatement.close();
                 }
                 userOptional = findEntityById(user.getId());
-                logger.info(user + " successfully updated!");
+                LOGGER.info(user + " successfully updated!");
             } catch (SQLException e) {
-                logger.error(e.getMessage());
+                LOGGER.error(e.getMessage());
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
                 connectionPool.close(connection);
@@ -264,7 +264,7 @@ public class UserDaoImpl implements UserDao {
             }
             resultSet.close();
         } catch (SQLException e) {
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         } finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connectionPool.close(connection);
@@ -338,7 +338,7 @@ public class UserDaoImpl implements UserDao {
                 }
             }
         }catch(SQLException e){
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
         return user;
     }

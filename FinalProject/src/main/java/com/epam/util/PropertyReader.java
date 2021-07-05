@@ -8,7 +8,7 @@ import java.util.Properties;
 
 public class PropertyReader {
     private static final Properties properties = new Properties();
-    private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(PropertyReader.class);
+    private static final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(PropertyReader.class);
     private static PropertyReader instance = null;
 
     public static Properties getProperties() {
@@ -28,16 +28,16 @@ public class PropertyReader {
         try{
             inputStream = new FileInputStream(propertiesFileName);
             properties.load(inputStream);
-            logger.info("Info from "+propertiesFileName+" were completely read");
+            LOGGER.info("Info from "+propertiesFileName+" were completely read");
         }catch (IOException e){
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         } finally {
             try{
                 if(inputStream != null){
                     inputStream.close();
                 }
             }catch(IOException e){
-                logger.error(e.getMessage());
+                LOGGER.error(e.getMessage());
             }
         }
     }

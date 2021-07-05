@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class ShowRequests implements Command {
-    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ShowRequests.class);
+    private final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(ShowRequests.class);
 
     /**
      * Forwarding user on 'requests' page. For clients setting only their own requests, for moderators/admins -
@@ -64,7 +64,7 @@ public class ShowRequests implements Command {
                 }
             }
         } catch (ServletException | DaoException e) {
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
     }
 }

@@ -25,7 +25,7 @@ import java.util.function.Predicate;
  * @author Andrey Rubin
  */
 public class RequestDaoImpl implements RequestDao {
-    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(RequestDaoImpl.class);
+    private final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(RequestDaoImpl.class);
     /**
      * Set of SQL queries
      */
@@ -55,7 +55,7 @@ public class RequestDaoImpl implements RequestDao {
             }
             resultSet.close();
         } catch (SQLException e) {
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         } finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connectionPool.close(connection);
@@ -79,7 +79,7 @@ public class RequestDaoImpl implements RequestDao {
             }
             resultSet.close();
         } catch (SQLException e) {
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         } finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connectionPool.close(connection);
@@ -109,9 +109,9 @@ public class RequestDaoImpl implements RequestDao {
                 }
                 prepStmnt(request, preparedStatement);
                 result = true;
-                logger.info(request + " successfully created!");
+                LOGGER.info(request + " successfully created!");
             } catch (SQLException e) {
-                logger.error(e.getMessage());
+                LOGGER.error(e.getMessage());
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
                 connectionPool.close(connection);
@@ -132,12 +132,12 @@ public class RequestDaoImpl implements RequestDao {
         boolean result = false;
         try {
             if (findEntityById(id).isPresent()) {
-                logger.info(findEntityById(id) + " successfully deleted!");
+                LOGGER.info(findEntityById(id) + " successfully deleted!");
                 connection.createStatement().executeUpdate(SQL_DELETE + id);
                 result = true;
             }
         } catch (SQLException e) {
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         } finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connectionPool.close(connection);
@@ -175,9 +175,9 @@ public class RequestDaoImpl implements RequestDao {
                 }
                 prepStmnt(request, preparedStatement);
                 requestOptional = findEntityById(request.getId());
-                logger.info(request + " successfully updated!");
+                LOGGER.info(request + " successfully updated!");
             } catch (SQLException e) {
-                logger.error(e.getMessage());
+                LOGGER.error(e.getMessage());
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
                 connectionPool.close(connection);
@@ -276,7 +276,7 @@ public class RequestDaoImpl implements RequestDao {
                 }
             }
         }catch(SQLException e){
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
         return request;
     }

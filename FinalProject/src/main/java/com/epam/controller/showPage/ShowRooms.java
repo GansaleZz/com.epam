@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShowRooms implements Command {
-    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ShowRooms.class);
+    private final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(ShowRooms.class);
 
     /**
      * Forwarding user on 'rooms' page
@@ -37,7 +37,7 @@ public class ShowRooms implements Command {
                 case ADMIN -> request.getServletContext().getRequestDispatcher(ServletDestination.ADMINROOMSPAGE.getPath()).forward(request, response);
             }
         } catch (ServletException e) {
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
     }
 }

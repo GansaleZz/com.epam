@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class ShowProfile implements Command {
-    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ShowProfile.class);
+    private final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(ShowProfile.class);
 
     /**
      * Forwarding user on 'profile' page
@@ -36,7 +36,7 @@ public class ShowProfile implements Command {
                 case CLIENT -> request.getServletContext().getRequestDispatcher(ServletDestination.CLIENTPROFILEPAGE.getPath()).forward(request, response);
             }
         } catch (DaoException | ServletException e) {
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
     }
 }

@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class UpdateRequest implements Command {
-    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(UpdateRequest.class);
+    private final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(UpdateRequest.class);
 
     /**
      * Realisation of updating request's information depending on button which user clicked.
@@ -36,7 +36,7 @@ public class UpdateRequest implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(UserRole.getRole((String) request.getSession().getAttribute("userRole")).equals(UserRole.CLIENT)){
             response.sendRedirect(link + CommandInstance.ACTSHOWHOME);
-            logger.warn("Client with login "+request.getSession().getAttribute("login")+" tried to got access to the page 'Update request'");
+            LOGGER.warn("Client with login "+request.getSession().getAttribute("login")+" tried to got access to the page 'Update request'");
         }else {
             ResourceBundle bundle = ResourceBundle.getBundle("language_"+request.getSession().getAttribute("locale"));
             if (new String(request.getParameter("submit").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8).equals(bundle.getString("deny"))) {
@@ -44,11 +44,11 @@ public class UpdateRequest implements Command {
                 try {
                     Request req = requestDao.findEntityById(Integer.valueOf(request.getParameter("id"))).get();
                     req.setRequestStatus(RequestStatus.DENIED);
-                    logger.info("User with login " + request.getSession().getAttribute("login")+" denied request of user with login "+req.getUser().getLogin());
+                    LOGGER.info("User with login " + request.getSession().getAttribute("login")+" denied request of user with login "+req.getUser().getLogin());
                     requestDao.update(req);
                     response.sendRedirect(link + CommandInstance.ACTSHOWREQUESTS);
                 } catch (DaoException e) {
-                    logger.error(e.getMessage());
+                    LOGGER.error(e.getMessage());
                 }
             }else{
                 if(new String(request.getParameter("submit").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8).equals(bundle.getString("approve"))) {
@@ -74,7 +74,7 @@ public class UpdateRequest implements Command {
                             case ADMIN -> request.getServletContext().getRequestDispatcher(ServletDestination.ADMINAPPROVEREQUESTPAGE.getPath()).forward(request, response);
                         }
                     } catch (ServletException | DaoException e) {
-                        logger.error(e.getMessage());
+                        LOGGER.error(e.getMessage());
                     }
                 }else{
                     try{
@@ -84,12 +84,12 @@ public class UpdateRequest implements Command {
                         Request req = requestDao.findEntityById(Integer.valueOf(request.getParameter("reqId"))).get();
                         req.setRequestStatus(RequestStatus.ACCEPTED);
                         req.setRoom(roomDao.findEntityById(Integer.valueOf(request.getParameter("roomId"))).get());
-                        logger.info("User with login " + request.getSession().getAttribute("login")+" accepted request of user with login "+req.getUser().getLogin());
+                        LOGGER.info("User with login " + request.getSession().getAttribute("login")+" accepted request of user with login "+req.getUser().getLogin());
                         cache.addRequest(req);
                         requestDao.update(req);
                         response.sendRedirect(link + CommandInstance.ACTSHOWREQUESTS);
                     } catch (DaoException e) {
-                        logger.error(e.getMessage());
+                        LOGGER.error(e.getMessage());
                     }
                 }
             }

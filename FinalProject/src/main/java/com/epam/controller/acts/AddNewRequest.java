@@ -21,7 +21,7 @@ import java.util.Date;
 
 
 public class AddNewRequest implements Command {
-    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(AddNewRequest.class);
+    private final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(AddNewRequest.class);
 
     /**
      * Realisation of adding new request on db through taking
@@ -31,7 +31,7 @@ public class AddNewRequest implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(!request.getSession().getAttribute("userRole").equals("CLIENT")){
-            logger.warn("Client with login " + request.getSession().getAttribute("login")+" tried to got access to the page 'Add new request'");
+            LOGGER.warn("Client with login " + request.getSession().getAttribute("login")+" tried to got access to the page 'Add new request'");
             response.sendRedirect(link+ CommandInstance.ACTSHOWHOME);
         }else {
             RequestDaoImpl requestDao = new RequestDaoImpl();
@@ -54,9 +54,9 @@ public class AddNewRequest implements Command {
                         .withNumberOfSeats(Integer.parseInt(request.getParameter("numberOfSeats")))
                         .build();
                 requestDao.create(newRequest);
-                logger.info(newRequest + " was created by user with login "+request.getSession().getAttribute("login"));
+                LOGGER.info(newRequest + " was created by user with login "+request.getSession().getAttribute("login"));
             } catch (ParseException | DaoException e) {
-                logger.error(e.getMessage());
+                LOGGER.error(e.getMessage());
             }
             response.sendRedirect(link + CommandInstance.ACTSHOWREQUESTS);
         }

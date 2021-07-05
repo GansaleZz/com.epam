@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShowUsers implements Command {
-    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ShowUsers.class);
+    private final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(ShowUsers.class);
 
     /**
      * Forwarding admin/moderator on 'users' page. Admin has opportunity to change user's role/status,
@@ -25,7 +25,7 @@ public class ShowUsers implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(request.getSession().getAttribute("userRole").equals("CLIENT")){
             response.sendRedirect(link + CommandInstance.ACTSHOWHOME);
-            logger.warn("Client with login "+request.getSession().getAttribute("login")+" tried to got access to the page 'Show users'");
+            LOGGER.warn("Client with login "+request.getSession().getAttribute("login")+" tried to got access to the page 'Show users'");
         }else {
             UserDaoImpl userDao = new UserDaoImpl();
             List<User> list = new ArrayList<>();
@@ -42,7 +42,7 @@ public class ShowUsers implements Command {
                     request.getServletContext().getRequestDispatcher(ServletDestination.MODERATORUSERSPAGE.getPath()).forward(request, response);
                 }
             } catch (ServletException e) {
-                logger.error(e.getMessage());
+                LOGGER.error(e.getMessage());
             }
         }
     }

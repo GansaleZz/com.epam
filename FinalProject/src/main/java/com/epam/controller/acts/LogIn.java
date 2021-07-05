@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.ResourceBundle;
 
 public class LogIn implements Command {
-    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(LogIn.class);
+    private final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(LogIn.class);
 
     /**
      * User's logging in the website
@@ -31,7 +31,7 @@ public class LogIn implements Command {
                 if (userDao.findUserByCriteria(criteria).isPresent() && userDao.findUserByCriteria(criteria).get().getPassword().equals(pass)) {
                     User user = userDao.findUserByCriteria(criteria).get();
                     if(user.getStatus().equals(UserStatus.BANNED)){
-                        logger.warn("Banned user with login" + user.getLogin()+" trying to sign in");
+                        LOGGER.warn("Banned user with login" + user.getLogin()+" trying to sign in");
                         response.sendRedirect(link + CommandInstance.ACTSHOWBAN);
                     }else {
                         HttpSession session = request.getSession();
@@ -45,20 +45,20 @@ public class LogIn implements Command {
                         session.setAttribute("id",user.getId());
                         session.setAttribute("locale","en");
                         session.setAttribute("bundle",bundle);
-                        logger.info("User with login " + user.getLogin()+" signed in");
+                        LOGGER.info("User with login " + user.getLogin()+" signed in");
                         response.sendRedirect(link + CommandInstance.ACTSHOWHOME);
                     }
                 } else {
                     response.sendRedirect(link + CommandInstance.ACTSHOWLOGINERROR);
                 }
             } catch (DaoException | IOException e) {
-                logger.error(e.getMessage());
+                LOGGER.error(e.getMessage());
             }
         }else{
             try {
                 response.sendRedirect(link + CommandInstance.ACTSHOWLOGINERROR);
             }catch (IOException e) {
-                logger.error(e.getMessage());
+                LOGGER.error(e.getMessage());
             }
         }
     }

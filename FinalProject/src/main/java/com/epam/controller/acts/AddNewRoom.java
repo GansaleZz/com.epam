@@ -15,7 +15,7 @@ import java.io.IOException;
 
 
 public class AddNewRoom implements Command {
-    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(AddNewRoom.class);
+    private final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(AddNewRoom.class);
 
     /**
      * Realisation of adding new room on db through taking
@@ -25,7 +25,7 @@ public class AddNewRoom implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(request.getSession().getAttribute("userRole").equals("CLIENT")){
             response.sendRedirect(link + CommandInstance.ACTSHOWHOME);
-            logger.warn("Client with login "+request.getSession().getAttribute("login")+" tried to got access to the page 'Add new room'");
+            LOGGER.warn("Client with login "+request.getSession().getAttribute("login")+" tried to got access to the page 'Add new room'");
         }else {
             if (request.getParameter("price").trim().length() != 0 || request.getSession().getAttribute("userRole").equals("CLIENT")) {
                 RoomDaoImpl roomDao = new RoomDaoImpl();
@@ -37,11 +37,11 @@ public class AddNewRoom implements Command {
                         .withNumberOfSeats(Integer.parseInt(request.getParameter("numberOfSeats")))
                         .withRoomNumber(Integer.parseInt(request.getParameter("roomNumber")))
                         .build();
-                logger.info(room + " was created by user with login "+request.getSession().getAttribute("login"));
+                LOGGER.info(room + " was created by user with login "+request.getSession().getAttribute("login"));
                 try {
                     roomDao.create(room);
                 } catch (DaoException e) {
-                    logger.error(e.getMessage());
+                    LOGGER.error(e.getMessage());
                 }
             }
             response.sendRedirect(link + CommandInstance.ACTSHOWROOMS);

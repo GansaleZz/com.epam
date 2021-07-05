@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class ShowLogInError implements Command {
-    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ShowLogInError.class);
+    private final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(ShowLogInError.class);
 
     /**
      * Forwarding user on 'log in error' page, if he entered wrong information
@@ -19,7 +19,7 @@ public class ShowLogInError implements Command {
         try {
             request.getServletContext().getRequestDispatcher(ServletDestination.LOGINERROR.getPath()).forward(request,response);
         } catch (ServletException e) {
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
     }
 }

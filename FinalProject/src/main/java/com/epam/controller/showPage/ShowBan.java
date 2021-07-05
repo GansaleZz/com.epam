@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class ShowBan implements Command {
-    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ShowBan.class);
+    private final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(ShowBan.class);
 
     /**
      * Forwarding user that was banned on 'ban' page
@@ -19,7 +19,7 @@ public class ShowBan implements Command {
         try {
             request.getServletContext().getRequestDispatcher(ServletDestination.BANPAGE.getPath()).forward(request,response);
         } catch (ServletException e) {
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
     }
 }

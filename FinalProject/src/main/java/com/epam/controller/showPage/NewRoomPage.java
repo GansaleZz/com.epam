@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class NewRoomPage implements Command {
-    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(NewRoomPage.class);
+    private final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(NewRoomPage.class);
 
     /**
      * Forwarding admin/client on 'New room' page
@@ -20,7 +20,7 @@ public class NewRoomPage implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(request.getSession().getAttribute("userRole").equals("CLIENT")){
             response.sendRedirect(link + CommandInstance.ACTSHOWHOME);
-            logger.warn("Client with login "+request.getSession().getAttribute("login")+" tried to got access to the page 'New room'");
+            LOGGER.warn("Client with login "+request.getSession().getAttribute("login")+" tried to got access to the page 'New room'");
         }else{
             try {
                 switch (UserRole.getRole((String) request.getSession().getAttribute("userRole"))) {
@@ -28,7 +28,7 @@ public class NewRoomPage implements Command {
                     case MODERATOR -> request.getServletContext().getRequestDispatcher(ServletDestination.MODERATORNEWROOMPAGE.getPath()).forward(request, response);
                 }
             }catch (ServletException e) {
-                logger.error(e.getMessage());
+                LOGGER.error(e.getMessage());
             }
         }
     }

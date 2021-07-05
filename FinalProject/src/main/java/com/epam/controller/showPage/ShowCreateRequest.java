@@ -16,7 +16,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class ShowCreateRequest implements Command {
-    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ShowCreateRequest.class);
+    private final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(ShowCreateRequest.class);
 
     /**
      * Method which use to show page of creating request.
@@ -27,7 +27,7 @@ public class ShowCreateRequest implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(!request.getSession().getAttribute("userRole").equals("CLIENT")){
             response.sendRedirect(link + CommandInstance.ACTSHOWHOME);
-            logger.warn("User with login "+request.getSession().getAttribute("login")+" tried to got access to the page 'Create request'");
+            LOGGER.warn("User with login "+request.getSession().getAttribute("login")+" tried to got access to the page 'Create request'");
         }else {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             Calendar calendar = Calendar.getInstance();
@@ -44,7 +44,7 @@ public class ShowCreateRequest implements Command {
                 request.setAttribute("requestsCount",requestsCount);
                 request.getServletContext().getRequestDispatcher(ServletDestination.CLIENTNEWREQUESTPAGE.getPath()).forward(request, response);
             } catch (ServletException | DaoException e) {
-                logger.error(e.getMessage());
+                LOGGER.error(e.getMessage());
             }
         }
     }

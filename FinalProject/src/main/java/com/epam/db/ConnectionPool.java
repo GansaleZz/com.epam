@@ -13,7 +13,7 @@ import java.util.concurrent.LinkedBlockingDeque;
  * Realization of working with connections
  */
 public final class ConnectionPool {
-    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ConnectionPool.class);
+    private final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(ConnectionPool.class);
     private BlockingDeque<Connection> availableConnectionList = new LinkedBlockingDeque<>();
     private List<Connection> engagedConnectionList = new LinkedList<>();
     /**
@@ -38,7 +38,7 @@ public final class ConnectionPool {
                 Connection connection = DriverManager.getConnection(property.getURL()+property.getSCHEME(), property.getUSER(), property.getPASSWORD());
                 availableConnectionList.put(connection);
             } catch (SQLException | InterruptedException e) {
-                logger.error(e.getMessage());
+                LOGGER.error(e.getMessage());
             }
         }
     }
@@ -60,11 +60,11 @@ public final class ConnectionPool {
                         Thread.sleep(500);
                     }
                 }else{
-                    logger.info("Connection received!");
+                    LOGGER.info("Connection received!");
                     addConnection();
                 }
             } catch (InterruptedException e) {
-                logger.error(e.getMessage());
+                LOGGER.error(e.getMessage());
             }
         }
         pool = availableConnectionList.poll();
@@ -84,7 +84,7 @@ public final class ConnectionPool {
      * All connections will be removed from the list of engaged connections and added to queue
      */
     public void closeAllConnections(){
-        logger.info("All connections closed!");
+        LOGGER.info("All connections closed!");
         engagedConnectionList.stream()
                 .forEach(i -> {
                     availableConnectionList.add(i);
@@ -105,9 +105,9 @@ public final class ConnectionPool {
                 Connection connection = new ConnectionProxy(DriverManager.getConnection(property.getURL()+property.getSCHEME(), property.getUSER(), property.getPASSWORD()));
                 availableConnectionList.add(connection);
             }
-            logger.info("Connection pool successfully inited!");
+            LOGGER.info("Connection pool successfully inited!");
         }catch(SQLException e){
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
     }
 

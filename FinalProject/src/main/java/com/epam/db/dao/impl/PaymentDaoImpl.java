@@ -23,7 +23,7 @@ import java.util.function.Predicate;
  * @author Andrey Rubin
  */
 public class PaymentDaoImpl implements PaymentDao {
-    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(PaymentDaoImpl.class);
+    private final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(PaymentDaoImpl.class);
     /**
      * Set of SQL queries
      */
@@ -50,7 +50,7 @@ public class PaymentDaoImpl implements PaymentDao {
             }
             resultSet.close();
         } catch (SQLException e) {
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         } finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connectionPool.close(connection);
@@ -75,7 +75,7 @@ public class PaymentDaoImpl implements PaymentDao {
             }
             resultSet.close();
         } catch (SQLException e) {
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         } finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connectionPool.close(connection);
@@ -103,9 +103,9 @@ public class PaymentDaoImpl implements PaymentDao {
                 preparedStatement.execute();
                 preparedStatement.close();
                 result = true;
-                logger.info(payment + " successfully created!");
+                LOGGER.info(payment + " successfully created!");
             } catch (SQLException e) {
-                logger.error(e.getMessage());
+                LOGGER.error(e.getMessage());
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
                 connectionPool.close(connection);
@@ -126,12 +126,12 @@ public class PaymentDaoImpl implements PaymentDao {
         boolean result = false;
         try {
             if (findEntityById(id).isPresent()) {
-                logger.info(findEntityById(id).get() + " successfully deleted!");
+                LOGGER.info(findEntityById(id).get() + " successfully deleted!");
                 connection.createStatement().executeUpdate(SQL_DELETE + id);
                 result = true;
             }
         } catch (SQLException e) {
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         } finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connectionPool.close(connection);
@@ -158,9 +158,9 @@ public class PaymentDaoImpl implements PaymentDao {
                 preparedStatement.execute();
                 preparedStatement.close();
                 paymentOptional = findEntityById(payment.getId());
-                logger.info(payment + " successfully updated!");
+                LOGGER.info(payment + " successfully updated!");
             } catch (SQLException e) {
-                logger.error(e.getMessage());
+                LOGGER.error(e.getMessage());
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
                 connectionPool.close(connection);
@@ -236,7 +236,7 @@ public class PaymentDaoImpl implements PaymentDao {
                 .build());
             }
         }catch(SQLException e){
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
         return payment;
     }

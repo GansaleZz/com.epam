@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.ResourceBundle;
 
 public class UpdateProfile implements Command {
-    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(UpdateProfile.class);
+    private final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(UpdateProfile.class);
 
     /**
      * Realisation of changing information of user by changing it on profile
@@ -30,7 +30,7 @@ public class UpdateProfile implements Command {
             userDao.update(user);
             response.sendRedirect(link + CommandInstance.ACTSHOWPROFILE);
         } catch (DaoException e) {
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
     }
 }

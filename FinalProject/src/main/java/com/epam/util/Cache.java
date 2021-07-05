@@ -9,7 +9,6 @@ import com.epam.exceptions.DaoException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -25,23 +24,7 @@ public class Cache {
      * Map 'activeRequests' need to store requests which was accepted/paid for checking their relevance
      */
     private Map<Integer, Request> activeRequests = new ConcurrentHashMap<>();
-    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(Cache.class);
-
-    /**
-     * Initialization of map
-     */
-    private Cache(){
-        RequestDaoImpl requestDao = new RequestDaoImpl();
-        Calendar calendar = Calendar.getInstance();
-        try {
-            requestDao.findAllEntities().stream()
-                    .filter(i -> i.getRequestStatus().equals(RequestStatus.ACCEPTED) ||
-                            (i.getRequestStatus().equals(RequestStatus.PAID) && i.getEnd().after(calendar.getTime())))
-                    .forEach(i -> addRequest(i));
-        } catch (DaoException e) {
-            logger.error(e.getMessage());
-        }
-    }
+    private final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(Cache.class);
 
     public static Cache getInstance(){
         if(instance == null){
@@ -92,12 +75,12 @@ public class Cache {
                                 j.setRequestStatus(RequestStatus.DENIED);
                                 requestDao.update(j);
                             } catch (DaoException e) {
-                                logger.error(e.getMessage());
+                                LOGGER.error(e.getMessage());
                             }
                         }
                     });
         } catch (DaoException e) {
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
     }
 
@@ -144,5 +127,21 @@ public class Cache {
             }
         }
         return bool;
+    }
+
+    /**
+     * Initialization of map
+     */
+    private Cache(){
+        RequestDaoImpl requestDao = new RequestDaoImpl();
+        Calendar calendar = Calendar.getInstance();
+        try {
+            requestDao.findAllEntities().stream()
+                    .filter(i -> i.getRequestStatus().equals(RequestStatus.ACCEPTED) ||
+                            (i.getRequestStatus().equals(RequestStatus.PAID) && i.getEnd().after(calendar.getTime())))
+                    .forEach(i -> addRequest(i));
+        } catch (DaoException e) {
+            LOGGER.error(e.getMessage());
+        }
     }
 }

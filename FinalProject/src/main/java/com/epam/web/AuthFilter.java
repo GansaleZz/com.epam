@@ -13,7 +13,7 @@ import java.io.IOException;
 
 @WebFilter("/*")
 public class AuthFilter implements Filter {
-    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(AuthFilter.class);
+    private final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(AuthFilter.class);
 
     /**
      * Filter that checks user for logged in when he try to get access
@@ -44,7 +44,7 @@ public class AuthFilter implements Filter {
             }
         }catch(ServletException e){
             httpServletResponse.sendRedirect("http://localhost:8080/controller?command=ACTSHOWERROR");
-            logger.debug(e.getMessage());
+            LOGGER.debug(e.getMessage());
         }
     }
 }

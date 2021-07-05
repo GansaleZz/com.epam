@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class ShowHome implements Command {
-    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ShowHome.class);
+    private final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(ShowHome.class);
 
     /**
      * Forwarding user on 'home' page
@@ -25,7 +25,7 @@ public class ShowHome implements Command {
                 case CLIENT -> request.getServletContext().getRequestDispatcher(ServletDestination.CLIENTHOMEPAGE.getPath()).forward(request, response);
             }
         }catch (ServletException e) {
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
     }
 }

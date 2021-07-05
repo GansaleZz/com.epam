@@ -24,7 +24,7 @@ import java.util.function.Predicate;
  * @author Andrey Rubin
  */
 public class RoomDaoImpl implements RoomDao {
-    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(RoomDaoImpl.class);
+    private final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(RoomDaoImpl.class);
     /**
      * Set of SQL queries
      */
@@ -51,7 +51,7 @@ public class RoomDaoImpl implements RoomDao {
             }
             resultSet.close();
         } catch (SQLException e) {
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         } finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connectionPool.close(connection);
@@ -75,7 +75,7 @@ public class RoomDaoImpl implements RoomDao {
             }
             resultSet.close();
         } catch (SQLException e) {
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         } finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connectionPool.close(connection);
@@ -104,9 +104,9 @@ public class RoomDaoImpl implements RoomDao {
                 preparedStatement.execute();
                 preparedStatement.close();
                 result = true;
-                logger.info(room + " successfully created!");
+                LOGGER.info(room + " successfully created!");
             } catch (SQLException e) {
-                logger.error(e.getMessage());
+                LOGGER.error(e.getMessage());
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
                 connectionPool.close(connection);
@@ -127,12 +127,12 @@ public class RoomDaoImpl implements RoomDao {
         boolean result = false;
         try {
             if (findEntityById(id).isPresent()) {
-                logger.info(findEntityById(id).get() + " successfully deleted");
+                LOGGER.info(findEntityById(id).get() + " successfully deleted");
                 connection.createStatement().executeUpdate(SQL_DELETE + id);
                 result = true;
             }
         } catch (SQLException e) {
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         } finally {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connectionPool.close(connection);
@@ -161,9 +161,9 @@ public class RoomDaoImpl implements RoomDao {
                 preparedStatement.execute();
                 preparedStatement.close();
                 roomOptional = findEntityById(room.getId());
-                logger.info(room + " successfully updated!");
+                LOGGER.info(room + " successfully updated!");
             } catch (SQLException e) {
-                logger.error(e.getMessage());
+                LOGGER.error(e.getMessage());
             } finally {
                 ConnectionPool connectionPool = ConnectionPool.getInstance();
                 connectionPool.close(connection);
@@ -245,7 +245,7 @@ public class RoomDaoImpl implements RoomDao {
                 .build());
             }
         }catch(SQLException e){
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
         return room;
     }

@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class ShowAuth implements Command {
-    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ShowAuth.class);
+    private final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(ShowAuth.class);
 
     /**
      * Forwarding user on 'authentication' page
@@ -19,7 +19,7 @@ public class ShowAuth implements Command {
         try {
             request.getServletContext().getRequestDispatcher(ServletDestination.AUTHPAGE.getPath()).forward(request,response);
         } catch (ServletException e) {
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
     }
 }
