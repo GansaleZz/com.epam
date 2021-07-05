@@ -1,9 +1,10 @@
 package com.epam.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-public class Request extends BaseEntity {
+public class Request extends BaseEntity implements Serializable {
     private int numberOfSeats;
     private Date start;
     private Date end;

@@ -20,16 +20,6 @@ public final class Property {
     private final int MAXPOOLSIZE;
     private static Property instance = null;
 
-    private Property(){
-        Properties properties = PropertyReader.getProperties();
-        URL = properties.getProperty("db.url");
-        SCHEME =  properties.getProperty("db.scheme");
-        PASSWORD = properties.getProperty("db.password");
-        USER = properties.getProperty("db.user");
-        INITPOOLSIZE = Integer.valueOf(properties.getProperty("db.initpoolsize"));
-        MAXPOOLSIZE = Integer.valueOf(properties.getProperty("db.maxpoolsize"));
-    }
-
     public static Property getInstance(){
         if(instance == null){
             instance = new Property();
@@ -71,5 +61,15 @@ public final class Property {
                 ", INITPOOLSIZE=" + INITPOOLSIZE +
                 ", MAXPOOLSIZE=" + MAXPOOLSIZE +
                 '}';
+    }
+
+    private Property(){
+        Properties properties = PropertyReader.getProperties();
+        URL = properties.getProperty("db.url");
+        SCHEME =  properties.getProperty("db.scheme");
+        PASSWORD = properties.getProperty("db.password");
+        USER = properties.getProperty("db.user");
+        INITPOOLSIZE = Integer.valueOf(properties.getProperty("db.initpoolsize"));
+        MAXPOOLSIZE = Integer.valueOf(properties.getProperty("db.maxpoolsize"));
     }
 }

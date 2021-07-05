@@ -1,8 +1,9 @@
 package com.epam.entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Room extends BaseEntity {
+public class Room extends BaseEntity implements Serializable {
     private RoomClass roomClass;
     private RoomStatus roomStatus;
     private int price;
