@@ -61,7 +61,7 @@ public class LogedInFilter implements Filter {
             }
         }catch(Exception e){
             httpServletResponse.sendRedirect("http://localhost:8080/controller?command=ACTSHOWERROR");
-            logger.error(e.getMessage());
+            logger.debug(e.getMessage());
         }
     }
 }
