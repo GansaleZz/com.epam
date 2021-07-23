@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class RealiseDeposite implements Command {
-    private final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(RealiseDeposite.class);
+public class RealiseDeposit implements Command {
+    private final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(RealiseDeposit.class);
 
 
     /**
@@ -20,7 +20,7 @@ public class RealiseDeposite implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(!request.getSession().getAttribute("userRole").equals("CLIENT")){
-            response.sendRedirect(link + CommandInstance.ACTSHOWHOME);
+            response.sendRedirect(link + CommandInstance.ACT_SHOW_HOME);
             LOGGER.warn("User with login "+request.getSession().getAttribute("login")+" tried to got access to the page 'Realise deposit'");
         }else{
             try {
@@ -34,7 +34,7 @@ public class RealiseDeposite implements Command {
             } catch (DaoException e) {
                 LOGGER.error(e.getMessage());
             }finally {
-                response.sendRedirect(link + CommandInstance.ACTSHOWPROFILE);
+                response.sendRedirect(link + CommandInstance.ACT_SHOW_PROFILE);
             }
         }
     }

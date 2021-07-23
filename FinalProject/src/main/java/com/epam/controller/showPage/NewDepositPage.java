@@ -20,7 +20,7 @@ public class NewDepositPage implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(!request.getSession().getAttribute("userRole").equals("CLIENT")){
             LOGGER.warn("User with login "+request.getSession().getAttribute("login")+" tried to got access to the page 'New deposit'");
-            response.sendRedirect(link + CommandInstance.ACTSHOWHOME);
+            response.sendRedirect(link + CommandInstance.ACT_SHOW_HOME);
         }else{
             try {
                 request.getServletContext().getRequestDispatcher(ServletDestination.CLIENTNEWDEPOSITPAGE.getPath()).forward(request, response);

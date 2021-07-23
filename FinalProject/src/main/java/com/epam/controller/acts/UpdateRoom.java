@@ -25,7 +25,7 @@ public class UpdateRoom implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if (UserRole.getRole((String) request.getSession().getAttribute("userRole")).equals(UserRole.CLIENT)) {
-            response.sendRedirect(link + CommandInstance.ACTSHOWHOME);
+            response.sendRedirect(link + CommandInstance.ACT_SHOW_HOME);
             LOGGER.warn("Client with login " + request.getSession().getAttribute("login") + " tried to got access to the page 'Update room'");
         } else {
             RoomDaoImpl roomDao = new RoomDaoImpl();
@@ -45,7 +45,7 @@ public class UpdateRoom implements Command {
                     LOGGER.info("User with login "+request.getSession().getAttribute("login") + " updated room from "+oldRoom + " to "+room );
                     roomDao.update(room);
                 }
-                response.sendRedirect(link + CommandInstance.ACTSHOWROOMS);
+                response.sendRedirect(link + CommandInstance.ACT_SHOW_ROOMS);
             } catch (DaoException e) {
                 LOGGER.error(e.getMessage());
             }

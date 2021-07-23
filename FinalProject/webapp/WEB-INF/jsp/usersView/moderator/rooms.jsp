@@ -23,37 +23,37 @@
     <nav class="one">
         <ul>
             <li>
-                <a href="http://localhost:8080/controller?command=ACTSHOWHOME">
+                <a href="http://localhost:8080/controller?command=ACT_SHOW_HOME">
                     <i class="fa fa-home fa-fw" aria-hidden="true"></i>
                     <c:out value="${bundle.getString('home')}"/>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:8080/controller?command=ACTSHOWROOMS">
+                <a href="http://localhost:8080/controller?command=ACT_SHOW_ROOMS">
                     <i class="fa fa-shower" aria-hidden="true"></i>
                     <c:out value="${bundle.getString('rooms')}"/>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:8080/controller?command=ACTSHOWPROFILE" >
+                <a href="http://localhost:8080/controller?command=ACT_SHOW_PROFILE" >
                     <i class="fa fa-user-circle" aria-hidden="true"></i>
                     <c:out value="${bundle.getString('profile')}"/>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:8080/controller?command=ACTSHOWREQUESTS">
+                <a href="http://localhost:8080/controller?command=ACT_SHOW_REQUESTS">
                     <i class="fa fa-book" aria-hidden="true"></i>
                     <c:out value="${bundle.getString('requests')}"/>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:8080/controller?command=ACTSHOWUSERS">
+                <a href="http://localhost:8080/controller?command=ACT_SHOW_USERS">
                     <i class="fa fa-users" aria-hidden="true"></i>
                     <c:out value="${bundle.getString('users')}"/>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:8080/controller?command=ACTLOGOUT">
+                <a href="http://localhost:8080/controller?command=ACT_LOGOUT">
                     <i class="fa fa-sign-out-alt" aria-hidden="true"></i>
                     <c:out value="${bundle.getString('logOut')}"/>
                 </a>
@@ -103,7 +103,7 @@
                 </tr>
                 <c:forEach var="room" items="${list}">
                     <tr>
-                        <form action="controller?command=ACTUPDATEROOM" method = "post">
+                        <form action="controller?command=ACT_UPDATE_ROOM" method = "post">
                             <input type = "hidden" name = "id" value="${room.id}" >
                             <td>
                                 <input type = "number" name = "roomNumber" value="${room.roomNumber}" min="1">
@@ -311,7 +311,7 @@
                 </c:forEach>
             </table>
         </div>
-        <a href="http://localhost:8080/controller?command=ACTNEWROOMPAGE" class = "s2"><c:out value="${bundle.getString('addNewRoom')}"/></a>
+        <a href="http://localhost:8080/controller?command=ACT_NEW_ROOM_PAGE" class = "s2"><c:out value="${bundle.getString('addNewRoom')}"/></a>
     </div>
     <footer class="footer">
         <img src="<c:url value="/resources/images/image1.png"/>" alt="image">

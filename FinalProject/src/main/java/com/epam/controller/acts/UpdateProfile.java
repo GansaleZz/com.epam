@@ -28,7 +28,7 @@ public class UpdateProfile implements Command {
             user.setName(request.getParameter("name"));
             user.setEmail(request.getParameter("email"));
             userDao.update(user);
-            response.sendRedirect(link + CommandInstance.ACTSHOWPROFILE);
+            response.sendRedirect(link + CommandInstance.ACT_SHOW_PROFILE);
         } catch (DaoException e) {
             LOGGER.error(e.getMessage());
         }

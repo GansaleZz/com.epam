@@ -15,7 +15,7 @@
 </head>
 <body>
   <h1>You were successfully signed up! Now you can sign in</h1>
-  <a href="http://localhost:8080/controller?command=ACTSHOWLOGIN" class="s2">Log In</a>
-  <a href="http://localhost:8080/controller?command=ACTSHOWAUTH" class="s2">Back</a>
+  <a href="http://localhost:8080/controller?command=ACT_SHOW_LOGIN" class="s2">Log In</a>
+  <a href="http://localhost:8080/controller?command=ACT_SHOW_AUTH" class="s2">Back</a>
 </body>
 </html>

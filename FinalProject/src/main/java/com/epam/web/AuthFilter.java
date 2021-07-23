@@ -37,13 +37,13 @@ public class AuthFilter implements Filter {
                 return;
             } else {
                 if (!loggedIn && !badRequestLogged) {
-                    httpServletResponse.sendRedirect("http://localhost:8080/controller?command=ACTSHOWAUTH");
+                    httpServletResponse.sendRedirect("http://localhost:8080/controller?command=ACT_SHOW_AUTH");
                 } else {
                     chain.doFilter(request, response);
                 }
             }
         }catch(ServletException e){
-            httpServletResponse.sendRedirect("http://localhost:8080/controller?command=ACTSHOWERROR");
+            httpServletResponse.sendRedirect("http://localhost:8080/controller?command=ACT_SHOW_ERROR");
             LOGGER.debug(e.getMessage());
         }
     }

@@ -17,6 +17,6 @@ public class LogOut implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         LOGGER.info("User with login " + request.getParameter("login") + "log out");
         request.getSession().invalidate();
-        response.sendRedirect(link + CommandInstance.ACTSHOWAUTH);
+        response.sendRedirect(link + CommandInstance.ACT_SHOW_AUTH);
     }
 }

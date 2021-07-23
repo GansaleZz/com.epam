@@ -54,13 +54,13 @@ public class LogedInFilter implements Filter {
                     }
                 }
                 if (loggedIn && badRequestLogged) {
-                    httpServletResponse.sendRedirect("http://localhost:8080/controller?command=ACTSHOWHOME");
+                    httpServletResponse.sendRedirect("http://localhost:8080/controller?command=ACT_SHOW_HOME");
                 } else {
                     chain.doFilter(request, response);
                 }
             }
         }catch(Exception e){
-            httpServletResponse.sendRedirect("http://localhost:8080/controller?command=ACTSHOWERROR");
+            httpServletResponse.sendRedirect("http://localhost:8080/controller?command=ACT_SHOW_ERROR");
             LOGGER.debug(e.getMessage());
         }
     }

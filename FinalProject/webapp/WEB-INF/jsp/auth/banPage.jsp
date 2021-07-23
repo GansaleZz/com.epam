@@ -17,6 +17,6 @@
 
   <h1>You were banned</h1>
 
-  <a href="http://localhost:8080/controller?command=ACTSHOWSIGNUP" class="s2">Sign Up</a>
+  <a href="http://localhost:8080/controller?command=ACT_SHOW_SIGNUP" class="s2">Sign Up</a>
 </body>
 </html>

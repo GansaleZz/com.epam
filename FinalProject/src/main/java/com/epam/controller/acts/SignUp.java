@@ -35,18 +35,18 @@ public class SignUp implements Command {
                 try {
                     if (userDao.create(user)) {
                         LOGGER.info("User with login "+user.getLogin()+" was signed up");
-                        response.sendRedirect(link + CommandInstance.ACTSHOWSIGNUPSUCC);
+                        response.sendRedirect(link + CommandInstance.ACT_SHOW_SIGNUP_SUCC);
                     } else {
-                        response.sendRedirect(link + CommandInstance.ACTSHOWSIGNUPERROR);
+                        response.sendRedirect(link + CommandInstance.ACT_SHOW_SIGNUP_ERROR);
                     }
                 } catch (DaoException | IOException e) {
                     LOGGER.error(e.getMessage());
                 }
             } else {
-                response.sendRedirect(link + CommandInstance.ACTSHOWSIGNUPERROR);
+                response.sendRedirect(link + CommandInstance.ACT_SHOW_SIGNUP_ERROR);
             }
         }else {
-            response.sendRedirect(link + CommandInstance.ACTSHOWSIGNUPERROR);
+            response.sendRedirect(link + CommandInstance.ACT_SHOW_SIGNUP_ERROR);
         }
     }
 }

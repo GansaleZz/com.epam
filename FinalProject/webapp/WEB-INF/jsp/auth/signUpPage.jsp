@@ -16,12 +16,12 @@
 </head>
 <body>
 
-<a href="http://localhost:8080/controller?command=ACTSHOWAUTH" class="s1">Back</a>
+<a href="http://localhost:8080/controller?command=ACT_SHOW_AUTH" class="s1">Back</a>
 
 <h1>Sign Up</h1>
 
 <div id="wrapper">
-    <form id="signin" action="/controller?command=ACTSIGNUP" method = "post">
+    <form id="signin" action="/controller?command=ACT_SIGNUP" method = "post">
         <input type = "text" name="login" placeholder="Login"/><br/>
         <input type = "password" name="password" placeholder="Password"/><br/>
         <input type = "text" name="name" placeholder="Name"/><br/>

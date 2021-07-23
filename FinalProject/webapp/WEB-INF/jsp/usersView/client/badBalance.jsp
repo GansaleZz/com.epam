@@ -22,37 +22,37 @@
     <nav class="one">
         <ul>
             <li>
-                <a href="http://localhost:8080/controller?command=ACTSHOWHOME">
+                <a href="http://localhost:8080/controller?command=ACT_SHOWHOME">
                     <i class="fa fa-home fa-fw" aria-hidden="true"></i>
                     <c:out value="${bundle.getString('home')}"/>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:8080/controller?command=ACTSHOWROOMS">
+                <a href="http://localhost:8080/controller?command=ACT_SHOWROOMS">
                     <i class="fa fa-shower" aria-hidden="true"></i>
                     <c:out value="${bundle.getString('rooms')}"/>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:8080/controller?command=ACTSHOWPROFILE">
+                <a href="http://localhost:8080/controller?command=ACT_SHOWPROFILE">
                     <i class="fa fa-user-circle" aria-hidden="true"></i>
                     <c:out value="${bundle.getString('profile')}"/>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:8080/controller?command=ACTCREATEREQUESTPAGE">
+                <a href="http://localhost:8080/controller?command=ACT_CREATEREQUESTPAGE">
                     <i class="fa fa-pencil-alt" aria-hidden="true"></i>
                     <c:out value="${bundle.getString('createRequest')}"/>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:8080/controller?command=ACTSHOWREQUESTS">
+                <a href="http://localhost:8080/controller?command=ACT_SHOWREQUESTS">
                     <i class="fa fa-book" aria-hidden="true"></i>
                     <c:out value="${bundle.getString('requests')}"/>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:8080/controller?command=ACTLOGOUT">
+                <a href="http://localhost:8080/controller?command=ACT_LOGOUT">
                     <i class="fa fa-sign-out-alt" aria-hidden="true"></i>
                     <c:out value="${bundle.getString('logOut')}"/>
                 </a>
@@ -63,7 +63,7 @@
         <h1>
             <c:out value="${bundle.getString('badBalance')}"/>
         </h1>
-        <form action="/controller?command=ACTNEWDEPOSITPAGE" method = "post">
+        <form action="/controller?command=ACT_NEW_DEPOSIT_PAGE" method = "post">
             <div class="form-row">
                 <input type="submit" value="${bundle.getString('deposit')}">
             </div>

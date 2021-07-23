@@ -24,7 +24,7 @@ public class ShowUsers implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(request.getSession().getAttribute("userRole").equals("CLIENT")){
-            response.sendRedirect(link + CommandInstance.ACTSHOWHOME);
+            response.sendRedirect(link + CommandInstance.ACT_SHOW_HOME);
             LOGGER.warn("Client with login "+request.getSession().getAttribute("login")+" tried to got access to the page 'Show users'");
         }else {
             UserDaoImpl userDao = new UserDaoImpl();

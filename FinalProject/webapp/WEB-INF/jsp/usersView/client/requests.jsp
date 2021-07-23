@@ -23,37 +23,37 @@
     <nav class="one">
         <ul>
             <li>
-                <a href="http://localhost:8080/controller?command=ACTSHOWHOME">
+                <a href="http://localhost:8080/controller?command=ACT_SHOW_HOME">
                     <i class="fa fa-home fa-fw" aria-hidden="true"></i>
                     <c:out value="${bundle.getString('home')}"/>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:8080/controller?command=ACTSHOWROOMS">
+                <a href="http://localhost:8080/controller?command=ACT_SHOW_ROOMS">
                     <i class="fa fa-shower" aria-hidden="true"></i>
                     <c:out value="${bundle.getString('rooms')}"/>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:8080/controller?command=ACTSHOWPROFILE">
+                <a href="http://localhost:8080/controller?command=ACT_SHOW_PROFILE">
                     <i class="fa fa-user-circle" aria-hidden="true"></i>
                     <c:out value="${bundle.getString('profile')}"/>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:8080/controller?command=ACTCREATEREQUESTPAGE">
+                <a href="http://localhost:8080/controller?command=ACT_CREATE_REQUEST_PAGE">
                     <i class="fa fa-pencil-alt" aria-hidden="true"></i>
                     <c:out value="${bundle.getString('createRequest')}"/>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:8080/controller?command=ACTSHOWREQUESTS">
+                <a href="http://localhost:8080/controller?command=ACT_SHOW_REQUESTS">
                     <i class="fa fa-book" aria-hidden="true"></i>
                     <c:out value="${bundle.getString('requests')}"/>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:8080/controller?command=ACTLOGOUT">
+                <a href="http://localhost:8080/controller?command=ACT_LOGOUT">
                     <i class="fa fa-sign-out-alt" aria-hidden="true"></i>
                     <c:out value="${bundle.getString('logOut')}"/>
                 </a>
@@ -195,7 +195,7 @@
                                     <c:out value="${bundle.getString('requestStatus.paid')}"/>
                                 </c:when>
                                 <c:when test="${request.payment == null}">
-                                    <form action="controller?command=ACTPAYFORREQUEST" method = "post">
+                                    <form action="controller?command=ACT_PAY_FOR_REQUEST" method = "post">
                                         <input class="button" type="submit" name="submit" value="${bundle.getString('pay')}">
                                         <input class="button" type="submit" name="submit" value="${bundle.getString('cancel')}">
                                         <input type="hidden" name="id" value="${request.id}">

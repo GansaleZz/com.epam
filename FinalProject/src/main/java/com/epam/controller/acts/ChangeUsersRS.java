@@ -21,7 +21,7 @@ public class ChangeUsersRS implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(request.getSession().getAttribute("userRole").equals("CLIENT")){
-            response.sendRedirect(link + CommandInstance.ACTSHOWHOME);
+            response.sendRedirect(link + CommandInstance.ACT_SHOW_HOME);
             LOGGER.warn("Client with login "+request.getSession().getAttribute("login")+" tried to got access to the page 'Change users role and status'");
         }else {
             UserDaoImpl userDao = new UserDaoImpl();
@@ -34,7 +34,7 @@ public class ChangeUsersRS implements Command {
             } catch (DaoException e) {
                 LOGGER.error(e.getMessage());
             }
-            response.sendRedirect(link + CommandInstance.ACTSHOWUSERS);
+            response.sendRedirect(link + CommandInstance.ACT_SHOW_USERS);
         }
     }
 }

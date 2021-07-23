@@ -35,7 +35,7 @@ public class UpdateRequest implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(UserRole.getRole((String) request.getSession().getAttribute("userRole")).equals(UserRole.CLIENT)){
-            response.sendRedirect(link + CommandInstance.ACTSHOWHOME);
+            response.sendRedirect(link + CommandInstance.ACT_SHOW_HOME);
             LOGGER.warn("Client with login "+request.getSession().getAttribute("login")+" tried to got access to the page 'Update request'");
         }else {
             ResourceBundle bundle = ResourceBundle.getBundle("language_"+request.getSession().getAttribute("locale"));
@@ -46,7 +46,7 @@ public class UpdateRequest implements Command {
                     req.setRequestStatus(RequestStatus.DENIED);
                     LOGGER.info("User with login " + request.getSession().getAttribute("login")+" denied request of user with login "+req.getUser().getLogin());
                     requestDao.update(req);
-                    response.sendRedirect(link + CommandInstance.ACTSHOWREQUESTS);
+                    response.sendRedirect(link + CommandInstance.ACT_SHOW_REQUESTS);
                 } catch (DaoException e) {
                     LOGGER.error(e.getMessage());
                 }
@@ -87,7 +87,7 @@ public class UpdateRequest implements Command {
                         LOGGER.info("User with login " + request.getSession().getAttribute("login")+" accepted request of user with login "+req.getUser().getLogin());
                         cache.addRequest(req);
                         requestDao.update(req);
-                        response.sendRedirect(link + CommandInstance.ACTSHOWREQUESTS);
+                        response.sendRedirect(link + CommandInstance.ACT_SHOW_REQUESTS);
                     } catch (DaoException e) {
                         LOGGER.error(e.getMessage());
                     }

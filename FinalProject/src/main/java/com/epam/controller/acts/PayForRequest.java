@@ -32,7 +32,7 @@ public class PayForRequest implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(!request.getSession().getAttribute("userRole").equals("CLIENT")){
-            response.sendRedirect(link + CommandInstance.ACTSHOWHOME);
+            response.sendRedirect(link + CommandInstance.ACT_SHOW_HOME);
             LOGGER.warn("User with login "+request.getSession().getAttribute("login")+" tried to got access to the page 'Pay for request'");
         }else {
             try {
@@ -55,7 +55,7 @@ public class PayForRequest implements Command {
                     req.setPayment(payment);
                     requestDao.update(req);
                     cache.removeRequest(req.getId());
-                    response.sendRedirect(link + CommandInstance.ACTSHOWREQUESTS);
+                    response.sendRedirect(link + CommandInstance.ACT_SHOW_REQUESTS);
                     LOGGER.info("Client with login " + request.getSession().getAttribute("login") + " cancelled request with room number "+req.getRoom().getRoomNumber());
             }else{
                 if(req.getUser().getBalance() >= payment.getAmount()) {
@@ -70,7 +70,7 @@ public class PayForRequest implements Command {
                     requestDao.update(req);
                     cache.addRequest(req);
                     LOGGER.info("Client with login " + request.getSession().getAttribute("login") + " paid for request with room number "+req.getRoom().getRoomNumber());
-                    response.sendRedirect(link + CommandInstance.ACTSHOWREQUESTS);
+                    response.sendRedirect(link + CommandInstance.ACT_SHOW_REQUESTS);
                 }else{
                     request.getServletContext().getRequestDispatcher(ServletDestination.CLIENTBADBALANCEPAGE.getPath()).forward(request,response);
                 }

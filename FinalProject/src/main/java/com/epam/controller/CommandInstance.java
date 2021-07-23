@@ -6,7 +6,7 @@ import com.epam.controller.acts.ChangeUsersRS;
 import com.epam.controller.acts.LogIn;
 import com.epam.controller.acts.LogOut;
 import com.epam.controller.acts.PayForRequest;
-import com.epam.controller.acts.RealiseDeposite;
+import com.epam.controller.acts.RealiseDeposit;
 import com.epam.controller.acts.SignUp;
 import com.epam.controller.acts.UpdateProfile;
 import com.epam.controller.acts.UpdateRequest;
@@ -35,33 +35,33 @@ import java.util.Arrays;
  *
  */
 public enum CommandInstance {
-    ACTSHOWLOGIN(new ShowLogIn()),
-    ACTSHOWSIGNUP(new ShowSignUp()),
-    ACTSHOWAUTH(new ShowAuth()),
-    ACTLOGIN(new LogIn()),
-    ACTLOGOUT(new LogOut()),
-    ACTSIGNUP(new SignUp()),
-    ACTSHOWBAN(new ShowBan()),
-    ACTSHOWLOGINERROR(new ShowLogInError()),
-    ACTSHOWSIGNUPERROR(new ShowSignUpError()),
-    ACTSHOWSIGNUPSUCC(new ShowSignUpSucc()),
-    ACTSHOWROOMS(new ShowRooms()),
-    ACTSHOWPROFILE(new ShowProfile()),
-    ACTSHOWUSERS(new ShowUsers()),
-    ACTCHANGEUSERSRS(new ChangeUsersRS()),
-    ACTNEWROOMPAGE(new NewRoomPage()),
-    ACTADDNEWROOM(new AddNewRoom()),
-    ACTUPDATEROOM(new UpdateRoom()),
-    ACTUPDATEPROFILE(new UpdateProfile()),
-    ACTCREATEREQUESTPAGE(new ShowCreateRequest()),
-    ACTNEWREQUEST(new AddNewRequest()),
-    ACTNEWDEPOSITPAGE(new NewDepositPage()),
-    ACTSHOWHOME(new ShowHome()),
-    ACTREALISEDEPOSITE(new RealiseDeposite()),
-    ACTSHOWREQUESTS(new ShowRequests()),
-    ACTUPDATEREQUEST(new UpdateRequest()),
-    ACTPAYFORREQUEST(new PayForRequest()),
-    ACTSHOWERROR(new ShowErrorPage());
+    ACT_SHOW_LOGIN(new ShowLogIn()),
+    ACT_SHOW_SIGNUP(new ShowSignUp()),
+    ACT_SHOW_AUTH(new ShowAuth()),
+    ACT_LOGIN(new LogIn()),
+    ACT_LOGOUT(new LogOut()),
+    ACT_SIGNUP(new SignUp()),
+    ACT_SHOW_BAN(new ShowBan()),
+    ACT_SHOW_LOGIN_ERROR(new ShowLogInError()),
+    ACT_SHOW_SIGNUP_ERROR(new ShowSignUpError()),
+    ACT_SHOW_SIGNUP_SUCC(new ShowSignUpSucc()),
+    ACT_SHOW_ROOMS(new ShowRooms()),
+    ACT_SHOW_PROFILE(new ShowProfile()),
+    ACT_SHOW_USERS(new ShowUsers()),
+    ACT_CHANGE_USERS_RS(new ChangeUsersRS()),
+    ACT_NEW_ROOM_PAGE(new NewRoomPage()),
+    ACT_ADD_NEW_ROOM(new AddNewRoom()),
+    ACT_UPDATE_ROOM(new UpdateRoom()),
+    ACT_UPDATE_PROFILE(new UpdateProfile()),
+    ACT_CREATE_REQUEST_PAGE(new ShowCreateRequest()),
+    ACT_NEW_REQUEST(new AddNewRequest()),
+    ACT_NEW_DEPOSIT_PAGE(new NewDepositPage()),
+    ACT_SHOW_HOME(new ShowHome()),
+    ACT_REALISE_DEPOSIT(new RealiseDeposit()),
+    ACT_SHOW_REQUESTS(new ShowRequests()),
+    ACT_UPDATE_REQUEST(new UpdateRequest()),
+    ACT_PAY_FOR_REQUEST(new PayForRequest()),
+    ACT_SHOW_ERROR(new ShowErrorPage());
 
     private final Command command;
 

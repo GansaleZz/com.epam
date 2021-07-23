@@ -32,7 +32,7 @@ public class LogIn implements Command {
                     User user = userDao.findUserByCriteria(criteria).get();
                     if(user.getStatus().equals(UserStatus.BANNED)){
                         LOGGER.warn("Banned user with login" + user.getLogin()+" trying to sign in");
-                        response.sendRedirect(link + CommandInstance.ACTSHOWBAN);
+                        response.sendRedirect(link + CommandInstance.ACT_SHOW_BAN);
                     }else {
                         HttpSession session = request.getSession();
                         String userRole = String.valueOf(user.getUserRole());
@@ -46,17 +46,17 @@ public class LogIn implements Command {
                         session.setAttribute("locale","en");
                         session.setAttribute("bundle",bundle);
                         LOGGER.info("User with login " + user.getLogin()+" signed in");
-                        response.sendRedirect(link + CommandInstance.ACTSHOWHOME);
+                        response.sendRedirect(link + CommandInstance.ACT_SHOW_HOME);
                     }
                 } else {
-                    response.sendRedirect(link + CommandInstance.ACTSHOWLOGINERROR);
+                    response.sendRedirect(link + CommandInstance.ACT_SHOW_LOGIN_ERROR);
                 }
             } catch (DaoException | IOException e) {
                 LOGGER.error(e.getMessage());
             }
         }else{
             try {
-                response.sendRedirect(link + CommandInstance.ACTSHOWLOGINERROR);
+                response.sendRedirect(link + CommandInstance.ACT_SHOW_LOGIN_ERROR);
             }catch (IOException e) {
                 LOGGER.error(e.getMessage());
             }

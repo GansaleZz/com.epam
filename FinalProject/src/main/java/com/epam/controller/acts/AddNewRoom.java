@@ -24,7 +24,7 @@ public class AddNewRoom implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(request.getSession().getAttribute("userRole").equals("CLIENT")){
-            response.sendRedirect(link + CommandInstance.ACTSHOWHOME);
+            response.sendRedirect(link + CommandInstance.ACT_SHOW_HOME);
             LOGGER.warn("Client with login "+request.getSession().getAttribute("login")+" tried to got access to the page 'Add new room'");
         }else {
             if (request.getParameter("price").trim().length() != 0 || request.getSession().getAttribute("userRole").equals("CLIENT")) {
@@ -44,7 +44,7 @@ public class AddNewRoom implements Command {
                     LOGGER.error(e.getMessage());
                 }
             }
-            response.sendRedirect(link + CommandInstance.ACTSHOWROOMS);
+            response.sendRedirect(link + CommandInstance.ACT_SHOW_ROOMS);
         }
     }
 }

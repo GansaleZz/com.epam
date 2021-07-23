@@ -4,17 +4,15 @@ import java.util.Arrays;
 import java.util.Optional;
 
 public enum UserRole {
-    ADMIN(1,"/usersView/admin/"),
-    MODERATOR(2,"/usersView/moderator/"),
-    CLIENT(3,"/usersView/client/");
+    ADMIN(1),
+    MODERATOR(2),
+    CLIENT(3);
 
     private final int id;
-    private final String permissions;
 
 
-    UserRole(int id, String permissions){
+    UserRole(int id){
         this.id = id;
-        this.permissions = permissions;
     }
 
     public static int getIdByUserRole(UserRole userRole) {

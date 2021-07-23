@@ -32,7 +32,7 @@ public class AddNewRequest implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(!request.getSession().getAttribute("userRole").equals("CLIENT")){
             LOGGER.warn("Client with login " + request.getSession().getAttribute("login")+" tried to got access to the page 'Add new request'");
-            response.sendRedirect(link+ CommandInstance.ACTSHOWHOME);
+            response.sendRedirect(link+ CommandInstance.ACT_SHOW_HOME);
         }else {
             RequestDaoImpl requestDao = new RequestDaoImpl();
             UserDaoImpl userDao = new UserDaoImpl();
@@ -58,7 +58,7 @@ public class AddNewRequest implements Command {
             } catch (ParseException | DaoException e) {
                 LOGGER.error(e.getMessage());
             }
-            response.sendRedirect(link + CommandInstance.ACTSHOWREQUESTS);
+            response.sendRedirect(link + CommandInstance.ACT_SHOW_REQUESTS);
         }
     }
 }
