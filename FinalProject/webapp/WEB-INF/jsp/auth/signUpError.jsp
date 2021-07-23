@@ -15,7 +15,7 @@
 </head>
 <body>
 
-  <h1>User with this login already exists or input data incorrect</h1>
+  <h1>User with this login already exists </h1>
 
   <a href="http://localhost:8080/controller?command=ACT_SHOW_SIGNUP" class="s2">Try again</a>
 </body>

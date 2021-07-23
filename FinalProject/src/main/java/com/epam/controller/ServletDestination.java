@@ -26,6 +26,7 @@ public enum ServletDestination implements Destination{
     CLIENTNEWDEPOSITPAGE("/WEB-INF/jsp/usersView/client/newDeposit.jsp"),
     CLIENTNEWREQUESTPAGE("/WEB-INF/jsp/usersView/client/newRequest.jsp"),
     CLIENTBADBALANCEPAGE("/WEB-INF/jsp/usersView/client/badBalance.jsp"),
+    CLIENTROOMSLISTPAGE("/WEB-INF/jsp/usersView/client/roomsList.jsp"),
     SIGNUPERROR("/WEB-INF/jsp/auth/signUpError.jsp"),
     SIGNUPSUCC("/WEB-INF/jsp/auth/signUpSucc.jsp"),
     SIGNUPPAGE("/WEB-INF/jsp/auth/signUpPage.jsp"),
@@ -33,7 +34,8 @@ public enum ServletDestination implements Destination{
     LOGINPAGE("/WEB-INF/jsp/auth/logInPage.jsp"),
     AUTHPAGE("/WEB-INF/jsp/auth/authPage.jsp"),
     BANPAGE("/WEB-INF/jsp/auth/banPage.jsp"),
-    ERROPAGE("/WEB-INF/jsp/usersView/errorPage.jsp");
+    ERROPAGE("/WEB-INF/jsp/usersView/errorPage.jsp"),
+    BADROOMNUMBERPAGE("/WEB-INF/jsp/usersView/badRoomNumber.jsp");
 
     private final String PATH;
 

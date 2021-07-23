@@ -20,7 +20,7 @@ public class NewRoomPage implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(request.getSession().getAttribute("userRole").equals("CLIENT")){
             response.sendRedirect(link + CommandInstance.ACT_SHOW_HOME);
-            LOGGER.warn("Client with login "+request.getSession().getAttribute("login")+" tried to got access to the page 'New room'");
+            LOGGER.warn("Client with login "+request.getSession().getAttribute("login")+" tried to get access to the page 'New room'");
         }else{
             try {
                 switch (UserRole.getRole((String) request.getSession().getAttribute("userRole"))) {

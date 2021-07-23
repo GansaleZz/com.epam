@@ -27,7 +27,7 @@ public class ShowRooms implements Command {
         try {
             list = roomDao.findAllEntities();
         } catch (DaoException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage());
         }
         request.setAttribute("list", list);
         try {

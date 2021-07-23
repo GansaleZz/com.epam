@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="<c:url value="/resources/css/Header.css"/> ">
   <link rel="stylesheet" href="<c:url value="/resources/css/Rooms.css"/> ">
   <link rel="stylesheet" href="<c:url value="/resources/css/Footer.css"/> ">
+  <link rel="stylesheet" href="<c:url value="/resources/css/Link.css"/> ">
   <link rel="stylesheet" href="<c:url value="/resources/fontawesome/css/all.min.css"/>">
 </head>
 <body>
@@ -60,6 +61,7 @@
       </li>
     </ul>
   </nav>
+  <a href="http://localhost:8080/controller?command=ACT_SHOW_ROOMS_LIST" style="margin-left:39%; margin-bottom: 11px; width: 125px;" class="s2"><c:out value="${bundle.getString('roomsList')}"/></a>
   <div class="content">
     <div class="view view-first">
       <img src="<c:url value="/resources/images/econom.jpg"/>" />

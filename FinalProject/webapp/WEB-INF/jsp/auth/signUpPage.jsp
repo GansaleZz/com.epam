@@ -22,9 +22,9 @@
 
 <div id="wrapper">
     <form id="signin" action="/controller?command=ACT_SIGNUP" method = "post">
-        <input type = "text" name="login" placeholder="Login"/><br/>
-        <input type = "password" name="password" placeholder="Password"/><br/>
-        <input type = "text" name="name" placeholder="Name"/><br/>
+        <input type = "text" name="login" placeholder="Login" minlength="3" maxlength="12"/><br/>
+        <input type = "password" name="password" placeholder="Password" minlength="5" maxlength="12"/><br/>
+        <input type = "text" name="name" placeholder="Name" minlength="2" maxlength="12"/><br/>
         <input type = "email" name="email" placeholder="Email"/><br/>
         <button type="submit">&#xf0da;</button>
     </form>

@@ -1,5 +1,7 @@
 package com.epam.controller.acts;
 
+import com.epam.controller.ServletDestination;
+import com.epam.criteria.impl.RoomCriteria;
 import com.epam.db.dao.impl.RoomDaoImpl;
 import com.epam.entity.Room;
 import com.epam.entity.RoomClass;
@@ -9,6 +11,7 @@ import com.epam.exceptions.DaoException;
 import com.epam.controller.Command;
 import com.epam.controller.CommandInstance;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -36,17 +39,28 @@ public class UpdateRoom implements Command {
                     roomDao.delete(Integer.parseInt(request.getParameter("id")));
                 } else {
                     Room room = roomDao.findEntityById(Integer.valueOf(request.getParameter("id"))).get();
-                    Room oldRoom = room;
+                    Room oldRoom = new RoomCriteria.Builder().newBuilder()
+                            .withRoomClass(room.getRoomClass())
+                            .withRoomStatus(room.getRoomStatus())
+                            .withRoomNumber(room.getRoomNumber())
+                            .withPrice(room.getPrice())
+                            .withId(room.getId())
+                            .withNumberOfSeats(room.getNumberOfSeats())
+                            .build();
                     room.setPrice(Integer.parseInt(request.getParameter("price")));
                     room.setNumberOfSeats(Integer.parseInt(request.getParameter("numberOfSeats")));
                     room.setRoomStatus(RoomStatus.valueOf(request.getParameter("status")));
                     room.setRoomClass(RoomClass.valueOf(request.getParameter("class")));
                     room.setRoomNumber(Integer.parseInt(request.getParameter("roomNumber")));
-                    LOGGER.info("User with login "+request.getSession().getAttribute("login") + " updated room from "+oldRoom + " to "+room );
-                    roomDao.update(room);
+                    if(oldRoom.getRoomNumber()!= room.getRoomNumber() && roomDao.findAllEntities().stream().anyMatch(i -> i.getRoomNumber() == room.getRoomNumber())){
+                        request.getServletContext().getRequestDispatcher(ServletDestination.BADROOMNUMBERPAGE.getPath()).forward(request,response);
+                    }else {
+                        LOGGER.info("User with login " + request.getSession().getAttribute("login") + " updated room from " + oldRoom + " to " + room);
+                        roomDao.update(room);
+                    }
                 }
                 response.sendRedirect(link + CommandInstance.ACT_SHOW_ROOMS);
-            } catch (DaoException e) {
+            } catch (DaoException | ServletException e) {
                 LOGGER.error(e.getMessage());
             }
         }

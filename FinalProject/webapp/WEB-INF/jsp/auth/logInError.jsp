@@ -15,7 +15,7 @@
 </head>
 <body>
 
-  <h1>Wrong input information</h1>
+  <h1>Wrong login or password</h1>
 
   <a href="http://localhost:8080/controller?command=ACT_SHOW_LOGIN" class="s2">Try again</a>
 </body>

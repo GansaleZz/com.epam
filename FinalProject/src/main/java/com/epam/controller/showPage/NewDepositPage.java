@@ -19,7 +19,7 @@ public class NewDepositPage implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(!request.getSession().getAttribute("userRole").equals("CLIENT")){
-            LOGGER.warn("User with login "+request.getSession().getAttribute("login")+" tried to got access to the page 'New deposit'");
+            LOGGER.warn("User with login "+request.getSession().getAttribute("login")+" tried to get access to the page 'New deposit'");
             response.sendRedirect(link + CommandInstance.ACT_SHOW_HOME);
         }else{
             try {

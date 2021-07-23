@@ -11,22 +11,7 @@ import com.epam.controller.acts.SignUp;
 import com.epam.controller.acts.UpdateProfile;
 import com.epam.controller.acts.UpdateRequest;
 import com.epam.controller.acts.UpdateRoom;
-import com.epam.controller.showPage.NewDepositPage;
-import com.epam.controller.showPage.NewRoomPage;
-import com.epam.controller.showPage.ShowAuth;
-import com.epam.controller.showPage.ShowBan;
-import com.epam.controller.showPage.ShowCreateRequest;
-import com.epam.controller.showPage.ShowErrorPage;
-import com.epam.controller.showPage.ShowHome;
-import com.epam.controller.showPage.ShowLogIn;
-import com.epam.controller.showPage.ShowLogInError;
-import com.epam.controller.showPage.ShowProfile;
-import com.epam.controller.showPage.ShowRequests;
-import com.epam.controller.showPage.ShowRooms;
-import com.epam.controller.showPage.ShowSignUp;
-import com.epam.controller.showPage.ShowSignUpError;
-import com.epam.controller.showPage.ShowSignUpSucc;
-import com.epam.controller.showPage.ShowUsers;
+import com.epam.controller.showPage.*;
 
 import java.util.Arrays;
 
@@ -61,7 +46,8 @@ public enum CommandInstance {
     ACT_SHOW_REQUESTS(new ShowRequests()),
     ACT_UPDATE_REQUEST(new UpdateRequest()),
     ACT_PAY_FOR_REQUEST(new PayForRequest()),
-    ACT_SHOW_ERROR(new ShowErrorPage());
+    ACT_SHOW_ERROR(new ShowErrorPage()),
+    ACT_SHOW_ROOMS_LIST(new ShowRoomsList());
 
     private final Command command;
 
