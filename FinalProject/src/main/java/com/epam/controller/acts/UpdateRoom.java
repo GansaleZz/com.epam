@@ -53,7 +53,7 @@ public class UpdateRoom implements Command {
                     room.setRoomClass(RoomClass.valueOf(request.getParameter("class")));
                     room.setRoomNumber(Integer.parseInt(request.getParameter("roomNumber")));
                     if(oldRoom.getRoomNumber()!= room.getRoomNumber() && roomDao.findAllEntities().stream().anyMatch(i -> i.getRoomNumber() == room.getRoomNumber())){
-                        request.getServletContext().getRequestDispatcher(ServletDestination.BADROOMNUMBERPAGE.getPath()).forward(request,response);
+                        request.getServletContext().getRequestDispatcher(ServletDestination.BAD_ROOM_NUMBER_PAGE.getPath()).forward(request,response);
                     }else {
                         LOGGER.info("User with login " + request.getSession().getAttribute("login") + " updated room from " + oldRoom + " to " + room);
                         roomDao.update(room);

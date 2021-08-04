@@ -17,7 +17,7 @@ public class ShowSignUp implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
-            request.getServletContext().getRequestDispatcher(ServletDestination.SIGNUPPAGE.getPath()).forward(request,response);
+            request.getServletContext().getRequestDispatcher(ServletDestination.SIGNUP_PAGE.getPath()).forward(request,response);
         } catch (ServletException e) {
             LOGGER.error(e.getMessage());
         }

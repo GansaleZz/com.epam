@@ -20,9 +20,9 @@ public class ShowHome implements Command {
         UserRole userRole = UserRole.getRole((String) request.getSession().getAttribute("userRole"));
         try {
             switch (userRole) {
-                case ADMIN -> request.getServletContext().getRequestDispatcher(ServletDestination.ADMINHOMEPAGE.getPath()).forward(request, response);
-                case MODERATOR -> request.getServletContext().getRequestDispatcher(ServletDestination.MODERATORHOMEPAGE.getPath()).forward(request, response);
-                case CLIENT -> request.getServletContext().getRequestDispatcher(ServletDestination.CLIENTHOMEPAGE.getPath()).forward(request, response);
+                case ADMIN -> request.getServletContext().getRequestDispatcher(ServletDestination.ADMIN_HOME_PAGE.getPath()).forward(request, response);
+                case MODERATOR -> request.getServletContext().getRequestDispatcher(ServletDestination.MODERATOR_HOME_PAGE.getPath()).forward(request, response);
+                case CLIENT -> request.getServletContext().getRequestDispatcher(ServletDestination.CLIENT_HOME_PAGE.getPath()).forward(request, response);
             }
         }catch (ServletException e) {
             LOGGER.error(e.getMessage());

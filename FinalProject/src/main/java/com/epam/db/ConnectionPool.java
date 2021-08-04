@@ -33,7 +33,7 @@ public final class ConnectionPool {
      * Adding available connection on queue
      */
     private void addConnection(){
-        if(availableConnectionList.size()+ engagedConnectionList.size()<property.getMAXPOOLSIZE()) {
+        if(availableConnectionList.size()+ engagedConnectionList.size()<property.getMAX_POOL_SIZE()) {
             try {
                 Connection connection = DriverManager.getConnection(property.getURL()+property.getSCHEME(), property.getUSER(), property.getPASSWORD());
                 availableConnectionList.put(connection);
@@ -55,8 +55,8 @@ public final class ConnectionPool {
                  * While queue of available connections is empty and maximum pool size has achieved
                  * we are waiting when one of engaged connections will be available
                  */
-                if (engagedConnectionList.size() == Property.getInstance().getMAXPOOLSIZE()) {
-                    while (engagedConnectionList.size() == Property.getInstance().getMAXPOOLSIZE()) {
+                if (engagedConnectionList.size() == Property.getInstance().getMAX_POOL_SIZE()) {
+                    while (engagedConnectionList.size() == Property.getInstance().getMAX_POOL_SIZE()) {
                         Thread.sleep(500);
                     }
                 }else{
@@ -101,7 +101,7 @@ public final class ConnectionPool {
      */
     private void init(){
         try {
-            for (int i = 0; i < property.getINITPOOLSIZE(); ++i) {
+            for (int i = 0; i < property.getINIT_POOL_SIZE(); ++i) {
                 Connection connection = new ConnectionProxy(DriverManager.getConnection(property.getURL()+property.getSCHEME(), property.getUSER(), property.getPASSWORD()));
                 availableConnectionList.add(connection);
             }

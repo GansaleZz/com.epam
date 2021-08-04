@@ -70,8 +70,8 @@ public class UpdateRequest implements Command {
                         request.setAttribute("id",req.getId());
                         request.setAttribute("rooms", list);
                         switch (UserRole.getRole((String) request.getSession().getAttribute("userRole"))) {
-                            case MODERATOR -> request.getServletContext().getRequestDispatcher(ServletDestination.MODERATORAPPROVEREQUESTPAGE.getPath()).forward(request, response);
-                            case ADMIN -> request.getServletContext().getRequestDispatcher(ServletDestination.ADMINAPPROVEREQUESTPAGE.getPath()).forward(request, response);
+                            case MODERATOR -> request.getServletContext().getRequestDispatcher(ServletDestination.MODERATOR_APPROVE_REQUEST_PAGE.getPath()).forward(request, response);
+                            case ADMIN -> request.getServletContext().getRequestDispatcher(ServletDestination.ADMIN_APPROVE_REQUEST_PAGE.getPath()).forward(request, response);
                         }
                     } catch (ServletException | DaoException e) {
                         LOGGER.error(e.getMessage());

@@ -39,3 +39,16 @@ h1{
 	color: white;
 	font-weight: 100;
 }
+
+/*.input_style input[type="submit"], .input_style input[type="text"]{*/
+/*	width: 280px;*/
+/*	height: 45px;*/
+/*	border: 0;*/
+/*	outline: 0;*/
+/*	top: -2px;*/
+/*	padding: 0 0 0 20px;*/
+/*	font-weight: 700;*/
+/*	background: rgb(28, 30, 33);*/
+/*	box-shadow: inset -100px -100px 0 rgb(28, 30, 33);*/
+/*	color: rgb(52, 56, 61);*/
+/*}*/

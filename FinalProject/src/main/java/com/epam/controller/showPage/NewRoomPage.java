@@ -24,8 +24,8 @@ public class NewRoomPage implements Command {
         }else{
             try {
                 switch (UserRole.getRole((String) request.getSession().getAttribute("userRole"))) {
-                    case ADMIN -> request.getServletContext().getRequestDispatcher(ServletDestination.ADMINNEWROOMPAGE.getPath()).forward(request, response);
-                    case MODERATOR -> request.getServletContext().getRequestDispatcher(ServletDestination.MODERATORNEWROOMPAGE.getPath()).forward(request, response);
+                    case ADMIN -> request.getServletContext().getRequestDispatcher(ServletDestination.ADMIN_NEW_ROOM_PAGE.getPath()).forward(request, response);
+                    case MODERATOR -> request.getServletContext().getRequestDispatcher(ServletDestination.MODERATOR_NEW_ROOM_PAGE.getPath()).forward(request, response);
                 }
             }catch (ServletException e) {
                 LOGGER.error(e.getMessage());

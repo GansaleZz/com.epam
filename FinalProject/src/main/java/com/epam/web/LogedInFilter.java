@@ -33,7 +33,7 @@ public class LogedInFilter implements Filter {
             if(httpServletRequest.getRequestURI().equals("/")){
                 throw new PageException();
             }
-            boolean loggedIn = session != null && session.getAttribute("login") != null;
+            boolean loggedIn = session != null && session.getAttribute("password") != null;
             boolean badRequestLogged = (httpServletRequest.getRequestURI().contains("/controller") &&
                     httpServletRequest.getQueryString() != null &&
                     (httpServletRequest.getQueryString().contains("SIGNUP") ||
@@ -49,7 +49,7 @@ public class LogedInFilter implements Filter {
                     UserCriteria userCriteria = new UserCriteria();
                     userCriteria.setLogin((String) session.getAttribute("login"));
                     if (userDao.findUserByCriteria(userCriteria).get().getStatus().equals(UserStatus.BANNED)) {
-                        httpServletRequest.getServletContext().getRequestDispatcher(ServletDestination.BANPAGE.getPath()).forward(request,response);
+                        httpServletRequest.getServletContext().getRequestDispatcher(ServletDestination.BAN_PAGE.getPath()).forward(request,response);
                         session.invalidate();
                     }
                 }

@@ -17,7 +17,7 @@ public class ShowAuth implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
-            request.getServletContext().getRequestDispatcher(ServletDestination.AUTHPAGE.getPath()).forward(request,response);
+            request.getServletContext().getRequestDispatcher(ServletDestination.AUTH_PAGE.getPath()).forward(request,response);
         } catch (ServletException e) {
             LOGGER.error(e.getMessage());
         }

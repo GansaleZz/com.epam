@@ -28,4 +28,6 @@ public interface UserDao extends BaseDao<Integer,User>{
      * @return value of user's balance
      */
     Double findBalanceById(Integer id) throws DaoException;
+
+    Integer findVerifyCodeById(Integer id);
 }

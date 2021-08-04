@@ -24,13 +24,14 @@ public class AuthFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         HttpSession session = httpServletRequest.getSession(false);
-        boolean loggedIn = session != null && session.getAttribute("login") != null;
+        boolean loggedIn = session != null && session.getAttribute("password") != null;
         boolean badRequestLogged = (httpServletRequest.getRequestURI().contains("/controller") &&
                 httpServletRequest.getQueryString() != null &&
                 (httpServletRequest.getQueryString().contains("SIGNUP") ||
                         httpServletRequest.getQueryString().contains("LOGIN") ||
                         httpServletRequest.getQueryString().contains("AUTH") ||
-                        httpServletRequest.getQueryString().contains("BAN")));
+                        httpServletRequest.getQueryString().contains("BAN") ||
+                        httpServletRequest.getQueryString().contains("VERIFY")));
         try {
             if (httpServletRequest.getRequestURI().matches(".*(css|jpg|png|gif|js)")) {
                 chain.doFilter(request,response);

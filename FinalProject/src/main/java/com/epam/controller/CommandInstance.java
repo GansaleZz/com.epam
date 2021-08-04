@@ -1,16 +1,6 @@
 package com.epam.controller;
 
-import com.epam.controller.acts.AddNewRequest;
-import com.epam.controller.acts.AddNewRoom;
-import com.epam.controller.acts.ChangeUsersRS;
-import com.epam.controller.acts.LogIn;
-import com.epam.controller.acts.LogOut;
-import com.epam.controller.acts.PayForRequest;
-import com.epam.controller.acts.RealiseDeposit;
-import com.epam.controller.acts.SignUp;
-import com.epam.controller.acts.UpdateProfile;
-import com.epam.controller.acts.UpdateRequest;
-import com.epam.controller.acts.UpdateRoom;
+import com.epam.controller.acts.*;
 import com.epam.controller.showPage.*;
 
 import java.util.Arrays;
@@ -47,7 +37,9 @@ public enum CommandInstance {
     ACT_UPDATE_REQUEST(new UpdateRequest()),
     ACT_PAY_FOR_REQUEST(new PayForRequest()),
     ACT_SHOW_ERROR(new ShowErrorPage()),
-    ACT_SHOW_ROOMS_LIST(new ShowRoomsList());
+    ACT_SHOW_ROOMS_LIST(new ShowRoomsList()),
+    ACT_SHOW_VERIFY_PAGE(new ShowVerifyPage()),
+    ACT_VERIFY_ACCOUNT(new VerifyAccount());
 
     private final Command command;
 

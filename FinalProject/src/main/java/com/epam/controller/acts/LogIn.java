@@ -1,7 +1,9 @@
 package com.epam.controller.acts;
 
+import com.epam.controller.showPage.ShowVerifyPage;
 import com.epam.criteria.impl.UserCriteria;
 import com.epam.db.dao.impl.UserDaoImpl;
+import com.epam.entity.AccountStatus;
 import com.epam.entity.User;
 import com.epam.entity.UserStatus;
 import com.epam.exceptions.DaoException;
@@ -34,19 +36,26 @@ public class LogIn implements Command {
                         LOGGER.warn("Banned user with login" + user.getLogin()+" trying to sign in");
                         response.sendRedirect(link + CommandInstance.ACT_SHOW_BAN);
                     }else {
-                        HttpSession session = request.getSession();
-                        String userRole = String.valueOf(user.getUserRole());
-                        String userStatus = String.valueOf(user.getStatus());
-                        ResourceBundle bundle = ResourceBundle.getBundle("language_en");
-                        session.setAttribute("login", user.getLogin());
-                        session.setAttribute("password", pass);
-                        session.setAttribute("userRole", userRole);
-                        session.setAttribute("userStatus",userStatus);
-                        session.setAttribute("id",user.getId());
-                        session.setAttribute("locale","en");
-                        session.setAttribute("bundle",bundle);
-                        LOGGER.info("User with login " + user.getLogin()+" signed in");
-                        response.sendRedirect(link + CommandInstance.ACT_SHOW_HOME);
+                        if(user.getAccountStatus().equals(AccountStatus.NOTACTIVATED)){
+                            request.getSession(true).setAttribute("verify",true);
+                            request.getSession(true).setAttribute("verifyTry", false);
+                            request.getSession().setAttribute("login", user.getLogin());
+                            response.sendRedirect(link + CommandInstance.ACT_SHOW_VERIFY_PAGE);
+                        }else {
+                            HttpSession session = request.getSession(true);
+                            String userRole = String.valueOf(user.getUserRole());
+                            String userStatus = String.valueOf(user.getStatus());
+                            ResourceBundle bundle = ResourceBundle.getBundle("language_en");
+                            session.setAttribute("login", user.getLogin());
+                            session.setAttribute("password", pass);
+                            session.setAttribute("userRole", userRole);
+                            session.setAttribute("userStatus", userStatus);
+                            session.setAttribute("id", user.getId());
+                            session.setAttribute("locale", "en");
+                            session.setAttribute("bundle", bundle);
+                            LOGGER.info("User with login " + user.getLogin() + " signed in");
+                            response.sendRedirect(link + CommandInstance.ACT_SHOW_HOME);
+                        }
                     }
                 } else {
                     response.sendRedirect(link + CommandInstance.ACT_SHOW_LOGIN_ERROR);

@@ -42,7 +42,7 @@ public class ShowCreateRequest implements Command {
                         .filter(i -> i.getUser().getLogin().equals(request.getSession().getAttribute("login")) & !i.getRequestStatus().equals(RequestStatus.DENIED) & !i.getRequestStatus().equals(RequestStatus.CANCELLED))
                         .count();
                 request.setAttribute("requestsCount",requestsCount);
-                request.getServletContext().getRequestDispatcher(ServletDestination.CLIENTNEWREQUESTPAGE.getPath()).forward(request, response);
+                request.getServletContext().getRequestDispatcher(ServletDestination.CLIENT_NEW_REQUEST_PAGE.getPath()).forward(request, response);
             } catch (ServletException | DaoException e) {
                 LOGGER.error(e.getMessage());
             }

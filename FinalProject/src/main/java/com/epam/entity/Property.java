@@ -16,8 +16,10 @@ public final class Property {
     private final String SCHEME;
     private final String PASSWORD;
     private final String USER;
-    private final int INITPOOLSIZE;
-    private final int MAXPOOLSIZE;
+    private final int INIT_POOL_SIZE;
+    private final int MAX_POOL_SIZE;
+    private final String MAIL;
+    private final String MAIL_PASS;
     private static Property instance = null;
 
     public static Property getInstance(){
@@ -43,12 +45,20 @@ public final class Property {
         return USER;
     }
 
-    public int getINITPOOLSIZE() {
-        return INITPOOLSIZE;
+    public int getINIT_POOL_SIZE() {
+        return INIT_POOL_SIZE;
     }
 
-    public int getMAXPOOLSIZE() {
-        return MAXPOOLSIZE;
+    public int getMAX_POOL_SIZE() {
+        return MAX_POOL_SIZE;
+    }
+
+    public String getMAIL_PASS() {
+        return MAIL_PASS;
+    }
+
+    public String getMAIL() {
+        return MAIL;
     }
 
     @Override
@@ -58,8 +68,10 @@ public final class Property {
                 ", SCHEME='" + SCHEME + '\'' +
                 ", PASSWORD='" + PASSWORD + '\'' +
                 ", USER='" + USER + '\'' +
-                ", INITPOOLSIZE=" + INITPOOLSIZE +
-                ", MAXPOOLSIZE=" + MAXPOOLSIZE +
+                ", INIT_POOL_SIZE=" + INIT_POOL_SIZE +
+                ", MAX_POOL_SIZE=" + MAX_POOL_SIZE +
+                ", MAIL='" + MAIL + '\'' +
+                ", MAIL_PASS='" + MAIL_PASS + '\'' +
                 '}';
     }
 
@@ -69,7 +81,9 @@ public final class Property {
         SCHEME =  properties.getProperty("db.scheme");
         PASSWORD = properties.getProperty("db.password");
         USER = properties.getProperty("db.user");
-        INITPOOLSIZE = Integer.valueOf(properties.getProperty("db.initpoolsize"));
-        MAXPOOLSIZE = Integer.valueOf(properties.getProperty("db.maxpoolsize"));
+        INIT_POOL_SIZE = Integer.parseInt(properties.getProperty("db.init.pool.size"));
+        MAX_POOL_SIZE = Integer.parseInt(properties.getProperty("db.max.pool.size"));
+        MAIL = properties.getProperty("mail");
+        MAIL_PASS = properties.getProperty("mail.pass");
     }
 }

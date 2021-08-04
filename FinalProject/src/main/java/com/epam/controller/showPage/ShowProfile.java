@@ -31,9 +31,9 @@ public class ShowProfile implements Command {
             request.setAttribute("user", user);
             request.setAttribute("locale",request.getSession().getAttribute("locale"));
             switch(userRole){
-                case ADMIN -> request.getServletContext().getRequestDispatcher(ServletDestination.ADMINPROFILEPAGE.getPath()).forward(request, response);
-                case MODERATOR -> request.getServletContext().getRequestDispatcher(ServletDestination.MODERATORPROFILEPAGE.getPath()).forward(request, response);
-                case CLIENT -> request.getServletContext().getRequestDispatcher(ServletDestination.CLIENTPROFILEPAGE.getPath()).forward(request, response);
+                case ADMIN -> request.getServletContext().getRequestDispatcher(ServletDestination.ADMIN_PROFILE_PAGE.getPath()).forward(request, response);
+                case MODERATOR -> request.getServletContext().getRequestDispatcher(ServletDestination.MODERATOR_PROFILE_PAGE.getPath()).forward(request, response);
+                case CLIENT -> request.getServletContext().getRequestDispatcher(ServletDestination.CLIENT_PROFILE_PAGE.getPath()).forward(request, response);
             }
         } catch (DaoException | ServletException e) {
             LOGGER.error(e.getMessage());

@@ -21,7 +21,7 @@ public enum AccountStatus {
         return valueOf(status);
     }
 
-    public static Optional<AccountStatus> extractUserStatusById(int id){
+    public static Optional<AccountStatus> extractAccountStatusById(int id){
         return Arrays.stream(values())
                 .filter(i -> i.id == id)
                 .findAny();

@@ -12,6 +12,7 @@ public class User extends BaseEntity implements Serializable {
     private String name;
     private double balance;
     private AccountStatus accountStatus;
+    private int verifyCode;
 
     public User(){}
 
@@ -71,6 +72,22 @@ public class User extends BaseEntity implements Serializable {
         this.balance = balance;
     }
 
+    public AccountStatus getAccountStatus() {
+        return accountStatus;
+    }
+
+    public void setAccountStatus(AccountStatus accountStatus) {
+        this.accountStatus = accountStatus;
+    }
+
+    public int getVerifyCode() {
+        return verifyCode;
+    }
+
+    public void setVerifyCode(int verifyCode) {
+        this.verifyCode = verifyCode;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -81,7 +98,7 @@ public class User extends BaseEntity implements Serializable {
                 ", userRole=" + userRole +
                 ", name='" + name + '\'' +
                 ", balance=" + balance +
-                ", id=" + super.getId()+
+                ", accountStatus=" + accountStatus +
                 '}';
     }
 
@@ -90,11 +107,11 @@ public class User extends BaseEntity implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Double.compare(user.balance, balance) == 0 && Objects.equals(login, user.login) && Objects.equals(password, user.password) && Objects.equals(email, user.email) && status == user.status && userRole == user.userRole && Objects.equals(name, user.name);
+        return Double.compare(user.balance, balance) == 0 && Objects.equals(login, user.login) && Objects.equals(password, user.password) && Objects.equals(email, user.email) && status == user.status && userRole == user.userRole && Objects.equals(name, user.name) && accountStatus == user.accountStatus;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(login, password, email, status, userRole, name, balance);
+        return Objects.hash(login, password, email, status, userRole, name, balance, accountStatus);
     }
 }

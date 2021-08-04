@@ -17,7 +17,7 @@ public class ShowBan implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
-            request.getServletContext().getRequestDispatcher(ServletDestination.BANPAGE.getPath()).forward(request,response);
+            request.getServletContext().getRequestDispatcher(ServletDestination.BAN_PAGE.getPath()).forward(request,response);
         } catch (ServletException e) {
             LOGGER.error(e.getMessage());
         }

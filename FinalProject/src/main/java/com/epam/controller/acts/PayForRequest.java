@@ -72,7 +72,7 @@ public class PayForRequest implements Command {
                     LOGGER.info("Client with login " + request.getSession().getAttribute("login") + " paid for request with room number "+req.getRoom().getRoomNumber());
                     response.sendRedirect(link + CommandInstance.ACT_SHOW_REQUESTS);
                 }else{
-                    request.getServletContext().getRequestDispatcher(ServletDestination.CLIENTBADBALANCEPAGE.getPath()).forward(request,response);
+                    request.getServletContext().getRequestDispatcher(ServletDestination.CLIENT_BAD_BALANCE_PAGE.getPath()).forward(request,response);
                 }
             }
         } catch (DaoException | ServletException e) {

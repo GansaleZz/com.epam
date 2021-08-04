@@ -32,9 +32,9 @@ public class ShowRooms implements Command {
         request.setAttribute("list", list);
         try {
             switch(UserRole.getRole((String) request.getSession().getAttribute("userRole"))){
-                case CLIENT -> request.getServletContext().getRequestDispatcher(ServletDestination.CLIENTROOMSPAGE.getPath()).forward(request, response);
-                case MODERATOR -> request.getServletContext().getRequestDispatcher(ServletDestination.MODERATORROOMSPAGE.getPath()).forward(request, response);
-                case ADMIN -> request.getServletContext().getRequestDispatcher(ServletDestination.ADMINROOMSPAGE.getPath()).forward(request, response);
+                case CLIENT -> request.getServletContext().getRequestDispatcher(ServletDestination.CLIENT_ROOMS_PAGE.getPath()).forward(request, response);
+                case MODERATOR -> request.getServletContext().getRequestDispatcher(ServletDestination.MODERATOR_ROOMS_PAGE.getPath()).forward(request, response);
+                case ADMIN -> request.getServletContext().getRequestDispatcher(ServletDestination.ADMIN_ROOMS_PAGE.getPath()).forward(request, response);
             }
         } catch (ServletException e) {
             LOGGER.error(e.getMessage());

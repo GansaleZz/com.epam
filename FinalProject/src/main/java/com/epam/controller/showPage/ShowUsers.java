@@ -32,14 +32,14 @@ public class ShowUsers implements Command {
             try {
                 list = userDao.findAllEntities();
             } catch (DaoException e) {
-                e.printStackTrace();
+                LOGGER.error(e.getMessage());
             }
             request.setAttribute("list", list);
             try {
                 if (request.getSession().getAttribute("userRole").equals("ADMIN")) {
-                    request.getServletContext().getRequestDispatcher(ServletDestination.ADMINUSERSPAGE.getPath()).forward(request, response);
+                    request.getServletContext().getRequestDispatcher(ServletDestination.ADMIN_USERS_PAGE.getPath()).forward(request, response);
                 } else {
-                    request.getServletContext().getRequestDispatcher(ServletDestination.MODERATORUSERSPAGE.getPath()).forward(request, response);
+                    request.getServletContext().getRequestDispatcher(ServletDestination.MODERATOR_USERS_PAGE.getPath()).forward(request, response);
                 }
             } catch (ServletException e) {
                 LOGGER.error(e.getMessage());

@@ -19,7 +19,6 @@
 #signin::before {
     display: block;
     position: relative;
-    height: 2px;
     background: rgb(52, 56, 61);
     content: '';
     top: 44px;

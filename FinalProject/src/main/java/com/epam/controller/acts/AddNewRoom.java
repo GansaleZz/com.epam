@@ -34,7 +34,7 @@ public class AddNewRoom implements Command {
                 try {
                     if(roomDao.findAllEntities().stream()
                             .anyMatch(i -> i.getRoomNumber() == Integer.parseInt(request.getParameter("roomNumber")))){
-                        request.getServletContext().getRequestDispatcher(ServletDestination.BADROOMNUMBERPAGE.getPath()).forward(request,response);
+                        request.getServletContext().getRequestDispatcher(ServletDestination.BAD_ROOM_NUMBER_PAGE.getPath()).forward(request,response);
                     }else{
                         Room room = new RoomCriteria.Builder()
                                 .newBuilder()

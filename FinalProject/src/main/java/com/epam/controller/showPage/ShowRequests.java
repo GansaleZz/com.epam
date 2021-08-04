@@ -54,13 +54,13 @@ public class ShowRequests implements Command {
                             }
                         });
                 request.setAttribute("list", finalList);
-                request.getServletContext().getRequestDispatcher(ServletDestination.CLIENTREQEUSTSPAGE.getPath()).forward(request, response);
+                request.getServletContext().getRequestDispatcher(ServletDestination.CLIENT_REQUESTS_PAGE.getPath()).forward(request, response);
             }else {
                 list = requestDao.findAllEntities();
                 request.setAttribute("list", list);
                 switch (UserRole.getRole((String) request.getSession().getAttribute("userRole"))) {
-                    case MODERATOR -> request.getServletContext().getRequestDispatcher(ServletDestination.MODERATORREQUESTSPAGE.getPath()).forward(request, response);
-                    case ADMIN -> request.getServletContext().getRequestDispatcher(ServletDestination.ADMINREQUESTSPAGE.getPath()).forward(request, response);
+                    case MODERATOR -> request.getServletContext().getRequestDispatcher(ServletDestination.MODERATOR_REQUESTS_PAGE.getPath()).forward(request, response);
+                    case ADMIN -> request.getServletContext().getRequestDispatcher(ServletDestination.ADMIN_REQUESTS_PAGE.getPath()).forward(request, response);
                 }
             }
         } catch (ServletException | DaoException e) {

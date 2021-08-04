@@ -3,6 +3,7 @@ package com.epam.db.dao.impl;
 import com.epam.criteria.impl.UserCriteria;
 import com.epam.db.ConnectionPool;
 import com.epam.db.dao.UserDao;
+import com.epam.entity.AccountStatus;
 import com.epam.entity.User;
 import com.epam.entity.UserRole;
 import com.epam.entity.UserStatus;
@@ -13,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -30,13 +32,17 @@ public class UserDaoImpl implements UserDao {
     private final String SQL_SELECT_ALL = "SELECT * FROM USER";
     private final String SQL_SELECT_BY_CRITERIA = "SELECT * FROM USER WHERE ";
     private final String SQL_SELECT_BALANCE = "SELECT * FROM user_balance WHERE id = ";
+    private final String SQL_SELECT_VERIFY_CODE = "SELECT * FROM verify_code WHERE id = ";
     private final String SQL_INSERT_BALANCE = "INSERT INTO user_balance (id,balance) VALUES (?,?)";
+    private final String SQL_INSERT_VERIFY_CODE = "INSERT INTO verify_code (id,code) VALUES (?,?)";
     private final String SQL_UPDATE_BALANCE = "UPDATE user_balance SET balance = ? WHERE id = ?";
-    private final String SQL_INSERT = "INSERT INTO User (login,password, name, email, role_fk, status_fk) VALUES (?,?,?,?,?,?)";
+    private final String SQL_INSERT = "INSERT INTO User (login,password, name, email, role_fk, status_fk, account_status_fk) VALUES (?,?,?,?,?,?,?)";
     private final String SQL_DELETE = "DELETE FROM User WHERE id = ";
-    private final String SQL_UPDATE = "UPDATE User SET name = ?, email = ?, password = ?, status_fk = ?, role_fk = ? WHERE id = ? AND login = ?";
+    private final String SQL_UPDATE = "UPDATE User SET name = ?, email = ?, password = ?, status_fk = ?, role_fk = ?, account_status_fk = ? WHERE id = ? AND login = ?";
     private final String SQL_UPDATE_USERS_BALANCE = "UPDATE User SET balance_fk = ? WHERE id = ?";
+    private final String SQL_UPDATE_VERIFY_CODE = "UPDATE User SET verify_code_fk = ? WHERE id = ?";
     private final String SQL_DELETE_BALANCE = "DELETE FROM user_balance WHERE id = ";
+
 
     /**
      * Method, which finds all users on db
@@ -109,6 +115,7 @@ public class UserDaoImpl implements UserDao {
                     preparedStatement.setString(4,user.getEmail());
                     preparedStatement.setInt(5,UserRole.getIdByUserRole(UserRole.CLIENT));
                     preparedStatement.setInt(6,UserStatus.getIdByUserStatus(UserStatus.AVAILABLE));
+                    preparedStatement.setInt(7, AccountStatus.getIdByAccountStatus(AccountStatus.NOTACTIVATED));
                     preparedStatement.execute();
                     preparedStatement.close();
                     UserCriteria userCriteria = new UserCriteria();
@@ -120,6 +127,16 @@ public class UserDaoImpl implements UserDao {
                     preparedStatement.execute();
                     preparedStatement.close();
                     preparedStatement = connection.prepareStatement(SQL_UPDATE_USERS_BALANCE);
+                    preparedStatement.setInt(1,userTemp.getId());
+                    preparedStatement.setInt(2,userTemp.getId());
+                    preparedStatement.execute();
+                    preparedStatement.close();
+                    preparedStatement = connection.prepareStatement(SQL_INSERT_VERIFY_CODE);
+                    preparedStatement.setInt(1, userTemp.getId());
+                    preparedStatement.setInt(2, randomNumber());
+                    preparedStatement.execute();
+                    preparedStatement.close();
+                    preparedStatement = connection.prepareStatement(SQL_UPDATE_VERIFY_CODE);
                     preparedStatement.setInt(1,userTemp.getId());
                     preparedStatement.setInt(2,userTemp.getId());
                     preparedStatement.execute();
@@ -180,8 +197,9 @@ public class UserDaoImpl implements UserDao {
                 preparedStatement.setString(3,user.getPassword());
                 preparedStatement.setInt(4,UserStatus.getIdByUserStatus(user.getStatus()));
                 preparedStatement.setInt(5,UserRole.getIdByUserRole(user.getUserRole()));
-                preparedStatement.setInt(6,user.getId());
-                preparedStatement.setString(7,user.getLogin());
+                preparedStatement.setInt(6,AccountStatus.getIdByAccountStatus(user.getAccountStatus()));
+                preparedStatement.setInt(7,user.getId());
+                preparedStatement.setString(8,user.getLogin());
                 preparedStatement.execute();
                 preparedStatement.close();
                 if(user.getUserRole() != UserRole.CLIENT){
@@ -273,6 +291,24 @@ public class UserDaoImpl implements UserDao {
         return balance;
     }
 
+    public Integer findVerifyCodeById(Integer id){
+        Connection connection = ConnectionPool.getInstance().getConnection();
+        int verifyCode = 0;
+        try {
+            ResultSet resultSet = connection.createStatement().executeQuery(SQL_SELECT_VERIFY_CODE + id);
+            if (resultSet.next()) {
+                verifyCode = resultSet.getInt("code");
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+        } finally {
+            ConnectionPool connectionPool = ConnectionPool.getInstance();
+            connectionPool.close(connection);
+        }
+        return verifyCode;
+    }
+
     /**
      * Method that saving code from duplicates on method findUserByCriteria,
      * using for find user on db by criteria
@@ -280,11 +316,10 @@ public class UserDaoImpl implements UserDao {
      * @return user with a specific criteria
      */
     private Optional<User> chooseByPredicate(Predicate predicate) throws DaoException {
-        Optional<User> user = findAllEntities()
+        return (Optional<User>) findAllEntities()
                 .stream()
                 .filter(predicate)
                 .findAny();
-        return user;
     }
 
     /**
@@ -323,6 +358,10 @@ public class UserDaoImpl implements UserDao {
             if (UserRole.extractUserRolebyId(resultSet.getInt("role_fk")).isPresent()) {
                 userRole = UserRole.extractUserRolebyId(resultSet.getInt("role_fk")).get();
             }
+            AccountStatus accountStatus = null;
+            if (AccountStatus.extractAccountStatusById(resultSet.getInt("account_status_fk")).isPresent()) {
+                accountStatus = AccountStatus.extractAccountStatusById(resultSet.getInt("account_status_fk")).get();
+            }
             if (userRole != null && userStatus != null) {
                 user = Optional.of(new UserCriteria.Builder()
                         .newBuilder()
@@ -333,10 +372,12 @@ public class UserDaoImpl implements UserDao {
                         .withId(id)
                         .withUserRole(userRole)
                         .withUserStatus(userStatus)
+                        .withAccountStatus(accountStatus)
                         .build());
                 if(userRole == UserRole.CLIENT){
                     user.get().setBalance(findBalanceById(user.get().getId()));
                 }
+                user.get().setVerifyCode(findVerifyCodeById(user.get().getId()));
             }
         }catch(SQLException e){
             LOGGER.error(e.getMessage());
@@ -344,5 +385,19 @@ public class UserDaoImpl implements UserDao {
         return user;
     }
 
+    private int randomNumber(){
+        List<Integer> list = new ArrayList<>();
+        int res = 0;
+        int k = 1;
+        for (int i=1; i<10; i++) {
+            list.add(i);
+        }
+        Collections.shuffle(list);
+        for (Integer integer : list) {
+            res += integer * k;
+            k*=10;
+        }
+        return res;
+    }
 
 }

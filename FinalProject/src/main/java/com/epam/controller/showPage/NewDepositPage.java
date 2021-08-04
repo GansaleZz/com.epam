@@ -23,7 +23,7 @@ public class NewDepositPage implements Command {
             response.sendRedirect(link + CommandInstance.ACT_SHOW_HOME);
         }else{
             try {
-                request.getServletContext().getRequestDispatcher(ServletDestination.CLIENTNEWDEPOSITPAGE.getPath()).forward(request, response);
+                request.getServletContext().getRequestDispatcher(ServletDestination.CLIENT_NEW_DEPOSIT_PAGE.getPath()).forward(request, response);
             } catch (ServletException e) {
                 LOGGER.error(e.getMessage());
             }

@@ -18,7 +18,7 @@ public class ShowErrorPage implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try{
-            request.getServletContext().getRequestDispatcher(ServletDestination.ERROPAGE.getPath()).forward(request, response);
+            request.getServletContext().getRequestDispatcher(ServletDestination.ERROR_PAGE.getPath()).forward(request, response);
         }catch (ServletException e) {
             LOGGER.error(e.getMessage());
         }

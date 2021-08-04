@@ -1,6 +1,7 @@
 package com.epam.criteria.impl;
 
 import com.epam.criteria.BaseCriteria;
+import com.epam.entity.AccountStatus;
 import com.epam.entity.User;
 import com.epam.entity.UserRole;
 import com.epam.entity.UserStatus;
@@ -12,6 +13,7 @@ public class UserCriteria extends BaseCriteria<User> {
     private String password = null;
     private UserRole role = null;
     private UserStatus status = null;
+    private AccountStatus accountStatus = null;
 
     /**
      * Realisation of builder pattern for {@link User}
@@ -60,6 +62,16 @@ public class UserCriteria extends BaseCriteria<User> {
 
         public Builder withBalance(double balance){
             actualClass.setBalance(balance);
+            return this;
+        }
+
+        public Builder withAccountStatus(AccountStatus accountStatus){
+            actualClass.setAccountStatus(accountStatus);
+            return this;
+        }
+
+        public Builder withVerifyCode(int verifyCode){
+            actualClass.setVerifyCode(verifyCode);
             return this;
         }
 
