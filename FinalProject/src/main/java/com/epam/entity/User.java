@@ -11,6 +11,7 @@ public class User extends BaseEntity implements Serializable {
     private UserRole userRole;
     private String name;
     private double balance;
+    private AccountStatus accountStatus;
 
     public User(){}
 

@@ -23,7 +23,7 @@ public class Cache {
     /**
      * Map 'activeRequests' need to store requests which was accepted/paid for checking their relevance
      */
-    private Map<Integer, Request> activeRequests = new ConcurrentHashMap<>();
+    private final Map<Integer, Request> activeRequests = new ConcurrentHashMap<>();
     private final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(Cache.class);
 
     public static Cache getInstance(){
@@ -127,6 +127,10 @@ public class Cache {
             }
         }
         return bool;
+    }
+
+    public Map<Integer, Request> getActiveRequests() {
+        return activeRequests;
     }
 
     /**

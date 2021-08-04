@@ -7,6 +7,7 @@ import com.epam.db.dao.impl.RoomDaoImpl;
 import com.epam.entity.Room;
 import com.epam.entity.UserRole;
 import com.epam.exceptions.DaoException;
+import com.epam.util.Cache;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +33,9 @@ public class ShowRoomsList implements Command {
                 } catch (DaoException e) {
                     LOGGER.error(e.getMessage());
                 }
+                Cache.getInstance().updateRequests();
                 request.setAttribute("list", list);
+                request.setAttribute("reservedRooms", Cache.getInstance().getActiveRequests());
                 request.getServletContext().getRequestDispatcher(ServletDestination.CLIENTROOMSLISTPAGE.getPath()).forward(request, response);
             }
         } catch (ServletException e) {

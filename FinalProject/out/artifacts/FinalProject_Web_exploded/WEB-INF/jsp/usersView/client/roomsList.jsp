@@ -67,7 +67,7 @@
     <div class="Table">
       <table>
         <colgroup>
-          <col span="5">
+          <col span="6">
         </colgroup>
         <caption>
           <c:out value="${bundle.getString('roomsList')}"/>
@@ -96,6 +96,11 @@
           <th>
             <b>
               <c:out value="${bundle.getString('roomStatus')}"/>
+            </b>
+          </th>
+          <th>
+            <b>
+              <c:out value="${bundle.getString('roomReserved')}"/>
             </b>
           </th>
         </tr>
@@ -133,6 +138,24 @@
                   </c:when>
                   <c:when test="${room.roomStatus == 'CLOSED'}">
                     <c:out value="${bundle.getString('roomStatus.closed')}"/>
+                  </c:when>
+                </c:choose>
+              </td>
+              <td>
+                <c:set var="i" value="0"/>
+                <c:forEach var="item" items="${reservedRooms}">
+                  <c:choose>
+                    <c:when test="${room.roomNumber == item.value.room.roomNumber}">
+                      <c:set var="i" value="1"/>
+                      <c:out value="${bundle.getString('from')} ${item.value.start}"/>
+                      <c:out value="${bundle.getString('to')} ${item.value.end}"/>
+                      <br>
+                    </c:when>
+                  </c:choose>
+                </c:forEach>
+                <c:choose>
+                  <c:when test="${i == 0}">
+                    <c:out value="${bundle.getString('notReserved')}"/>
                   </c:when>
                 </c:choose>
               </td>

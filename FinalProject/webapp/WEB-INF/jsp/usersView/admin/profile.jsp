@@ -99,7 +99,7 @@
               </b>
             </th>
             <td>
-              <input type="email" name="email" value="${user.email}">
+              <c:out value="${user.email}"/>
             </td>
           </tr>
           <tr>
