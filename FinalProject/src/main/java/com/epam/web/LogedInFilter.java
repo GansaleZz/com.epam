@@ -3,6 +3,7 @@ package com.epam.web;
 import com.epam.controller.ServletDestination;
 import com.epam.criteria.impl.UserCriteria;
 import com.epam.db.dao.impl.UserDaoImpl;
+import com.epam.entity.UserRole;
 import com.epam.entity.UserStatus;
 import com.epam.exceptions.PageException;
 
@@ -50,6 +51,10 @@ public class LogedInFilter implements Filter {
                     userCriteria.setLogin((String) session.getAttribute("login"));
                     if (userDao.findUserByCriteria(userCriteria).get().getStatus().equals(UserStatus.BANNED)) {
                         httpServletRequest.getServletContext().getRequestDispatcher(ServletDestination.BAN_PAGE.getPath()).forward(request,response);
+                        session.invalidate();
+                    }
+                    if(!userDao.findUserByCriteria(userCriteria).get().getUserRole().equals(UserRole.valueOf((String) httpServletRequest.getSession().getAttribute("userRole")))){
+                        httpServletRequest.getServletContext().getRequestDispatcher(ServletDestination.AUTH_PAGE.getPath()).forward(request,response);
                         session.invalidate();
                     }
                 }
