@@ -26,7 +26,7 @@
                 </c:when>
             </c:choose>
             <input type="text" name="code" placeholder="Enter code" minlength="9" maxlength="9" required>
-            <input type="submit" value="Submit">
+            <input type="submit" value="Submit" class="submit_style">
         </form>
     </div>
     <a href="http://localhost:8080/controller?command=ACT_SHOW_AUTH" class="s2">Back</a>
