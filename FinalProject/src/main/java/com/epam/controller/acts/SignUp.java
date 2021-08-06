@@ -14,7 +14,7 @@ import java.io.IOException;
 
 public class SignUp implements Command {
     private final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(SignUp.class);
-    private final String VERIFY_LETTER = "You verify code: ";
+    private final String VERIFY_LETTER = "Your verify code: ";
     /**
      * User's signing up the website
      */
