@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/Table.css"/> ">
     <link rel="stylesheet" href="<c:url value="/resources/css/Footer.css"/> ">
     <link rel="stylesheet" href="<c:url value="/resources/fontawesome/css/all.min.css"/>">
+    <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.min.css"/>">
+    <link rel="stylesheet" href="<c:url value="/resources/css/dataTables.bootstrap4.min.css"/>">
 </head>
 <body>
 <c:set var="bundle" value="${sessionScope.bundle}"/>
@@ -61,182 +63,186 @@
         </ul>
     </nav>
     <div class="content">
-        <div class="Table">
-            <table>
+        <div class="container mb-3 mt-3">
+            <table class="table table-bordered mydatatable table-hover table-dark" >
                 <colgroup>
                     <col span="8">
                 </colgroup>
                 <caption>
                     <c:out value="${bundle.getString('userRequestsList')}"/>
                 </caption>
-                <tr>
-                    <th>
-                        <b>
-                            <c:out value="${bundle.getString('roomNumber')}"/>
-                        </b>
-                    </th>
-                    <th>
-                        <b>
-                            <c:out value="${bundle.getString('roomClass')}"/>
-                        </b>
-                    </th>
-                    <th>
-                        <b>
-                            <c:out value="${bundle.getString('numberOfSeats')}"/>
-                        </b>
-                    </th>
-                    <th>
-                        <b>
-                            <c:out value="${bundle.getString('startDate')}"/>
-                        </b>
-                    </th>
-                    <th>
-                        <b>
-                            <c:out value="${bundle.getString('endDate')}"/>
-                        </b>
-                    </th>
-                    <th>
-                        <b>
-                            <c:out value="${bundle.getString('pricePeriod')}"/>
-                        </b>
-                    </th>
-                    <th>
-                        <b>
-                            <c:out value="${bundle.getString('payment')}"/>
-                        </b>
-                    </th>
-                    <th>
-                        <b>
-                            <c:out value="${bundle.getString('requestStatus')}"/>
-                        </b>
-                    </th>
-                </tr>
-                <c:forEach var="request" items="${list}">
+                <thead>
                     <tr>
-                        <td>
-                            <c:choose>
-                                <c:when test="${request.requestStatus == 'INPROGRESS'}">
-                                    <c:out value="${bundle.getString('requestStatus.progress')}"/>
-                                </c:when>
-                                <c:when test="${request.requestStatus == 'DENIED'}">
-                                    <c:out value="${bundle.getString('requestStatus.denied')}"/>
-                                </c:when>
-                                <c:otherwise>
-                                    <c:out value="${request.room.roomNumber}"/>
-                                </c:otherwise>
-                            </c:choose>
-                        </td>
-                        <td>
-                            <c:choose>
-                                <c:when test="${request.requestStatus == 'INPROGRESS' || request.requestStatus == 'DENIED'}">
-                                    <c:choose>
-                                        <c:when test="${request.roomClass == 'BUSINESS'}">
-                                            <c:out value="${bundle.getString('business')}"/>
-                                        </c:when>
-                                        <c:when test="${request.roomClass == 'ECONOM'}">
-                                            <c:out value="${bundle.getString('econom')}"/>
-                                        </c:when>
-                                        <c:when test="${request.roomClass == 'LUXE'}">
-                                            <c:out value="${bundle.getString('luxe')}"/>
-                                        </c:when>
-                                        <c:when test="${request.roomClass == 'PREMIUM'}">
-                                            <c:out value="${bundle.getString('premium')}"/>
-                                        </c:when>
-                                    </c:choose>
-                                </c:when>
-                                <c:otherwise>
-                                    <c:choose>
-                                        <c:when test="${request.room.roomClass == 'BUSINESS'}">
-                                            <c:out value="${bundle.getString('business')}"/>
-                                        </c:when>
-                                        <c:when test="${request.room.roomClass == 'ECONOM'}">
-                                            <c:out value="${bundle.getString('econom')}"/>
-                                        </c:when>
-                                        <c:when test="${request.room.roomClass == 'LUXE'}">
-                                            <c:out value="${bundle.getString('luxe')}"/>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <c:out value="${bundle.getString('premium')}"/>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </c:otherwise>
-                            </c:choose>
-                        </td>
-                        <td>
-                            <c:out value="${request.numberOfSeats}"/>
-                        </td>
-                        <td>
-                            <c:out value="${request.start}"/>
-                        </td>
-                        <td>
-                            <c:out value="${request.end}"/>
-                        </td>
-                        <td>
-                            <c:choose>
-                                <c:when test="${request.requestStatus == 'INPROGRESS'}">
-                                    <c:out value="${bundle.getString('requestStatus.progress')}"/>
-                                </c:when>
-                                <c:when test="${request.requestStatus == 'DENIED'}">
-                                    <c:out value="${bundle.getString('requestStatus.denied')}"/>
-                                </c:when>
-                                <c:otherwise>
-                                    <c:out value="${(request.end.time-request.start.time)*request.room.price/ (1000*60*60*24)}"/> BYN</td>
-                                </c:otherwise>
-                            </c:choose>
-                        <td>
-                            <c:choose>
-                                <c:when test="${request.requestStatus == 'INPROGRESS'}">
-                                    <c:out value="${bundle.getString('requestStatus.progress')}"/>
-                                </c:when>
-                                <c:when test="${request.requestStatus == 'DENIED'}">
-                                    <c:out value="${bundle.getString('requestStatus.denied')}"/>
-                                </c:when>
-                                <c:when test="${request.requestStatus == 'PAID'}">
-                                    <c:out value="${bundle.getString('requestStatus.paid')}"/>
-                                </c:when>
-                                <c:when test="${request.payment == null}">
-                                    <form action="controller?command=ACT_PAY_FOR_REQUEST" method = "post">
-                                        <input class="button" type="submit" name="submit" value="${bundle.getString('pay')}">
-                                        <input class="button" type="submit" name="submit" value="${bundle.getString('cancel')}">
-                                        <input type="hidden" name="id" value="${request.id}">
-                                    </form>
-                                </c:when>
-                                <c:when test="${request.payment != null}">
-                                   <c:choose>
-                                       <c:when test="${request.payment.status == 'PENDINGPAYMENT'}">
-                                           <c:out value="${bundle.getString('pendingPayment')}"/>
-                                       </c:when>
-                                       <c:when test="${request.payment.status == 'CANCELLED'}">
-                                           <c:out value="${bundle.getString('requestStatus.cancelled')}"/>
-                                       </c:when>
-                                       <c:otherwise>
-                                           <c:out value="${bundle.getString('requestStatus.paid ')}"/>
-                                       </c:otherwise>
-                                   </c:choose>
-                                </c:when>
-                            </c:choose>
-                        </td>
-                        <td>
-                            <c:choose>
-                                <c:when test="${request.requestStatus == 'INPROGRESS'}">
-                                    <c:out value="${bundle.getString('requestStatus.progress')}"/>
-                                </c:when>
-                                <c:when test="${request.requestStatus == 'DENIED'}">
-                                    <c:out value="${bundle.getString('requestStatus.denied')}"/>
-                                </c:when>
-                                <c:when test="${request.requestStatus == 'PAID'}">
-                                    <c:out value="${bundle.getString('requestStatus.paid')}"/>
-                                </c:when>
-                                <c:when test="${request.requestStatus == 'ACCEPTED'}">
-                                    <c:out value="${bundle.getString('requestStatus.accepted')}"/>
-                                </c:when>
-                                <c:otherwise>
-                                    <c:out value="${bundle.getString('requestStatus.cancelled')}"/>
-                                </c:otherwise>
-                            </c:choose>
-                        </td>
+                        <th>
+                            <b>
+                                <c:out value="${bundle.getString('roomNumber')}"/>
+                            </b>
+                        </th>
+                        <th>
+                            <b>
+                                <c:out value="${bundle.getString('roomClass')}"/>
+                            </b>
+                        </th>
+                        <th>
+                            <b>
+                                <c:out value="${bundle.getString('numberOfSeats')}"/>
+                            </b>
+                        </th>
+                        <th>
+                            <b>
+                                <c:out value="${bundle.getString('startDate')}"/>
+                            </b>
+                        </th>
+                        <th>
+                            <b>
+                                <c:out value="${bundle.getString('endDate')}"/>
+                            </b>
+                        </th>
+                        <th>
+                            <b>
+                                <c:out value="${bundle.getString('pricePeriod')}"/>
+                            </b>
+                        </th>
+                        <th>
+                            <b>
+                                <c:out value="${bundle.getString('payment')}"/>
+                            </b>
+                        </th>
+                        <th>
+                            <b>
+                                <c:out value="${bundle.getString('requestStatus')}"/>
+                            </b>
+                        </th>
                     </tr>
-                </c:forEach>
+                </thead>
+                <tbody>
+                    <c:forEach var="request" items="${list}">
+                        <tr>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${request.requestStatus == 'INPROGRESS'}">
+                                        <c:out value="${bundle.getString('requestStatus.progress')}"/>
+                                    </c:when>
+                                    <c:when test="${request.requestStatus == 'DENIED'}">
+                                        <c:out value="${bundle.getString('requestStatus.denied')}"/>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:out value="${request.room.roomNumber}"/>
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${request.requestStatus == 'INPROGRESS' || request.requestStatus == 'DENIED'}">
+                                        <c:choose>
+                                            <c:when test="${request.roomClass == 'BUSINESS'}">
+                                                <c:out value="${bundle.getString('business')}"/>
+                                            </c:when>
+                                            <c:when test="${request.roomClass == 'ECONOM'}">
+                                                <c:out value="${bundle.getString('econom')}"/>
+                                            </c:when>
+                                            <c:when test="${request.roomClass == 'LUXE'}">
+                                                <c:out value="${bundle.getString('luxe')}"/>
+                                            </c:when>
+                                            <c:when test="${request.roomClass == 'PREMIUM'}">
+                                                <c:out value="${bundle.getString('premium')}"/>
+                                            </c:when>
+                                        </c:choose>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:choose>
+                                            <c:when test="${request.room.roomClass == 'BUSINESS'}">
+                                                <c:out value="${bundle.getString('business')}"/>
+                                            </c:when>
+                                            <c:when test="${request.room.roomClass == 'ECONOM'}">
+                                                <c:out value="${bundle.getString('econom')}"/>
+                                            </c:when>
+                                            <c:when test="${request.room.roomClass == 'LUXE'}">
+                                                <c:out value="${bundle.getString('luxe')}"/>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:out value="${bundle.getString('premium')}"/>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
+                            <td>
+                                <c:out value="${request.numberOfSeats}"/>
+                            </td>
+                            <td>
+                                <c:out value="${request.start}"/>
+                            </td>
+                            <td>
+                                <c:out value="${request.end}"/>
+                            </td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${request.requestStatus == 'INPROGRESS'}">
+                                        <c:out value="${bundle.getString('requestStatus.progress')}"/>
+                                    </c:when>
+                                    <c:when test="${request.requestStatus == 'DENIED'}">
+                                        <c:out value="${bundle.getString('requestStatus.denied')}"/>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:out value="${(request.end.time-request.start.time)*request.room.price/ (1000*60*60*24)}"/> BYN</td>
+                                    </c:otherwise>
+                                </c:choose>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${request.requestStatus == 'INPROGRESS'}">
+                                        <c:out value="${bundle.getString('requestStatus.progress')}"/>
+                                    </c:when>
+                                    <c:when test="${request.requestStatus == 'DENIED'}">
+                                        <c:out value="${bundle.getString('requestStatus.denied')}"/>
+                                    </c:when>
+                                    <c:when test="${request.requestStatus == 'PAID'}">
+                                        <c:out value="${bundle.getString('requestStatus.paid')}"/>
+                                    </c:when>
+                                    <c:when test="${request.payment == null}">
+                                        <form action="controller?command=ACT_PAY_FOR_REQUEST" method = "post">
+                                            <input class="button" type="submit" name="submit" value="${bundle.getString('pay')}">
+                                            <input class="button" type="submit" name="submit" value="${bundle.getString('cancel')}">
+                                            <input type="hidden" name="id" value="${request.id}">
+                                        </form>
+                                    </c:when>
+                                    <c:when test="${request.payment != null}">
+                                       <c:choose>
+                                           <c:when test="${request.payment.status == 'PENDINGPAYMENT'}">
+                                               <c:out value="${bundle.getString('pendingPayment')}"/>
+                                           </c:when>
+                                           <c:when test="${request.payment.status == 'CANCELLED'}">
+                                               <c:out value="${bundle.getString('requestStatus.cancelled')}"/>
+                                           </c:when>
+                                           <c:otherwise>
+                                               <c:out value="${bundle.getString('requestStatus.paid ')}"/>
+                                           </c:otherwise>
+                                       </c:choose>
+                                    </c:when>
+                                </c:choose>
+                            </td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${request.requestStatus == 'INPROGRESS'}">
+                                        <c:out value="${bundle.getString('requestStatus.progress')}"/>
+                                    </c:when>
+                                    <c:when test="${request.requestStatus == 'DENIED'}">
+                                        <c:out value="${bundle.getString('requestStatus.denied')}"/>
+                                    </c:when>
+                                    <c:when test="${request.requestStatus == 'PAID'}">
+                                        <c:out value="${bundle.getString('requestStatus.paid')}"/>
+                                    </c:when>
+                                    <c:when test="${request.requestStatus == 'ACCEPTED'}">
+                                        <c:out value="${bundle.getString('requestStatus.accepted')}"/>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:out value="${bundle.getString('requestStatus.cancelled')}"/>
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
             </table>
         </div>
     </div>
@@ -247,5 +253,39 @@
         </p>
     </footer>
 </div>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+<script>
+    $('.mydatatable').DataTable({
+        searching: false,
+        ordering: true,
+        info: false,
+        language: {
+            lengthMenu: '${bundle.getString('showEntries')} _MENU_',
+            paginate:{
+                "first":      "First",
+                "last":       "Last",
+                "next":       "${bundle.getString('next')}",
+                "previous":   "${bundle.getString('prev')}"
+            },
+            zeroRecords:    '${bundle.getString('zeroRecords')}',
+            emptyTable:     '${bundle.getString('emptyTable')}'
+        },
+        lengthMenu: [[5,10,25,50,-1],[5,10,25,50,"All"]],
+        "dom": '<"top"i>rt<"bottom"flp><"clear">',
+        createRow: function (row, data, index){
+            if ( data[5].replace(/[\$,]/g,'') * 1 > 150000){
+                $('td', row).eq(5).addClass('text-success');
+            }
+        }
+    });
+</script>
 </body>
 </html>

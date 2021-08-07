@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/Table.css"/> ">
     <link rel="stylesheet" href="<c:url value="/resources/css/Footer.css"/> ">
     <link rel="stylesheet" href="<c:url value="/resources/fontawesome/css/all.min.css"/>">
+    <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.min.css"/>">
+    <link rel="stylesheet" href="<c:url value="/resources/css/dataTables.bootstrap4.min.css"/>">
 </head>
 <body>
 <c:set var="bundle" value="${sessionScope.bundle}"/>
@@ -61,41 +63,44 @@
         </ul>
     </nav>
     <div class="content">
-        <div class="Table">
-            <table>
+        <div class="container mb-3 mt-3">
+            <table class="table table-bordered mydatatable table-hover table-dark" >
                 <colgroup>
                     <col span="5">
                 </colgroup>
                 <caption>
                     <c:out value="${bundle.getString('usersList')}"/>
                 </caption>
-                <tr>
-                    <th>
-                        <b>
-                            <c:out value="${bundle.getString('name')}"/>
-                        </b>
-                    </th>
-                    <th>
-                        <b>
-                            <c:out value="${bundle.getString('email')}"/>
-                        </b>
-                    </th>
-                    <th>
-                        <b>
-                            <c:out value="${bundle.getString('role')}"/>
-                        </b>
-                    </th>
-                    <th>
-                        <b>
-                            <c:out value="${bundle.getString('status')}"/>
-                        </b>
-                    </th>
-                    <th>
-                        <b>
-                            <c:out value="${bundle.getString('action')}"/>
-                        </b>
-                    </th>
-                </tr>
+                <thead>
+                    <tr>
+                        <th>
+                            <b>
+                                <c:out value="${bundle.getString('name')}"/>
+                            </b>
+                        </th>
+                        <th>
+                            <b>
+                                <c:out value="${bundle.getString('email')}"/>
+                            </b>
+                        </th>
+                        <th>
+                            <b>
+                                <c:out value="${bundle.getString('role')}"/>
+                            </b>
+                        </th>
+                        <th>
+                            <b>
+                                <c:out value="${bundle.getString('status')}"/>
+                            </b>
+                        </th>
+                        <th>
+                            <b>
+                                <c:out value="${bundle.getString('action')}"/>
+                            </b>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
                     <c:forEach var="user" items="${list}">
                         <tr>
                             <form action="controller?command=ACT_CHANGE_USERS_RS" method = "post">
@@ -175,6 +180,7 @@
                             </form>
                         </tr>
                     </c:forEach>
+                </tbody>
             </table>
         </div>
     </div>
@@ -185,5 +191,39 @@
         </p>
     </footer>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+<script>
+    $('.mydatatable').DataTable({
+        searching: true,
+        ordering: true,
+        info: false,
+        language: {
+            lengthMenu: '${bundle.getString('showEntries')} _MENU_',
+            paginate:{
+                "first":      "First",
+                "last":       "Last",
+                "next":       "${bundle.getString('next')}",
+                "previous":   "${bundle.getString('prev')}"
+            },
+            search:'${bundle.getString('search')}',
+            zeroRecords:    '${bundle.getString('zeroRecords')}',
+            emptyTable:     '${bundle.getString('emptyTable')}'
+        },
+        lengthMenu: [[5,10,25,50,-1],[5,10,25,50,"All"]],
+        "dom": '<"top"if>rt<"bottom"lp><"clear">',
+        createRow: function (row, data, index){
+            if ( data[5].replace(/[\$,]/g,'') * 1 > 150000){
+                $('td', row).eq(5).addClass('text-success');
+            }
+        }
+    });
+</script>
 </body>
 </html>

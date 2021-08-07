@@ -33,11 +33,15 @@ div.dataTables_wrapper div.dataTables_length select {
 }
 div.dataTables_wrapper div.dataTables_filter {
     text-align: right;
+    margin-bottom: -65px;
+    margin-top: 65px;
 }
 div.dataTables_wrapper div.dataTables_filter label {
     font-weight: normal;
     white-space: nowrap;
     text-align: left;
+    font-size:23px;
+    color: #FFFFFF;
 }
 div.dataTables_wrapper div.dataTables_filter input {
     margin-left: 0.5em;
