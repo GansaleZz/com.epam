@@ -65,7 +65,7 @@
         <div class="container mb-3 mt-3">
             <table class="table table-bordered mydatatable table-hover table-dark" >
                 <colgroup>
-                    <col span="4">
+                    <col span="5">
                 </colgroup>
                 <caption>
                     <c:out value="${bundle.getString('usersList')}"/>
@@ -92,16 +92,21 @@
                                 <c:out value="${bundle.getString('status')}"/>
                             </b>
                         </th>
+                        <th>
+                            <b>
+                                <c:out value="${bundle.getString('accountStatus')}"/>
+                            </b>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
                     <c:forEach var="user" items="${list}">
                         <tr>
                             <td>
-                                <c:out value="${user.name}"></c:out>
+                                <c:out value="${user.name}"/>
                             </td>
                             <td>
-                                <c:out value="${user.email}"></c:out>
+                                <c:out value="${user.email}"/>
                             </td>
                             <td>
                                 <c:choose>
@@ -123,6 +128,16 @@
                                     </c:when>
                                     <c:otherwise>
                                         <c:out value="${bundle.getString('user.available')}"/>
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${user.accountStatus == 'NOTACTIVATED'}">
+                                        <c:out value="${bundle.getString('user.notActivated')}"/>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:out value="${bundle.getString('user.activated')}"/>
                                     </c:otherwise>
                                 </c:choose>
                             </td>

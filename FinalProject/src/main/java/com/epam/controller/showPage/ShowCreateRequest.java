@@ -39,7 +39,10 @@ public class ShowCreateRequest implements Command {
             request.setAttribute("today", format.format(today));
             try {
                 int requestsCount = (int) requestDao.findAllEntities().stream()
-                        .filter(i -> i.getUser().getLogin().equals(request.getSession().getAttribute("login")) & !i.getRequestStatus().equals(RequestStatus.DENIED) & !i.getRequestStatus().equals(RequestStatus.CANCELLED))
+                        .filter(i -> i.getUser().getLogin().equals(request.getSession().getAttribute("login")) &
+                                !i.getRequestStatus().equals(RequestStatus.DENIED) &
+                                !i.getRequestStatus().equals(RequestStatus.CANCELLED) &
+                                i.getEnd().after(Calendar.getInstance().getTime()))
                         .count();
                 request.setAttribute("requestsCount",requestsCount);
                 request.getServletContext().getRequestDispatcher(ServletDestination.CLIENT_NEW_REQUEST_PAGE.getPath()).forward(request, response);

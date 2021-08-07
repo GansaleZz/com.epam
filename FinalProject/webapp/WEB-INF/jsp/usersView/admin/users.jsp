@@ -95,6 +95,11 @@
                         </th>
                         <th>
                             <b>
+                                <c:out value="${bundle.getString('accountStatus')}"/>
+                            </b>
+                        </th>
+                        <th>
+                            <b>
                                 <c:out value="${bundle.getString('action')}"/>
                             </b>
                         </th>
@@ -171,6 +176,16 @@
                                              </select>
                                          </c:when>
                                      </c:choose>
+                                </td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${user.accountStatus == 'NOTACTIVATED'}">
+                                            <c:out value="${bundle.getString('user.notActivated')}"/>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <c:out value="${bundle.getString('user.activated')}"/>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </td>
                                  <td>
                                      <c:if test="${user.userRole != 'ADMIN'}">

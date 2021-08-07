@@ -66,13 +66,18 @@
         <div class="container mb-3 mt-3">
             <table class="table table-bordered mydatatable table-hover table-dark" >
                 <colgroup>
-                    <col span="8">
+                    <col span="9">
                 </colgroup>
                 <caption>
                     <c:out value="${bundle.getString('usersRequestsList')}"/>
                 </caption>
                 <thead>
                     <tr>
+                        <th>
+                            <b>
+                                <c:out value="${bundle.getString('userEmail')}"/>
+                            </b>
+                        </th>
                         <th>
                             <b>
                                 <c:out value="${bundle.getString('userName')}"/>
@@ -118,6 +123,9 @@
                 <tbody>
                     <c:forEach var="request" items="${list}">
                         <tr>
+                            <td>
+                                <c:out value="${request.user.email}"/>
+                            </td>
                             <td>
                                 <c:out value="${request.user.name}"/>
                             </td>

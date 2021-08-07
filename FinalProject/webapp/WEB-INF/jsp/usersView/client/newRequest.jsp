@@ -19,18 +19,6 @@
 <body>
 <c:set var="bundle" value="${sessionScope.bundle}"/>
 
-<script>
-    function btnClick() {
-        var requestsCount = ${requestsCount};
-        if (requestsCount == 5){
-            alert("${bundle.getString('maxRequests')}");
-            return false;
-        }else{
-            return true;
-        }
-    }
-</script>
-
 <div class="page">
     <nav class="one">
         <ul>
@@ -118,5 +106,17 @@
         </p>
     </footer>
 </div>
+
+<script>
+    function btnClick() {
+        var requestsCount = ${requestsCount};
+        if (requestsCount == 5){
+            alert("${bundle.getString('maxRequests')}");
+            return false;
+        }else{
+            return true;
+        }
+    }
+</script>
 </body>
 </html>
