@@ -20,40 +20,43 @@ public class SignUp implements Command {
      */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        if(request.getParameter("password") != null && request.getParameter("login") != null && request.getParameter("email") != null) {
             String password = request.getParameter("password");
             String login = request.getParameter("login");
             String name = request.getParameter("name");
             String email = request.getParameter("email");
-            if (login.trim().length() != 0 && password.trim().length() != 0 && name.trim().length() != 0 && email.trim().length() != 0) {
-                UserDaoImpl userDao = new UserDaoImpl();
-                User user = new UserCriteria.Builder().newBuilder()
-                        .withLogin(login)
-                        .withPassword(password)
-                        .withName(name)
-                        .withEmail(email)
-                        .build();
-                try {
-                    if (userDao.create(user)) {
-                        UserCriteria userCriteria = new UserCriteria();
-                        userCriteria.setLogin(user.getLogin());
-                        MailSender.getInstance().sendMail(user.getEmail(),VERIFY_LETTER + userDao.findVerifyCodeById(userDao.findUserByCriteria(userCriteria).get().getId()));
-                        request.getSession(true).setAttribute("verify",true);
-                        request.getSession(true).setAttribute("verifyTry", false);
-                        request.getSession().setAttribute("login", user.getLogin());
-                        response.sendRedirect(link + CommandInstance.ACT_SHOW_VERIFY_PAGE);
-                        LOGGER.info("User with login "+user.getLogin()+" was signed up");
-                    } else {
-                        response.sendRedirect(link + CommandInstance.ACT_SHOW_SIGNUP_ERROR);
+            UserDaoImpl userDao = new UserDaoImpl();
+            User user = new UserCriteria.Builder().newBuilder()
+                    .withLogin(login)
+                    .withPassword(password)
+                    .withName(name)
+                    .withEmail(email)
+                    .build();
+            try {
+                if (userDao.create(user)) {
+                    UserCriteria userCriteria = new UserCriteria();
+                    userCriteria.setLogin(user.getLogin());
+                    MailSender.getInstance().sendMail(user.getEmail(),VERIFY_LETTER + userDao.findVerifyCodeById(userDao.findUserByCriteria(userCriteria).get().getId()));
+                    request.getSession(true).setAttribute("verify",true);
+                    request.getSession(true).setAttribute("verifyTry", false);
+                    request.getSession().setAttribute("login", user.getLogin());
+                    response.sendRedirect(link + CommandInstance.ACT_SHOW_VERIFY_PAGE);
+                    LOGGER.info("User with login "+user.getLogin()+" was signed up");
+                } else {
+                    UserCriteria userCriteria = new UserCriteria();
+                    userCriteria.setLogin(user.getLogin());
+                    if(userDao.findUserByCriteria(userCriteria).isPresent()){
+                        request.getSession().setAttribute("loginBad", "true");
+                    }else{
+                        request.getSession().setAttribute("emailBad", "true");
                     }
-                } catch (DaoException | IOException e) {
-                    LOGGER.error(e.getMessage());
+                    request.getSession().setAttribute("loginSignUp", user.getLogin());
+                    request.getSession().setAttribute("passSignUp", user.getName());
+                    request.getSession().setAttribute("nameSignUp", user.getName());
+                    request.getSession().setAttribute("emailSignUp", user.getEmail());
+                    response.sendRedirect(link + CommandInstance.ACT_SHOW_SIGNUP);
                 }
-            } else {
-                response.sendRedirect(link + CommandInstance.ACT_SHOW_SIGNUP_ERROR);
+            } catch (DaoException | IOException e) {
+                LOGGER.error(e.getMessage());
             }
-        }else {
-            response.sendRedirect(link + CommandInstance.ACT_SHOW_SIGNUP_ERROR);
-        }
     }
 }

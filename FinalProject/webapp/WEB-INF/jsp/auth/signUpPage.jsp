@@ -22,10 +22,52 @@
 
 <div id="wrapper">
     <form id="signin" action="/controller?command=ACT_SIGNUP" method = "post">
-        <input type = "text" name="login" placeholder="Login" minlength="3" maxlength="12" required/><br/>
-        <input type = "password" name="password" placeholder="Password" minlength="5" maxlength="12" required/><br/>
-        <input type = "text" name="name" placeholder="Name" minlength="2" maxlength="12" required/><br/>
-        <input type = "email" name="email" placeholder="Email" required/><br/>
+        <c:choose>
+            <c:when test="${loginBad == true}">
+                <p style="color: red; width: 300px; position: relative">
+                    User with this login already exists
+                </p>
+            </c:when>
+        </c:choose>
+        <c:choose>
+            <c:when test="${loginSignUp != null}">
+                <input type = "text" name="login" placeholder="Login" value="${loginSignUp}" minlength="3" maxlength="12" required/><br/>
+            </c:when>
+            <c:otherwise>
+                <input type = "text" name="login" placeholder="Login" minlength="3" maxlength="12" required/><br/>
+            </c:otherwise>
+        </c:choose>
+        <c:choose>
+            <c:when test="${passSignUp != null}">
+                <input type = "password" name="password" placeholder="Password" value="${passSignUp}" minlength="5" maxlength="12" required/><br/>
+            </c:when>
+            <c:otherwise>
+                <input type = "password" name="password" placeholder="Password" minlength="5" maxlength="12" required/><br/>
+            </c:otherwise>
+        </c:choose>
+        <c:choose>
+            <c:when test="${nameSignUp != null}">
+                <input type = "text" name="name" placeholder="Name" value="${nameSignUp}" minlength="2" maxlength="12" required/><br/>
+            </c:when>
+            <c:otherwise>
+                <input type = "text" name="name" placeholder="Name" minlength="2" maxlength="12" required/><br/>
+            </c:otherwise>
+        </c:choose>
+        <c:choose>
+            <c:when test="${emailBad == true}">
+                <p style="color: red; width: 300px; position: relative; margin: -15px 0 0 0;">
+                    User with this email already exists
+                </p>
+            </c:when>
+        </c:choose>
+        <c:choose>
+            <c:when test="${emailSignUp != null}">
+                <input type = "email" name="email" placeholder="Email" value="${emailSignUp}" required/><br/>
+            </c:when>
+            <c:otherwise>
+                <input type = "email" name="email" placeholder="Email" required/><br/>
+            </c:otherwise>
+        </c:choose>
         <button type="submit">&#xf0da;</button>
     </form>
 </div>

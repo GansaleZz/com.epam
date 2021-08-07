@@ -17,8 +17,6 @@ public enum CommandInstance {
     ACT_LOGOUT(new LogOut()),
     ACT_SIGNUP(new SignUp()),
     ACT_SHOW_BAN(new ShowBan()),
-    ACT_SHOW_LOGIN_ERROR(new ShowLogInError()),
-    ACT_SHOW_SIGNUP_ERROR(new ShowSignUpError()),
     ACT_SHOW_SIGNUP_SUCC(new ShowSignUpSucc()),
     ACT_SHOW_ROOMS(new ShowRooms()),
     ACT_SHOW_PROFILE(new ShowProfile()),

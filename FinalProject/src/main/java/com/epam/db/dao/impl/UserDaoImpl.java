@@ -105,9 +105,12 @@ public class UserDaoImpl implements UserDao {
         if(user!=null) {
             Connection connection = ConnectionPool.getInstance().getConnection();
             PreparedStatement preparedStatement ;
+            UserCriteria userCriteriaLogin = new UserCriteria();
+            UserCriteria userCriteriaEmail = new UserCriteria();
+            userCriteriaLogin.setLogin(user.getLogin());
+            userCriteriaEmail.setEmail(user.getEmail());
             try {
-                if (!connection.createStatement().executeQuery(SQL_SELECT_BY_CRITERIA + "login = '" + user.getLogin() + "'").next() &&
-                    !connection.createStatement().executeQuery(SQL_SELECT_BY_CRITERIA + "email = '" + user.getEmail() + "'").next()) {
+                if (findUserByCriteria(userCriteriaLogin).isEmpty() && findUserByCriteria(userCriteriaEmail).isEmpty()) {
                     preparedStatement = connection.prepareStatement(SQL_INSERT);
                     preparedStatement.setString(1,user.getLogin());
                     preparedStatement.setString(2,user.getPassword());

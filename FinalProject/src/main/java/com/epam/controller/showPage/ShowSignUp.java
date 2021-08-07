@@ -18,6 +18,12 @@ public class ShowSignUp implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             request.getServletContext().getRequestDispatcher(ServletDestination.SIGNUP_PAGE.getPath()).forward(request,response);
+            request.getSession().setAttribute("loginBad", false);
+            request.getSession().setAttribute("emailBad", false);
+            request.getSession().setAttribute("loginSignUp", null);
+            request.getSession().setAttribute("nameSignUp", null);
+            request.getSession().setAttribute("passSignUp", null);
+            request.getSession().setAttribute("emailSignUp", null);
         } catch (ServletException e) {
             LOGGER.error(e.getMessage());
         }

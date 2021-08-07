@@ -21,8 +21,36 @@
 
 <div id ="wrapper">
     <form id="signin" action="/controller?command=ACT_LOGIN" method = "post">
-        <input type = "text" name="login" placeholder="Login" minlength="3" maxlength="12" required/><br/>
-        <input type = "password" name="password" placeholder="Password" minlength="5" maxlength="12" required/><br/>
+        <c:choose>
+            <c:when test="${loginBad == true}">
+                <p style="color: red; width: 300px; position: relative">
+                    Wrong login. Try again..
+                </p>
+            </c:when>
+        </c:choose>
+        <c:choose>
+            <c:when test="${loginSignIn != null}">
+                <input type = "text" name="login" placeholder="Login" value="${loginSignIn}" minlength="3" maxlength="12" required/><br/>
+            </c:when>
+            <c:otherwise>
+                <input type = "text" name="login" placeholder="Login" minlength="3" maxlength="12" required/><br/>
+            </c:otherwise>
+        </c:choose>
+        <c:choose>
+            <c:when test="${passBad == true}">
+                <p style="color: red; width: 300px; position: relative; margin: -15px 0 0 0;">
+                    Wrong password. Try again..
+                </p>
+            </c:when>
+        </c:choose>
+        <c:choose>
+            <c:when test="${passSignIn != null}">
+                <input type = "password" name="password" placeholder="Password" value="${passSignIn}" minlength="5" maxlength="12" required/><br/>
+            </c:when>
+            <c:otherwise>
+                <input type = "password" name="password" placeholder="Password" minlength="5" maxlength="12" required/><br/>
+            </c:otherwise>
+        </c:choose>
         <button type="submit">&#xf0da;</button>
     </form>
 </div>

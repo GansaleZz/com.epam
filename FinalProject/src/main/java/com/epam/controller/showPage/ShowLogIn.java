@@ -18,6 +18,10 @@ public class ShowLogIn implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             request.getServletContext().getRequestDispatcher(ServletDestination.LOGIN_PAGE.getPath()).forward(request,response);
+            request.getSession().setAttribute("loginBad", false);
+            request.getSession().setAttribute("passBad", false);
+            request.getSession().setAttribute("loginSignIn", null);
+            request.getSession().setAttribute("passSignIn", null);
         } catch (ServletException e) {
             LOGGER.error(e.getMessage());
         }
